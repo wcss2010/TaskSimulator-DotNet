@@ -24,5 +24,27 @@ namespace TaskSimulatorLib.Monitors
         {
             get { return MonitorManager.monitors; }
         }
+
+        /// <summary>
+        /// 注册监视器
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="monitorCode"></param>
+        /// <param name="monitor"></param>
+        public static void RegisterMonitor(User user, string monitorCode, IMonitor monitor)
+        {
+        
+        }
+
+        /// <summary>
+        /// 获得一个监视器
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="monitorCode"></param>
+        /// <returns></returns>
+        public static IMonitor GetMonitor(User user, string monitorCode)
+        {
+            return null;
+        }
     }
 }
