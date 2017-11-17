@@ -5,7 +5,8 @@ using System.Text;
 
 namespace TaskSimulatorLib.Entitys
 {
-    class MonitorQueryParameter
+    public class MonitorQueryParameter
     {
+
     }
 }
