@@ -10,7 +10,7 @@ namespace TaskSimulatorLib.Monitors
      * 
      *  作者：李文龙
      * 
-     *  本类主要用于管理系统中的所有监视器
+     *  本类主要用于管理每艘无人船上所有的监视器
      * 
      */
     public class MonitorManager

@@ -17,6 +17,11 @@ namespace TaskSimulatorLib.Monitors
     public interface IMonitor
     {
         /// <summary>
+        /// 所属用户
+        /// </summary>
+        User User { get; set; }
+
+        /// <summary>
         /// 查询或改变监视器数据
         /// </summary>
         /// <returns></returns>
