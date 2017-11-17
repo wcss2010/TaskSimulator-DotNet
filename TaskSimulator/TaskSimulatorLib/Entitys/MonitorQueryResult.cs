@@ -15,6 +15,18 @@ namespace TaskSimulatorLib.Entitys
      */
     public class MonitorQueryResult
     {
+        /// <summary>
+        /// 查询指令
+        /// </summary>
+        public string QueryCommand { get; set; }
 
+        private SortedList<string, object> objects = new SortedList<string, object>();
+        /// <summary>
+        /// 结果对象(key=参数名，Value=参数值)
+        /// </summary>
+        public SortedList<string, object> Objects
+        {
+            get { return objects; }
+        }
     }
 }

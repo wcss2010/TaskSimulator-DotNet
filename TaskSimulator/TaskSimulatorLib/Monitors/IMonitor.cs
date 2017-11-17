@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TaskSimulatorLib.Entitys;
 
 namespace TaskSimulatorLib.Monitors
 {
@@ -13,8 +14,12 @@ namespace TaskSimulatorLib.Monitors
      *  本类主要用于查询GPS或Comera等设备的数据的接口
      * 
      */
-    public class IMonitor
+    public interface IMonitor
     {
-
+        /// <summary>
+        /// 查询或改变监视器数据
+        /// </summary>
+        /// <returns></returns>
+        MonitorQueryResult ExecuteOrQuery(string command, MonitorQueryParameter parameter);
     }
 }

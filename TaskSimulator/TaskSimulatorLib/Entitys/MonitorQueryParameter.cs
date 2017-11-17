@@ -15,6 +15,13 @@ namespace TaskSimulatorLib.Entitys
      */
     public class MonitorQueryParameter
     {
-
+        private SortedList<string, object> objects = new SortedList<string, object>();
+        /// <summary>
+        /// 参数对象(key=参数名，Value=参数值)
+        /// </summary>
+        public SortedList<string, object> Objects
+        {
+            get { return objects; }
+        }
     }
 }
