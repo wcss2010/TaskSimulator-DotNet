@@ -56,14 +56,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engines\CommandEngine.cs" />
+    <Compile Include="Entitys\Command.cs" />
+    <Compile Include="Entitys\MonitorQueryParameter.cs" />
+    <Compile Include="Entitys\MonitorQueryResult.cs" />
+    <Compile Include="Entitys\Task.cs" />
+    <Compile Include="Entitys\User.cs" />
+    <Compile Include="Monitors\IMonitor.cs" />
+    <Compile Include="Monitors\MonitorManager.cs" />
+    <Compile Include="Processors\TaskProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Engines\" />
-    <Folder Include="Entitys\" />
-    <Folder Include="Monitors\" />
-    <Folder Include="Processors\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
