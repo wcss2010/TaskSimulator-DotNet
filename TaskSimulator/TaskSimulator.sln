@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskSimulator", "TaskSimulator\TaskSimulator.csproj", "{A3BF066F-E570-41D8-9DE5-07A93C2870E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskSimulatorLib", "TaskSimulatorLib\TaskSimulatorLib.csproj", "{5A94275D-A324-4278-BA5D-4816EE6D6BBE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A3BF066F-E570-41D8-9DE5-07A93C2870E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3BF066F-E570-41D8-9DE5-07A93C2870E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3BF066F-E570-41D8-9DE5-07A93C2870E7}.Debug|x86.ActiveCfg = Debug|x86
+		{A3BF066F-E570-41D8-9DE5-07A93C2870E7}.Debug|x86.Build.0 = Debug|x86
+		{A3BF066F-E570-41D8-9DE5-07A93C2870E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3BF066F-E570-41D8-9DE5-07A93C2870E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3BF066F-E570-41D8-9DE5-07A93C2870E7}.Release|x86.ActiveCfg = Release|x86
+		{A3BF066F-E570-41D8-9DE5-07A93C2870E7}.Release|x86.Build.0 = Release|x86
+		{5A94275D-A324-4278-BA5D-4816EE6D6BBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A94275D-A324-4278-BA5D-4816EE6D6BBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A94275D-A324-4278-BA5D-4816EE6D6BBE}.Debug|x86.ActiveCfg = Debug|x86
+		{5A94275D-A324-4278-BA5D-4816EE6D6BBE}.Debug|x86.Build.0 = Debug|x86
+		{5A94275D-A324-4278-BA5D-4816EE6D6BBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A94275D-A324-4278-BA5D-4816EE6D6BBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A94275D-A324-4278-BA5D-4816EE6D6BBE}.Release|x86.ActiveCfg = Release|x86
+		{5A94275D-A324-4278-BA5D-4816EE6D6BBE}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
