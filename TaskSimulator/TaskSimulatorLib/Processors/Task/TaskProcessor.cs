@@ -9,6 +9,13 @@ using TaskSimulatorLib.Entitys;
 
 namespace TaskSimulatorLib.Processors.Task
 {
+    public delegate void TaskCompleteDelegate(object sender,TaskCompleteArgs args);
+    public class TaskCompleteArgs : EventArgs
+    {
+        public DeviceUser User { get; set; }
+        public Entitys.Task Task { get; set; }
+    }
+
     /**
      *  无人船自主任务模拟器 V1.0
      * 
@@ -32,6 +39,11 @@ namespace TaskSimulatorLib.Processors.Task
         /// 工作线程
         /// </summary>
         private BackgroundWorker workers = new BackgroundWorker();
+
+        /// <summary>
+        /// 任务完成事件
+        /// </summary>
+        public event TaskCompleteDelegate OnTaskCompleteEvent;
 
         public TaskProcessor()
         {
@@ -75,6 +87,23 @@ namespace TaskSimulatorLib.Processors.Task
         }
 
         /// <summary>
+        /// 投递任务完成事件
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="task"></param>
+        protected void OnTaskComplete(DeviceUser user, Entitys.Task task)
+        {
+            if (OnTaskCompleteEvent != null)
+            {
+                TaskCompleteArgs tca = new TaskCompleteArgs();
+                tca.User = user;
+                tca.Task = task;
+
+                OnTaskCompleteEvent(this, tca);
+            }
+        }
+
+        /// <summary>
         /// 线程执行体
         /// </summary>
         private void DoWork()
@@ -106,7 +135,16 @@ namespace TaskSimulatorLib.Processors.Task
                                 }
 
                                 //检查这个任务是不是没有完成
-
+                                if (queueObject.Task.TaskState == StateType.Running)
+                                {
+                                    //还在运行的任务需要再入队列
+                                    Queues.Enqueue(queueObject);
+                                }
+                                else
+                                {
+                                    //投递任务完成事件
+                                    OnTaskComplete(queueObject.User, queueObject.Task);
+                                }
                             }
                             else
                             {
