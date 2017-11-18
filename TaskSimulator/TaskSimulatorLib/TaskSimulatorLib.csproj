@@ -64,6 +64,7 @@
     <Compile Include="Entitys\User.cs" />
     <Compile Include="Monitors\IMonitor.cs" />
     <Compile Include="Monitors\MonitorManager.cs" />
+    <Compile Include="Processors\ITaskProcessorUnit.cs" />
     <Compile Include="Processors\TaskProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
