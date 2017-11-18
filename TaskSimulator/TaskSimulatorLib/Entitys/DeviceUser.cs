@@ -15,6 +15,6 @@ namespace TaskSimulatorLib.Entitys
      */
     public class DeviceUser
     {
-
+       
     }
 }

@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TaskSimulatorLib</RootNamespace>
     <AssemblyName>TaskSimulatorLib</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,14 +57,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engines\CommandEngine.cs" />
+    <Compile Include="Engines\CommandQueueWorker.cs" />
+    <Compile Include="Engines\ICommandWorker.cs" />
     <Compile Include="Entitys\Command.cs" />
     <Compile Include="Entitys\MonitorQueryParameter.cs" />
     <Compile Include="Entitys\MonitorQueryResult.cs" />
     <Compile Include="Entitys\Task.cs" />
-    <Compile Include="Entitys\User.cs" />
+    <Compile Include="Entitys\DeviceUser.cs" />
     <Compile Include="Monitors\IMonitor.cs" />
-    <Compile Include="Monitors\MonitorManager.cs" />
     <Compile Include="Processors\ITaskProcessorUnit.cs" />
     <Compile Include="Processors\TaskProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

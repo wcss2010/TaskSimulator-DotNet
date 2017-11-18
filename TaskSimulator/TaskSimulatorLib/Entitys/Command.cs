@@ -18,7 +18,7 @@ namespace TaskSimulatorLib.Entitys
         /// <summary>
         /// 要执行的指令
         /// </summary>
-        public string Command { get; set; }
+        public string Cmd { get; set; }
 
         private SortedList<string, object> objects = new SortedList<string, object>();
         /// <summary>
