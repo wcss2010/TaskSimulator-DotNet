@@ -35,6 +35,11 @@ namespace TaskSimulatorLib.Entitys
         public TaskType TaskType { get; set; }
 
         /// <summary>
+        /// 任务的当前状态
+        /// </summary>
+        public StateType TaskState { get; set; }
+
+        /// <summary>
         /// 优先级
         /// </summary>
         public int TaskPriority { get; set; }
@@ -75,5 +80,13 @@ namespace TaskSimulatorLib.Entitys
     public enum TaskType
     {
        NowTask,RandomTask,OnlyTimeTask,TimeAfterTask
+    }
+
+    /// <summary>
+    /// 任务状态分为三种,准备运行，正在运行，结束
+    /// </summary>
+    public enum StateType
+    {
+       Ready,Running,End
     }
 }
