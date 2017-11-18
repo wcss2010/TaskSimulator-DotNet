@@ -60,6 +60,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extends\Base\BaseCommandWorkerThread.cs" />
+    <Compile Include="Extends\Base\BaseMonitor.cs" />
+    <Compile Include="Extends\Base\BaseTaskWorkerThread.cs" />
     <Compile Include="Processors\Command\CommandProcessor.cs" />
     <Compile Include="Processors\Command\ICommandWorkerThread.cs" />
     <Compile Include="Entitys\Command.cs" />
