@@ -19,7 +19,7 @@ namespace TaskSimulatorLib.Processors.Task
         /// <summary>
         /// 所属任务
         /// </summary>
-        Task Task { get; set; }
+        Entitys.Task Task { get; set; }
 
         /// <summary>
         /// 所属设备用户
@@ -31,7 +31,7 @@ namespace TaskSimulatorLib.Processors.Task
         /// </summary>
         /// <param name="commandObj"></param>
         /// <returns></returns>
-        CommandResult Process(Command commandObj);
+        CommandResult Process(Entitys.Command commandObj);
 
         /// <summary>
         /// 创建一个新对象

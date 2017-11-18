@@ -3,8 +3,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TaskSimulatorLib.Engines;
 using TaskSimulatorLib.Processors;
+using TaskSimulatorLib.Processors.Command;
+using TaskSimulatorLib.Processors.Task;
 
 namespace TaskSimulatorLib.Entitys
 {
