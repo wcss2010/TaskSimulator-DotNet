@@ -35,9 +35,14 @@ namespace TaskSimulatorLib.Entitys
         public TaskType TaskType { get; set; }
 
         /// <summary>
+        /// 优先级
+        /// </summary>
+        public int TaskPriority { get; set; }
+
+        /// <summary>
         /// 任务处理器(用于生成Command)
         /// </summary>
-        public ITaskWorkerThread TaskProcessorUnit { get; set; }
+        public ITaskWorkerThread TaskWorkerThread { get; set; }
 
         ConcurrentDictionary<string, ICommandWorkerThread> commandWorkerDict = new ConcurrentDictionary<string, ICommandWorkerThread>();
         /// <summary>
