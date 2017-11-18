@@ -53,6 +53,15 @@ namespace TaskSimulatorLib.Entitys
             get { return commandWorkerDict; }
         }
 
+        private ConcurrentDictionary<string, object> objects = new ConcurrentDictionary<string, object>();
+        /// <summary>
+        /// 参数对象(key=参数名，Value=参数值)
+        /// </summary>
+        public ConcurrentDictionary<string, object> Objects
+        {
+            get { return objects; }
+        }
+
         /// <summary>
         /// 临时数据
         /// </summary>
