@@ -83,10 +83,10 @@ namespace TaskSimulatorLib.Entitys
     }
 
     /// <summary>
-    /// 任务状态分为三种,准备运行，正在运行，结束
+    /// 任务状态分为四种,准备运行，已开始，正在运行，已结束
     /// </summary>
     public enum StateType
     {
-       Ready,Running,End
+       Ready,Started,Running,Ended
     }
 }
