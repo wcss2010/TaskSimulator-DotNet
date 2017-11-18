@@ -87,7 +87,37 @@ namespace TaskSimulatorLib.Processors.Task
                     ProcessorQueueObject queueObject = new ProcessorQueueObject();
                     Queues.TryDequeue(out queueObject);
 
+                    //开始处理任务
+                    if (queueObject != null && queueObject.Task != null && queueObject.User != null && queueObject.Command != null)
+                    {
+                        if (queueObject.Task.TaskWorkerThread != null)
+                        {
+                            CommandResult cr = queueObject.Task.TaskWorkerThread.Process(queueObject.Command);
+                            if (cr != null)
+                            {
+                                //打印处理结果
+                                if (cr.IsOK)
+                                {
+                                    SuperObject.logger.Debug("设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理成功！");
+                                }
+                                else
+                                {
+                                    SuperObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理失败！原因：" + cr.Reason);
+                                }
 
+                                //检查这个任务是不是没有完成
+
+                            }
+                            else
+                            {
+                                SuperObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")没有返回处理结果!");
+                            }
+                        }
+                        else
+                        {
+                            SuperObject.logger.Error("对不起，设备(" + queueObject.User.UserCode + ")中没有任务处理线程(" + queueObject.Task.TaskCode + ")");
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
