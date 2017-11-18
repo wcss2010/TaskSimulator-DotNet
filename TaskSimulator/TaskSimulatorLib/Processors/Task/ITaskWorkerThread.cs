@@ -11,7 +11,7 @@ namespace TaskSimulatorLib.Processors.Task
      * 
      *  作者：李文龙
      * 
-     *  本类主要用于根据监视器的数据生成指令添加到CommandQueueWorker中
+     *  本类主要用于根据监视器的数据生成指令添加到CommandProcessor中
      * 
      */
     public interface ITaskWorkerThread
