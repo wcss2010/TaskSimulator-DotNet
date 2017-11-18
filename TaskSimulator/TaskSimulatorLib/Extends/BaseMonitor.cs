@@ -11,17 +11,14 @@ namespace TaskSimulatorLib.Extends
      * 
      *  作者：李文龙
      * 
-     *  本类主要用于描述一个指令
+     *  本类是一个监视器抽象类
      * 
      */
-    public class GpsMapMonitor:IMonitor
+    public abstract class BaseMonitor:IMonitor
     {
         public Entitys.DeviceUser User { get; set; }
 
-        public Entitys.CommandResult Process(Entitys.Command commandObj)
-        {
-            
-        }
+        public abstract Entitys.CommandResult Process(Entitys.Command commandObj);
 
         public IMonitor Clone()
         {
