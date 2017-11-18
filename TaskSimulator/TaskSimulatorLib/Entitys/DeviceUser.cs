@@ -27,11 +27,11 @@ namespace TaskSimulatorLib.Entitys
         /// </summary>
         public string UserName { get; set; }
 
-        private ConcurrentDictionary<string, object> objects = new ConcurrentDictionary<string, object>();
+        private Dictionary<string, object> objects = new Dictionary<string, object>();
         /// <summary>
         /// 参数对象(key=参数名，Value=参数值)
         /// </summary>
-        public ConcurrentDictionary<string, object> Objects
+        public Dictionary<string, object> Objects
         {
             get { return objects; }
         }
