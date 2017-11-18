@@ -18,15 +18,6 @@ namespace TaskSimulatorLib.Processors.Task
      */
     public class TaskProcessor
     {
-        ConcurrentDictionary<string, DeviceUser> userDict = new ConcurrentDictionary<string, DeviceUser>();
-        /// <summary>
-        /// 无人船用户字典
-        /// </summary>
-        public ConcurrentDictionary<string, DeviceUser> UserDict
-        {
-            get { return userDict; }
-        }
-
         /// <summary>
         /// 工作线程
         /// </summary>
