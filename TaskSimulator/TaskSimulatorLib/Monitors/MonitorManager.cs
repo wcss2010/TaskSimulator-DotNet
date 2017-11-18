@@ -37,6 +37,16 @@ namespace TaskSimulatorLib.Monitors
         }
 
         /// <summary>
+        /// 反注册监视器
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="monitorCode"></param>
+        public static void UnRegisterMonitor(User user, string monitorCode)
+        {
+
+        }
+
+        /// <summary>
         /// 获得一个监视器
         /// </summary>
         /// <param name="user"></param>
