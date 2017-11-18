@@ -31,6 +31,6 @@ namespace TaskSimulatorLib.Monitors
         /// <summary>
         /// 临时数据
         /// </summary>
-        public object Tag { get; set; }
+        object Tag { get; set; }
     }
 }
