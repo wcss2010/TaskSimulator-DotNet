@@ -9,6 +9,14 @@ using TaskSimulatorLib.Processors.Task;
 
 namespace TaskSimulatorLib
 {
+    /**
+     *  无人船自主任务模拟器 V1.0
+     * 
+     *  作者：李文龙
+     * 
+     *  本类是整个类库的入口
+     * 
+     */
     public class SimulatorObject
     {
        public static log4net.ILog logger = log4net.LogManager.GetLogger(typeof(SimulatorObject));       
