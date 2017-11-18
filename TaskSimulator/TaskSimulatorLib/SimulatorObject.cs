@@ -7,9 +7,9 @@ using TaskSimulatorLib.Entitys;
 
 namespace TaskSimulatorLib
 {
-    public class SuperObject
+    public class SimulatorObject
     {
-       public static log4net.ILog logger = log4net.LogManager.GetLogger(typeof(SuperObject));
+       public static log4net.ILog logger = log4net.LogManager.GetLogger(typeof(SimulatorObject));
 
        public static log4net.ILog GetLogger(Type t)
        {

@@ -127,11 +127,11 @@ namespace TaskSimulatorLib.Processors.Task
                                 //打印处理结果
                                 if (cr.IsOK)
                                 {
-                                    SuperObject.logger.Debug("设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理成功！");
+                                    SimulatorObject.logger.Debug("设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理成功！");
                                 }
                                 else
                                 {
-                                    SuperObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理失败！原因：" + cr.Reason);
+                                    SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理失败！原因：" + cr.Reason);
                                 }
 
                                 //检查这个任务是不是没有完成
@@ -148,18 +148,18 @@ namespace TaskSimulatorLib.Processors.Task
                             }
                             else
                             {
-                                SuperObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")没有返回处理结果!");
+                                SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")没有返回处理结果!");
                             }
                         }
                         else
                         {
-                            SuperObject.logger.Error("对不起，设备(" + queueObject.User.UserCode + ")中没有任务处理线程(" + queueObject.Task.TaskCode + ")");
+                            SimulatorObject.logger.Error("对不起，设备(" + queueObject.User.UserCode + ")中没有任务处理线程(" + queueObject.Task.TaskCode + ")");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    SuperObject.logger.Error(ex.ToString());
+                    SimulatorObject.logger.Error(ex.ToString());
                 }
             }
         }

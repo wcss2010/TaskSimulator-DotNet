@@ -101,33 +101,33 @@ namespace TaskSimulatorLib.Processors.Command
                                         {
                                             if (cr.IsOK)                                        
                                             {
-                                                SuperObject.logger.Debug("设备(" + queueObject.User.UserCode + ")中的指令处理线程(" + queueObject.Command.Cmd + ")执行成功！");
+                                                SimulatorObject.logger.Debug("设备(" + queueObject.User.UserCode + ")中的指令处理线程(" + queueObject.Command.Cmd + ")执行成功！");
                                             }
                                             else
                                             {
-                                                SuperObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的指令处理线程(" + queueObject.Command.Cmd + ")执行失败！原因：" + cr.Reason);
+                                                SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的指令处理线程(" + queueObject.Command.Cmd + ")执行失败！原因：" + cr.Reason);
                                             }
                                         }
                                         else
                                         {
-                                            SuperObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的指令处理线程(" + queueObject.Command.Cmd + ")没有返回处理结果！");
+                                            SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的指令处理线程(" + queueObject.Command.Cmd + ")没有返回处理结果！");
                                         }
                                     }
                                     else
                                     {
-                                        SuperObject.logger.Error("对不起，设备(" + queueObject.User.UserCode + ")中没有指令处理线程(" + queueObject.Command.Cmd + ")");
+                                        SimulatorObject.logger.Error("对不起，设备(" + queueObject.User.UserCode + ")中没有指令处理线程(" + queueObject.Command.Cmd + ")");
                                     }
                                 }
                             }
                             catch (Exception ex)
                             {
-                                SuperObject.logger.Error(ex.ToString());
+                                SimulatorObject.logger.Error(ex.ToString());
                             }
                         }));
                 }
                 catch (Exception ex)
                 {
-                    SuperObject.logger.Error(ex.ToString());
+                    SimulatorObject.logger.Error(ex.ToString());
                 }
             }
         }
