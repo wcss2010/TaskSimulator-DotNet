@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TaskSimulatorLib.Engines;
 using TaskSimulatorLib.Processors;
 
 namespace TaskSimulatorLib.Entitys
@@ -35,6 +37,15 @@ namespace TaskSimulatorLib.Entitys
         /// 任务处理器(用于生成Command)
         /// </summary>
         public ITaskProcessorUnit TaskProcessorUnit { get; set; }
+
+        ConcurrentDictionary<string, ICommandWorker> commandWorkerDict = new ConcurrentDictionary<string, ICommandWorker>();
+        /// <summary>
+        /// 任务的指令执行器字典
+        /// </summary>
+        public ConcurrentDictionary<string, ICommandWorker> CommandWorkerDict
+        {
+            get { return commandWorkerDict; }
+        }
 
         /// <summary>
         /// 临时数据
