@@ -19,7 +19,7 @@ namespace TaskSimulatorLib.Monitors
         /// <summary>
         /// 所属用户
         /// </summary>
-        User User { get; set; }
+        DeviceUser User { get; set; }
 
         /// <summary>
         /// 查询或改变监视器数据
