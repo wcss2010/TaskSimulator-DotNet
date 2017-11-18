@@ -19,11 +19,11 @@ namespace TaskSimulatorLib.Processors.Command
      */
     public class CommandProcessor
     {
-        private ConcurrentQueue<CommandProcessorQueueObject> queues = new ConcurrentQueue<CommandProcessorQueueObject>();
+        private ConcurrentQueue<ProcessorQueueObject> queues = new ConcurrentQueue<ProcessorQueueObject>();
         /// <summary>
         /// Command处理队列
         /// </summary>
-        public ConcurrentQueue<CommandProcessorQueueObject> Queues
+        public ConcurrentQueue<ProcessorQueueObject> Queues
         {
             get { return queues; }
         }
@@ -84,7 +84,7 @@ namespace TaskSimulatorLib.Processors.Command
                 try
                 {
                     //取一个对象
-                    CommandProcessorQueueObject queueObject = new CommandProcessorQueueObject();
+                    ProcessorQueueObject queueObject = new ProcessorQueueObject();
                     Queues.TryDequeue(out queueObject);
 
                     //调用Command工作线程去处理
@@ -131,26 +131,5 @@ namespace TaskSimulatorLib.Processors.Command
                 }
             }
         }
-    }
-
-    /// <summary>
-    /// 处理队列对象
-    /// </summary>
-    public class CommandProcessorQueueObject
-    {
-        /// <summary>
-        /// 所属任务
-        /// </summary>
-        public Entitys.Task Task { get; set; }
-
-        /// <summary>
-        /// 要执行的指令参数
-        /// </summary>
-        public Entitys.Command Command { get; set; }
-
-        /// <summary>
-        /// 所属设备用户
-        /// </summary>
-        public DeviceUser User { get; set; }
     }
 }

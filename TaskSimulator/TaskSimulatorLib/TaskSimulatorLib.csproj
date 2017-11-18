@@ -67,6 +67,7 @@
     <Compile Include="Entitys\Task.cs" />
     <Compile Include="Entitys\DeviceUser.cs" />
     <Compile Include="Monitors\IMonitor.cs" />
+    <Compile Include="Processors\ProcessorQueueObject.cs" />
     <Compile Include="Processors\Task\ITaskWorkerThread.cs" />
     <Compile Include="Processors\Task\TaskProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
