@@ -17,7 +17,7 @@ namespace TaskSimulatorLib.Monitors
     public interface IMonitor
     {
         /// <summary>
-        /// 所属用户
+        /// 所属设备用户
         /// </summary>
         DeviceUser User { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,14 @@ namespace TaskSimulatorLib.Entitys
      */
     public class DeviceUser
     {
-       
+        ConcurrentDictionary<string, Task> supportedTask = new ConcurrentDictionary<string, Task>();
+        /// <summary>
+        /// 支持的任务
+        /// </summary>
+        public ConcurrentDictionary<string, Task> SupportedTask
+        {
+            get { return supportedTask; }
+        }
+
     }
 }
