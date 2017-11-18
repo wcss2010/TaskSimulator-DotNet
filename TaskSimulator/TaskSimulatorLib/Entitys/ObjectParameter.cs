@@ -10,19 +10,14 @@ namespace TaskSimulatorLib.Entitys
      * 
      *  作者：李文龙
      * 
-     *  本类主要用于监视器数据查询结果
+     *  本类主要用于描述监视器数据查询参数
      * 
      */
-    public class MonitorQueryResult
+    public class ObjectParameter
     {
-        /// <summary>
-        /// 查询指令
-        /// </summary>
-        public string QueryCommand { get; set; }
-
         private SortedList<string, object> objects = new SortedList<string, object>();
         /// <summary>
-        /// 结果对象(key=参数名，Value=参数值)
+        /// 参数对象(key=参数名，Value=参数值)
         /// </summary>
         public SortedList<string, object> Objects
         {

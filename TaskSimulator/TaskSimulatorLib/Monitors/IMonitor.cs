@@ -25,6 +25,6 @@ namespace TaskSimulatorLib.Monitors
         /// 查询或改变监视器数据
         /// </summary>
         /// <returns></returns>
-        MonitorQueryResult ExecuteOrQuery(string command, MonitorQueryParameter parameter);
+        ObjectResult ExecuteOrQuery(string command, ObjectParameter parameter);
     }
 }
