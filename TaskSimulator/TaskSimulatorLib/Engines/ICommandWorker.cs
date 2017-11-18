@@ -30,17 +30,17 @@ namespace TaskSimulatorLib.Engines
         /// 所属设备用户
         /// </summary>
         public DeviceUser User { get; set; }
-
-        /// <summary>
-        /// 临时数据
-        /// </summary>
-        public object Tag { get; set; }
-
+        
         /// <summary>
         /// 处理一个命令
         /// </summary>
         /// <param name="commandObj"></param>
         /// <returns></returns>
         CommandResult Process(Command commandObj);
+
+        /// <summary>
+        /// 临时数据
+        /// </summary>
+        public object Tag { get; set; }
     }
 }

@@ -17,6 +17,25 @@ namespace TaskSimulatorLib.Entitys
      */
     public class DeviceUser
     {
+        /// <summary>
+        /// 用户代码
+        /// </summary>
+        public string UserCode { get; set; }
+
+        /// <summary>
+        /// 用户名称
+        /// </summary>
+        public string UserName { get; set; }
+
+        private SortedList<string, object> objects = new SortedList<string, object>();
+        /// <summary>
+        /// 参数对象(key=参数名，Value=参数值)
+        /// </summary>
+        public SortedList<string, object> Objects
+        {
+            get { return objects; }
+        }
+
         ConcurrentDictionary<string, Task> supportedTask = new ConcurrentDictionary<string, Task>();
         /// <summary>
         /// 所支持的任务
@@ -35,6 +54,9 @@ namespace TaskSimulatorLib.Entitys
             get { return supportedMonitor; }
         }
 
-
+        /// <summary>
+        /// 临时数据
+        /// </summary>
+        public object Tag { get; set; }
     }
 }
