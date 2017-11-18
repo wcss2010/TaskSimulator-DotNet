@@ -19,6 +19,15 @@ namespace TaskSimulatorLib.Processors.Task
      */
     public class TaskProcessor
     {
+        private ConcurrentQueue<ProcessorQueueObject> queues = new ConcurrentQueue<ProcessorQueueObject>();
+        /// <summary>
+        /// Task处理队列
+        /// </summary>
+        public ConcurrentQueue<ProcessorQueueObject> Queues
+        {
+            get { return queues; }
+        }
+
         /// <summary>
         /// 工作线程
         /// </summary>
@@ -70,7 +79,21 @@ namespace TaskSimulatorLib.Processors.Task
         /// </summary>
         private void DoWork()
         {
-            
+            if (Queues != null && Queues.Count > 0)
+            {
+                try
+                {
+                    //取一个对象
+                    ProcessorQueueObject queueObject = new ProcessorQueueObject();
+                    Queues.TryDequeue(out queueObject);
+
+
+                }
+                catch (Exception ex)
+                {
+                    SuperObject.logger.Error(ex.ToString());
+                }
+            }
         }
     }
 }
