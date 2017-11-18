@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using TaskSimulatorLib.Entitys;
 
-namespace TaskSimulatorLib.Engines
+namespace TaskSimulatorLib.Processors.Command
 {
     /**
      *  无人船自主任务模拟器 V1.0
@@ -14,7 +14,7 @@ namespace TaskSimulatorLib.Engines
      *  本类主要用于执行TaskProcessor生成的Command
      * 
      */
-    public interface ICommandWorker
+    public interface ICommandWorkerThread
     {
         /// <summary>
         /// 所支持的指令
@@ -42,7 +42,7 @@ namespace TaskSimulatorLib.Engines
         /// 创建一个新对象
         /// </summary>
         /// <returns></returns>
-        ICommandWorker Clone();
+        ICommandWorkerThread Clone();
 
         /// <summary>
         /// 临时数据

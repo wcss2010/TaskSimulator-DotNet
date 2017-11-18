@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using TaskSimulatorLib.Entitys;
 
-namespace TaskSimulatorLib.Processors
+namespace TaskSimulatorLib.Processors.Task
 {
     /**
      *  无人船自主任务模拟器 V1.0
@@ -14,7 +14,7 @@ namespace TaskSimulatorLib.Processors
      *  本类主要用于根据监视器的数据生成指令添加到CommandQueueWorker中
      * 
      */
-    public interface ITaskProcessorUnit
+    public interface ITaskWorkerThread
     {
         /// <summary>
         /// 所属任务
@@ -37,7 +37,7 @@ namespace TaskSimulatorLib.Processors
         /// 创建一个新对象
         /// </summary>
         /// <returns></returns>
-        ITaskProcessorUnit Clone();
+        ITaskWorkerThread Clone();
 
         /// <summary>
         /// 临时数据

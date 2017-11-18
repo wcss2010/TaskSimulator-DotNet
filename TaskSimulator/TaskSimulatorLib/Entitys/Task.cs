@@ -36,13 +36,13 @@ namespace TaskSimulatorLib.Entitys
         /// <summary>
         /// 任务处理器(用于生成Command)
         /// </summary>
-        public ITaskProcessorUnit TaskProcessorUnit { get; set; }
+        public ITaskWorkerThread TaskProcessorUnit { get; set; }
 
-        ConcurrentDictionary<string, ICommandWorker> commandWorkerDict = new ConcurrentDictionary<string, ICommandWorker>();
+        ConcurrentDictionary<string, ICommandWorkerThread> commandWorkerDict = new ConcurrentDictionary<string, ICommandWorkerThread>();
         /// <summary>
         /// 任务的指令执行器字典
         /// </summary>
-        public ConcurrentDictionary<string, ICommandWorker> CommandWorkerDict
+        public ConcurrentDictionary<string, ICommandWorkerThread> CommandWorkerDict
         {
             get { return commandWorkerDict; }
         }

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TaskSimulatorLib.Entitys;
 
-namespace TaskSimulatorLib.Processors
+namespace TaskSimulatorLib.Processors.Task
 {
     /**
      *  无人船自主任务模拟器 V1.0
@@ -15,6 +17,6 @@ namespace TaskSimulatorLib.Processors
      */
     public class TaskProcessor
     {
-
+        
     }
 }
