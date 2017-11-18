@@ -39,8 +39,14 @@ namespace TaskSimulatorLib.Engines
         CommandResult Process(Command commandObj);
 
         /// <summary>
+        /// 创建一个新对象
+        /// </summary>
+        /// <returns></returns>
+        ICommandWorker Clone();
+
+        /// <summary>
         /// 临时数据
         /// </summary>
-        public object Tag { get; set; }
+        object Tag { get; set; }
     }
 }

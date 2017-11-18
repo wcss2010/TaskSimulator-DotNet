@@ -14,17 +14,17 @@ namespace TaskSimulatorLib.Processors
      *  本类主要用于根据监视器的数据生成指令添加到CommandQueueWorker中
      * 
      */
-    public class ITaskProcessorUnit
+    public interface ITaskProcessorUnit
     {
         /// <summary>
         /// 所属任务
         /// </summary>
-        public Task Task { get; set; }
+        Task Task { get; set; }
 
         /// <summary>
         /// 所属设备用户
         /// </summary>
-        public DeviceUser User { get; set; }
+        DeviceUser User { get; set; }
 
         /// <summary>
         /// 处理一个命令
@@ -34,8 +34,14 @@ namespace TaskSimulatorLib.Processors
         CommandResult Process(Command commandObj);
 
         /// <summary>
+        /// 创建一个新对象
+        /// </summary>
+        /// <returns></returns>
+        ITaskProcessorUnit Clone();
+
+        /// <summary>
         /// 临时数据
         /// </summary>
-        public object Tag { get; set; }
+        object Tag { get; set; }
     }
 }

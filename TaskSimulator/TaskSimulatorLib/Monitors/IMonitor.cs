@@ -29,6 +29,12 @@ namespace TaskSimulatorLib.Monitors
         CommandResult Process(Command commandObj);
 
         /// <summary>
+        /// 创建一个新对象
+        /// </summary>
+        /// <returns></returns>
+        IMonitor Clone();
+
+        /// <summary>
         /// 临时数据
         /// </summary>
         object Tag { get; set; }
