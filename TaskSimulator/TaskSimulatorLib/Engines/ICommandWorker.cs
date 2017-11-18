@@ -15,6 +15,9 @@ namespace TaskSimulatorLib.Engines
      */
     public interface ICommandWorker
     {
-
+        /// <summary>
+        /// 临时数据
+        /// </summary>
+        public object Tag { get; set; }
     }
 }

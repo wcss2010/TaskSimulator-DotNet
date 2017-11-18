@@ -35,6 +35,11 @@ namespace TaskSimulatorLib.Entitys
         /// 任务处理器(用于生成Command)
         /// </summary>
         public ITaskProcessorUnit TaskProcessorUnit { get; set; }
+
+        /// <summary>
+        /// 临时数据
+        /// </summary>
+        public object Tag { get; set; }
     }
 
     /// <summary>

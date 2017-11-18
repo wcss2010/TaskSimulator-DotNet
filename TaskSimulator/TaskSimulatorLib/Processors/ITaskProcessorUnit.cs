@@ -15,6 +15,9 @@ namespace TaskSimulatorLib.Processors
      */
     public class ITaskProcessorUnit
     {
-
+        /// <summary>
+        /// 临时数据
+        /// </summary>
+        public object Tag { get; set; }
     }
 }
