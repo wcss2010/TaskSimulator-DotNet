@@ -10,19 +10,19 @@ namespace TaskSimulatorLib.Entitys
      * 
      *  作者：李文龙
      * 
-     *  本类主要用于描述一个指令
+     *  本类主要用于描述指令执行结果
      * 
      */
-    public class Command
+    public class CommandResult
     {
         /// <summary>
-        /// 要执行的指令
+        /// 已执行的指令
         /// </summary>
         public string Cmd { get; set; }
 
         private SortedList<string, object> objects = new SortedList<string, object>();
         /// <summary>
-        /// 参数对象(key=参数名，Value=参数值)
+        /// 结果对象(key=参数名，Value=参数值)
         /// </summary>
         public SortedList<string, object> Objects
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TaskSimulatorLib.Entitys;
 
 namespace TaskSimulatorLib.Engines
 {
@@ -16,8 +17,30 @@ namespace TaskSimulatorLib.Engines
     public interface ICommandWorker
     {
         /// <summary>
+        /// 所支持的指令
+        /// </summary>
+        public string Cmd { get; set; }
+
+        /// <summary>
+        /// 所属任务
+        /// </summary>
+        public Task Task { get; set; }
+
+        /// <summary>
+        /// 所属设备用户
+        /// </summary>
+        public DeviceUser User { get; set; }
+
+        /// <summary>
         /// 临时数据
         /// </summary>
         public object Tag { get; set; }
+
+        /// <summary>
+        /// 处理一个命令
+        /// </summary>
+        /// <param name="commandObj"></param>
+        /// <returns></returns>
+        CommandResult Process(Command commandObj);
     }
 }

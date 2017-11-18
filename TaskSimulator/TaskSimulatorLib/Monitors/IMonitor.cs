@@ -22,9 +22,15 @@ namespace TaskSimulatorLib.Monitors
         DeviceUser User { get; set; }
 
         /// <summary>
-        /// 查询或改变监视器数据
+        /// 处理一个指令
         /// </summary>
+        /// <param name="commandObj"></param>
         /// <returns></returns>
-        ObjectResult ExecuteOrQuery(string command, ObjectParameter parameter);
+        CommandResult Process(Command commandObj);
+
+        /// <summary>
+        /// 临时数据
+        /// </summary>
+        public object Tag { get; set; }
     }
 }
