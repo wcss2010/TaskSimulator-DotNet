@@ -79,7 +79,57 @@ namespace TaskSimulatorLib.Processors.Command
         /// </summary>
         private void DoWork()
         {
-            
+            if (Queues != null && Queues.Count > 0)
+            {
+                try
+                {
+                    //取一个对象
+                    CommandProcessorQueueObject queueObject = new CommandProcessorQueueObject();
+                    Queues.TryDequeue(out queueObject);
+
+                    //调用Command工作线程去处理
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(delegate(object o)
+                        {
+                            try
+                            {
+                                if (queueObject != null && queueObject.Task != null && queueObject.Command != null && queueObject.User != null)
+                                {
+                                    if (queueObject.Task.CommandWorkerDict.ContainsKey(queueObject.Command.Cmd))
+                                    {
+                                        CommandResult cr = queueObject.Task.CommandWorkerDict[queueObject.Command.Cmd].Process(queueObject.Command);
+                                        if (cr != null)
+                                        {
+                                            if (cr.IsOK)                                        
+                                            {
+                                                SuperObject.logger.Debug("设备(" + queueObject.User.UserCode + ")中的指令处理线程(" + queueObject.Command.Cmd + ")执行成功！");
+                                            }
+                                            else
+                                            {
+                                                SuperObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的指令处理线程(" + queueObject.Command.Cmd + ")执行失败！原因：" + cr.Reason);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            SuperObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的指令处理线程(" + queueObject.Command.Cmd + ")没有返回处理结果！");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        SuperObject.logger.Error("对不起，设备(" + queueObject.User.UserCode + ")中没有指令处理线程(" + queueObject.Command.Cmd + ")");
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                SuperObject.logger.Error(ex.ToString());
+                            }
+                        }));
+                }
+                catch (Exception ex)
+                {
+                    SuperObject.logger.Error(ex.ToString());
+                }
+            }
         }
     }
 
@@ -91,16 +141,16 @@ namespace TaskSimulatorLib.Processors.Command
         /// <summary>
         /// 所属任务
         /// </summary>
-        Entitys.Task Task { get; set; }
-
-        /// <summary>
-        /// 所属设备用户
-        /// </summary>
-        DeviceUser User { get; set; }
+        public Entitys.Task Task { get; set; }
 
         /// <summary>
         /// 要执行的指令参数
         /// </summary>
-        Entitys.Command Command { get; set; }
+        public Entitys.Command Command { get; set; }
+
+        /// <summary>
+        /// 所属设备用户
+        /// </summary>
+        public DeviceUser User { get; set; }
     }
 }

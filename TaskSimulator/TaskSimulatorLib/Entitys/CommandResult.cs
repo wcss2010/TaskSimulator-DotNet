@@ -21,6 +21,16 @@ namespace TaskSimulatorLib.Entitys
         /// </summary>
         public string Cmd { get; set; }
 
+        /// <summary>
+        /// 是否成功
+        /// </summary>
+        public bool IsOK { get; set; }
+
+        /// <summary>
+        /// 失败原因
+        /// </summary>
+        public string Reason { get; set; }
+
         private ConcurrentDictionary<string, object> objects = new ConcurrentDictionary<string, object>();
         /// <summary>
         /// 结果对象(key=参数名，Value=参数值)
