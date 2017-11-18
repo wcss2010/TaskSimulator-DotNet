@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using TaskSimulatorLib.Monitors;
 
-namespace TaskSimulatorLib.Extends
+namespace TaskSimulatorLib.Extends.Base
 {
     /**
      *  无人船自主任务模拟器 V1.0
