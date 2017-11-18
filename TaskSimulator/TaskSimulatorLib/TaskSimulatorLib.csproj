@@ -60,8 +60,7 @@
     <Compile Include="Engines\CommandQueueWorker.cs" />
     <Compile Include="Engines\ICommandWorker.cs" />
     <Compile Include="Entitys\Command.cs" />
-    <Compile Include="Entitys\ObjectParameter.cs" />
-    <Compile Include="Entitys\ObjectResult.cs" />
+    <Compile Include="Entitys\CommandResult.cs" />
     <Compile Include="Entitys\Task.cs" />
     <Compile Include="Entitys\DeviceUser.cs" />
     <Compile Include="Monitors\IMonitor.cs" />

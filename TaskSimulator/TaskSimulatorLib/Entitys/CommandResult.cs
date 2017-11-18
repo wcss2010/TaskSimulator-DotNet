@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,11 +21,11 @@ namespace TaskSimulatorLib.Entitys
         /// </summary>
         public string Cmd { get; set; }
 
-        private SortedList<string, object> objects = new SortedList<string, object>();
+        private ConcurrentDictionary<string, object> objects = new ConcurrentDictionary<string, object>();
         /// <summary>
         /// 结果对象(key=参数名，Value=参数值)
         /// </summary>
-        public SortedList<string, object> Objects
+        public ConcurrentDictionary<string, object> Objects
         {
             get { return objects; }
         }
