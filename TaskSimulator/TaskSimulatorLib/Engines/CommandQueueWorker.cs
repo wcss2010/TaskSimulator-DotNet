@@ -13,7 +13,7 @@ namespace TaskSimulatorLib.Engines
      *  本类主要用于对TaskProcessor分配给它的Command予以执行
      * 
      */
-    public class CommandEngine
+    public class CommandQueueWorker
     {
 
     }
