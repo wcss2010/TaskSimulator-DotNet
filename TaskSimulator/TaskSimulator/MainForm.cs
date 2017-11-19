@@ -101,7 +101,12 @@ namespace TaskSimulator
 
         private void btnAddShip_Click(object sender, EventArgs e)
         {
+            Command cmds = new Command();
+            cmds.Cmd = shipMoveCmd.Cmd;
+            cmds.Objects.Add("lat", 26.1615);
+            cmds.Objects.Add("lng", 127.4453);
 
+            shipMoveCmd.Process(cmds);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
