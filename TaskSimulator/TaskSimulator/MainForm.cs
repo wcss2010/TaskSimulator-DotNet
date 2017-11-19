@@ -36,13 +36,14 @@ namespace TaskSimulator
             mapControl.MapProvider = GMapProviders.GoogleChinaMap;
 
             //检查是否需要导入地图到缓存
-            if (!File.Exists(Path.Combine(Application.StartupPath, @"GMapCache\TileDBv5\en\Data.gmdb")))
-            {
+            //if (!File.Exists(Path.Combine(Application.StartupPath, @"GMapCache\TileDBv5\en\Data.gmdb")))
+            //{
                 if (mapControl.Manager.ImportFromGMDB(Path.Combine(Application.StartupPath, "SeaMap201711192033.gmdb")))
                 {
                     mapControl.Manager.Mode = GMap.NET.AccessMode.CacheOnly;
                 }
-            }
+            //}
+
             try
             {
                 //1.美国空军嘉手纳空军基地
@@ -52,8 +53,8 @@ namespace TaskSimulator
             catch (Exception ex) { }
 
             //添加图层
-            //objects = new GMapOverlay("objects");
-            //mapControl.Overlays.Add(this.objects);
+            objects = new GMapOverlay("objects");
+            mapControl.Overlays.Add(this.objects);
         }
     }
 }
