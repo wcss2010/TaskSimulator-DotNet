@@ -500,7 +500,7 @@ namespace TaskSimulatorLib.Util
         /// <param name="collList">阻挡物节点列表</param>
         /// <param name="dir">移动方向</param>
         /// <returns></returns>
-        protected bool IsCorner(Point point, CompassDirections dir)
+        protected virtual bool IsCorner(Point point, CompassDirections dir)
         {
             if (CanThroughCorner)
             {
