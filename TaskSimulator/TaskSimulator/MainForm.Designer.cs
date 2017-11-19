@@ -30,6 +30,8 @@
         {
             this.mapControl = new GMap.NET.WindowsForms.GMapControl();
             this.groupBox = new System.Windows.Forms.GroupBox();
+            this.btnAddShip = new System.Windows.Forms.Button();
+            this.groupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // mapControl
@@ -61,12 +63,23 @@
             // 
             // groupBox
             // 
+            this.groupBox.Controls.Add(this.btnAddShip);
             this.groupBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.groupBox.Location = new System.Drawing.Point(633, 0);
             this.groupBox.Name = "groupBox";
             this.groupBox.Size = new System.Drawing.Size(241, 496);
             this.groupBox.TabIndex = 1;
             this.groupBox.TabStop = false;
+            // 
+            // btnAddShip
+            // 
+            this.btnAddShip.Location = new System.Drawing.Point(50, 38);
+            this.btnAddShip.Name = "btnAddShip";
+            this.btnAddShip.Size = new System.Drawing.Size(137, 78);
+            this.btnAddShip.TabIndex = 0;
+            this.btnAddShip.Text = "添加一艘船";
+            this.btnAddShip.UseVisualStyleBackColor = true;
+            this.btnAddShip.Click += new System.EventHandler(this.btnAddShip_Click);
             // 
             // MainForm
             // 
@@ -77,7 +90,9 @@
             this.Controls.Add(this.groupBox);
             this.Name = "MainForm";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.groupBox.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -86,6 +101,7 @@
 
         private GMap.NET.WindowsForms.GMapControl mapControl;
         private System.Windows.Forms.GroupBox groupBox;
+        private System.Windows.Forms.Button btnAddShip;
     }
 }
 
