@@ -13,7 +13,7 @@ namespace TaskSimulatorLib.Util
      *  本类是A*自动寻路算法
      * 
      */
-    public abstract class DoPlan
+    public abstract class BaseDoPlan
     {
         /// <summary>
         /// 前面或后退一步的大小
@@ -23,11 +23,11 @@ namespace TaskSimulatorLib.Util
         /// <summary>
         /// 开放节点
         /// </summary>
-        protected List<AStarPoint> openPoints = new List<AStarPoint>();
+        public List<AStarPoint> OpenPoints = new List<AStarPoint>();
         /// <summary>
         /// 关闭列表
         /// </summary>
-        protected List<AStarPoint> closePoints = new List<AStarPoint>();
+        public List<AStarPoint> ClosePoints = new List<AStarPoint>();
 
         /// <summary>
         /// 地图区域
@@ -43,15 +43,15 @@ namespace TaskSimulatorLib.Util
         {
             //2、重复如下的工作：
             //a) 寻找开启列表中F值最低的格子。我们称它为当前格。
-            AStarPoint minCostFPoint = this.GetMinCostFPoint(openPoints);
+            AStarPoint minCostFPoint = this.GetMinCostFPoint(OpenPoints);
             if (minCostFPoint == null) //表明从起点到终点之间没有任何通路。
             {
                 return null;
             }
             AStarPoint start = minCostFPoint;
             //b) 把它切换到关闭列表。
-            RemovePoint(minCostFPoint, openPoints);
-            closePoints.Add(start);
+            RemovePoint(minCostFPoint, OpenPoints);
+            ClosePoints.Add(start);
 
             //c) 对相邻的8格中的每一个
             //检查所有相邻格子
@@ -67,7 +67,7 @@ namespace TaskSimulatorLib.Util
                 }
 
                 //如果它不可通过或者已经在关闭列表中，略过它。反之如下。 
-                if (IsBar(point) || IsInList(point, closePoints) || IsCorner(start.CurrentPoint, direction))
+                if (IsBar(point) || IsInList(point, ClosePoints) || IsCorner(start.CurrentPoint, direction))
                 {
                     continue;
                 }
@@ -77,7 +77,7 @@ namespace TaskSimulatorLib.Util
                 //如果它已经在开启列表中，用G值为参考检查新的路径是否更好。更低的G值意味着更好的路径。如果是这样，就把这一格的父节点改成当前格，并且重新计算这一格的G和F值
                 //如果你保持你的开启列表按F值排序，改变之后你可能需要重新对开启列表排序。 
                 AStarPoint existPoint;
-                if (IsInList(point, openPoints, out existPoint))
+                if (IsInList(point, OpenPoints, out existPoint))
                 {
                     if (existPoint.G > costG)
                     {
@@ -88,13 +88,13 @@ namespace TaskSimulatorLib.Util
                 else
                 {
                     AStarPoint newPoint = new AStarPoint(point, start, costG, costH);
-                    openPoints.Add(newPoint);
+                    OpenPoints.Add(newPoint);
                 }
             }
             //d) 停止，当你 
             //把目标格添加进了开启列表，这时候路径被找到，或者 
             AStarPoint endPoint;
-            if (IsInList(end.CurrentPoint, openPoints, out endPoint))
+            if (IsInList(end.CurrentPoint, OpenPoints, out endPoint))
             {
                 //3、保存路径。从目标格开始，沿着每一格的父节点移动直到回到起始格。这就是你的路径。
                 IList<Point> route = new List<Point>();
@@ -110,7 +110,7 @@ namespace TaskSimulatorLib.Util
                 return route;
             }
             //没有找到目标格，开启列表已经空了。这时候，路径不存在。 
-            if (openPoints.Count == 0)
+            if (OpenPoints.Count == 0)
             {
                 return null;
             }
@@ -154,7 +154,7 @@ namespace TaskSimulatorLib.Util
                 }
 
                 //跳过那些已经在关闭列表中的或者不可通过的(有墙，水的地形，或者其他无法通过的地形)，把他们添加进开启列表
-                if (IsBar(point) || IsInList(point, closePoints))
+                if (IsBar(point) || IsInList(point, ClosePoints))
                 {
                     continue;
                 }
@@ -164,7 +164,7 @@ namespace TaskSimulatorLib.Util
                 //如果某个相邻格已经在开启列表里了，检查现在的这条路径是否更好。换句话说，检查如果我们用新的路径到达它的话，G值是否会更低一些。如果不是，那就什么都不做。
                 //如果新的G值更低，那就把相邻方格的父节点改为目前选中的方格（在上面的图表中，把箭头的方向改为指向这个方格）。最后，重新计算F和G的值。
                 AStarPoint existPoint;
-                if (IsInList(point, openPoints, out existPoint))
+                if (IsInList(point, OpenPoints, out existPoint))
                 {
                     if (existPoint.G > costG)
                     {
@@ -176,20 +176,20 @@ namespace TaskSimulatorLib.Util
                 else
                 {
                     AStarPoint newPoint = new AStarPoint(point, start, costG, costH);
-                    openPoints.Add(newPoint);
+                    OpenPoints.Add(newPoint);
                 }
             }
 
             //开启列表中删除，然后添加到关闭列表中
             //openPoints.Remove(start);
-            RemovePoint(start, openPoints);
-            closePoints.Add(start);
+            RemovePoint(start, OpenPoints);
+            ClosePoints.Add(start);
 
             //d) 停止，当你 
             //把目标格添加进了开启列表，这时候路径被找到，或者 
             //没有找到目标格，开启列表已经空了。这时候，路径不存在。 
             AStarPoint endPoint;
-            if (IsInList(end.CurrentPoint, openPoints, out endPoint))
+            if (IsInList(end.CurrentPoint, OpenPoints, out endPoint))
             {
                 IList<Point> route = new List<Point>();
                 route.Add(endPoint.CurrentPoint);
@@ -205,7 +205,7 @@ namespace TaskSimulatorLib.Util
             }
 
             //3、保存路径。从目标格开始，沿着每一格的父节点移动直到回到起始格。这就是你的路径。 
-            AStarPoint minCostFPoint = this.GetMinCostFPoint(openPoints);
+            AStarPoint minCostFPoint = this.GetMinCostFPoint(OpenPoints);
             if (minCostFPoint == null) //表明从起点到终点之间没有任何通路。
             {
                 return null;

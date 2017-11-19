@@ -76,7 +76,7 @@
     <Compile Include="Processors\Task\TaskProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimulatorObject.cs" />
-    <Compile Include="Util\DoPlan.cs" />
+    <Compile Include="Util\BaseDoPlan.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="log4net.config">
