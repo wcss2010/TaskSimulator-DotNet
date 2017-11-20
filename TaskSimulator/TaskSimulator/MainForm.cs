@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using TaskSimulatorLib;
 using TaskSimulatorLib.Entitys;
 using TaskSimulatorLib.Extends.Base;
+using TaskSimulatorLib.Processors;
 
 namespace TaskSimulator
 {
@@ -22,7 +23,7 @@ namespace TaskSimulator
         /// 地图上的图层，用户显示船只
         /// </summary>
         private GMapOverlay objects = null;
-        private SimulatorObject so = new SimulatorObject();
+        public static SimulatorObject so = new SimulatorObject();
         private DeviceUser firstDeviceUser = new DeviceUser();
         private Task moveTask = new Task();
         private ShipMoveCommand shipMoveCmd = null;
@@ -60,7 +61,17 @@ namespace TaskSimulator
 
             firstDeviceUser.SupportedMonitor.TryAdd("GPS", gpsMonitor);
 
+            taskWorkerThread.User = firstDeviceUser;
+            taskWorkerThread.Task = moveTask;
+
             moveTask.TaskWorkerThread = taskWorkerThread;
+
+            so.TaskProcessor.OnTaskCompleteEvent += TaskProcessor_OnTaskCompleteEvent;
+        }
+
+        void TaskProcessor_OnTaskCompleteEvent(object sender, TaskSimulatorLib.Processors.Task.TaskCompleteArgs args)
+        {
+            System.Console.WriteLine(args.Task.TaskCode +  "任务完成！");
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -101,12 +112,25 @@ namespace TaskSimulator
 
         private void btnAddShip_Click(object sender, EventArgs e)
         {
-            Command cmds = new Command();
-            cmds.Cmd = shipMoveCmd.Cmd;
-            cmds.Objects.Add("lat", 26.1615);
-            cmds.Objects.Add("lng", 127.4453);
+            //Command cmds = new Command();
+            //cmds.Cmd = shipMoveCmd.Cmd;
+            //cmds.Objects.Add("lat", 26.4615);
+            //cmds.Objects.Add("lng", 127.4453);
 
-            shipMoveCmd.Process(cmds);
+            //shipMoveCmd.Process(cmds);
+
+            objects.Markers.Clear();
+
+            taskWorkerThread.InitQueues();
+
+            ProcessorQueueObject pqo = new ProcessorQueueObject();
+            pqo.User = firstDeviceUser;
+            pqo.Task = moveTask;
+
+            pqo.Command = new Command();
+            pqo.Command.Cmd = "AA";
+
+            so.TaskProcessor.Queues.Enqueue(pqo);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -135,6 +159,8 @@ namespace TaskSimulator
             {
                 try
                 {
+                    objects.Markers.Clear();
+
                     double lat = double.Parse(commandObj.Objects["lat"].ToString());
                     double lng = double.Parse(commandObj.Objects["lng"].ToString());
 
@@ -168,9 +194,72 @@ namespace TaskSimulator
 
     public class MoveTaskWorkerThread : BaseTaskWorkerThread
     {
+        Queue<Command> cmdList = new Queue<Command>();
+
+        DateTime lastSendTime = DateTime.Now;
+
+        public MoveTaskWorkerThread()
+        {
+            InitQueues();
+        }
+
+        public void InitQueues()
+        {
+            cmdList.Enqueue(GetCommand(26.1615, 127.4453));
+
+            cmdList.Enqueue(GetCommand(26.2615, 127.4453));
+
+            cmdList.Enqueue(GetCommand(26.3615, 127.4453));
+
+            cmdList.Enqueue(GetCommand(26.4615, 127.4453));
+
+            cmdList.Enqueue(GetCommand(26.5615, 127.4453));
+
+            cmdList.Enqueue(GetCommand(26.6615, 127.4453));
+
+            cmdList.Enqueue(GetCommand(26.7615, 127.4453));
+
+            cmdList.Enqueue(GetCommand(26.8615, 127.4453));
+        }
+
+        protected Command GetCommand(double lat, double lng)
+        {
+            Command cmds = new Command();
+            cmds.Cmd = "ShipMove";
+            cmds.Objects.Add("lat", lat);
+            cmds.Objects.Add("lng", lng);
+
+            return cmds;
+        }
+
         public override CommandResult Process(Command commandObj)
         {
-            return null;
+            CommandResult cr = new CommandResult();
+            cr.Cmd = commandObj.Cmd;
+            cr.IsOK = true;
+
+            this.Task.TaskState = StateType.Running;
+
+            if (commandObj.Cmd.Equals("AA"))
+            {
+                if ((DateTime.Now - lastSendTime).TotalSeconds >= 2)
+                {
+                    lastSendTime = DateTime.Now;
+
+                    TaskSimulatorLib.Processors.ProcessorQueueObject pqo = new TaskSimulatorLib.Processors.ProcessorQueueObject();
+                    pqo.User = User;
+                    pqo.Task = Task;
+                    pqo.Command = cmdList.Dequeue();
+                    MainForm.so.CommandProcessor.Queues.Enqueue(pqo);
+                }
+            }
+
+            if (cmdList.Count <= 0)
+            {
+                this.Task.TaskState = StateType.Ended;
+            }
+
+            return cr;
         }
     }
 }
