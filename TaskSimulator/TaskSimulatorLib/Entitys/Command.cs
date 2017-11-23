@@ -19,7 +19,7 @@ namespace TaskSimulatorLib.Entitys
 
         public Command(string command, KeyValuePair<string, object>[] paramList)
         {
-            this.Command = command;
+            this.CommandText = command;
 
             if (paramList != null)
             {
@@ -33,7 +33,7 @@ namespace TaskSimulatorLib.Entitys
         /// <summary>
         /// 要执行的指令
         /// </summary>
-        public string Command { get; set; }
+        public string CommandText { get; set; }
 
         private Dictionary<string, object> objects = new Dictionary<string, object>();
         /// <summary>

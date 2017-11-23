@@ -19,7 +19,7 @@ namespace TaskSimulatorLib.Entitys
 
         public CommandResult(string command, bool isok, string errorReason, object content, KeyValuePair<string, object>[] paramList)
         {
-            this.Command = command;
+            this.CommandText = command;
             this.IsOK = isok;
             this.ErrorReason = errorReason;
             this.Content = content;
@@ -36,7 +36,7 @@ namespace TaskSimulatorLib.Entitys
         /// <summary>
         /// 已执行的指令
         /// </summary>
-        public string Command { get; set; }
+        public string CommandText { get; set; }
 
         /// <summary>
         /// 是否成功
