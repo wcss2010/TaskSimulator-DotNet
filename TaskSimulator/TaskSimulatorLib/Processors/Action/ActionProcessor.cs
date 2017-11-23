@@ -94,28 +94,28 @@ namespace TaskSimulatorLib.Processors.Action
                             {
                                 if (queueObject != null && queueObject.Task != null && queueObject.Command != null && queueObject.User != null)
                                 {
-                                    if (queueObject.User.SupportedAction.ContainsKey(queueObject.Command.Cmd))
+                                    if (queueObject.User.SupportedAction.ContainsKey(queueObject.Command.CommandText))
                                     {
-                                        CommandResult cr = queueObject.User.SupportedAction[queueObject.Command.Cmd].Process(queueObject.Command);
+                                        CommandResult cr = queueObject.User.SupportedAction[queueObject.Command.CommandText].Process(queueObject.Command);
                                         if (cr != null)
                                         {
                                             if (cr.IsOK)                                        
                                             {
-                                                SimulatorObject.logger.Debug("设备(" + queueObject.User.UserCode + ")中的指令处理线程(" + queueObject.Command.Cmd + ")执行成功！");
+                                                SimulatorObject.logger.Debug("设备(" + queueObject.User.UserCode + ")中的指令处理线程(" + queueObject.Command.CommandText + ")执行成功！");
                                             }
                                             else
                                             {
-                                                SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的指令处理线程(" + queueObject.Command.Cmd + ")执行失败！原因：" + cr.Reason);
+                                                SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的指令处理线程(" + queueObject.Command.CommandText + ")执行失败！原因：" + cr.ErrorReason);
                                             }
                                         }
                                         else
                                         {
-                                            SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的指令处理线程(" + queueObject.Command.Cmd + ")没有返回处理结果！");
+                                            SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的指令处理线程(" + queueObject.Command.CommandText + ")没有返回处理结果！");
                                         }
                                     }
                                     else
                                     {
-                                        SimulatorObject.logger.Error("对不起，设备(" + queueObject.User.UserCode + ")中没有指令处理线程(" + queueObject.Command.Cmd + ")");
+                                        SimulatorObject.logger.Error("对不起，设备(" + queueObject.User.UserCode + ")中没有指令处理线程(" + queueObject.Command.CommandText + ")");
                                     }
                                 }
                             }

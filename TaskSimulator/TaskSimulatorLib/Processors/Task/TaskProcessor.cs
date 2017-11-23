@@ -131,7 +131,7 @@ namespace TaskSimulatorLib.Processors.Task
                                 }
                                 else
                                 {
-                                    SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理失败！原因：" + cr.Reason);
+                                    SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理失败！原因：" + cr.ErrorReason);
                                 }
                             }
                             else
