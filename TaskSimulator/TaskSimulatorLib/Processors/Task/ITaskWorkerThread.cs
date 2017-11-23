@@ -17,14 +17,19 @@ namespace TaskSimulatorLib.Processors.Task
     public interface ITaskWorkerThread
     {
         /// <summary>
+        /// 当前状态
+        /// </summary>
+        WorkerThreadStateType WorkerThreadState { get; set; }
+
+        /// <summary>
         /// 所属任务
         /// </summary>
-        Entitys.Task Task { get; set; }
+        RobotTask Task { get; set; }
 
         /// <summary>
         /// 所属设备用户
         /// </summary>
-        DeviceUser User { get; set; }
+        RobotUser User { get; set; }
 
         /// <summary>
         /// 处理一个命令
@@ -43,5 +48,13 @@ namespace TaskSimulatorLib.Processors.Task
         /// 临时数据
         /// </summary>
         object Tag { get; set; }
+    }
+
+    /// <summary>
+    /// 任务状态分为四种,准备运行，已开始，正在运行，已结束
+    /// </summary>
+    public enum WorkerThreadStateType
+    {
+        Ready, Started, Running, Ended
     }
 }

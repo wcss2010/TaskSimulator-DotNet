@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TaskSimulatorLib.Entitys;
-using TaskSimulatorLib.Processors.Command;
+using TaskSimulatorLib.Processors.Action;
 using TaskSimulatorLib.Processors.Task;
 
 namespace TaskSimulatorLib
@@ -30,11 +30,11 @@ namespace TaskSimulatorLib
            return log4net.LogManager.GetLogger(t);
        }
        
-       ConcurrentDictionary<string, DeviceUser> userDict = new ConcurrentDictionary<string, DeviceUser>();
+       ConcurrentDictionary<string, RobotUser> userDict = new ConcurrentDictionary<string, RobotUser>();
        /// <summary>
        /// 无人船用户字典
        /// </summary>
-       public ConcurrentDictionary<string, DeviceUser> UserDict
+       public ConcurrentDictionary<string, RobotUser> UserDict
        {
            get { return userDict; }
        }
@@ -48,13 +48,13 @@ namespace TaskSimulatorLib
            get { return taskProcessor; }
        }
 
-       private CommandProcessor commandProcessor = new CommandProcessor();
+       private ActionProcessor actionProcessor = new ActionProcessor();
        /// <summary>
-       /// 指令处理器
+       /// 动作处理器
        /// </summary>
-       public CommandProcessor CommandProcessor
+       public ActionProcessor ActionProcessor
        {
-           get { return commandProcessor; }
+           get { return actionProcessor; }
        }
        
        /// <summary>
@@ -63,7 +63,7 @@ namespace TaskSimulatorLib
        public void Start()
        {
            TaskProcessor.Start();
-           CommandProcessor.Start();
+           ActionProcessor.Start();
        }
        
        /// <summary>
@@ -72,7 +72,7 @@ namespace TaskSimulatorLib
        public void Stop()
        {
            TaskProcessor.Stop();
-           CommandProcessor.Stop();
+           ActionProcessor.Stop();
        }
     }
 }

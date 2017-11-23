@@ -16,7 +16,7 @@ namespace TaskSimulatorLib.Extends.Base
      */
     public abstract class BaseMonitor:IMonitor
     {
-        public Entitys.DeviceUser User { get; set; }
+        public Entitys.RobotUser User { get; set; }
 
         public abstract Entitys.CommandResult Process(Entitys.Command commandObj);
 

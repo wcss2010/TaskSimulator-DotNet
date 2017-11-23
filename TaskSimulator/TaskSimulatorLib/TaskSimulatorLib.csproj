@@ -61,15 +61,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extends\Base\BaseCommandWorkerThread.cs" />
+    <Compile Include="Extends\Base\BaseActionWorkerThread.cs" />
     <Compile Include="Extends\Base\BaseMonitor.cs" />
     <Compile Include="Extends\Base\BaseTaskWorkerThread.cs" />
-    <Compile Include="Processors\Command\CommandProcessor.cs" />
-    <Compile Include="Processors\Command\ICommandWorkerThread.cs" />
+    <Compile Include="Processors\Action\ActionProcessor.cs" />
+    <Compile Include="Processors\Action\IActionWorkerThread.cs" />
     <Compile Include="Entitys\Command.cs" />
     <Compile Include="Entitys\CommandResult.cs" />
-    <Compile Include="Entitys\Task.cs" />
-    <Compile Include="Entitys\DeviceUser.cs" />
+    <Compile Include="Entitys\RobotTask.cs" />
+    <Compile Include="Entitys\RobotUser.cs" />
     <Compile Include="Monitors\IMonitor.cs" />
     <Compile Include="Processors\ProcessorQueueObject.cs" />
     <Compile Include="Processors\Task\ITaskWorkerThread.cs" />

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using TaskSimulatorLib.Entitys;
 
-namespace TaskSimulatorLib.Processors.Command
+namespace TaskSimulatorLib.Processors.Action
 {
     /**
      *  无人船自主任务模拟器 V1.0
@@ -17,7 +17,7 @@ namespace TaskSimulatorLib.Processors.Command
      *  本类主要用于对TaskProcessor分配给它的Command使用线程池来运行
      * 
      */
-    public class CommandProcessor
+    public class ActionProcessor
     {
         private ConcurrentQueue<ProcessorQueueObject> queues = new ConcurrentQueue<ProcessorQueueObject>();
         /// <summary>
@@ -33,7 +33,7 @@ namespace TaskSimulatorLib.Processors.Command
         /// </summary>
         private BackgroundWorker workers = new BackgroundWorker();
 
-        public CommandProcessor()
+        public ActionProcessor()
         {
             workers.WorkerSupportsCancellation = true;
             workers.DoWork += workers_DoWork;
@@ -94,9 +94,9 @@ namespace TaskSimulatorLib.Processors.Command
                             {
                                 if (queueObject != null && queueObject.Task != null && queueObject.Command != null && queueObject.User != null)
                                 {
-                                    if (queueObject.Task.CommandWorkerDict.ContainsKey(queueObject.Command.Cmd))
+                                    if (queueObject.User.SupportedAction.ContainsKey(queueObject.Command.Cmd))
                                     {
-                                        CommandResult cr = queueObject.Task.CommandWorkerDict[queueObject.Command.Cmd].Process(queueObject.Command);
+                                        CommandResult cr = queueObject.User.SupportedAction[queueObject.Command.Cmd].Process(queueObject.Command);
                                         if (cr != null)
                                         {
                                             if (cr.IsOK)                                        

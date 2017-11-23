@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TaskSimulatorLib.Monitors;
+using TaskSimulatorLib.Processors.Action;
 
 namespace TaskSimulatorLib.Entitys
 {
@@ -15,7 +16,7 @@ namespace TaskSimulatorLib.Entitys
      *  本类主要用于这艘无人船的基本用户信息(包括支持什么样的任务，起始坐标等)
      * 
      */
-    public class DeviceUser
+    public class RobotUser
     {
         /// <summary>
         /// 用户代码
@@ -36,11 +37,11 @@ namespace TaskSimulatorLib.Entitys
             get { return objects; }
         }
 
-        ConcurrentDictionary<string, Task> supportedTask = new ConcurrentDictionary<string, Task>();
+        ConcurrentDictionary<string, RobotTask> supportedTask = new ConcurrentDictionary<string, RobotTask>();
         /// <summary>
         /// 所支持的任务
         /// </summary>
-        public ConcurrentDictionary<string, Task> SupportedTask
+        public ConcurrentDictionary<string, RobotTask> SupportedTask
         {
             get { return supportedTask; }
         }
@@ -52,6 +53,15 @@ namespace TaskSimulatorLib.Entitys
         public ConcurrentDictionary<string, IMonitor> SupportedMonitor
         {
             get { return supportedMonitor; }
+        }
+
+        ConcurrentDictionary<string, IActionWorkerThread> supportedAction = new ConcurrentDictionary<string, IActionWorkerThread>();
+        /// <summary>
+        /// 所支持的动作
+        /// </summary>
+        public ConcurrentDictionary<string, IActionWorkerThread> SupportedAction
+        {
+            get { return supportedAction; }
         }
 
         /// <summary>

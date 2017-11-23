@@ -14,7 +14,7 @@ namespace TaskSimulatorLib.Processors
         /// <summary>
         /// 所属任务
         /// </summary>
-        public Entitys.Task Task { get; set; }
+        public Entitys.RobotTask Task { get; set; }
 
         /// <summary>
         /// 要执行的指令参数
@@ -24,6 +24,6 @@ namespace TaskSimulatorLib.Processors
         /// <summary>
         /// 所属设备用户
         /// </summary>
-        public DeviceUser User { get; set; }
+        public RobotUser User { get; set; }
     }
 }

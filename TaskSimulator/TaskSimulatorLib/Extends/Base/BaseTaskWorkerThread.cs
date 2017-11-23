@@ -16,9 +16,9 @@ namespace TaskSimulatorLib.Extends.Base
      */
     public abstract class BaseTaskWorkerThread : ITaskWorkerThread
     {
-        public Entitys.Task Task { get; set; }
+        public Entitys.RobotTask Task { get; set; }
 
-        public Entitys.DeviceUser User { get; set; }
+        public Entitys.RobotUser User { get; set; }
 
         public abstract Entitys.CommandResult Process(Entitys.Command commandObj);
 
@@ -28,5 +28,7 @@ namespace TaskSimulatorLib.Extends.Base
         }
 
         public object Tag { get; set; }
+
+        public WorkerThreadStateType WorkerThreadState { get; set; }
     }
 }

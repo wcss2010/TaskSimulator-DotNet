@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using TaskSimulatorLib.Entitys;
 
-namespace TaskSimulatorLib.Processors.Command
+namespace TaskSimulatorLib.Processors.Action
 {
     /**
      *  无人船自主任务模拟器 V1.0
@@ -14,7 +14,7 @@ namespace TaskSimulatorLib.Processors.Command
      *  本类主要用于执行TaskProcessor生成的Command
      * 
      */
-    public interface ICommandWorkerThread
+    public interface IActionWorkerThread
     {
         /// <summary>
         /// 所支持的指令
@@ -24,12 +24,12 @@ namespace TaskSimulatorLib.Processors.Command
         /// <summary>
         /// 所属任务
         /// </summary>
-        Entitys.Task Task { get; set; }
+        Entitys.RobotTask Task { get; set; }
 
         /// <summary>
         /// 所属设备用户
         /// </summary>
-        DeviceUser User { get; set; }
+        RobotUser User { get; set; }
         
         /// <summary>
         /// 处理一个命令
@@ -42,7 +42,7 @@ namespace TaskSimulatorLib.Processors.Command
         /// 创建一个新对象
         /// </summary>
         /// <returns></returns>
-        ICommandWorkerThread Clone();
+        IActionWorkerThread Clone();
 
         /// <summary>
         /// 临时数据

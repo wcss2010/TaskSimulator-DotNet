@@ -12,8 +12,8 @@ namespace TaskSimulatorLib.Processors.Task
     public delegate void TaskCompleteDelegate(object sender,TaskCompleteArgs args);
     public class TaskCompleteArgs : EventArgs
     {
-        public DeviceUser User { get; set; }
-        public Entitys.Task Task { get; set; }
+        public RobotUser User { get; set; }
+        public Entitys.RobotTask Task { get; set; }
     }
 
     /**
@@ -91,7 +91,7 @@ namespace TaskSimulatorLib.Processors.Task
         /// </summary>
         /// <param name="user"></param>
         /// <param name="task"></param>
-        protected void OnTaskComplete(DeviceUser user, Entitys.Task task)
+        protected void OnTaskComplete(RobotUser user, Entitys.RobotTask task)
         {
             if (OnTaskCompleteEvent != null)
             {
@@ -133,22 +133,22 @@ namespace TaskSimulatorLib.Processors.Task
                                 {
                                     SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理失败！原因：" + cr.Reason);
                                 }
-
-                                //检查这个任务是不是没有完成
-                                if (queueObject.Task.TaskState == StateType.Running)
-                                {
-                                    //还在运行的任务需要再入队列
-                                    Queues.Enqueue(queueObject);
-                                }
-                                else
-                                {
-                                    //投递任务完成事件
-                                    OnTaskComplete(queueObject.User, queueObject.Task);
-                                }
                             }
                             else
                             {
                                 SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")没有返回处理结果!");
+                            }
+
+                            //检查这个任务是不是没有完成
+                            if (queueObject.Task.TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Running)
+                            {
+                                //还在运行的任务需要再入队列
+                                Queues.Enqueue(queueObject);
+                            }
+                            else
+                            {
+                                //投递任务完成事件
+                                OnTaskComplete(queueObject.User, queueObject.Task);
                             }
                         }
                         else

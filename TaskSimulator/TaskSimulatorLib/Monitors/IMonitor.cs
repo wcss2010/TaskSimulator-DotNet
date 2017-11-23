@@ -19,7 +19,7 @@ namespace TaskSimulatorLib.Monitors
         /// <summary>
         /// 所属设备用户
         /// </summary>
-        DeviceUser User { get; set; }
+        RobotUser User { get; set; }
 
         /// <summary>
         /// 处理一个指令
