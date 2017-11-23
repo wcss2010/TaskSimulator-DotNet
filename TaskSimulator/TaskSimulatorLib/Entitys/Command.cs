@@ -15,10 +15,25 @@ namespace TaskSimulatorLib.Entitys
      */
     public class Command
     {
+        public Command() { }
+
+        public Command(string command, KeyValuePair<string, object>[] paramList)
+        {
+            this.Command = command;
+
+            if (paramList != null)
+            {
+                foreach (KeyValuePair<string, object> kvp in paramList)
+                {
+                    Objects.Add(kvp.Key, kvp.Value);
+                }
+            }
+        }
+
         /// <summary>
         /// 要执行的指令
         /// </summary>
-        public string Cmd { get; set; }
+        public string Command { get; set; }
 
         private Dictionary<string, object> objects = new Dictionary<string, object>();
         /// <summary>

@@ -15,10 +15,28 @@ namespace TaskSimulatorLib.Entitys
      */
     public class CommandResult
     {
+        public CommandResult() { }
+
+        public CommandResult(string command, bool isok, string errorReason, object content, KeyValuePair<string, object>[] paramList)
+        {
+            this.Command = command;
+            this.IsOK = isok;
+            this.ErrorReason = errorReason;
+            this.Content = content;
+
+            if (paramList != null)
+            {
+                foreach (KeyValuePair<string, object> kvp in paramList)
+                {
+                    Objects.Add(kvp.Key, kvp.Value);
+                }
+            }
+        }
+
         /// <summary>
         /// 已执行的指令
         /// </summary>
-        public string Cmd { get; set; }
+        public string Command { get; set; }
 
         /// <summary>
         /// 是否成功
@@ -28,7 +46,12 @@ namespace TaskSimulatorLib.Entitys
         /// <summary>
         /// 失败原因
         /// </summary>
-        public string Reason { get; set; }
+        public string ErrorReason { get; set; }
+
+        /// <summary>
+        /// 内容
+        /// </summary>
+        public object Content { get; set; }
 
         private Dictionary<string, object> objects = new Dictionary<string, object>();
         /// <summary>
