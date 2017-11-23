@@ -11,15 +11,24 @@ namespace TaskSimulatorLib.Processors
     /// </summary>
     public class ProcessorQueueObject
     {
+        public ProcessorQueueObject() { }
+
+        public ProcessorQueueObject(RobotUser u, RobotTask t, Command c)
+        {
+            this.User = u;
+            this.Task = t;
+            this.Command = c;
+        }
+
         /// <summary>
         /// 所属任务
         /// </summary>
-        public Entitys.RobotTask Task { get; set; }
+        public RobotTask Task { get; set; }
 
         /// <summary>
         /// 要执行的指令参数
         /// </summary>
-        public Entitys.Command Command { get; set; }
+        public Command Command { get; set; }
 
         /// <summary>
         /// 所属设备用户

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TaskSimulatorLib.Entitys;
 using TaskSimulatorLib.Processors.Action;
 
 namespace TaskSimulatorLib.Extends.Base
@@ -16,11 +17,11 @@ namespace TaskSimulatorLib.Extends.Base
      */
     public abstract class BaseActionWorkerThread : IActionWorkerThread
     {
-        public string Cmd { get; set; }
+        public string SupportedActionCommand { get; set; }
 
-        public Entitys.RobotTask Task { get; set; }
+        public RobotTask Task { get; set; }
 
-        public Entitys.RobotUser User { get; set; }
+        public RobotUser User { get; set; }
 
         public abstract Entitys.CommandResult Process(Entitys.Command commandObj);
 

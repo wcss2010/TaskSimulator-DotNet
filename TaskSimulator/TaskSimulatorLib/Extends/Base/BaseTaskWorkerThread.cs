@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TaskSimulatorLib.Entitys;
 using TaskSimulatorLib.Processors.Task;
 
 namespace TaskSimulatorLib.Extends.Base
@@ -16,9 +17,9 @@ namespace TaskSimulatorLib.Extends.Base
      */
     public abstract class BaseTaskWorkerThread : ITaskWorkerThread
     {
-        public Entitys.RobotTask Task { get; set; }
+        public RobotTask Task { get; set; }
 
-        public Entitys.RobotUser User { get; set; }
+        public RobotUser User { get; set; }
 
         public abstract Entitys.CommandResult Process(Entitys.Command commandObj);
 
@@ -29,6 +30,6 @@ namespace TaskSimulatorLib.Extends.Base
 
         public object Tag { get; set; }
 
-        public WorkerThreadStateType WorkerThreadState { get; set; }
+        public virtual WorkerThreadStateType WorkerThreadState { get; set; }
     }
 }

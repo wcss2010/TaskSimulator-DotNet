@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TaskSimulatorLib.Entitys;
 using TaskSimulatorLib.Monitors;
 
 namespace TaskSimulatorLib.Extends.Base
@@ -16,7 +17,7 @@ namespace TaskSimulatorLib.Extends.Base
      */
     public abstract class BaseMonitor:IMonitor
     {
-        public Entitys.RobotUser User { get; set; }
+        public RobotUser User { get; set; }
 
         public abstract Entitys.CommandResult Process(Entitys.Command commandObj);
 

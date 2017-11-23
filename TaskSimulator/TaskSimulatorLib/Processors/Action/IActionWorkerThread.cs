@@ -19,12 +19,12 @@ namespace TaskSimulatorLib.Processors.Action
         /// <summary>
         /// 所支持的指令
         /// </summary>
-        string Cmd { get; set; }
+        string SupportedActionCommand { get; set; }
 
         /// <summary>
         /// 所属任务
         /// </summary>
-        Entitys.RobotTask Task { get; set; }
+        RobotTask Task { get; set; }
 
         /// <summary>
         /// 所属设备用户
