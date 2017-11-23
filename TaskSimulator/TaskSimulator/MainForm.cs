@@ -14,6 +14,7 @@ using TaskSimulatorLib;
 using TaskSimulatorLib.Entitys;
 using TaskSimulatorLib.Extends.Base;
 using TaskSimulatorLib.Processors;
+using TaskSimulatorLib.Processors.Task;
 
 namespace TaskSimulator
 {
@@ -24,8 +25,8 @@ namespace TaskSimulator
         /// </summary>
         private GMapOverlay objects = null;
         public static SimulatorObject so = new SimulatorObject();
-        private DeviceUser firstDeviceUser = new DeviceUser();
-        private Task moveTask = new Task();
+        private RobotUser firstDeviceUser = new RobotUser();
+        private RobotTask moveTask = new RobotTask();
         private ShipMoveCommand shipMoveCmd = null;
         private GpsMapMonitor gpsMonitor = new GpsMapMonitor();
         private MoveTaskWorkerThread taskWorkerThread = new MoveTaskWorkerThread();
@@ -47,15 +48,13 @@ namespace TaskSimulator
             firstDeviceUser.UserName = "第一艘船";
 
             moveTask.TaskCode = "Move";
-            moveTask.TaskState = StateType.Ready;
-            moveTask.TaskType = TaskType.NowTask;
-            moveTask.TaskPriority = 1;
+            moveTask.TaskName = "移动任务";
 
             shipMoveCmd = new ShipMoveCommand(objects);
             shipMoveCmd.User = firstDeviceUser;
             shipMoveCmd.Task = moveTask;
 
-            moveTask.CommandWorkerDict.TryAdd(shipMoveCmd.Cmd, shipMoveCmd);
+            firstDeviceUser.SupportedAction.TryAdd(shipMoveCmd.SupportedActionCommand, shipMoveCmd);
 
             firstDeviceUser.SupportedTask.TryAdd(moveTask.TaskCode, moveTask);
 
@@ -123,14 +122,7 @@ namespace TaskSimulator
 
             taskWorkerThread.InitQueues();
 
-            ProcessorQueueObject pqo = new ProcessorQueueObject();
-            pqo.User = firstDeviceUser;
-            pqo.Task = moveTask;
-
-            pqo.Command = new Command();
-            pqo.Command.Cmd = "AA";
-
-            so.TaskProcessor.Queues.Enqueue(pqo);
+            so.TaskProcessor.Queues.Enqueue(new ProcessorQueueObject(firstDeviceUser, moveTask, new Command("AA", null)));
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -139,23 +131,22 @@ namespace TaskSimulator
         }
     }
 
-    public class ShipMoveCommand : BaseCommandWorkerThread
+    public class ShipMoveCommand : BaseActionWorkerThread
     {
         GMapOverlay objects = null;
 
         public ShipMoveCommand(GMapOverlay objects)
         {
-            this.Cmd = "ShipMove";
+            this.SupportedActionCommand = "ShipMove";
             this.objects = objects;
         }
 
         public override TaskSimulatorLib.Entitys.CommandResult Process(TaskSimulatorLib.Entitys.Command commandObj)
         {
             TaskSimulatorLib.Entitys.CommandResult cr = new TaskSimulatorLib.Entitys.CommandResult();
-            cr.Cmd = this.Cmd;
+            cr.CommandText = commandObj.CommandText;
 
-
-            if (commandObj.Cmd != null && commandObj.Cmd.Equals(this.Cmd) && commandObj.Objects.ContainsKey("lat") && commandObj.Objects.ContainsKey("lng"))
+            if (commandObj.CommandText != null && commandObj.CommandText.Equals(this.SupportedActionCommand) && commandObj.Objects.ContainsKey("lat") && commandObj.Objects.ContainsKey("lng"))
             {
                 try
                 {
@@ -172,7 +163,7 @@ namespace TaskSimulator
                 catch (Exception ex)
                 {
                     cr.IsOK = false;
-                    cr.Reason = ex.ToString();
+                    cr.ErrorReason = ex.ToString();
                 }
             }
             else
@@ -224,42 +215,33 @@ namespace TaskSimulator
 
         protected Command GetCommand(double lat, double lng)
         {
-            Command cmds = new Command();
-            cmds.Cmd = "ShipMove";
-            cmds.Objects.Add("lat", lat);
-            cmds.Objects.Add("lng", lng);
-
-            return cmds;
+            return new Command("ShipMove",new KeyValuePair<string,object>[]{ new KeyValuePair<string,object>("lat", lat), new KeyValuePair<string,object>("lng", lng)});
         }
 
         public override CommandResult Process(Command commandObj)
         {
             CommandResult cr = new CommandResult();
-            cr.Cmd = commandObj.Cmd;
+            cr.CommandText = commandObj.CommandText;
             cr.IsOK = true;
 
-            this.Task.TaskState = StateType.Running;
+            this.WorkerThreadState = WorkerThreadStateType.Running;
 
-            if (commandObj.Cmd.Equals("AA"))
+            if (commandObj.CommandText.Equals("AA"))
             {
                 if ((DateTime.Now - lastSendTime).TotalSeconds >= 2)
                 {
                     lastSendTime = DateTime.Now;
 
-                    TaskSimulatorLib.Processors.ProcessorQueueObject pqo = new TaskSimulatorLib.Processors.ProcessorQueueObject();
-                    pqo.User = User;
-                    pqo.Task = Task;
-                    pqo.Command = cmdList.Dequeue();
-                    MainForm.so.CommandProcessor.Queues.Enqueue(pqo);
+                    MainForm.so.ActionProcessor.Queues.Enqueue(new ProcessorQueueObject(User, Task, cmdList.Dequeue()));
                 }
             }
 
             if (cmdList.Count <= 0)
             {
-                this.Task.TaskState = StateType.Ended;
+                this.WorkerThreadState = WorkerThreadStateType.Ended;
             }
 
-            return cr;
+            return new CommandResult(commandObj.CommandText, true, string.Empty, null, null);
         }
     }
 }
