@@ -434,23 +434,23 @@ namespace TaskSimulator
             //}
             //RobotFactory.StartMoveShipWithRect("test9", RobotFactory.StepWithSecond * 12);
 
-            lat = ((GPSMonitor)RobotFactory.Simulator.UserDict["test10"].SupportedMonitor[RobotFactory.Monitor_GPS]).Lat;
-            lng = ((GPSMonitor)RobotFactory.Simulator.UserDict["test10"].SupportedMonitor[RobotFactory.Monitor_GPS]).Lng;
-            posList = new List<double[]>();
-            if (lng > 135.4603)
-            {
-                for (int kkk = 0; kkk < 15; kkk++)
-                {
-                    posList.Add(new double[] { lat, lng - (RobotFactory.StepWithSecond * kkk) });
-                }
-            }
-            else
-            {
-                for (int kkk = 0; kkk < 15; kkk++)
-                {
-                    posList.Add(new double[] { lat, lng + (RobotFactory.StepWithSecond * kkk) });
-                }
-            }
+            //lat = ((GPSMonitor)RobotFactory.Simulator.UserDict["test10"].SupportedMonitor[RobotFactory.Monitor_GPS]).Lat;
+            //lng = ((GPSMonitor)RobotFactory.Simulator.UserDict["test10"].SupportedMonitor[RobotFactory.Monitor_GPS]).Lng;
+            //posList = new List<double[]>();
+            //if (lng > 135.4603)
+            //{
+            //    for (int kkk = 0; kkk < 15; kkk++)
+            //    {
+            //        posList.Add(new double[] { lat, lng - (RobotFactory.StepWithSecond * kkk) });
+            //    }
+            //}
+            //else
+            //{
+            //    for (int kkk = 0; kkk < 15; kkk++)
+            //    {
+            //        posList.Add(new double[] { lat, lng + (RobotFactory.StepWithSecond * kkk) });
+            //    }
+            //}
             //RobotFactory.StartMoveShipWithPosList("test10", posList);
         }
 
