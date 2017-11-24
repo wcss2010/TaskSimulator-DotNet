@@ -78,7 +78,7 @@ namespace TaskSimulator
             //RobotFactory.CreateRobot("test10", "测试无人船10", 30.2120, 135.4603, virtualCameras.ToArray());
 
             // create client instance 
-            mqttClient = new MqttClient(IPAddress.Parse("ssl://boat.mqtt.iot.bj.baidubce.com:1884"));
+            mqttClient = new MqttClient("boat.mqtt.iot.bj.baidubce.com");
 
             // register to message received 
             mqttClient.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
@@ -87,7 +87,7 @@ namespace TaskSimulator
             mqttClient.Connect(Guid.NewGuid().ToString(), "boat/ground_station", "8yLSsRabuknL6YI/vRPP874+QMbPMiho6Tir21W9zo4=");
 
             // subscribe to the topic "/shore2boat" with QoS 1 
-            mqttClient.Subscribe(new string[] { "/shore2boat" }, new byte[] { MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE });
+            mqttClient.Subscribe(new string[] { "/shore2boat" }, new byte[] { MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE });
 
         }
 
@@ -95,9 +95,18 @@ namespace TaskSimulator
         /// SendDataToServer
         /// </summary>
         /// <param name="strValue"></param>
-        void SendTo(string strValue)
+        void SendMessageTo(string strValue)
         {
-            mqttClient.Publish("/boat2shore", Encoding.UTF8.GetBytes(strValue), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
+            mqttClient.Publish("/boat2shore", Encoding.UTF8.GetBytes(strValue), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+        }
+
+        /// <summary>
+        /// SendPicToServer
+        /// </summary>
+        /// <param name="strValue"></param>
+        void SendPictureTo(string strValue)
+        {
+            mqttClient.Publish("/picture2shore", Encoding.UTF8.GetBytes(strValue), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
         }
 
         void client_MqttMsgPublishReceived(object sender, uPLibrary.Networking.M2Mqtt.Messages.MqttMsgPublishEventArgs e)
@@ -110,7 +119,7 @@ namespace TaskSimulator
                     if (string.IsNullOrEmpty(remoteCommand))
                     {
                         //Reply OK
-                        SendTo("ACK");
+                        SendMessageTo("ACK");
 
                         if (remoteCommand.ToUpper().StartsWith("GET PIC"))
                         {
@@ -135,7 +144,7 @@ namespace TaskSimulator
                         else if (remoteCommand.ToUpper().StartsWith("GET BOAT SPEED"))
                         {
                             //Get SPEED
-                            SendTo("BOAT SPEED=3.2");
+                            SendMessageTo("BOAT SPEED=3.2");
                         }
                         else if (remoteCommand.ToUpper().StartsWith("SET BOAT UPDATE INTERVAL"))
                         {
@@ -235,11 +244,11 @@ namespace TaskSimulator
                     string bufferString = Encoding.UTF8.GetString(buffer);
 
                     //SendTo
-                    SendTo("PIC,BMP," + fileName + "," + (kkk + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + bufferString);
+                    SendPictureTo("PIC,BMP," + fileName + "," + (kkk + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + bufferString);
                 }
 
                 //End Send
-                SendTo("PIC,BMP," + fileName + "," + (PicPageSize + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + "=======================");
+                SendPictureTo("PIC,BMP," + fileName + "," + (PicPageSize + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + "=======================");
             }
         }
 
@@ -254,7 +263,7 @@ namespace TaskSimulator
             string latString = Math.Abs(lat).ToString() + (lat > 0 ? "N" : (lat == 0 ? string.Empty : "S"));
             string lngString = Math.Abs(lng).ToString() + (lng > 0 ? "E" : (lng == 0 ? string.Empty : "W"));
 
-            SendTo("BOAT POS=" + latString + "," + lngString);
+            SendMessageTo("BOAT POS=" + latString + "," + lngString);
         }
 
         void RobotFactory_OnShipMoveEvent(object sender, UIActionEventArgs args)
@@ -343,7 +352,7 @@ namespace TaskSimulator
 
         void TaskProcessor_OnTaskCompleteEvent(object sender, TaskSimulatorLib.Processors.Task.TaskCompleteArgs args)
         {
-            SendTo("NOTICE=DESTINATION ARRIVED");
+            SendMessageTo("NOTICE=DESTINATION ARRIVED");
 
             if (IsHandleCreated)
             {
