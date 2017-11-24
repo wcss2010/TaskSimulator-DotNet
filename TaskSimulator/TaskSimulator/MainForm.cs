@@ -63,12 +63,12 @@ namespace TaskSimulator
             RobotFactory.VirtualCameraImageWidth = 400;
             RobotFactory.VirtualCameraImageFont = new Font("宋体", 18);
 
-            RobotFactory.CreateRobot("test1", "测试无人船1", 16.2120, 128.4603, virtualCameras.ToArray());
+            RobotFactory.CreateRobot("test1", "测试无人船1", 21.2120, 133.4603, virtualCameras.ToArray());
             //RobotFactory.CreateRobot("test2", "测试无人船2", 16.2120, 133.4603, virtualCameras.ToArray());
             //RobotFactory.CreateRobot("test3", "测试无人船3", 16.2120, 138.4603, virtualCameras.ToArray());
 
             //RobotFactory.CreateRobot("test4", "测试无人船4", 21.2120, 128.4603, virtualCameras.ToArray());
-            //RobotFactory.CreateRobot("test5", "测试无人船5", 21.2120, 133.4603, virtualCameras.ToArray());
+            //RobotFactory.CreateRobot("test5", "测试无人船5", 16.2120, 128.4603, virtualCameras.ToArray());
             //RobotFactory.CreateRobot("test6", "测试无人船6", 21.2120, 138.4603, virtualCameras.ToArray());
 
             //RobotFactory.CreateRobot("test7", "测试无人船7", 26.2120, 129.4603, virtualCameras.ToArray());
