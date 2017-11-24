@@ -146,8 +146,17 @@ namespace TaskSimulator
 
             if (b1 != null)
             {
+                //Write BMP To Stream
                 MemoryStream ms = new MemoryStream();
                 b1.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+                ms.Position = 0;
+
+                //Convert To Base64
+                byte[] total = new byte[ms.Length];
+                ms.Read(total, 0, total.Length);
+                ms = new MemoryStream();
+                total = Encoding.UTF8.GetBytes(Convert.ToBase64String(total));
+                ms.Write(total, 0, total.Length);
                 ms.Position = 0;
 
                 //Count PageSize
@@ -183,8 +192,8 @@ namespace TaskSimulator
                         ms.Read(buffer, 0, (int)(ms.Length - ms.Position));
                     }
 
-                    //Convert To Base64
-                    string bufferString = Convert.ToBase64String(buffer);
+                    //Convert To String
+                    string bufferString = Encoding.UTF8.GetString(buffer);
 
                     //SendTo
                     SendTo("PIC,BMP," + fileName + "," + (kkk + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + bufferString);
