@@ -14,13 +14,13 @@ using TaskSimulatorLib;
 using TaskSimulatorLib.Entitys;
 using TaskSimulatorLib.Extends.Base;
 using TaskSimulatorLib.Processors;
-using TaskSimulator.RobotTask;
+using TaskSimulator.RobotTaskFactory;
 
 namespace TaskSimulator
 {
     public partial class MainForm : Form
     {
-        Dictionary<DeviceUser, GMarkerGoogle> MarkerDict = new Dictionary<DeviceUser, GMarkerGoogle>();
+        Dictionary<RobotUser, GMarkerGoogle> MarkerDict = new Dictionary<RobotUser, GMarkerGoogle>();
         /// <summary>
         /// 地图上的图层，用户显示船只
         /// </summary>
@@ -250,7 +250,7 @@ namespace TaskSimulator
 
         private void mapControl_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {
-            DeviceUser du = ((Task)item.Tag).TaskWorkerThread.User;
+            RobotUser du = ((RobotTask)item.Tag).TaskWorkerThread.User;
 
             Bitmap b1 = (Bitmap)du.SupportedMonitor["C1"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Objects[CameraMonitor.Property_BMP];
             Bitmap b2 = (Bitmap)du.SupportedMonitor["C2"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Objects[CameraMonitor.Property_BMP];
