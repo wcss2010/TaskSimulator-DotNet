@@ -15,6 +15,9 @@ using TaskSimulatorLib.Entitys;
 using TaskSimulatorLib.Extends.Base;
 using TaskSimulatorLib.Processors;
 using TaskSimulator.RobotTaskFactory;
+using uPLibrary.Networking.M2Mqtt;
+using System.Net;
+using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace TaskSimulator
 {
@@ -37,7 +40,7 @@ namespace TaskSimulator
         /// <summary>
         /// 初始化用户信息
         /// </summary>
-        private void InitUsers()
+        private void InitData()
         {
             RobotFactory.OnUiActionEvent += new UIActionDelegate(RobotFactory_OnShipMoveEvent);
 
@@ -52,18 +55,77 @@ namespace TaskSimulator
             RobotFactory.VirtualCameraImageFont = new Font("宋体", 18);
 
             RobotFactory.CreateRobot("test1", "测试无人船1", 16.2120, 128.4603, virtualCameras.ToArray());
-            RobotFactory.CreateRobot("test2", "测试无人船2", 16.2120, 133.4603, virtualCameras.ToArray());
-            RobotFactory.CreateRobot("test3", "测试无人船3", 16.2120, 138.4603, virtualCameras.ToArray());
+            //RobotFactory.CreateRobot("test2", "测试无人船2", 16.2120, 133.4603, virtualCameras.ToArray());
+            //RobotFactory.CreateRobot("test3", "测试无人船3", 16.2120, 138.4603, virtualCameras.ToArray());
 
-            RobotFactory.CreateRobot("test4", "测试无人船4", 21.2120, 128.4603, virtualCameras.ToArray());
-            RobotFactory.CreateRobot("test5", "测试无人船5", 21.2120, 133.4603, virtualCameras.ToArray());
-            RobotFactory.CreateRobot("test6", "测试无人船6", 21.2120, 138.4603, virtualCameras.ToArray());
+            //RobotFactory.CreateRobot("test4", "测试无人船4", 21.2120, 128.4603, virtualCameras.ToArray());
+            //RobotFactory.CreateRobot("test5", "测试无人船5", 21.2120, 133.4603, virtualCameras.ToArray());
+            //RobotFactory.CreateRobot("test6", "测试无人船6", 21.2120, 138.4603, virtualCameras.ToArray());
 
-            RobotFactory.CreateRobot("test7", "测试无人船7", 26.2120, 129.4603, virtualCameras.ToArray());
-            RobotFactory.CreateRobot("test8", "测试无人船8", 26.2120, 134.4603, virtualCameras.ToArray());
-            RobotFactory.CreateRobot("test9", "测试无人船9", 26.2120, 139.4603, virtualCameras.ToArray());
+            //RobotFactory.CreateRobot("test7", "测试无人船7", 26.2120, 129.4603, virtualCameras.ToArray());
+            //RobotFactory.CreateRobot("test8", "测试无人船8", 26.2120, 134.4603, virtualCameras.ToArray());
+            //RobotFactory.CreateRobot("test9", "测试无人船9", 26.2120, 139.4603, virtualCameras.ToArray());
 
-            RobotFactory.CreateRobot("test10", "测试无人船10", 30.2120, 135.4603, virtualCameras.ToArray());
+            //RobotFactory.CreateRobot("test10", "测试无人船10", 30.2120, 135.4603, virtualCameras.ToArray());
+
+            // create client instance 
+            mqttClient = new MqttClient(IPAddress.Parse("ssl://boat.mqtt.iot.bj.baidubce.com:1884"));
+
+            // register to message received 
+            mqttClient.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
+
+            //connect to server
+            mqttClient.Connect(Guid.NewGuid().ToString(), "boat/ground_station", "8yLSsRabuknL6YI/vRPP874+QMbPMiho6Tir21W9zo4=");
+
+            // subscribe to the topic "/shore2boat" with QoS 1 
+            mqttClient.Subscribe(new string[] { "/shore2boat" }, new byte[] { MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE }); 
+ 
+        }
+
+        /// <summary>
+        /// SendDataToServer
+        /// </summary>
+        /// <param name="strValue"></param>
+        void SendTo(string strValue)
+        {
+            mqttClient.Publish("/boat2shore", Encoding.UTF8.GetBytes(strValue), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
+        }
+
+        void client_MqttMsgPublishReceived(object sender, uPLibrary.Networking.M2Mqtt.Messages.MqttMsgPublishEventArgs e)
+        {
+            try
+            {
+                if (e.Message != null)
+                {
+                    string remoteCommand = Encoding.UTF8.GetString(e.Message);
+                    if (string.IsNullOrEmpty(remoteCommand))
+                    {
+                        switch (remoteCommand.ToUpper())
+                        {
+                            case "GET PIC":
+                                //Picture
+
+                                break;
+                            case "GET BOAT POS":
+                                //Get GPS
+                                double lat =((GPSMonitor)RobotFactory.Simulator.UserDict["test1"].SupportedMonitor[RobotFactory.Monitor_GPS]).Lat;
+                                double lng = ((GPSMonitor)RobotFactory.Simulator.UserDict["test1"].SupportedMonitor[RobotFactory.Monitor_GPS]).Lng;
+
+                                //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
+                                SendTo("BOAT POS=" + lat + "," + lng);
+                                break;
+                            case "GET BOAT SPEED":
+                                //Get SPEED
+
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SimulatorObject.logger.Error(ex.ToString());
+            }
         }
 
         void RobotFactory_OnShipMoveEvent(object sender, UIActionEventArgs args)
@@ -138,7 +200,7 @@ namespace TaskSimulator
             mapControl.Overlays.Add(this.objects);
 
             //初始化用户信息
-            InitUsers();
+            InitData();
 
             RobotFactory.Simulator.TaskProcessor.OnTaskCompleteEvent += new TaskSimulatorLib.Processors.Task.TaskCompleteDelegate(TaskProcessor_OnTaskCompleteEvent);
         }
@@ -172,56 +234,56 @@ namespace TaskSimulator
             //{
             //    posList.Add(new double[] { lat + 1, lng - (RobotFactory.StepWithSecond * kkk) });
             //}
-            RobotFactory.StartMoveShipWithRound("test2", RobotFactory.StepWithSecond * 12);
+            //RobotFactory.StartMoveShipWithRound("test2", RobotFactory.StepWithSecond * 12);
 
             //posList = new List<double[]>();
             //for (int kkk = 0; kkk < 15; kkk++)
             //{
             //    posList.Add(new double[] { lat + 2, lng + (RobotFactory.StepWithSecond * kkk) });
             //}
-            RobotFactory.StartMoveShipWithRect("test3", RobotFactory.StepWithSecond * 12);
+            //RobotFactory.StartMoveShipWithRect("test3", RobotFactory.StepWithSecond * 12);
 
             //posList = new List<double[]>();
             //for (int kkk = 0; kkk < 15; kkk++)
             //{
             //    posList.Add(new double[] { lat + 3, lng - (RobotFactory.StepWithSecond * kkk) });
             //}
-            RobotFactory.StartMoveShipWithRound("test4", RobotFactory.StepWithSecond * 12);
+            //RobotFactory.StartMoveShipWithRound("test4", RobotFactory.StepWithSecond * 12);
 
             //posList = new List<double[]>();
             //for (int kkk = 0; kkk < 15; kkk++)
             //{
             //    posList.Add(new double[] { lat + 4, lng + (RobotFactory.StepWithSecond * kkk) });
             //}
-            RobotFactory.StartMoveShipWithRect("test5", RobotFactory.StepWithSecond * 12);
+            //RobotFactory.StartMoveShipWithRect("test5", RobotFactory.StepWithSecond * 12);
 
             //posList = new List<double[]>();
             //for (int kkk = 0; kkk < 15; kkk++)
             //{
             //    posList.Add(new double[] { lat + 4, lng + (RobotFactory.StepWithSecond * kkk) });
             //}
-            RobotFactory.StartMoveShipWithRound("test6", RobotFactory.StepWithSecond * 12);
+            //RobotFactory.StartMoveShipWithRound("test6", RobotFactory.StepWithSecond * 12);
 
             //posList = new List<double[]>();
             //for (int kkk = 0; kkk < 15; kkk++)
             //{
             //    posList.Add(new double[] { lat + 4, lng + (RobotFactory.StepWithSecond * kkk) });
             //}
-            RobotFactory.StartMoveShipWithRect("test7", RobotFactory.StepWithSecond * 12);
+            //RobotFactory.StartMoveShipWithRect("test7", RobotFactory.StepWithSecond * 12);
 
             //posList = new List<double[]>();
             //for (int kkk = 0; kkk < 15; kkk++)
             //{
             //    posList.Add(new double[] { lat + 4, lng + (RobotFactory.StepWithSecond * kkk) });
             //}
-            RobotFactory.StartMoveShipWithRound("test8", RobotFactory.StepWithSecond * 12);
+            //RobotFactory.StartMoveShipWithRound("test8", RobotFactory.StepWithSecond * 12);
 
             //posList = new List<double[]>();
             //for (int kkk = 0; kkk < 15; kkk++)
             //{
             //    posList.Add(new double[] { lat + 4, lng + (RobotFactory.StepWithSecond * kkk) });
             //}
-            RobotFactory.StartMoveShipWithRect("test9", RobotFactory.StepWithSecond * 12);
+            //RobotFactory.StartMoveShipWithRect("test9", RobotFactory.StepWithSecond * 12);
 
             lat = ((GPSMonitor)RobotFactory.Simulator.UserDict["test10"].SupportedMonitor[RobotFactory.Monitor_GPS]).Lat;
             lng = ((GPSMonitor)RobotFactory.Simulator.UserDict["test10"].SupportedMonitor[RobotFactory.Monitor_GPS]).Lng;
@@ -240,7 +302,7 @@ namespace TaskSimulator
                     posList.Add(new double[] { lat, lng + (RobotFactory.StepWithSecond * kkk) });
                 }
             }
-            RobotFactory.StartMoveShipWithPosList("test10", posList);
+            //RobotFactory.StartMoveShipWithPosList("test10", posList);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -262,5 +324,7 @@ namespace TaskSimulator
             pbCamera3.Image = b3;
             pbCamera4.Image = b4;
         }
+
+        public MqttClient mqttClient { get; set; }
     }
 }
