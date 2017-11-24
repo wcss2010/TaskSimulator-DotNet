@@ -110,6 +110,8 @@ namespace TaskSimulator
                                 //PIC,JPEG,IMG_9987,3,5,12776，图片数据
                                 //传输图片，图片格式JPEG，文件名为IMG_9987,当前为第3包，总共5包，本包图片数据长度12776字节，图片数据
 
+                                SendPictureTo(b1);
+
                                 break;
                             case "GET BOAT POS":
                                 //Get GPS
@@ -130,6 +132,66 @@ namespace TaskSimulator
             catch (Exception ex)
             {
                 SimulatorObject.logger.Error(ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Send Picture
+        /// </summary>
+        /// <param name="b1"></param>
+        private void SendPictureTo(Bitmap b1)
+        {
+            //PIC,JPEG,IMG_9987,3,5,12776，图片数据
+            //传输图片，图片格式JPEG，文件名为IMG_9987,当前为第3包，总共5包，本包图片数据长度12776字节，图片数据
+
+            if (b1 != null)
+            {
+                MemoryStream ms = new MemoryStream();
+                b1.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+                ms.Position = 0;
+
+                //Count PageSize
+                int MaxPicUnitSize = 28 * 1000;
+                int PicPageSize = 0;
+                if (ms.Length > MaxPicUnitSize)
+                {
+                    //Need Split
+                    PicPageSize = (int)ms.Length / MaxPicUnitSize;
+                    if (ms.Length % MaxPicUnitSize > 0)
+                    {
+                        PicPageSize++;
+                    }
+                }
+                else
+                {
+                    //No Split
+                    PicPageSize = 1;
+                }
+
+                //Send Pic Page
+                string fileName = "BMP_" + Guid.NewGuid().ToString();
+                for (int kkk = 0; kkk < PicPageSize; kkk++)
+                {
+                    //Read Pic Unit
+                    byte[] buffer = new byte[MaxPicUnitSize];
+                    if (ms.Length - ms.Position >= buffer.Length)
+                    {
+                        ms.Read(buffer, 0, buffer.Length);
+                    }
+                    else
+                    {
+                        ms.Read(buffer, 0, (int)(ms.Length - ms.Position));
+                    }
+
+                    //Convert To Base64
+                    string bufferString = Convert.ToBase64String(buffer);
+
+                    //SendTo
+                    SendTo("PIC,BMP," + fileName + "," + (kkk + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + bufferString);
+                }
+                
+                //End Send
+                SendTo("PIC,BMP," + fileName + "," + (PicPageSize + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + "=======================");
             }
         }
 
