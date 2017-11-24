@@ -23,6 +23,15 @@ namespace TaskSimulator
 {
     public partial class MainForm : Form
     {
+        /// <summary>
+        /// Enabled Send GPS Position
+        /// </summary>
+        private bool EnabledAutoSendBoardPosition = false;
+        /// <summary>
+        /// Enabled Send Pic
+        /// </summary>
+        private bool EnabledAutoSendBoardPic = false;
+
         Dictionary<RobotUser, GMarkerGoogle> MarkerDict = new Dictionary<RobotUser, GMarkerGoogle>();
         /// <summary>
         /// 地图上的图层，用户显示船只
@@ -78,8 +87,8 @@ namespace TaskSimulator
             mqttClient.Connect(Guid.NewGuid().ToString(), "boat/ground_station", "8yLSsRabuknL6YI/vRPP874+QMbPMiho6Tir21W9zo4=");
 
             // subscribe to the topic "/shore2boat" with QoS 1 
-            mqttClient.Subscribe(new string[] { "/shore2boat" }, new byte[] { MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE }); 
- 
+            mqttClient.Subscribe(new string[] { "/shore2boat" }, new byte[] { MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE });
+
         }
 
         /// <summary>
@@ -100,31 +109,61 @@ namespace TaskSimulator
                     string remoteCommand = Encoding.UTF8.GetString(e.Message);
                     if (string.IsNullOrEmpty(remoteCommand))
                     {
-                        switch (remoteCommand.ToUpper())
+                        //Reply OK
+                        SendTo("ACK");
+
+                        if (remoteCommand.ToUpper().StartsWith("GET PIC"))
                         {
-                            case "GET PIC":
-                                //Picture
-                                RobotUser du = RobotFactory.Simulator.UserDict["test1"];
-                                Bitmap b1 = (Bitmap)du.SupportedMonitor["C1"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
-                                
-                                //PIC,JPEG,IMG_9987,3,5,12776，图片数据
-                                //传输图片，图片格式JPEG，文件名为IMG_9987,当前为第3包，总共5包，本包图片数据长度12776字节，图片数据
+                            //Picture
+                            RobotUser du = RobotFactory.Simulator.UserDict["test1"];
+                            Bitmap b1 = (Bitmap)du.SupportedMonitor["C1"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
 
-                                SendPictureTo(b1);
+                            //PIC,JPEG,IMG_9987,3,5,12776，图片数据
+                            //传输图片，图片格式JPEG，文件名为IMG_9987,当前为第3包，总共5包，本包图片数据长度12776字节，图片数据
 
-                                break;
-                            case "GET BOAT POS":
-                                //Get GPS
-                                double lat =((GPSMonitor)RobotFactory.Simulator.UserDict["test1"].SupportedMonitor[RobotFactory.Monitor_GPS]).Lat;
-                                double lng = ((GPSMonitor)RobotFactory.Simulator.UserDict["test1"].SupportedMonitor[RobotFactory.Monitor_GPS]).Lng;
+                            SendPictureTo(b1);
+                        }
+                        else if (remoteCommand.ToUpper().StartsWith("GET BOAT POS"))
+                        {
+                            //Get GPS
+                            double lat = ((GPSMonitor)RobotFactory.Simulator.UserDict["test1"].SupportedMonitor[RobotFactory.Monitor_GPS]).Lat;
+                            double lng = ((GPSMonitor)RobotFactory.Simulator.UserDict["test1"].SupportedMonitor[RobotFactory.Monitor_GPS]).Lng;
 
-                                //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
-                                SendTo("BOAT POS=" + lat + "," + lng);
-                                break;
-                            case "GET BOAT SPEED":
-                                //Get SPEED
-                                SendTo("BOAT SPEED=3.2");
-                                break;
+                            //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
+                            SendTo("BOAT POS=" + lat + "," + lng);
+                        }
+                        else if (remoteCommand.ToUpper().StartsWith("GET BOAT SPEED"))
+                        {
+                            //Get SPEED
+                            SendTo("BOAT SPEED=3.2");
+                        }
+                        else if (remoteCommand.ToUpper().StartsWith("SET BOAT UPDATE INTERVAL"))
+                        {
+                            //SET BOAT UPDATE INTERVAL
+                            if (remoteCommand.ToUpper().EndsWith("=0"))
+                            {
+                                //close
+                                EnabledAutoSendBoardPosition = false;
+                            }
+                            else
+                            {
+                                //open
+                                EnabledAutoSendBoardPosition = true;
+                            }
+                        }
+                        else if (remoteCommand.ToUpper().StartsWith("SET PIC UPDATE INTERVAL"))
+                        {
+                            //SET PIC UPDATE INTERVAL
+                            if (remoteCommand.ToUpper().EndsWith("=0"))
+                            {
+                                //close
+                                EnabledAutoSendBoardPic = false;
+                            }
+                            else
+                            {
+                                //open
+                                EnabledAutoSendBoardPic = true;
+                            }
                         }
                     }
                 }
@@ -198,7 +237,7 @@ namespace TaskSimulator
                     //SendTo
                     SendTo("PIC,BMP," + fileName + "," + (kkk + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + bufferString);
                 }
-                
+
                 //End Send
                 SendTo("PIC,BMP," + fileName + "," + (PicPageSize + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + "=======================");
             }
@@ -257,10 +296,10 @@ namespace TaskSimulator
             //检查是否需要导入地图到缓存
             //if (!File.Exists(Path.Combine(Application.StartupPath, @"GMapCache\TileDBv5\en\Data.gmdb")))
             //{
-                if (mapControl.Manager.ImportFromGMDB(Path.Combine(Application.StartupPath, "SeaMap201711192033.gmdb")))
-                {
-                    mapControl.Manager.Mode = GMap.NET.AccessMode.CacheOnly;
-                }
+            if (mapControl.Manager.ImportFromGMDB(Path.Combine(Application.StartupPath, "SeaMap201711192033.gmdb")))
+            {
+                mapControl.Manager.Mode = GMap.NET.AccessMode.CacheOnly;
+            }
             //}
 
             try
@@ -295,7 +334,7 @@ namespace TaskSimulator
         private void btnAddShip_Click(object sender, EventArgs e)
         {
             List<double[]> posList = new List<double[]>();
-            double lat =26.2120;
+            double lat = 26.2120;
             double lng = 127.4603;
 
             //posList = new List<double[]>();
@@ -303,7 +342,7 @@ namespace TaskSimulator
             //{
             //    posList.Add(new double[] { lat, lng - (RobotFactory.StepWithSecond * kkk) });
             //}
-            RobotFactory.StartMoveShipWithRect("test1", RobotFactory.StepWithSecond *  12);
+            RobotFactory.StartMoveShipWithRect("test1", RobotFactory.StepWithSecond * 12);
 
             //posList = new List<double[]>();
             //for (int kkk = 0; kkk < 15; kkk++)
