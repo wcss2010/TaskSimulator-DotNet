@@ -14,29 +14,24 @@ using TaskSimulatorLib;
 using TaskSimulatorLib.Entitys;
 using TaskSimulatorLib.Extends.Base;
 using TaskSimulatorLib.Processors;
-using TaskSimulatorLib.Processors.Task;
+using TaskSimulator.RobotTask;
 
 namespace TaskSimulator
 {
     public partial class MainForm : Form
     {
+        Dictionary<DeviceUser, GMarkerGoogle> MarkerDict = new Dictionary<DeviceUser, GMarkerGoogle>();
         /// <summary>
         /// 地图上的图层，用户显示船只
         /// </summary>
         private GMapOverlay objects = null;
-        public static SimulatorObject so = new SimulatorObject();
-        private RobotUser firstDeviceUser = new RobotUser();
-        private RobotTask moveTask = new RobotTask();
-        private ShipMoveCommand shipMoveCmd = null;
-        private GpsMapMonitor gpsMonitor = new GpsMapMonitor();
-        private MoveTaskWorkerThread taskWorkerThread = new MoveTaskWorkerThread();
 
         public MainForm()
         {
             InitializeComponent();
 
             //开启任务模拟器
-            so.Start();
+            RobotFactory.Simulator.Start();
         }
 
         /// <summary>
@@ -44,33 +39,70 @@ namespace TaskSimulator
         /// </summary>
         private void InitUsers()
         {
-            firstDeviceUser.UserCode = "FirstShip";
-            firstDeviceUser.UserName = "第一艘船";
+            RobotFactory.OnUiActionEvent += new UIActionDelegate(RobotFactory_OnShipMoveEvent);
 
-            moveTask.TaskCode = "Move";
-            moveTask.TaskName = "移动任务";
+            List<KeyValuePair<string, string>> virtualCameras = new List<KeyValuePair<string, string>>();
+            virtualCameras.Add(new KeyValuePair<string, string>("C1", "1号前视摄像头"));
+            virtualCameras.Add(new KeyValuePair<string, string>("C2", "2号后视摄像头"));
+            virtualCameras.Add(new KeyValuePair<string, string>("C3", "3号左侧摄像头"));
+            virtualCameras.Add(new KeyValuePair<string, string>("C4", "4号右侧摄像头"));
 
-            shipMoveCmd = new ShipMoveCommand(objects);
-            shipMoveCmd.User = firstDeviceUser;
-            shipMoveCmd.Task = moveTask;
+            RobotFactory.VirtualCameraImageHeight = 160;
+            RobotFactory.VirtualCameraImageWidth = 400;
+            RobotFactory.VirtualCameraImageFont = new Font("宋体", 18);
 
-            firstDeviceUser.SupportedAction.TryAdd(shipMoveCmd.SupportedActionCommand, shipMoveCmd);
+            RobotFactory.CreateRobot("test1", "测试无人船1", 16.2120, 128.4603, virtualCameras.ToArray());
+            RobotFactory.CreateRobot("test2", "测试无人船2", 16.2120, 133.4603, virtualCameras.ToArray());
+            RobotFactory.CreateRobot("test3", "测试无人船3", 16.2120, 138.4603, virtualCameras.ToArray());
 
-            firstDeviceUser.SupportedTask.TryAdd(moveTask.TaskCode, moveTask);
+            RobotFactory.CreateRobot("test4", "测试无人船4", 21.2120, 128.4603, virtualCameras.ToArray());
+            RobotFactory.CreateRobot("test5", "测试无人船5", 21.2120, 133.4603, virtualCameras.ToArray());
+            RobotFactory.CreateRobot("test6", "测试无人船6", 21.2120, 138.4603, virtualCameras.ToArray());
 
-            firstDeviceUser.SupportedMonitor.TryAdd("GPS", gpsMonitor);
+            RobotFactory.CreateRobot("test7", "测试无人船7", 26.2120, 129.4603, virtualCameras.ToArray());
+            RobotFactory.CreateRobot("test8", "测试无人船8", 26.2120, 134.4603, virtualCameras.ToArray());
+            RobotFactory.CreateRobot("test9", "测试无人船9", 26.2120, 139.4603, virtualCameras.ToArray());
 
-            taskWorkerThread.User = firstDeviceUser;
-            taskWorkerThread.Task = moveTask;
-
-            moveTask.TaskWorkerThread = taskWorkerThread;
-
-            so.TaskProcessor.OnTaskCompleteEvent += TaskProcessor_OnTaskCompleteEvent;
+            RobotFactory.CreateRobot("test10", "测试无人船10", 30.2120, 135.4603, virtualCameras.ToArray());
         }
 
-        void TaskProcessor_OnTaskCompleteEvent(object sender, TaskSimulatorLib.Processors.Task.TaskCompleteArgs args)
+        void RobotFactory_OnShipMoveEvent(object sender, UIActionEventArgs args)
         {
-            System.Console.WriteLine(args.Task.TaskCode +  "任务完成！");
+            if (IsHandleCreated)
+            {
+                this.Invoke(new MethodInvoker(delegate()
+                {
+                    if (args.ActionName.Equals(RobotFactory.UIAction_Move))
+                    {
+                        try
+                        {
+                            double lat = double.Parse(args.Objects["lat"].ToString());
+                            double lng = double.Parse(args.Objects["lng"].ToString());
+
+                            GMarkerGoogle marker = null;
+                            if (MarkerDict.ContainsKey(args.User))
+                            {
+                                marker = MarkerDict[args.User];
+                                marker.Position = new GMap.NET.PointLatLng(lat, lng);
+                            }
+                            else
+                            {
+                                marker = new GMarkerGoogle(new GMap.NET.PointLatLng(lat, lng), new Bitmap(Bitmap.FromFile(Path.Combine(Application.StartupPath, "ship.png"))));
+                                marker.ToolTipMode = MarkerTooltipMode.Always;
+                                marker.ToolTipText = args.User.UserName;
+                                marker.Tag = args.Task;
+
+                                MarkerDict.Add(args.User, marker);
+                                objects.Markers.Add(marker);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Console.WriteLine(ex.ToString());
+                        }
+                    }
+                }));
+            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -97,7 +129,7 @@ namespace TaskSimulator
             {
                 //1.美国空军嘉手纳空军基地
                 //位置： 日本冲绳县中头郡    
-                mapControl.Position = new GMap.NET.PointLatLng(26.2120, 127.4603);
+                mapControl.Position = new GMap.NET.PointLatLng(24.2120, 135.4603);
             }
             catch (Exception ex) { }
 
@@ -107,141 +139,128 @@ namespace TaskSimulator
 
             //初始化用户信息
             InitUsers();
+
+            RobotFactory.Simulator.TaskProcessor.OnTaskCompleteEvent += new TaskSimulatorLib.Processors.Task.TaskCompleteDelegate(TaskProcessor_OnTaskCompleteEvent);
+        }
+
+        void TaskProcessor_OnTaskCompleteEvent(object sender, TaskSimulatorLib.Processors.Task.TaskCompleteArgs args)
+        {
+            if (IsHandleCreated)
+            {
+                this.Invoke(new MethodInvoker(delegate()
+                    {
+                        this.Text = "任务完成!" + DateTime.Now;
+                    }));
+            }
         }
 
         private void btnAddShip_Click(object sender, EventArgs e)
         {
-            //Command cmds = new Command();
-            //cmds.Cmd = shipMoveCmd.Cmd;
-            //cmds.Objects.Add("lat", 26.4615);
-            //cmds.Objects.Add("lng", 127.4453);
+            List<double[]> posList = new List<double[]>();
+            double lat =26.2120;
+            double lng = 127.4603;
 
-            //shipMoveCmd.Process(cmds);
+            //posList = new List<double[]>();
+            //for (int kkk = 0; kkk < 15; kkk++)
+            //{
+            //    posList.Add(new double[] { lat, lng - (RobotFactory.StepWithSecond * kkk) });
+            //}
+            RobotFactory.StartMoveShipWithRect("test1", RobotFactory.StepWithSecond *  12);
 
-            objects.Markers.Clear();
+            //posList = new List<double[]>();
+            //for (int kkk = 0; kkk < 15; kkk++)
+            //{
+            //    posList.Add(new double[] { lat + 1, lng - (RobotFactory.StepWithSecond * kkk) });
+            //}
+            RobotFactory.StartMoveShipWithRound("test2", RobotFactory.StepWithSecond * 12);
 
-            taskWorkerThread.InitQueues();
+            //posList = new List<double[]>();
+            //for (int kkk = 0; kkk < 15; kkk++)
+            //{
+            //    posList.Add(new double[] { lat + 2, lng + (RobotFactory.StepWithSecond * kkk) });
+            //}
+            RobotFactory.StartMoveShipWithRect("test3", RobotFactory.StepWithSecond * 12);
 
-            so.TaskProcessor.Queues.Enqueue(new ProcessorQueueObject(firstDeviceUser, moveTask, new Command("AA", null)));
-        }
+            //posList = new List<double[]>();
+            //for (int kkk = 0; kkk < 15; kkk++)
+            //{
+            //    posList.Add(new double[] { lat + 3, lng - (RobotFactory.StepWithSecond * kkk) });
+            //}
+            RobotFactory.StartMoveShipWithRound("test4", RobotFactory.StepWithSecond * 12);
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-           so.Stop();
-        }
-    }
+            //posList = new List<double[]>();
+            //for (int kkk = 0; kkk < 15; kkk++)
+            //{
+            //    posList.Add(new double[] { lat + 4, lng + (RobotFactory.StepWithSecond * kkk) });
+            //}
+            RobotFactory.StartMoveShipWithRect("test5", RobotFactory.StepWithSecond * 12);
 
-    public class ShipMoveCommand : BaseActionWorkerThread
-    {
-        GMapOverlay objects = null;
+            //posList = new List<double[]>();
+            //for (int kkk = 0; kkk < 15; kkk++)
+            //{
+            //    posList.Add(new double[] { lat + 4, lng + (RobotFactory.StepWithSecond * kkk) });
+            //}
+            RobotFactory.StartMoveShipWithRound("test6", RobotFactory.StepWithSecond * 12);
 
-        public ShipMoveCommand(GMapOverlay objects)
-        {
-            this.SupportedActionCommand = "ShipMove";
-            this.objects = objects;
-        }
+            //posList = new List<double[]>();
+            //for (int kkk = 0; kkk < 15; kkk++)
+            //{
+            //    posList.Add(new double[] { lat + 4, lng + (RobotFactory.StepWithSecond * kkk) });
+            //}
+            RobotFactory.StartMoveShipWithRect("test7", RobotFactory.StepWithSecond * 12);
 
-        public override TaskSimulatorLib.Entitys.CommandResult Process(TaskSimulatorLib.Entitys.Command commandObj)
-        {
-            TaskSimulatorLib.Entitys.CommandResult cr = new TaskSimulatorLib.Entitys.CommandResult();
-            cr.CommandText = commandObj.CommandText;
+            //posList = new List<double[]>();
+            //for (int kkk = 0; kkk < 15; kkk++)
+            //{
+            //    posList.Add(new double[] { lat + 4, lng + (RobotFactory.StepWithSecond * kkk) });
+            //}
+            RobotFactory.StartMoveShipWithRound("test8", RobotFactory.StepWithSecond * 12);
 
-            if (commandObj.CommandText != null && commandObj.CommandText.Equals(this.SupportedActionCommand) && commandObj.Objects.ContainsKey("lat") && commandObj.Objects.ContainsKey("lng"))
+            //posList = new List<double[]>();
+            //for (int kkk = 0; kkk < 15; kkk++)
+            //{
+            //    posList.Add(new double[] { lat + 4, lng + (RobotFactory.StepWithSecond * kkk) });
+            //}
+            RobotFactory.StartMoveShipWithRect("test9", RobotFactory.StepWithSecond * 12);
+
+            lat = ((GPSMonitor)RobotFactory.Simulator.UserDict["test10"].SupportedMonitor[RobotFactory.Monitor_GPS]).Lat;
+            lng = ((GPSMonitor)RobotFactory.Simulator.UserDict["test10"].SupportedMonitor[RobotFactory.Monitor_GPS]).Lng;
+            posList = new List<double[]>();
+            if (lng > 135.4603)
             {
-                try
+                for (int kkk = 0; kkk < 15; kkk++)
                 {
-                    objects.Markers.Clear();
-
-                    double lat = double.Parse(commandObj.Objects["lat"].ToString());
-                    double lng = double.Parse(commandObj.Objects["lng"].ToString());
-
-                    GMarkerGoogle gmg = new GMarkerGoogle(new GMap.NET.PointLatLng(lat, lng), new Bitmap(Bitmap.FromFile(Path.Combine(Application.StartupPath, "ship.png"))));
-                    objects.Markers.Add(gmg);
-
-                    cr.IsOK = true;
-                }
-                catch (Exception ex)
-                {
-                    cr.IsOK = false;
-                    cr.ErrorReason = ex.ToString();
+                    posList.Add(new double[] { lat, lng - (RobotFactory.StepWithSecond * kkk) });
                 }
             }
             else
             {
-                cr.IsOK = false;
-            }
-
-            return cr;
-        }
-    }
-
-    public class GpsMapMonitor : BaseMonitor
-    {
-        public override CommandResult Process(Command commandObj)
-        {   
-            return null;
-        }
-    }
-
-    public class MoveTaskWorkerThread : BaseTaskWorkerThread
-    {
-        Queue<Command> cmdList = new Queue<Command>();
-
-        DateTime lastSendTime = DateTime.Now;
-
-        public MoveTaskWorkerThread()
-        {
-            InitQueues();
-        }
-
-        public void InitQueues()
-        {
-            cmdList.Enqueue(GetCommand(26.1615, 127.4453));
-
-            cmdList.Enqueue(GetCommand(26.2615, 127.4453));
-
-            cmdList.Enqueue(GetCommand(26.3615, 127.4453));
-
-            cmdList.Enqueue(GetCommand(26.4615, 127.4453));
-
-            cmdList.Enqueue(GetCommand(26.5615, 127.4453));
-
-            cmdList.Enqueue(GetCommand(26.6615, 127.4453));
-
-            cmdList.Enqueue(GetCommand(26.7615, 127.4453));
-
-            cmdList.Enqueue(GetCommand(26.8615, 127.4453));
-        }
-
-        protected Command GetCommand(double lat, double lng)
-        {
-            return new Command("ShipMove",new KeyValuePair<string,object>[]{ new KeyValuePair<string,object>("lat", lat), new KeyValuePair<string,object>("lng", lng)});
-        }
-
-        public override CommandResult Process(Command commandObj)
-        {
-            CommandResult cr = new CommandResult();
-            cr.CommandText = commandObj.CommandText;
-            cr.IsOK = true;
-
-            this.WorkerThreadState = WorkerThreadStateType.Running;
-
-            if (commandObj.CommandText.Equals("AA"))
-            {
-                if ((DateTime.Now - lastSendTime).TotalSeconds >= 2)
+                for (int kkk = 0; kkk < 15; kkk++)
                 {
-                    lastSendTime = DateTime.Now;
-
-                    MainForm.so.ActionProcessor.Queues.Enqueue(new ProcessorQueueObject(User, Task, cmdList.Dequeue()));
+                    posList.Add(new double[] { lat, lng + (RobotFactory.StepWithSecond * kkk) });
                 }
             }
+            RobotFactory.StartMoveShipWithPosList("test10", posList);
+        }
 
-            if (cmdList.Count <= 0)
-            {
-                this.WorkerThreadState = WorkerThreadStateType.Ended;
-            }
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            RobotFactory.Simulator.Stop();
+        }
 
-            return new CommandResult(commandObj.CommandText, true, string.Empty, null, null);
+        private void mapControl_OnMarkerClick(GMapMarker item, MouseEventArgs e)
+        {
+            DeviceUser du = ((Task)item.Tag).TaskWorkerThread.User;
+
+            Bitmap b1 = (Bitmap)du.SupportedMonitor["C1"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Objects[CameraMonitor.Property_BMP];
+            Bitmap b2 = (Bitmap)du.SupportedMonitor["C2"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Objects[CameraMonitor.Property_BMP];
+            Bitmap b3 = (Bitmap)du.SupportedMonitor["C3"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Objects[CameraMonitor.Property_BMP];
+            Bitmap b4 = (Bitmap)du.SupportedMonitor["C4"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Objects[CameraMonitor.Property_BMP];
+
+            pbCamera1.Image = b1;
+            pbCamera2.Image = b2;
+            pbCamera3.Image = b3;
+            pbCamera4.Image = b4;
         }
     }
 }
