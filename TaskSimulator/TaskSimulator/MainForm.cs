@@ -130,7 +130,7 @@ namespace TaskSimulator
                             double lng = ((GPSMonitor)RobotFactory.Simulator.UserDict["test1"].SupportedMonitor[RobotFactory.Monitor_GPS]).Lng;
 
                             //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
-                            SendTo("BOAT POS=" + lat + "," + lng);
+                            SendGPSPosition(lat, lng);
                         }
                         else if (remoteCommand.ToUpper().StartsWith("GET BOAT SPEED"))
                         {
@@ -243,6 +243,20 @@ namespace TaskSimulator
             }
         }
 
+        /// <summary>
+        /// Convert GPSPosition To 南纬S，北纬用N，东经用E，西经用W
+        /// </summary>
+        /// <param name="lat"></param>
+        /// <param name="lng"></param>
+        private void SendGPSPosition(double lat, double lng)
+        {
+            //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
+            string latString = Math.Abs(lat).ToString() + (lat > 0 ? "N" : (lat == 0 ? string.Empty : "S"));
+            string lngString = Math.Abs(lng).ToString() + (lng > 0 ? "E" : (lng == 0 ? string.Empty : "W"));
+
+            SendTo("BOAT POS=" + latString + "," + lngString);
+        }
+
         void RobotFactory_OnShipMoveEvent(object sender, UIActionEventArgs args)
         {
             if (IsHandleCreated)
@@ -260,7 +274,7 @@ namespace TaskSimulator
                             if (EnabledAutoSendBoardPosition)
                             {
                                 //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
-                                SendTo("BOAT POS=" + lat + "," + lng);
+                                SendGPSPosition(lat, lng);
                             }
 
                             GMarkerGoogle marker = null;
