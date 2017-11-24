@@ -181,20 +181,21 @@ namespace TaskSimulator.RobotTaskFactory
         {
             if (Simulator.UserDict.ContainsKey(userCode))
             {
+                //取出用户
                 RobotUser selectedUser = Simulator.UserDict[userCode];
-                selectedUser.SupportedTask[Task_RobotMove].TaskState = StateType.Ready;
 
-                ProcessorQueueObject pqo = new ProcessorQueueObject();
-                pqo.User = selectedUser;
-                pqo.Task = selectedUser.SupportedTask[Task_RobotMove];
+                //重置工作线程状态为Ready
+                selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
 
-                pqo.Command = new Command();
-                pqo.Command.Cmd = RebotMoveTaskWorkerThread.Command_UsePosList;
+                //当前要执行的命令
+                string currentCommand = RebotMoveTaskWorkerThread.Command_UsePosList;
 
-                pqo.Task.Objects.Clear();
-                pqo.Task.Objects.Add(RebotMoveTaskWorkerThread.Property_PosList, posList);
+                //参数
+                List<KeyValuePair<string,object>> paramList = new List<KeyValuePair<string,object>>();
+                paramList.Add(new KeyValuePair<string,object>(RebotMoveTaskWorkerThread.Property_PosList, posList));
 
-                AddTaskToRobot(pqo);
+                //添加到任务队列
+                AddTaskToRobot(new ProcessorQueueObject(selectedUser, selectedUser.SupportedTask[Task_RobotMove], new Command(currentCommand, paramList.ToArray())));
             }
         }
 
@@ -206,20 +207,21 @@ namespace TaskSimulator.RobotTaskFactory
         {
             if (Simulator.UserDict.ContainsKey(userCode))
             {
+                //取出用户
                 RobotUser selectedUser = Simulator.UserDict[userCode];
-                selectedUser.SupportedTask[Task_RobotMove].TaskState = StateType.Ready;
 
-                ProcessorQueueObject pqo = new ProcessorQueueObject();
-                pqo.User = selectedUser;
-                pqo.Task = selectedUser.SupportedTask[Task_RobotMove];
+                //重置工作线程状态为Ready
+                selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
 
-                pqo.Command = new Command();
-                pqo.Command.Cmd = RebotMoveTaskWorkerThread.Command_UseDefaultRect;
+                //当前要执行的命令
+                string currentCommand = RebotMoveTaskWorkerThread.Command_UseDefaultRect;
 
-                pqo.Task.Objects.Clear();
-                pqo.Task.Objects.Add(RebotMoveTaskWorkerThread.Property_Limit, limit);
+                //参数
+                List<KeyValuePair<string,object>> paramList = new List<KeyValuePair<string,object>>();
+                paramList.Add(new KeyValuePair<string,object>(RebotMoveTaskWorkerThread.Property_Limit, limit));
 
-                AddTaskToRobot(pqo);
+                //添加到任务队列
+                AddTaskToRobot(new ProcessorQueueObject(selectedUser, selectedUser.SupportedTask[Task_RobotMove], new Command(currentCommand, paramList.ToArray())));
             }
         }
 
@@ -231,20 +233,21 @@ namespace TaskSimulator.RobotTaskFactory
         {
             if (Simulator.UserDict.ContainsKey(userCode))
             {
+                //取出用户
                 RobotUser selectedUser = Simulator.UserDict[userCode];
-                selectedUser.SupportedTask[Task_RobotMove].TaskState = StateType.Ready;
 
-                ProcessorQueueObject pqo = new ProcessorQueueObject();
-                pqo.User = selectedUser;
-                pqo.Task = selectedUser.SupportedTask[Task_RobotMove];
+                //重置工作线程状态为Ready
+                selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
 
-                pqo.Command = new Command();
-                pqo.Command.Cmd = RebotMoveTaskWorkerThread.Command_UseDefaultRound;
+                //当前要执行的命令
+                string currentCommand = RebotMoveTaskWorkerThread.Command_UseDefaultRound;
 
-                pqo.Task.Objects.Clear();
-                pqo.Task.Objects.Add(RebotMoveTaskWorkerThread.Property_Limit, limit);
+                //参数
+                List<KeyValuePair<string,object>> paramList = new List<KeyValuePair<string,object>>();
+                paramList.Add(new KeyValuePair<string,object>(RebotMoveTaskWorkerThread.Property_Limit, limit));
 
-                AddTaskToRobot(pqo);
+                //添加到任务队列
+                AddTaskToRobot(new ProcessorQueueObject(selectedUser, selectedUser.SupportedTask[Task_RobotMove], new Command(currentCommand, paramList.ToArray())));
             }
         }
 
