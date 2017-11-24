@@ -27,5 +27,7 @@ namespace TaskSimulatorLib.Extends.Base
         }
 
         public object Tag { get; set; }
+
+        public string Name { get; set; }
     }
 }

@@ -38,5 +38,10 @@ namespace TaskSimulatorLib.Monitors
         /// 临时数据
         /// </summary>
         object Tag { get; set; }
+
+        /// <summary>
+        /// 监视器名称
+        /// </summary>
+        string Name { get; set; }
     }
 }

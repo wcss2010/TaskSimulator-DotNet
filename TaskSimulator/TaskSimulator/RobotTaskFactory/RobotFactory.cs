@@ -12,7 +12,7 @@ using System.IO;
 using System.Windows.Forms;
 using TaskSimulatorLib.Processors;
 
-namespace TaskSimulator.RobotTask
+namespace TaskSimulator.RobotTaskFactory
 {
     public delegate void UIActionDelegate(object sender, UIActionEventArgs args);
 
@@ -20,9 +20,9 @@ namespace TaskSimulator.RobotTask
     {
         public string ActionName { get; set; }
 
-        public DeviceUser User { get; set; }
+        public RobotUser User { get; set; }
         
-        public Task Task { get; set; }
+        public RobotTask Task { get; set; }
 
         private Dictionary<string, object> objects = new Dictionary<string, object>();
         /// <summary>
@@ -90,7 +90,7 @@ namespace TaskSimulator.RobotTask
         public static Font VirtualCameraImageFont = new Font("宋体", 16);
 
         public static event UIActionDelegate OnUiActionEvent;
-        public static void OnUiAction(string actionName,DeviceUser user, Task task,KeyValuePair<string,object>[] dataTeam)
+        public static void OnUiAction(string actionName,RobotUser user, RobotTask task,KeyValuePair<string,object>[] dataTeam)
         {
             if (OnUiActionEvent != null)
             {
@@ -125,27 +125,26 @@ namespace TaskSimulator.RobotTask
         public static void CreateRobot(string userCode, string userName, double defaultLat, double defaultLng,KeyValuePair<string,string>[] virtualCameras)
         {
             //用户名称和用户代码
-            DeviceUser curUser = new DeviceUser();
+            RobotUser curUser = new RobotUser();
             curUser.UserCode = userCode;
             curUser.UserName = userName;
 
             //移动任务
-            Task rebotMoveTask = new Task();
+            RobotTask rebotMoveTask = new RobotTask();
             rebotMoveTask.TaskCode = Task_RobotMove;
-            rebotMoveTask.TaskState = StateType.Ready;
-            rebotMoveTask.TaskType = TaskType.NowTask;
-            rebotMoveTask.TaskPriority = 0;
+            rebotMoveTask.TaskName = "机器人移动任务";
 
             //位置移动指令
-            RebotMoveCommandWorkerThread shipMoveCmd = new RebotMoveCommandWorkerThread();
+            RebotMoveActionWorkerThread shipMoveCmd = new RebotMoveActionWorkerThread();
             shipMoveCmd.User = curUser;
             shipMoveCmd.Task = rebotMoveTask;
-            rebotMoveTask.CommandWorkerDict.TryAdd(shipMoveCmd.Cmd, shipMoveCmd);
+            curUser.SupportedAction.TryAdd(shipMoveCmd.SupportedActionCommand, shipMoveCmd);
 
             //位置移动任务
             RebotMoveTaskWorkerThread taskWorkerThread = new RebotMoveTaskWorkerThread();
             taskWorkerThread.Task = rebotMoveTask;
             taskWorkerThread.User = curUser;
+            taskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
             rebotMoveTask.TaskWorkerThread = taskWorkerThread;
 
             curUser.SupportedTask.TryAdd(rebotMoveTask.TaskCode, rebotMoveTask);
@@ -182,7 +181,7 @@ namespace TaskSimulator.RobotTask
         {
             if (Simulator.UserDict.ContainsKey(userCode))
             {
-                DeviceUser selectedUser = Simulator.UserDict[userCode];
+                RobotUser selectedUser = Simulator.UserDict[userCode];
                 selectedUser.SupportedTask[Task_RobotMove].TaskState = StateType.Ready;
 
                 ProcessorQueueObject pqo = new ProcessorQueueObject();
@@ -207,7 +206,7 @@ namespace TaskSimulator.RobotTask
         {
             if (Simulator.UserDict.ContainsKey(userCode))
             {
-                DeviceUser selectedUser = Simulator.UserDict[userCode];
+                RobotUser selectedUser = Simulator.UserDict[userCode];
                 selectedUser.SupportedTask[Task_RobotMove].TaskState = StateType.Ready;
 
                 ProcessorQueueObject pqo = new ProcessorQueueObject();
@@ -232,7 +231,7 @@ namespace TaskSimulator.RobotTask
         {
             if (Simulator.UserDict.ContainsKey(userCode))
             {
-                DeviceUser selectedUser = Simulator.UserDict[userCode];
+                RobotUser selectedUser = Simulator.UserDict[userCode];
                 selectedUser.SupportedTask[Task_RobotMove].TaskState = StateType.Ready;
 
                 ProcessorQueueObject pqo = new ProcessorQueueObject();
@@ -479,9 +478,9 @@ namespace TaskSimulator.RobotTask
     /// <summary>
     /// 负责按照坐标来让机器人移动
     /// </summary>
-    public class RebotMoveCommandWorkerThread : BaseCommandWorkerThread
+    public class RebotMoveActionWorkerThread : BaseActionWorkerThread
     {
-        public RebotMoveCommandWorkerThread()
+        public RebotMoveActionWorkerThread()
         {
             this.Cmd = RobotFactory.Command_RebotMove;
         }
@@ -605,7 +604,7 @@ namespace TaskSimulator.RobotTask
 
                     //填充一个随机背景色
                     g.FillRectangle(new SolidBrush(backgroundColors[random.Next(0, backgroundColors.Count)]), new Rectangle(0, 0, RobotFactory.VirtualCameraImageWidth, RobotFactory.VirtualCameraImageHeight));
-                    //写DeviceUser名称
+                    //写RobotUser名称
                     StringFormat sf = new StringFormat();
                     sf.Alignment = StringAlignment.Center;
                     sf.LineAlignment = StringAlignment.Center;
