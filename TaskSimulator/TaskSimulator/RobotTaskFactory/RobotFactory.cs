@@ -335,10 +335,10 @@ namespace TaskSimulator.RobotTaskFactory
             {
                 if (commandObj.CommandText.Equals(Command_UsePosList))
                 {
-                    if (Task.Objects.ContainsKey(Property_PosList))
+                    if (commandObj.Objects.ContainsKey(Property_PosList))
                     {
                         //位置队列为空时初始化列表
-                        List<double[]> posList = (List<double[]>)Task.Objects[Property_PosList];
+                        List<double[]> posList = (List<double[]>)commandObj.Objects[Property_PosList];
                         if (posList.Count > 0)
                         {
                             foreach (double[] pos in posList)
@@ -351,9 +351,9 @@ namespace TaskSimulator.RobotTaskFactory
                 else if (commandObj.CommandText.Equals(Command_UseDefaultRect))
                 {
                     //画方框
-                    if (Task.Objects.ContainsKey(Property_Limit))
+                    if (commandObj.Objects.ContainsKey(Property_Limit))
                     {
-                        double limit = (double)Task.Objects[Property_Limit];
+                        double limit = (double)commandObj.Objects[Property_Limit];
 
                         commandObj.CommandText = GPSMonitor.Command_GetGPS;
                         CommandResult gps = User.SupportedMonitor[RobotFactory.Monitor_GPS].Process(commandObj);
@@ -392,9 +392,9 @@ namespace TaskSimulator.RobotTaskFactory
                 else if (commandObj.CommandText.Equals(Command_UseDefaultRound))
                 {
                     //画圆圈
-                    if (Task.Objects.ContainsKey(Property_Limit))
+                    if (commandObj.Objects.ContainsKey(Property_Limit))
                     {
-                        double limit = (double)Task.Objects[Property_Limit];
+                        double limit = (double)commandObj.Objects[Property_Limit];
 
                         commandObj.CommandText = GPSMonitor.Command_GetGPS;
                         CommandResult gps = User.SupportedMonitor[RobotFactory.Monitor_GPS].Process(commandObj);

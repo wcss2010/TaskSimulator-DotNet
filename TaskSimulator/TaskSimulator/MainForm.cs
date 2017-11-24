@@ -252,10 +252,10 @@ namespace TaskSimulator
         {
             RobotUser du = ((RobotTask)item.Tag).TaskWorkerThread.User;
 
-            Bitmap b1 = (Bitmap)du.SupportedMonitor["C1"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Objects[CameraMonitor.Property_BMP];
-            Bitmap b2 = (Bitmap)du.SupportedMonitor["C2"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Objects[CameraMonitor.Property_BMP];
-            Bitmap b3 = (Bitmap)du.SupportedMonitor["C3"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Objects[CameraMonitor.Property_BMP];
-            Bitmap b4 = (Bitmap)du.SupportedMonitor["C4"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Objects[CameraMonitor.Property_BMP];
+            Bitmap b1 = (Bitmap)du.SupportedMonitor["C1"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
+            Bitmap b2 = (Bitmap)du.SupportedMonitor["C2"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
+            Bitmap b3 = (Bitmap)du.SupportedMonitor["C3"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
+            Bitmap b4 = (Bitmap)du.SupportedMonitor["C4"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
 
             pbCamera1.Image = b1;
             pbCamera2.Image = b2;
