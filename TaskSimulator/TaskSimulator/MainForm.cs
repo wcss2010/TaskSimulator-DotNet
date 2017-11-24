@@ -104,6 +104,11 @@ namespace TaskSimulator
                         {
                             case "GET PIC":
                                 //Picture
+                                RobotUser du = RobotFactory.Simulator.UserDict["test1"];
+                                Bitmap b1 = (Bitmap)du.SupportedMonitor["C1"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
+                                
+                                //PIC,JPEG,IMG_9987,3,5,12776，图片数据
+                                //传输图片，图片格式JPEG，文件名为IMG_9987,当前为第3包，总共5包，本包图片数据长度12776字节，图片数据
 
                                 break;
                             case "GET BOAT POS":
@@ -116,7 +121,7 @@ namespace TaskSimulator
                                 break;
                             case "GET BOAT SPEED":
                                 //Get SPEED
-
+                                SendTo("BOAT SPEED=3.2");
                                 break;
                         }
                     }
