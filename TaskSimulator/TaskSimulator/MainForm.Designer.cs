@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.mapControl = new GMap.NET.WindowsForms.GMapControl();
             this.groupBox = new System.Windows.Forms.Panel();
             this.pbCamera4 = new System.Windows.Forms.PictureBox();
@@ -36,6 +37,7 @@
             this.pbCamera1 = new System.Windows.Forms.PictureBox();
             this.btnAddShip = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.trSendPic = new System.Windows.Forms.Timer(this.components);
             this.groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCamera4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCamera3)).BeginInit();
@@ -147,6 +149,12 @@
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             // 
+            // trSendPic
+            // 
+            this.trSendPic.Enabled = true;
+            this.trSendPic.Interval = 800;
+            this.trSendPic.Tick += new System.EventHandler(this.trSendPic_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -179,6 +187,7 @@
         private System.Windows.Forms.PictureBox pbCamera3;
         private System.Windows.Forms.PictureBox pbCamera2;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Timer trSendPic;
     }
 }
 

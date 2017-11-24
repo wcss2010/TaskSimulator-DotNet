@@ -450,5 +450,13 @@ namespace TaskSimulator
         }
 
         public MqttClient mqttClient { get; set; }
+
+        private void trSendPic_Tick(object sender, EventArgs e)
+        {
+            if (EnabledAutoSendBoardPic)
+            {
+                client_MqttMsgPublishReceived(mqttClient, new MqttMsgPublishEventArgs(string.Empty, Encoding.UTF8.GetBytes("GET PIC"), false, 0x00, false));
+            }
+        }
     }
 }
