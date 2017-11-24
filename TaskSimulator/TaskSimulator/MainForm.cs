@@ -15,9 +15,9 @@ using TaskSimulatorLib.Entitys;
 using TaskSimulatorLib.Extends.Base;
 using TaskSimulatorLib.Processors;
 using TaskSimulator.RobotTaskFactory;
-using uPLibrary.Networking.M2Mqtt;
 using System.Net;
 using uPLibrary.Networking.M2Mqtt.Messages;
+using uPLibrary.Networking.M2Mqtt;
 
 namespace TaskSimulator
 {
@@ -78,7 +78,7 @@ namespace TaskSimulator
             //RobotFactory.CreateRobot("test10", "测试无人船10", 30.2120, 135.4603, virtualCameras.ToArray());
 
             // create client instance 
-            mqttClient = new MqttClient("boat.mqtt.iot.bj.baidubce.com");
+            mqttClient = new MqttClient("ssl://boat.mqtt.iot.bj.baidubce.com:1884");
 
             // register to message received 
             mqttClient.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
@@ -109,7 +109,7 @@ namespace TaskSimulator
             mqttClient.Publish("/picture2shore", Encoding.UTF8.GetBytes(strValue), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
         }
 
-        void client_MqttMsgPublishReceived(object sender, uPLibrary.Networking.M2Mqtt.Messages.MqttMsgPublishEventArgs e)
+        void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
             try
             {
