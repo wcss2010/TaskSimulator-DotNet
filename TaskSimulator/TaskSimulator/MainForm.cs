@@ -256,6 +256,13 @@ namespace TaskSimulator
                             double lat = double.Parse(args.Objects["lat"].ToString());
                             double lng = double.Parse(args.Objects["lng"].ToString());
 
+                            //Send Board GPS Position
+                            if (EnabledAutoSendBoardPosition)
+                            {
+                                //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
+                                SendTo("BOAT POS=" + lat + "," + lng);
+                            }
+
                             GMarkerGoogle marker = null;
                             if (MarkerDict.ContainsKey(args.User))
                             {
