@@ -79,13 +79,14 @@ namespace TaskSimulator
             //RobotFactory.CreateRobot("test10", "测试无人船10", 30.2120, 135.4603, virtualCameras.ToArray());
 
             // create client instance 
-            mqttClient = new MqttClient("112.34.115.12", 8884, true, new X509Certificate(new byte[0]), new X509Certificate(new byte[0]), MqttSslProtocols.TLSv1_0);
+            mqttClient = new MqttClient("boat.mqtt.iot.bj.baidubce.com", 1884, true, MqttSslProtocols.TLSv1_0, null, null);
+            mqttClient.ProtocolVersion = MqttProtocolVersion.Version_3_1;
 
             // register to message received 
             mqttClient.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
 
             //connect to server
-            mqttClient.Connect(Guid.NewGuid().ToString(), "boardtest/test002", "IVTwQhEJ7FbMwIfQKWa2bh5xjm8g0bcuKAgO9s7ZRn4=", true, 120);
+            mqttClient.Connect(Guid.NewGuid().ToString(), "boat/boat_0001", "8yLSsRabuknL6YI/vRPP874+QMbPMiho6Tir21W9zo4=", true, 3600);
 
             // subscribe to the topic "/shore2boat" with QoS 1 
             mqttClient.Subscribe(new string[] { "/shore2boat" }, new byte[] { MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE });
