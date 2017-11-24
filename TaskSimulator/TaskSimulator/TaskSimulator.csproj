@@ -57,6 +57,10 @@
     <Reference Include="GMap.NET.WindowsForms">
       <HintPath>..\..\Lib\GreatMaps-v2015.26\Release-NETv4.0\GMap.NET.WindowsForms.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\Log4net\log4net-2.0.8-bin\net\4.0\release\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="M2Mqtt.Net">
       <HintPath>..\..\Lib\M2Mqtt.Net.dll</HintPath>
     </Reference>
