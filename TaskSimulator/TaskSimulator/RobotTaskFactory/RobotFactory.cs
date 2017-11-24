@@ -11,6 +11,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using TaskSimulatorLib.Processors;
+using TaskSimulatorLib.Processors.Task;
 
 namespace TaskSimulator.RobotTaskFactory
 {
@@ -52,7 +53,7 @@ namespace TaskSimulator.RobotTaskFactory
         /// <summary>
         /// 位置移动指令
         /// </summary>
-        public const string Command_RebotMove = "RebotMove";
+        public const string Action_RebotMove = "RebotMove";
 
         /// <summary>
         /// UI动作移动小船到新坐标
@@ -314,12 +315,11 @@ namespace TaskSimulator.RobotTaskFactory
         /// <returns></returns>
         private Command CreateMoveCommand(double lat, double lng)
         {
-            Command cmds = new Command();
-            cmds.Cmd = RobotFactory.Command_RebotMove;
-            cmds.Objects.Add("lat", lat);
-            cmds.Objects.Add("lng", lng);
+            List<KeyValuePair<string,object>> paramList = new List<KeyValuePair<string,object>>();
+            paramList.Add(new KeyValuePair<string,object>("lat", lat));
+            paramList.Add(new KeyValuePair<string,object>("lng", lng));
 
-            return cmds;
+            return new Command(RobotFactory.Action_RebotMove, paramList.ToArray());
         }
 
         public override CommandResult Process(Command commandObj)
@@ -327,12 +327,13 @@ namespace TaskSimulator.RobotTaskFactory
             TaskSimulatorLib.Entitys.CommandResult cr = new TaskSimulatorLib.Entitys.CommandResult();
             cr.IsOK = true;
 
-            Task.TaskState = StateType.Running;
+            //设置状态为正在运行
+            WorkerThreadState = WorkerThreadStateType.Running;
 
             //尝试初始化队列
             if (CommandQueues.Count == 0)
             {
-                if (commandObj.Cmd.Equals(Command_UsePosList))
+                if (commandObj.CommandText.Equals(Command_UsePosList))
                 {
                     if (Task.Objects.ContainsKey(Property_PosList))
                     {
@@ -347,14 +348,14 @@ namespace TaskSimulator.RobotTaskFactory
                         }
                     }
                 }
-                else if (commandObj.Cmd.Equals(Command_UseDefaultRect))
+                else if (commandObj.CommandText.Equals(Command_UseDefaultRect))
                 {
                     //画方框
                     if (Task.Objects.ContainsKey(Property_Limit))
                     {
                         double limit = (double)Task.Objects[Property_Limit];
 
-                        commandObj.Cmd = GPSMonitor.Command_GetGPS;
+                        commandObj.CommandText = GPSMonitor.Command_GetGPS;
                         CommandResult gps = User.SupportedMonitor[RobotFactory.Monitor_GPS].Process(commandObj);
                         double lat = double.Parse(gps.Objects["lat"].ToString());
                         double lng = double.Parse(gps.Objects["lng"].ToString());
@@ -388,14 +389,14 @@ namespace TaskSimulator.RobotTaskFactory
                         }
                     }
                 }
-                else if (commandObj.Cmd.Equals(Command_UseDefaultRound))
+                else if (commandObj.CommandText.Equals(Command_UseDefaultRound))
                 {
                     //画圆圈
                     if (Task.Objects.ContainsKey(Property_Limit))
                     {
                         double limit = (double)Task.Objects[Property_Limit];
 
-                        commandObj.Cmd = GPSMonitor.Command_GetGPS;
+                        commandObj.CommandText = GPSMonitor.Command_GetGPS;
                         CommandResult gps = User.SupportedMonitor[RobotFactory.Monitor_GPS].Process(commandObj);
                         double lat = double.Parse(gps.Objects["lat"].ToString());
                         double lng = double.Parse(gps.Objects["lng"].ToString());
@@ -461,17 +462,13 @@ namespace TaskSimulator.RobotTaskFactory
                 lastSendTime = DateTime.Now;
 
                 //从队列中取一个Position放到CommandProcessor中
-                ProcessorQueueObject pqo = new ProcessorQueueObject();
-                pqo.User = this.User;
-                pqo.Task = this.Task;
-                pqo.Command = CommandQueues.Dequeue();
-                RobotFactory.Simulator.CommandProcessor.Queues.Enqueue(pqo);
+                RobotFactory.Simulator.ActionProcessor.Queues.Enqueue(new ProcessorQueueObject(User, Task, CommandQueues.Dequeue()));
             }
 
             //队列中没有记录则结束任务
             if (CommandQueues.Count <= 0)
             {
-                this.Task.TaskState = StateType.Ended;
+                WorkerThreadState = WorkerThreadStateType.Ended;
             }
 
             return cr;
@@ -485,15 +482,15 @@ namespace TaskSimulator.RobotTaskFactory
     {
         public RebotMoveActionWorkerThread()
         {
-            this.Cmd = RobotFactory.Command_RebotMove;
+            this.SupportedActionCommand = RobotFactory.Action_RebotMove;
         }
 
         public override CommandResult Process(Command commandObj)
         {
             CommandResult cr = new CommandResult();
-            cr.Cmd = this.Cmd;
+            cr.CommandText = this.SupportedActionCommand;
 
-            if (commandObj.Cmd != null && commandObj.Cmd.Equals(this.Cmd) && commandObj.Objects.ContainsKey("lat") && commandObj.Objects.ContainsKey("lng"))
+            if (commandObj.CommandText != null && commandObj.CommandText.Equals(this.SupportedActionCommand) && commandObj.Objects.ContainsKey("lat") && commandObj.Objects.ContainsKey("lng"))
             {
                 try
                 {
@@ -504,7 +501,7 @@ namespace TaskSimulator.RobotTaskFactory
                     RobotFactory.OnUiAction(RobotFactory.UIAction_Move, User, Task, new KeyValuePair<string, object>[] { new KeyValuePair<string, object>("lat", lat), new KeyValuePair<string, object>("lng", lng) });
 
                     //向GPSMonitor报告自己的位置
-                    commandObj.Cmd = GPSMonitor.Command_ReportGPS;
+                    commandObj.CommandText = GPSMonitor.Command_ReportGPS;
                     User.SupportedMonitor[RobotFactory.Monitor_GPS].Process(commandObj);
 
                     cr.IsOK = true;
@@ -512,7 +509,7 @@ namespace TaskSimulator.RobotTaskFactory
                 catch (Exception ex)
                 {
                     cr.IsOK = false;
-                    cr.Reason = ex.ToString();
+                    cr.ErrorReason = ex.ToString();
                 }
             }
             else
@@ -548,10 +545,10 @@ namespace TaskSimulator.RobotTaskFactory
         public override CommandResult Process(Command commandObj)
         {
             TaskSimulatorLib.Entitys.CommandResult cr = new TaskSimulatorLib.Entitys.CommandResult();
-            cr.Cmd = commandObj.Cmd;
+            cr.CommandText = commandObj.CommandText;
             cr.IsOK = true;
 
-            switch (commandObj.Cmd)
+            switch (commandObj.CommandText)
             {
                 case Command_ReportGPS:
                     if (commandObj.Objects.ContainsKey("lat") && commandObj.Objects.ContainsKey("lng"))
@@ -584,21 +581,17 @@ namespace TaskSimulator.RobotTaskFactory
         /// </summary>
         public const string Command_GetCameraImage = "GetCameraImage";
 
-        /// <summary>
-        /// 摄像头图片
-        /// </summary>
-        public const string Property_BMP = "BMP";
-
         Random random = new Random((int)DateTime.Now.Ticks);
 
         public override CommandResult Process(Command commandObj)
         {
             List<KeyValuePair<string,object>> resultParams = new List<KeyValuePair<string,object>>();
 
-            if (Command_GetCameraImage.Equals(commandObj.Cmd))
+            Bitmap bmp = null;
+            if (Command_GetCameraImage.Equals(commandObj.CommandText))
             {
                 //绘制虚拟摄像头图像
-                Bitmap bmp = new Bitmap(RobotFactory.VirtualCameraImageWidth, RobotFactory.VirtualCameraImageHeight);
+                bmp = new Bitmap(RobotFactory.VirtualCameraImageWidth, RobotFactory.VirtualCameraImageHeight);
                 Graphics g = Graphics.FromImage(bmp);
                 try
                 {
@@ -623,12 +616,9 @@ namespace TaskSimulator.RobotTaskFactory
                 {
                     g.Dispose();
                 }
-
-                //返回图片
-                resultParams.Add(new KeyValuePair<string, object>(Property_BMP, bmp));
             }
 
-            return new CommandResult(commandObj.Cmd, true, string.Empty, resultParams.ToArray());
+            return new CommandResult(commandObj.CommandText, true, string.Empty, bmp,resultParams.ToArray());
         }
     }
 }
