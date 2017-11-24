@@ -329,6 +329,8 @@ namespace TaskSimulator
 
         void TaskProcessor_OnTaskCompleteEvent(object sender, TaskSimulatorLib.Processors.Task.TaskCompleteArgs args)
         {
+            SendTo("NOTICE=DESTINATION ARRIVED");
+
             if (IsHandleCreated)
             {
                 this.Invoke(new MethodInvoker(delegate()
