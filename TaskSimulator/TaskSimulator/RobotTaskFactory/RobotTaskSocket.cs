@@ -79,6 +79,11 @@ namespace TaskSimulator.RobotTaskFactory
         /// </summary>
         public bool EnabledAutoSendBoardPic = false;
 
+        /// <summary>
+        /// 表示船画方框或圆圈时的边长或距离
+        /// </summary>
+        public int BoatMoveLimit { get; set; }
+
         public RobotTaskSocket(RobotUser user,string ips,int ports,string username,string password)
         {
             //记录项
@@ -440,7 +445,34 @@ namespace TaskSimulator.RobotTaskFactory
         /// <param name="receiveString"></param>
         public void SetBoatDest(string receiveString)
         {
-            throw new NotImplementedException();
+            //目前暂不支持给定距离行走
+
+            //画方形或圆形
+            RandomRectOrRoundTask();
+        }
+
+        /// <summary>
+        /// 随机出一个画方框或圆圈的任务
+        /// </summary>
+        public void RandomRectOrRoundTask()
+        {
+            Random random = new Random((int)DateTime.Now.Ticks);
+
+            //1=方框，2=圆圈
+            int taskIndex = random.Next(1, 3);
+
+            TaskSimulatorLib.SimulatorObject.logger.Debug("为机器人(" + RobotUser.UserName + ")选择了按指定 边长或半径 行走" + (taskIndex == 1 ? "方形" : "圆形") + "的任务！");
+
+            if (taskIndex == 1)
+            {
+                //方框
+                RobotFactory.StartMoveShipWithRect(RobotUser.UserCode, BoatMoveLimit);
+            }
+            else
+            {
+                //圆圈
+                RobotFactory.StartMoveShipWithRound(RobotUser.UserCode, BoatMoveLimit);
+            }
         }
 
         /// <summary>
@@ -449,7 +481,7 @@ namespace TaskSimulator.RobotTaskFactory
         /// <param name="receiveString"></param>
         public void SetBoatSpeed(string receiveString)
         {
-            throw new NotImplementedException();
+            
         }
 
         /// <summary>
@@ -457,7 +489,7 @@ namespace TaskSimulator.RobotTaskFactory
         /// </summary>
         public void CloseBoatEngine()
         {
-            throw new NotImplementedException();
+            
         }
 
         /// <summary>
@@ -465,7 +497,7 @@ namespace TaskSimulator.RobotTaskFactory
         /// </summary>
         public void OpenBoatEngine()
         {
-            throw new NotImplementedException();
+            
         }
         
         /// <summary>
