@@ -213,13 +213,76 @@ namespace TaskSimulator.RobotTaskFactory
         /// </summary>
         /// <param name="lat"></param>
         /// <param name="lng"></param>
-        public void PublishGPSPosition(double lat, double lng)
+        public void PublishBoatPos(double lat, double lng)
         {
             //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
             string latString = Math.Abs(lat).ToString() + (lat > 0 ? "N" : (lat == 0 ? string.Empty : "S"));
             string lngString = Math.Abs(lng).ToString() + (lng > 0 ? "E" : (lng == 0 ? string.Empty : "W"));
 
             PublishCommand("BOAT POS=" + latString + "," + lngString);
+        }
+
+        /// <summary>
+        /// 船速3.2米每秒（地速）
+        /// </summary>
+        /// <param name="value"></param>
+        public void PublishBoatSpeed(double value)
+        {
+            PublishCommand("BOAT SPEED=" + value);
+        }
+
+        /// <summary>
+        /// 船的航向123.3度
+        /// </summary>
+        /// <param name="value"></param>
+        public void PublishBoatSailDir(double value)
+        {
+            PublishCommand("BOAT SAIL DIR=" + value);
+        }
+
+        /// <summary>
+        /// 水温23.2摄氏度
+        /// </summary>
+        /// <param name="value"></param>
+        public void PublishWaterTemp(double value)
+        {
+            PublishCommand("WATER TEMP=" + value);
+        }
+
+        /// <summary>
+        /// 气温23.4摄氏度
+        /// </summary>
+        /// <param name="value"></param>
+        public void PublishAirTemp(double value)
+        {
+            PublishCommand("AIR TEMP=" + value);
+        }
+
+        /// <summary>
+        /// 风速3.6米每秒
+        /// </summary>
+        /// <param name="value"></param>
+        public void PublishWindSpeed(double value)
+        {
+            PublishCommand("WIND SPEED=" + value);
+        }
+
+        /// <summary>
+        /// 风向落入22.5度区间
+        /// </summary>
+        /// <param name="value"></param>
+        public void PublishWindDir(double value)
+        {
+            PublishCommand("WIND DIR=" + value);
+        }
+
+        /// <summary>
+        /// 主电池电压25.3伏
+        /// </summary>
+        /// <param name="value"></param>
+        public void PublishBoatMainBattVol(double value)
+        {
+            PublishCommand("BOAT MAIN BATT VOL=" + value);
         }
 
         /// <summary>
