@@ -215,11 +215,13 @@ namespace TaskSimulator.RobotTaskFactory
                     string bufferString = Encoding.UTF8.GetString(buffer);
 
                     //SendTo
-                    PublishPicture("PIC,BMP," + fileName + "," + (kkk + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + bufferString);
+                    //PublishPicture("PIC,BMP," + fileName + "," + (kkk + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + bufferString);
+                    PublishPicture(bufferString);
                 }
 
                 //End Send
-                PublishPicture("PIC,BMP," + fileName + "," + (PicPageSize + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + "=====");
+                //PublishPicture("PIC,BMP," + fileName + "," + (PicPageSize + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + "=====");
+                PublishPicture("=====");
             }
         }
 
