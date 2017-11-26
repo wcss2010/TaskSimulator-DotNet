@@ -74,6 +74,7 @@ namespace TaskSimulator
             // create client instance 
             taskSocket = new RobotTaskSocket(RobotFactory.Simulator.UserDict["test1"],"boat.mqtt.iot.bj.baidubce.com", 1884,"boat/boat_0001", "8yLSsRabuknL6YI/vRPP874+QMbPMiho6Tir21W9zo4=");
             taskSocket.BoatMoveLimit = RobotFactory.StepWithSecond * 15;
+            taskSocket.DefaultCameraMonitorId = "C1";
         }
 
         void RobotFactory_OnShipMoveEvent(object sender, UIActionEventArgs args)
@@ -90,10 +91,10 @@ namespace TaskSimulator
                             double lng = double.Parse(args.Objects["lng"].ToString());
 
                             //Send Board GPS Position
-                            if (EnabledAutoSendBoardPosition)
+                            if (taskSocket.EnabledAutoSendBoardPosition)
                             {
                                 //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
-                                SendGPSPosition(lat, lng);
+                                taskSocket.PublishBoatPos(lat, lng);
                             }
 
                             GMarkerGoogle marker = null;
@@ -162,7 +163,7 @@ namespace TaskSimulator
 
         void TaskProcessor_OnTaskCompleteEvent(object sender, TaskSimulatorLib.Processors.Task.TaskCompleteArgs args)
         {
-            SendMessageTo("NOTICE=DESTINATION ARRIVED");
+            taskSocket.PublishCommand("NOTICE=DESTINATION ARRIVED");
 
             if (IsHandleCreated)
             {
@@ -288,9 +289,10 @@ namespace TaskSimulator
 
         private void trSendPic_Tick(object sender, EventArgs e)
         {
-            if (EnabledAutoSendBoardPic)
+            if (taskSocket.EnabledAutoSendBoardPic)
             {
-                client_MqttMsgPublishReceived(mqttClient, new MqttMsgPublishEventArgs(string.Empty, Encoding.UTF8.GetBytes("GET PIC"), false, 0x00, false));
+                Bitmap b12111 = (Bitmap)taskSocket.RobotUser.SupportedMonitor[taskSocket.DefaultCameraMonitorId].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
+                taskSocket.PublishPicture(b12111);
             }
         }
     }
