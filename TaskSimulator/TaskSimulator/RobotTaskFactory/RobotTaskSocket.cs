@@ -219,7 +219,7 @@ namespace TaskSimulator.RobotTaskFactory
                 }
 
                 //End Send
-                PublishPicture("PIC,BMP," + fileName + "," + (PicPageSize + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + "=======================");
+                PublishPicture("PIC,BMP," + fileName + "," + (PicPageSize + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + "=====");
             }
         }
 
