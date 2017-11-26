@@ -311,8 +311,92 @@ namespace TaskSimulator.RobotTaskFactory
 
             //打印日志
             TaskSimulatorLib.SimulatorObject.logger.Debug("机器人:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "收到消息 = " + receiveString + " 来自主题 " + e.Topic);
-        
-            
+
+            if (string.IsNullOrEmpty(receiveString))
+            {
+                return;
+            }
+            else
+            {
+                //Reply OK
+                PublishCommand("ACK");
+
+                if (receiveString.Trim().StartsWith("GET WATER TEMP"))
+                {
+                    //水温
+                    PublishWaterTemp(23.2);
+                }
+                else if (receiveString.Trim().StartsWith("GET AIR TEMP"))
+                {
+                    //气温
+                    PublishAirTemp(23.2);
+                }
+                else if (receiveString.Trim().StartsWith("GET WIND SPEED"))
+                {
+                    //风速
+                    PublishWindSpeed(3.6);
+                }
+                else if (receiveString.Trim().StartsWith("GET WIND DIR"))
+                {
+                    //风向
+                    PublishWindDir(22.5);
+                }
+                else if (receiveString.Trim().StartsWith("GET BOAT POS"))
+                {
+                    //船经纬度
+                    //Get GPS
+                    double lat = ((GPSMonitor)RobotUser.SupportedMonitor[RobotFactory.Monitor_GPS]).Lat;
+                    double lng = ((GPSMonitor)RobotUser.SupportedMonitor[RobotFactory.Monitor_GPS]).Lng;
+
+                    //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
+                    PublishBoatPos(lat, lng);
+                }
+                else if (receiveString.Trim().StartsWith("GET BOAT SPEED"))
+                {
+                    //船速
+                    PublishBoatSpeed(3.2);
+                }
+                else if (receiveString.Trim().StartsWith("GET BOAT SAIL DIR"))
+                {
+                    //船航向
+                    PublishBoatSailDir(123.3);
+                }
+                else if (receiveString.Trim().StartsWith("GET BOAT MAIN BATT VOL"))
+                {
+                    //主电池电压
+                    PublishBoatMainBattVol(25.3);
+                }
+                else if (receiveString.Trim().StartsWith("GET PIC"))
+                {
+                    //图片
+                    Bitmap b12111 = (Bitmap)RobotUser.SupportedMonitor[DefaultCameraMonitorId].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
+                    PublishPicture(b12111);
+                }
+                else if (receiveString.Trim().StartsWith("SET BOAT MOTOR ON"))
+                {
+                    //打开船动力
+                }
+                else if (receiveString.Trim().StartsWith("SET BOAT MOTOR OFF"))
+                {
+                    //关闭船动力
+                }
+                else if (receiveString.Trim().StartsWith("SET BOAT SPEED"))
+                {
+                    //设置船速度
+                }
+                else if (receiveString.Trim().StartsWith("SET BOAT DEST"))
+                {
+                    //设置船的目的地的经纬度
+                }
+                else if (receiveString.Trim().StartsWith("SET BOAT UPDATE INTERVAL"))
+                {
+                    //设定船发送自身信息的时间间隔（秒），=0表示不发送
+                }
+                else if (receiveString.Trim().StartsWith("SET PIC UPDATE INTERVAL"))
+                {
+                    //设定船发送图片信息的时间间隔（秒），0表示不发送
+                }
+            }
         }
         
         /// <summary>
@@ -344,5 +428,7 @@ namespace TaskSimulator.RobotTaskFactory
         {
             TaskSimulatorLib.SimulatorObject.logger.Debug("机器人:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "连接已断开");
         }
+
+        public string DefaultCameraMonitorId { get; set; }
     }
 }
