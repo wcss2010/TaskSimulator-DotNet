@@ -120,32 +120,54 @@ namespace TaskSimulator.RobotTaskFactory
             Client.Publish(subjects, Encoding.UTF8.GetBytes(strValues), qosLevels[0], false);
         }
 
-        // sub后的操作
+        /// <summary>
+        /// 订阅ListenSubject后的操作
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         static void client_MqttMsgSubscribed(object sender, MqttMsgSubscribedEventArgs e)
         {
             Console.WriteLine("Subscribed for id = " + e.MessageId);
         }
-        // 接受消息后的操作
+
+        /// <summary>
+        /// 接受消息后的操作
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         static void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
             Console.WriteLine("Received = " + Encoding.UTF8.GetString(e.Message) + " on topic " + e.Topic);
         }
-        // 发布消息后的操作
+        
+        /// <summary>
+        /// 发布消息后的操作
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         static void client_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
         {
             Console.WriteLine("MessageId = " + e.MessageId + " Published = " + e.IsPublished);
         }
-        // 关闭连接后的操作
+        
+        /// <summary>
+        /// 关闭连接后的操作
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         static void client_ConnectionClosed(object sender, EventArgs e)
         {
             Console.WriteLine("connect closed");
         }
-        // 取消sub后的操作
+        
+        /// <summary>
+        /// 取消订阅ListenSubject后的操作
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         static void client_MqttMsgUnsubscribed(object sender, MqttMsgUnsubscribedEventArgs e)
         {
             Console.WriteLine("connect closed");
         }
-
-
     }
 }
