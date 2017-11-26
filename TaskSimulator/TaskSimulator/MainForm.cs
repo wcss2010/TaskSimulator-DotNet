@@ -57,7 +57,7 @@ namespace TaskSimulator
             RobotFactory.VirtualCameraImageWidth = 400;
             RobotFactory.VirtualCameraImageFont = new Font("宋体", 18);
 
-            RobotFactory.CreateRobot("test1", "测试无人船1", 21.2120, 133.4603, virtualCameras.ToArray());
+            //RobotFactory.CreateRobot("test1", "测试无人船1", 21.2120, 133.4603, virtualCameras.ToArray());
             //RobotFactory.CreateRobot("test2", "测试无人船2", 16.2120, 133.4603, virtualCameras.ToArray());
             //RobotFactory.CreateRobot("test3", "测试无人船3", 16.2120, 138.4603, virtualCameras.ToArray());
 
@@ -65,14 +65,14 @@ namespace TaskSimulator
             //RobotFactory.CreateRobot("test5", "测试无人船5", 16.2120, 128.4603, virtualCameras.ToArray());
             //RobotFactory.CreateRobot("test6", "测试无人船6", 21.2120, 138.4603, virtualCameras.ToArray());
 
-            //RobotFactory.CreateRobot("test7", "测试无人船7", 26.2120, 129.4603, virtualCameras.ToArray());
+            RobotFactory.CreateRobot("test7", "测试无人船7", 26.2120, 129.4603, virtualCameras.ToArray());
             //RobotFactory.CreateRobot("test8", "测试无人船8", 26.2120, 134.4603, virtualCameras.ToArray());
             //RobotFactory.CreateRobot("test9", "测试无人船9", 26.2120, 139.4603, virtualCameras.ToArray());
 
             //RobotFactory.CreateRobot("test10", "测试无人船10", 30.2120, 135.4603, virtualCameras.ToArray());
 
             // create client instance 
-            taskSocket = new RobotTaskSocket(RobotFactory.Simulator.UserDict["test1"],"boat.mqtt.iot.bj.baidubce.com", 1884,"boat/boat_0001", "8yLSsRabuknL6YI/vRPP874+QMbPMiho6Tir21W9zo4=");
+            taskSocket = new RobotTaskSocket(RobotFactory.Simulator.UserDict["test7"], "47.104.7.244", 61614, "admin", "password");
             taskSocket.BoatMoveLimit = RobotFactory.StepWithSecond * 15;
             taskSocket.DefaultCameraMonitorId = "C1";
         }
@@ -185,7 +185,8 @@ namespace TaskSimulator
             //{
             //    posList.Add(new double[] { lat, lng - (RobotFactory.StepWithSecond * kkk) });
             //}
-            RobotFactory.StartMoveShipWithRect("test1", RobotFactory.StepWithSecond * 12);
+            //RobotFactory.StartMoveShipWithRect("test1", RobotFactory.StepWithSecond * 12);
+            taskSocket.RandomRectOrRoundTask();
 
             //posList = new List<double[]>();
             //for (int kkk = 0; kkk < 15; kkk++)
