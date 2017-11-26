@@ -167,7 +167,7 @@ namespace TaskSimulator.RobotTaskFactory
             {
                 //Write BMP To Stream
                 MemoryStream ms = new MemoryStream();
-                bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+                bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
                 ms.Position = 0;
 
                 //Convert To Base64
