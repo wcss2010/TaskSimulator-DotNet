@@ -82,7 +82,7 @@ namespace TaskSimulator.RobotTaskFactory
         /// <summary>
         /// 表示船画方框或圆圈时的边长或距离
         /// </summary>
-        public int BoatMoveLimit { get; set; }
+        public double BoatMoveLimit { get; set; }
 
         public RobotTaskSocket(RobotUser user,string ips,int ports,string username,string password)
         {

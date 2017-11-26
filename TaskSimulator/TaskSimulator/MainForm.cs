@@ -24,14 +24,7 @@ namespace TaskSimulator
 {
     public partial class MainForm : Form
     {
-        /// <summary>
-        /// Enabled Send GPS Position
-        /// </summary>
-        private bool EnabledAutoSendBoardPosition = false;
-        /// <summary>
-        /// Enabled Send Pic
-        /// </summary>
-        private bool EnabledAutoSendBoardPic = false;
+        RobotTaskSocket taskSocket = null;
 
         Dictionary<RobotUser, GMarkerGoogle> MarkerDict = new Dictionary<RobotUser, GMarkerGoogle>();
         /// <summary>
@@ -79,193 +72,8 @@ namespace TaskSimulator
             //RobotFactory.CreateRobot("test10", "测试无人船10", 30.2120, 135.4603, virtualCameras.ToArray());
 
             // create client instance 
-            mqttClient = new MqttClient("boat.mqtt.iot.bj.baidubce.com", 1884, true, MqttSslProtocols.TLSv1_0, null, null);
-            mqttClient.ProtocolVersion = MqttProtocolVersion.Version_3_1;
-
-            // register to message received 
-            mqttClient.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
-
-            //connect to server
-            mqttClient.Connect(Guid.NewGuid().ToString(), "boat/boat_0001", "8yLSsRabuknL6YI/vRPP874+QMbPMiho6Tir21W9zo4=", true, 3600);
-
-            // subscribe to the topic "/shore2boat" with QoS 1 
-            mqttClient.Subscribe(new string[] { "/shore2boat" }, new byte[] { MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE });
-
-        }
-
-        /// <summary>
-        /// SendDataToServer
-        /// </summary>
-        /// <param name="strValue"></param>
-        void SendMessageTo(string strValue)
-        {
-            mqttClient.Publish("/boat2shore", Encoding.UTF8.GetBytes(strValue), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
-        }
-
-        /// <summary>
-        /// SendPicToServer
-        /// </summary>
-        /// <param name="strValue"></param>
-        void SendPictureTo(string strValue)
-        {
-            mqttClient.Publish("/picture2shore", Encoding.UTF8.GetBytes(strValue), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
-        }
-
-        void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
-        {
-            try
-            {
-                if (e.Message != null)
-                {
-                    string remoteCommand = Encoding.UTF8.GetString(e.Message);
-                    if (string.IsNullOrEmpty(remoteCommand))
-                    {
-                        //Reply OK
-                        SendMessageTo("ACK");
-
-                        if (remoteCommand.ToUpper().StartsWith("GET PIC"))
-                        {
-                            //Picture
-                            RobotUser du = RobotFactory.Simulator.UserDict["test1"];
-                            Bitmap b1 = (Bitmap)du.SupportedMonitor["C1"].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
-
-                            //PIC,JPEG,IMG_9987,3,5,12776，图片数据
-                            //传输图片，图片格式JPEG，文件名为IMG_9987,当前为第3包，总共5包，本包图片数据长度12776字节，图片数据
-
-                            SendPictureTo(b1);
-                        }
-                        else if (remoteCommand.ToUpper().StartsWith("GET BOAT POS"))
-                        {
-                            //Get GPS
-                            double lat = ((GPSMonitor)RobotFactory.Simulator.UserDict["test1"].SupportedMonitor[RobotFactory.Monitor_GPS]).Lat;
-                            double lng = ((GPSMonitor)RobotFactory.Simulator.UserDict["test1"].SupportedMonitor[RobotFactory.Monitor_GPS]).Lng;
-
-                            //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
-                            SendGPSPosition(lat, lng);
-                        }
-                        else if (remoteCommand.ToUpper().StartsWith("GET BOAT SPEED"))
-                        {
-                            //Get SPEED
-                            SendMessageTo("BOAT SPEED=3.2");
-                        }
-                        else if (remoteCommand.ToUpper().StartsWith("SET BOAT UPDATE INTERVAL"))
-                        {
-                            //SET BOAT UPDATE INTERVAL
-                            if (remoteCommand.ToUpper().EndsWith("=0"))
-                            {
-                                //close
-                                EnabledAutoSendBoardPosition = false;
-                            }
-                            else
-                            {
-                                //open
-                                EnabledAutoSendBoardPosition = true;
-                            }
-                        }
-                        else if (remoteCommand.ToUpper().StartsWith("SET PIC UPDATE INTERVAL"))
-                        {
-                            //SET PIC UPDATE INTERVAL
-                            if (remoteCommand.ToUpper().EndsWith("=0"))
-                            {
-                                //close
-                                EnabledAutoSendBoardPic = false;
-                            }
-                            else
-                            {
-                                //open
-                                EnabledAutoSendBoardPic = true;
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                SimulatorObject.logger.Error(ex.ToString());
-            }
-        }
-
-        /// <summary>
-        /// Send Picture
-        /// </summary>
-        /// <param name="b1"></param>
-        private void SendPictureTo(Bitmap b1)
-        {
-            //PIC,JPEG,IMG_9987,3,5,12776，图片数据
-            //传输图片，图片格式JPEG，文件名为IMG_9987,当前为第3包，总共5包，本包图片数据长度12776字节，图片数据
-
-            if (b1 != null)
-            {
-                //Write BMP To Stream
-                MemoryStream ms = new MemoryStream();
-                b1.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
-                ms.Position = 0;
-
-                //Convert To Base64
-                byte[] total = new byte[ms.Length];
-                ms.Read(total, 0, total.Length);
-                ms = new MemoryStream();
-                total = Encoding.UTF8.GetBytes(Convert.ToBase64String(total));
-                ms.Write(total, 0, total.Length);
-                ms.Position = 0;
-
-                //Count PageSize
-                int MaxPicUnitSize = 28 * 1000;
-                int PicPageSize = 0;
-                if (ms.Length > MaxPicUnitSize)
-                {
-                    //Need Split
-                    PicPageSize = (int)ms.Length / MaxPicUnitSize;
-                    if (ms.Length % MaxPicUnitSize > 0)
-                    {
-                        PicPageSize++;
-                    }
-                }
-                else
-                {
-                    //No Split
-                    PicPageSize = 1;
-                }
-
-                //Send Pic Page
-                string fileName = "BMP_" + Guid.NewGuid().ToString();
-                for (int kkk = 0; kkk < PicPageSize; kkk++)
-                {
-                    //Read Pic Unit
-                    byte[] buffer = new byte[MaxPicUnitSize];
-                    if (ms.Length - ms.Position >= buffer.Length)
-                    {
-                        ms.Read(buffer, 0, buffer.Length);
-                    }
-                    else
-                    {
-                        ms.Read(buffer, 0, (int)(ms.Length - ms.Position));
-                    }
-
-                    //Convert To String
-                    string bufferString = Encoding.UTF8.GetString(buffer);
-
-                    //SendTo
-                    SendPictureTo("PIC,BMP," + fileName + "," + (kkk + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + bufferString);
-                }
-
-                //End Send
-                SendPictureTo("PIC,BMP," + fileName + "," + (PicPageSize + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + "=======================");
-            }
-        }
-
-        /// <summary>
-        /// Convert GPSPosition To 南纬S，北纬用N，东经用E，西经用W
-        /// </summary>
-        /// <param name="lat"></param>
-        /// <param name="lng"></param>
-        private void SendGPSPosition(double lat, double lng)
-        {
-            //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
-            string latString = Math.Abs(lat).ToString() + (lat > 0 ? "N" : (lat == 0 ? string.Empty : "S"));
-            string lngString = Math.Abs(lng).ToString() + (lng > 0 ? "E" : (lng == 0 ? string.Empty : "W"));
-
-            SendMessageTo("BOAT POS=" + latString + "," + lngString);
+            taskSocket = new RobotTaskSocket(RobotFactory.Simulator.UserDict["test1"],"boat.mqtt.iot.bj.baidubce.com", 1884,"boat/boat_0001", "8yLSsRabuknL6YI/vRPP874+QMbPMiho6Tir21W9zo4=");
+            taskSocket.BoatMoveLimit = RobotFactory.StepWithSecond * 15;
         }
 
         void RobotFactory_OnShipMoveEvent(object sender, UIActionEventArgs args)
@@ -457,6 +265,8 @@ namespace TaskSimulator
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             RobotFactory.Simulator.Stop();
+
+            taskSocket.Client.Disconnect();
         }
 
         private void mapControl_OnMarkerClick(GMapMarker item, MouseEventArgs e)
