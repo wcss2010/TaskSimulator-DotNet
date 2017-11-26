@@ -70,6 +70,15 @@ namespace TaskSimulator.RobotTaskFactory
         /// </summary>
         public string ClientId { get; set; }
 
+        /// <summary>
+        /// Enabled Send GPS Position
+        /// </summary>
+        public bool EnabledAutoSendBoardPosition = false;
+        /// <summary>
+        /// Enabled Send Pic
+        /// </summary>
+        public bool EnabledAutoSendBoardPic = false;
+
         public RobotTaskSocket(RobotUser user,string ips,int ports,string username,string password)
         {
             //记录项
@@ -375,10 +384,12 @@ namespace TaskSimulator.RobotTaskFactory
                 else if (receiveString.Trim().StartsWith("SET BOAT MOTOR ON"))
                 {
                     //打开船动力
+                    OpenBoatTask();
                 }
                 else if (receiveString.Trim().StartsWith("SET BOAT MOTOR OFF"))
                 {
                     //关闭船动力
+                    CloseBoatTask();
                 }
                 else if (receiveString.Trim().StartsWith("SET BOAT SPEED"))
                 {
@@ -391,12 +402,44 @@ namespace TaskSimulator.RobotTaskFactory
                 else if (receiveString.Trim().StartsWith("SET BOAT UPDATE INTERVAL"))
                 {
                     //设定船发送自身信息的时间间隔（秒），=0表示不发送
+                    //SET BOAT UPDATE INTERVAL
+                    if (receiveString.ToUpper().EndsWith("=0"))
+                    {
+                        //close
+                        EnabledAutoSendBoardPosition = false;
+                    }
+                    else
+                    {
+                        //open
+                        EnabledAutoSendBoardPosition = true;
+                    }
                 }
                 else if (receiveString.Trim().StartsWith("SET PIC UPDATE INTERVAL"))
                 {
                     //设定船发送图片信息的时间间隔（秒），0表示不发送
+                    //SET PIC UPDATE INTERVAL
+                    if (receiveString.ToUpper().EndsWith("=0"))
+                    {
+                        //close
+                        EnabledAutoSendBoardPic = false;
+                    }
+                    else
+                    {
+                        //open
+                        EnabledAutoSendBoardPic = true;
+                    }
                 }
             }
+        }
+
+        private void CloseBoatTask()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OpenBoatTask()
+        {
+            throw new NotImplementedException();
         }
         
         /// <summary>
