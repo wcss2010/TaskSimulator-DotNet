@@ -85,7 +85,7 @@ namespace TaskSimulator.RobotTaskFactory
         /// </summary>
         public double BoatMoveLimit { get; set; }
 
-        public RobotTaskSocket(RobotUser user,string ips,int ports,string username,string password)
+        public RobotTaskSocket(RobotUser user,string ips,int ports,string username,string password,bool IsTls)
         {
             //记录项
             this.RobotUser = user;
@@ -98,7 +98,7 @@ namespace TaskSimulator.RobotTaskFactory
             //连接服务器
             Client = new MqttClient(RemoteIP,
                                                 RemotePort,
-                                                true, // 开启TLS
+                                                IsTls, // 开启TLS
                                                 null,
                                                 null,
                                                 MqttSslProtocols.TLSv1_0 // TLS版本

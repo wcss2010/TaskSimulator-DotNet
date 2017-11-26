@@ -72,7 +72,7 @@ namespace TaskSimulator
             //RobotFactory.CreateRobot("test10", "测试无人船10", 30.2120, 135.4603, virtualCameras.ToArray());
 
             // create client instance 
-            taskSocket = new RobotTaskSocket(RobotFactory.Simulator.UserDict["test7"], "47.104.7.244", 61614, "admin", "password");
+            taskSocket = new RobotTaskSocket(RobotFactory.Simulator.UserDict["test7"], "47.104.7.244", 61613, "admin", "password",false);
             taskSocket.BoatMoveLimit = RobotFactory.StepWithSecond * 15;
             taskSocket.DefaultCameraMonitorId = "C1";
         }
