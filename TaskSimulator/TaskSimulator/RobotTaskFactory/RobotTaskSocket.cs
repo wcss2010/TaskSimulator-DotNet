@@ -110,6 +110,16 @@ namespace TaskSimulator.RobotTaskFactory
             Client.Subscribe(new string[] { ListenSubject }, qosLevels); // sub 的qos=1
         }
 
+        /// <summary>
+        /// 发布消息
+        /// </summary>
+        /// <param name="subjects"></param>
+        /// <param name="strValues"></param>
+        public void Publish(string subjects,string strValues)
+        {
+            Client.Publish(subjects, Encoding.UTF8.GetBytes(strValues), qosLevels[0], false);
+        }
+
         // sub后的操作
         static void client_MqttMsgSubscribed(object sender, MqttMsgSubscribedEventArgs e)
         {
