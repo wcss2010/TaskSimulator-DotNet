@@ -384,20 +384,22 @@ namespace TaskSimulator.RobotTaskFactory
                 else if (receiveString.Trim().StartsWith("SET BOAT MOTOR ON"))
                 {
                     //打开船动力
-                    OpenBoatTask();
+                    OpenBoatEngine();
                 }
                 else if (receiveString.Trim().StartsWith("SET BOAT MOTOR OFF"))
                 {
                     //关闭船动力
-                    CloseBoatTask();
+                    CloseBoatEngine();
                 }
                 else if (receiveString.Trim().StartsWith("SET BOAT SPEED"))
                 {
                     //设置船速度
+                    SetBoatSpeed(receiveString);
                 }
                 else if (receiveString.Trim().StartsWith("SET BOAT DEST"))
                 {
                     //设置船的目的地的经纬度
+                    SetBoatDest(receiveString);
                 }
                 else if (receiveString.Trim().StartsWith("SET BOAT UPDATE INTERVAL"))
                 {
@@ -432,12 +434,36 @@ namespace TaskSimulator.RobotTaskFactory
             }
         }
 
-        private void CloseBoatTask()
+        /// <summary>
+        /// 设置船的目的地
+        /// </summary>
+        /// <param name="receiveString"></param>
+        public void SetBoatDest(string receiveString)
         {
             throw new NotImplementedException();
         }
 
-        private void OpenBoatTask()
+        /// <summary>
+        /// 设置船速度
+        /// </summary>
+        /// <param name="receiveString"></param>
+        public void SetBoatSpeed(string receiveString)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 关闭船动力
+        /// </summary>
+        public void CloseBoatEngine()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 打开船动力
+        /// </summary>
+        public void OpenBoatEngine()
         {
             throw new NotImplementedException();
         }
