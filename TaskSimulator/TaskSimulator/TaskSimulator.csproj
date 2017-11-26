@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RobotTaskFactory\RobotFactory.cs" />
+    <Compile Include="RobotTaskFactory\RobotTaskSocket.cs" />
     <Compile Include="TestAStarForm.cs">
       <SubType>Form</SubType>
     </Compile>
