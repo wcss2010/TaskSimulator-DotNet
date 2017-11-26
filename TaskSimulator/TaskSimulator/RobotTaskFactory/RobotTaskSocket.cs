@@ -239,7 +239,17 @@ namespace TaskSimulator.RobotTaskFactory
         /// <param name="e"></param>
         void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
-            TaskSimulatorLib.SimulatorObject.logger.Debug("机器人:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "收到消息 = " + Encoding.UTF8.GetString(e.Message) + " 来自主题 " + e.Topic);
+            //接收消息
+            string receiveString = string.Empty;
+            if (e.Message != null && e.Message.Length > 0)
+            {
+                receiveString = Encoding.UTF8.GetString(e.Message);
+            }
+
+            //打印日志
+            TaskSimulatorLib.SimulatorObject.logger.Debug("机器人:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "收到消息 = " + receiveString + " 来自主题 " + e.Topic);
+        
+            
         }
         
         /// <summary>
