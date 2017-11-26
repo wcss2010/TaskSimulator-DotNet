@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -121,11 +122,112 @@ namespace TaskSimulator.RobotTaskFactory
         }
 
         /// <summary>
+        /// 发布消息到服务器
+        /// </summary>
+        /// <param name="strValue"></param>
+        public void PublishCommand(string strValue)
+        {
+            Publish(CommandSendSubject, strValue);
+        }
+
+        /// <summary>
+        /// 发布图片到服务器
+        /// </summary>
+        /// <param name="strValue"></param>
+        public void PublishPicture(string strValue)
+        {
+            Publish(PictureSendSubject, strValue);
+        }
+
+        /// <summary>
+        /// Send Picture
+        /// </summary>
+        /// <param name="bmp"></param>
+        public void PublishPicture(Bitmap bmp)
+        {
+            //PIC,JPEG,IMG_9987,3,5,12776，图片数据
+            //传输图片，图片格式JPEG，文件名为IMG_9987,当前为第3包，总共5包，本包图片数据长度12776字节，图片数据
+
+            if (bmp != null)
+            {
+                //Write BMP To Stream
+                MemoryStream ms = new MemoryStream();
+                bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+                ms.Position = 0;
+
+                //Convert To Base64
+                byte[] total = new byte[ms.Length];
+                ms.Read(total, 0, total.Length);
+                ms = new MemoryStream();
+                total = Encoding.UTF8.GetBytes(Convert.ToBase64String(total));
+                ms.Write(total, 0, total.Length);
+                ms.Position = 0;
+
+                //Count PageSize
+                int MaxPicUnitSize = 28 * 1000;
+                int PicPageSize = 0;
+                if (ms.Length > MaxPicUnitSize)
+                {
+                    //Need Split
+                    PicPageSize = (int)ms.Length / MaxPicUnitSize;
+                    if (ms.Length % MaxPicUnitSize > 0)
+                    {
+                        PicPageSize++;
+                    }
+                }
+                else
+                {
+                    //No Split
+                    PicPageSize = 1;
+                }
+
+                //Send Pic Page
+                string fileName = "BMP_" + Guid.NewGuid().ToString();
+                for (int kkk = 0; kkk < PicPageSize; kkk++)
+                {
+                    //Read Pic Unit
+                    byte[] buffer = new byte[MaxPicUnitSize];
+                    if (ms.Length - ms.Position >= buffer.Length)
+                    {
+                        ms.Read(buffer, 0, buffer.Length);
+                    }
+                    else
+                    {
+                        ms.Read(buffer, 0, (int)(ms.Length - ms.Position));
+                    }
+
+                    //Convert To String
+                    string bufferString = Encoding.UTF8.GetString(buffer);
+
+                    //SendTo
+                    PublishPicture("PIC,BMP," + fileName + "," + (kkk + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + bufferString);
+                }
+
+                //End Send
+                PublishPicture("PIC,BMP," + fileName + "," + (PicPageSize + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + "=======================");
+            }
+        }
+
+        /// <summary>
+        /// Convert GPSPosition To 南纬S，北纬用N，东经用E，西经用W
+        /// </summary>
+        /// <param name="lat"></param>
+        /// <param name="lng"></param>
+        public void PublishGPSPosition(double lat, double lng)
+        {
+            //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
+            string latString = Math.Abs(lat).ToString() + (lat > 0 ? "N" : (lat == 0 ? string.Empty : "S"));
+            string lngString = Math.Abs(lng).ToString() + (lng > 0 ? "E" : (lng == 0 ? string.Empty : "W"));
+
+            PublishCommand("BOAT POS=" + latString + "," + lngString);
+        }
+
+        /// <summary>
         /// 订阅ListenSubject后的操作
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        static void client_MqttMsgSubscribed(object sender, MqttMsgSubscribedEventArgs e)
+        void client_MqttMsgSubscribed(object sender, MqttMsgSubscribedEventArgs e)
         {
             Console.WriteLine("Subscribed for id = " + e.MessageId);
         }
@@ -135,7 +237,7 @@ namespace TaskSimulator.RobotTaskFactory
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        static void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
+        void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
             Console.WriteLine("Received = " + Encoding.UTF8.GetString(e.Message) + " on topic " + e.Topic);
         }
@@ -145,7 +247,7 @@ namespace TaskSimulator.RobotTaskFactory
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        static void client_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
+        void client_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
         {
             Console.WriteLine("MessageId = " + e.MessageId + " Published = " + e.IsPublished);
         }
@@ -155,7 +257,7 @@ namespace TaskSimulator.RobotTaskFactory
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        static void client_ConnectionClosed(object sender, EventArgs e)
+        void client_ConnectionClosed(object sender, EventArgs e)
         {
             Console.WriteLine("connect closed");
         }
@@ -165,7 +267,7 @@ namespace TaskSimulator.RobotTaskFactory
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        static void client_MqttMsgUnsubscribed(object sender, MqttMsgUnsubscribedEventArgs e)
+        void client_MqttMsgUnsubscribed(object sender, MqttMsgUnsubscribedEventArgs e)
         {
             Console.WriteLine("connect closed");
         }
