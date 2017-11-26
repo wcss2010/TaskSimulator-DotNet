@@ -229,7 +229,7 @@ namespace TaskSimulator.RobotTaskFactory
         /// <param name="e"></param>
         void client_MqttMsgSubscribed(object sender, MqttMsgSubscribedEventArgs e)
         {
-            Console.WriteLine("Subscribed for id = " + e.MessageId);
+            TaskSimulatorLib.SimulatorObject.logger.Debug("机器人:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "已订阅的主题的Id = " + e.MessageId);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace TaskSimulator.RobotTaskFactory
         /// <param name="e"></param>
         void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
-            Console.WriteLine("Received = " + Encoding.UTF8.GetString(e.Message) + " on topic " + e.Topic);
+            TaskSimulatorLib.SimulatorObject.logger.Debug("机器人:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "收到消息 = " + Encoding.UTF8.GetString(e.Message) + " 来自主题 " + e.Topic);
         }
         
         /// <summary>
@@ -249,7 +249,7 @@ namespace TaskSimulator.RobotTaskFactory
         /// <param name="e"></param>
         void client_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
         {
-            Console.WriteLine("MessageId = " + e.MessageId + " Published = " + e.IsPublished);
+            TaskSimulatorLib.SimulatorObject.logger.Debug("机器人:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "消息ID = " + e.MessageId + " 是否发布成功 = " + (e.IsPublished ? "成功" : "失败"));
         }
         
         /// <summary>
@@ -259,7 +259,7 @@ namespace TaskSimulator.RobotTaskFactory
         /// <param name="e"></param>
         void client_ConnectionClosed(object sender, EventArgs e)
         {
-            Console.WriteLine("connect closed");
+            TaskSimulatorLib.SimulatorObject.logger.Debug("机器人:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "连接已断开"); ;
         }
         
         /// <summary>
@@ -269,7 +269,7 @@ namespace TaskSimulator.RobotTaskFactory
         /// <param name="e"></param>
         void client_MqttMsgUnsubscribed(object sender, MqttMsgUnsubscribedEventArgs e)
         {
-            Console.WriteLine("connect closed");
+            TaskSimulatorLib.SimulatorObject.logger.Debug("机器人:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "连接已断开");
         }
     }
 }
