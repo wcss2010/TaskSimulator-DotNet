@@ -37,16 +37,16 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(940, 173);
+            this.groupBox1.Size = new System.Drawing.Size(940, 137);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
             // tbLogs
             // 
             this.tbLogs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLogs.Location = new System.Drawing.Point(0, 173);
+            this.tbLogs.Location = new System.Drawing.Point(0, 137);
             this.tbLogs.Name = "tbLogs";
-            this.tbLogs.Size = new System.Drawing.Size(940, 352);
+            this.tbLogs.Size = new System.Drawing.Size(940, 388);
             this.tbLogs.TabIndex = 1;
             this.tbLogs.Text = "";
             // 
