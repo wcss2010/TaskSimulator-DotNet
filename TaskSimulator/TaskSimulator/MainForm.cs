@@ -28,6 +28,36 @@ namespace TaskSimulator
             OpenAllRobot();
         }
 
+        /// <summary>
+        /// 显示一段提示文字(UI操作)
+        /// </summary>
+        /// <param name="txt"></param>
+        protected void ShowLogTextWithUI(string txt)
+        {
+            tbLogs.AppendText(DateTime.Now.ToString() + ":" + txt);
+
+            if (tbLogs.Text.Length > 0)
+            {
+                tbLogs.SelectionStart = tbLogs.Text.Length; //Set the current caret position at the end
+                tbLogs.ScrollToCaret(); //Now scroll it automatically
+            }
+        }
+
+        /// <summary>
+        /// 显示一段提示文字(线程中)
+        /// </summary>
+        /// <param name="txt"></param>
+        protected void ShowLogTextWithThread(string txt)
+        {
+            if (IsHandleCreated)
+            {
+                this.Invoke(new MethodInvoker(delegate()
+                    {
+                        ShowLogTextWithUI(txt);
+                    }));
+            }
+        }
+
         private void OpenAllRobot()
         {
             
