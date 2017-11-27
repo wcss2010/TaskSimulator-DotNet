@@ -1,6 +1,6 @@
 ﻿namespace TaskSimulator
 {
-    partial class MainForm
+    partial class GISTempForm
     {
         /// <summary>
         /// 必需的设计器变量。

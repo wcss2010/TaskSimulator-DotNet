@@ -22,7 +22,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace TaskSimulator
 {
-    public partial class MainForm : Form
+    public partial class GISTempForm : Form
     {
         RobotTaskSocket taskSocket = null;
 
@@ -32,7 +32,7 @@ namespace TaskSimulator
         /// </summary>
         private GMapOverlay objects = null;
 
-        public MainForm()
+        public GISTempForm()
         {
             InitializeComponent();
 
