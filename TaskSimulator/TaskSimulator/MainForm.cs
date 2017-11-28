@@ -47,7 +47,45 @@ namespace TaskSimulator
         /// <param name="e"></param>
         void initWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            
+            try
+            {
+                //载入基本配置
+                RobotFactory.StepWithSecond = RobotListConfig.StepWithSecond;
+                RobotFactory.VirtualCameraImageWidth = RobotListConfig.VirtualCameraPictureWidth;
+                RobotFactory.VirtualCameraImageHeight = RobotListConfig.VirtualCameraPictureHeight;
+                RobotFactory.VirtualCameraImageFont = new Font(RobotListConfig.VirtualCameraHintTextFontName, RobotListConfig.VirtualCameraHintTextFontSize);
+
+                if (RobotListConfig.RobotList != null && RobotListConfig.RobotList.Length > 0)
+                {
+                    foreach (VirtualRobotConfig vrc in RobotListConfig.RobotList)
+                    {
+                        ShowLogTextWithThread("正在创建机器人" + vrc.VirtualRobotId + "......");
+                        TaskSimulatorLib.SimulatorObject.logger.Info("正在创建机器人" + vrc.VirtualRobotId + "......");
+
+                        //添加配置字典
+                        VirtualRobotConfigDict[vrc.VirtualRobotId] = vrc;
+
+                        List<KeyValuePair<string, string>> virtualCamerasList = new List<KeyValuePair<string, string>>();
+                        for (int kkk = 0; kkk < RobotListConfig.VirtualCameraCount; kkk++)
+                        {
+                            virtualCamerasList.Add(new KeyValuePair<string, string>("Camera" + kkk, (kkk + 1) + "号摄像头"));
+                        }
+                        //创建机器人
+                        RobotFactory.CreateRobot(vrc.VirtualRobotId, vrc.VirtualRobotName, vrc.DefaultLat, vrc.DefaultLng, virtualCamerasList.ToArray());
+                    
+                        //连接MQTT
+                        RobotTaskSocket robotTaskSocket = new RobotTaskSocket(RobotFactory.Simulator.UserDict[vrc.VirtualRobotId], RobotListConfig.MQTTServerIP, RobotListConfig.MQTTServerPort, vrc.MQTTUser, vrc.MQTTPassword, RobotListConfig.IsTlsModeLoginMQTT);
+                        VirtualRobotSocketDict[vrc.VirtualRobotId] = robotTaskSocket;
+
+                        ShowLogTextWithThread("创建机器人" + vrc.VirtualRobotId + "成功！");
+                        TaskSimulatorLib.SimulatorObject.logger.Info("创建机器人" + vrc.VirtualRobotId + "成功！");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TaskSimulatorLib.SimulatorObject.logger.Error(ex.ToString());
+            }
         }
 
         protected override void OnLoad(EventArgs e)

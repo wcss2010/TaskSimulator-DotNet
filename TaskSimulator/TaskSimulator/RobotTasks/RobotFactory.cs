@@ -63,7 +63,7 @@ namespace TaskSimulator.RobotTasks
         /// <summary>
         /// 每秒移动步长
         /// </summary>
-        public const double StepWithSecond = 0.15;
+        public static double StepWithSecond = 0.15;
 
         /// <summary>
         /// 虚拟摄像头图片宽度
