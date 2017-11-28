@@ -195,7 +195,12 @@ namespace TaskSimulator
             try
             {
                 VirtualRobotConfig VRConfig = VirtualRobotConfigDict[args.User.UserCode];
-                RobotTaskSocket taskSocket = VirtualRobotSocketDict[args.User.UserCode];
+
+                RobotTaskSocket taskSocket = null;
+                if (VirtualRobotSocketDict.ContainsKey(args.User.UserCode))
+                {
+                    taskSocket = VirtualRobotSocketDict[args.User.UserCode];
+                }
 
                 if (args.ActionName.Equals(RobotFactory.UIAction_Move))
                 {     
@@ -203,10 +208,13 @@ namespace TaskSimulator
                      double lng = double.Parse(args.Objects["lng"].ToString());
 
                      //Send Board GPS Position
-                     if (taskSocket.EnabledAutoSendBoardPosition)
+                     if (taskSocket != null)
                      {
-                          //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
-                          taskSocket.PublishBoatPos(lat, lng);
+                         if (taskSocket.EnabledAutoSendBoardPosition)
+                         {
+                             //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
+                             taskSocket.PublishBoatPos(lat, lng);
+                         }
                      }
 
                      ShowLogTextWithThread("无人船" + args.User.UserName + "(" + args.User.UserCode + ") 移动到坐标(" + lat + "," + lng + ")");
