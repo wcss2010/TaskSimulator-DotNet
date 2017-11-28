@@ -20,6 +20,8 @@ namespace TaskSimulator
         /// </summary>
         public static VirtualRobotListConfig RobotListConfig { get; set; }
 
+        public static Dictionary<string, VirtualRobotConfig> VirtualRobotConfigDict = new Dictionary<string, VirtualRobotConfig>(); 
+
         public MainForm()
         {
             InitializeComponent();
@@ -88,7 +90,7 @@ namespace TaskSimulator
                 RobotListConfig.VirtualCameraHintTextFontName = RobotFactory.VirtualCameraImageFont.Name;
                 RobotListConfig.VirtualCameraHintTextFontSize = RobotFactory.VirtualCameraImageFont.Size;
 
-                RobotListConfig.RobotList = new VirtualRobot[] { new VirtualRobot() };
+                RobotListConfig.RobotList = new VirtualRobotConfig[] { new VirtualRobotConfig() };
                 RobotListConfig.RobotList[0].VirtualRobotId = "test1";
                 RobotListConfig.RobotList[0].VirtualRobotName = "测试无人船1";
                 RobotListConfig.RobotList[0].EnabledAutoReportGpsLocation = true;
@@ -193,7 +195,7 @@ namespace TaskSimulator
         /// <summary>
         /// 机器人列表
         /// </summary>
-        public VirtualRobot[] RobotList { get; set; }
+        public VirtualRobotConfig[] RobotList { get; set; }
     }
 
     /// <summary>
@@ -228,7 +230,7 @@ namespace TaskSimulator
     }
 
     [Serializable]
-    public class VirtualRobot
+    public class VirtualRobotConfig
     {
         /// <summary>
         /// 虚拟机器人ID
