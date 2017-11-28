@@ -94,8 +94,8 @@ namespace TaskSimulator
                 RobotListConfig.RobotList[0].EnabledAutoReportGpsLocation = true;
                 RobotListConfig.RobotList[0].EnabledAutoUploadVirtualCameraPicture = true;
                 RobotListConfig.RobotList[0].EnabledStartAndStopTaskWithOpenOrCloseEngine = false;
-                RobotListConfig.RobotList[0].MQTTUser = "";
-                RobotListConfig.RobotList[0].MQTTPassword = "";
+                RobotListConfig.RobotList[0].MQTTUser = "gs";
+                RobotListConfig.RobotList[0].MQTTPassword = "gs_password";
 
                 RobotListConfig.RobotList[0].DefaultLat = 26.2120;
                 RobotListConfig.RobotList[0].DefaultLng = 129.4603;
