@@ -68,7 +68,7 @@ namespace TaskSimulator
                         TaskSimulatorLib.SimulatorObject.logger.Info("正在创建机器人" + vrc.VirtualRobotId + "......");
 
                         //添加配置字典
-                        VirtualRobotConfigDict[vrc.VirtualRobotId] = vrc;
+                        VirtualRobotConfigDict.Add(vrc.VirtualRobotId, vrc);
 
                         List<KeyValuePair<string, string>> virtualCamerasList = new List<KeyValuePair<string, string>>();
                         for (int kkk = 0; kkk < RobotListConfig.VirtualCameraCount; kkk++)
@@ -84,7 +84,7 @@ namespace TaskSimulator
                         robotTaskSocket.DefaultCameraMonitorId = virtualCamerasList[0].Key;
                         robotTaskSocket.EnabledAutoSendBoardPosition = vrc.EnabledAutoReportGpsLocation;
                         robotTaskSocket.EnabledAutoSendBoardPic = vrc.EnabledAutoUploadVirtualCameraPicture;
-                        VirtualRobotSocketDict[vrc.VirtualRobotId] = robotTaskSocket;
+                        VirtualRobotSocketDict.Add(vrc.VirtualRobotId, robotTaskSocket);
 
                         ShowLogTextWithThread("创建机器人" + vrc.VirtualRobotId + "成功！");
                         TaskSimulatorLib.SimulatorObject.logger.Info("创建机器人" + vrc.VirtualRobotId + "成功！");
