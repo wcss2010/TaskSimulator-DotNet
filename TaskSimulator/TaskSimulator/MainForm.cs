@@ -16,6 +16,11 @@ namespace TaskSimulator
     public partial class MainForm : Form
     {
         /// <summary>
+        /// 最大日志显示行
+        /// </summary>
+        public const int Max_Log_Line_Count = 800;
+
+        /// <summary>
         /// 机器人配置
         /// </summary>
         public static VirtualRobotListConfig RobotListConfig { get; set; }
@@ -72,7 +77,7 @@ namespace TaskSimulator
                         }
                         //创建机器人
                         RobotFactory.CreateRobot(vrc.VirtualRobotId, vrc.VirtualRobotName, vrc.DefaultLat, vrc.DefaultLng, virtualCamerasList.ToArray());
-                    
+
                         //连接MQTT
                         RobotTaskSocket robotTaskSocket = new RobotTaskSocket(RobotFactory.Simulator.UserDict[vrc.VirtualRobotId], RobotListConfig.MQTTServerIP, RobotListConfig.MQTTServerPort, vrc.MQTTUser, vrc.MQTTPassword, RobotListConfig.IsTlsModeLoginMQTT);
                         robotTaskSocket.BoatMoveLimit = RobotListConfig.RobotMoveLimit;
@@ -107,6 +112,11 @@ namespace TaskSimulator
         /// <param name="txt"></param>
         protected void ShowLogTextWithUI(string txt)
         {
+            if (tbLogs.Lines != null && tbLogs.Lines.Length >= Max_Log_Line_Count)
+            {
+                tbLogs.Clear();
+            }
+
             tbLogs.AppendText(DateTime.Now.ToString() + ":" + txt + "\n");
 
             if (tbLogs.Text.Length > 0)
@@ -184,7 +194,20 @@ namespace TaskSimulator
                 VirtualRobotConfig VRConfig = VirtualRobotConfigDict[args.User.UserCode];
                 RobotTaskSocket taskSocket = VirtualRobotSocketDict[args.User.UserCode];
 
+                if (args.ActionName.Equals(RobotFactory.UIAction_Move))
+                {     
+                     double lat = double.Parse(args.Objects["lat"].ToString());
+                     double lng = double.Parse(args.Objects["lng"].ToString());
 
+                     //Send Board GPS Position
+                     if (taskSocket.EnabledAutoSendBoardPosition)
+                     {
+                          //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
+                          taskSocket.PublishBoatPos(lat, lng);
+                     }
+
+                     ShowLogTextWithThread("无人船" + args.User.UserName + "(" + args.User.UserCode + ") 移动到坐标(" + lat  + "," + lng + ")";
+                }
             }
             catch (Exception ex)
             {
@@ -195,7 +218,7 @@ namespace TaskSimulator
 
         void TaskProcessor_OnTaskCompleteEvent(object sender, TaskSimulatorLib.Processors.Task.TaskCompleteArgs args)
         {
-            
+
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
