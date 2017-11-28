@@ -68,6 +68,7 @@ namespace TaskSimulator
 
         private void OpenAllRobot()
         {
+            #region 读取配置文件
             string xmlConfig = Path.Combine(Application.StartupPath, "robot.config");
             if (File.Exists(xmlConfig))
             {
@@ -101,6 +102,9 @@ namespace TaskSimulator
 
                 File.WriteAllText(xmlConfig, XmlSerializeTool.Serializer<VirtualRobotListConfig>(MainForm.RobotListConfig));
             }
+            #endregion
+
+
         }
 
         void RobotFactory_OnUiActionEvent(object sender, RobotTasks.UIActionEventArgs args)
@@ -118,7 +122,7 @@ namespace TaskSimulator
             base.OnFormClosing(e);
 
             //停止任务处理器
-            RobotTaskFactory.RobotFactory.Simulator.Stop();
+            RobotTasks.RobotFactory.Simulator.Stop();
 
             //关闭所有机器人
             CloseAllRobot();
