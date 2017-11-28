@@ -20,11 +20,34 @@ namespace TaskSimulator
         /// </summary>
         public static VirtualRobotListConfig RobotListConfig { get; set; }
 
-        public static Dictionary<string, VirtualRobotConfig> VirtualRobotConfigDict = new Dictionary<string, VirtualRobotConfig>(); 
+        /// <summary>
+        /// 虚拟机器人配置字典(Key=机器人ID,Value=配置)
+        /// </summary>
+        public static Dictionary<string, VirtualRobotConfig> VirtualRobotConfigDict = new Dictionary<string, VirtualRobotConfig>();
+
+        /// <summary>
+        /// 虚拟机器人MQTT连接配置(Key=机器人ID,Value=MQTT连接)
+        /// </summary>
+        public static Dictionary<string, RobotTaskSocket> VirtualRobotSocketDict = new Dictionary<string, RobotTaskSocket>();
+
+        private BackgroundWorker initWorker = new BackgroundWorker();
 
         public MainForm()
         {
             InitializeComponent();
+
+            initWorker.WorkerSupportsCancellation = true;
+            initWorker.DoWork += initWorker_DoWork;
+        }
+
+        /// <summary>
+        /// 机器人初始化
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void initWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            
         }
 
         protected override void OnLoad(EventArgs e)
@@ -106,7 +129,12 @@ namespace TaskSimulator
             }
             #endregion
 
+            if (initWorker.IsBusy)
+            {
+                return;
+            }
 
+            initWorker.RunWorkerAsync();
         }
 
         void RobotFactory_OnUiActionEvent(object sender, RobotTasks.UIActionEventArgs args)
