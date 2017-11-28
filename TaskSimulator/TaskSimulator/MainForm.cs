@@ -84,6 +84,7 @@ namespace TaskSimulator
             }
             catch (Exception ex)
             {
+                ShowLogTextWithThread(ex.ToString());
                 TaskSimulatorLib.SimulatorObject.logger.Error(ex.ToString());
             }
         }
