@@ -383,33 +383,33 @@ namespace TaskSimulator.RobotTasks
                     //主电池电压
                     PublishBoatMainBattVol(25.3);
                 }
-                else if (receiveString.Trim().StartsWith("GET PIC"))
+                else if (receiveString.Trim().StartsWith("GET_PIC"))
                 {
                     //图片
                     Bitmap b12111 = (Bitmap)RobotUser.SupportedMonitor[DefaultCameraMonitorId].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
                     PublishPicture(b12111);
                 }
-                else if (receiveString.Trim().StartsWith("SET BOAT MOTOR ON"))
+                else if (receiveString.Trim().StartsWith("GO"))
                 {
                     //打开船动力
                     OpenBoatEngine();
                 }
-                else if (receiveString.Trim().StartsWith("SET BOAT MOTOR OFF"))
+                else if (receiveString.Trim().StartsWith("STOP"))
                 {
                     //关闭船动力
                     CloseBoatEngine();
                 }
-                else if (receiveString.Trim().StartsWith("SET BOAT SPEED"))
+                else if (receiveString.Trim().StartsWith("SET_BOAT_SPEED"))
                 {
                     //设置船速度
                     SetBoatSpeed(receiveString);
                 }
-                else if (receiveString.Trim().StartsWith("SET BOAT DEST"))
+                else if (receiveString.Trim().StartsWith("SET_DEST_POS"))
                 {
                     //设置船的目的地的经纬度
                     SetBoatDest(receiveString);
                 }
-                else if (receiveString.Trim().StartsWith("SET BOAT UPDATE INTERVAL"))
+                else if (receiveString.Trim().StartsWith("POS_UPDATE"))
                 {
                     //设定船发送自身信息的时间间隔（秒），=0表示不发送
                     //SET BOAT UPDATE INTERVAL
@@ -424,7 +424,7 @@ namespace TaskSimulator.RobotTasks
                         EnabledAutoSendBoardPosition = true;
                     }
                 }
-                else if (receiveString.Trim().StartsWith("SET PIC UPDATE INTERVAL"))
+                else if (receiveString.Trim().StartsWith("PIC_UPDATE"))
                 {
                     //设定船发送图片信息的时间间隔（秒），0表示不发送
                     //SET PIC UPDATE INTERVAL
