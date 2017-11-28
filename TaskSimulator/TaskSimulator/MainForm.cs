@@ -105,7 +105,7 @@ namespace TaskSimulator
         /// <param name="txt"></param>
         protected void ShowLogTextWithUI(string txt)
         {
-            tbLogs.AppendText(DateTime.Now.ToString() + ":" + txt);
+            tbLogs.AppendText(DateTime.Now.ToString() + ":" + txt + "\n");
 
             if (tbLogs.Text.Length > 0)
             {
