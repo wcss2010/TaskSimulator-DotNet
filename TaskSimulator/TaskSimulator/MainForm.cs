@@ -220,7 +220,10 @@ namespace TaskSimulator
         {
             try
             {
-
+                foreach (RobotTaskSocket taskSocket in VirtualRobotSocketDict.Values)
+                {
+                    taskSocket.RandomRectOrRoundTask();
+                }
             }
             catch (Exception ex)
             {
