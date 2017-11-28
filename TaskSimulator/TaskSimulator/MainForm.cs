@@ -201,7 +201,17 @@ namespace TaskSimulator
         /// </summary>
         private void CloseAllRobot()
         {
-            
+            try
+            {
+                foreach (RobotTaskSocket taskSocket in VirtualRobotSocketDict.Values)
+                {
+                    taskSocket.Client.Disconnect();
+                }
+            }
+            catch (Exception ex)
+            {
+                TaskSimulatorLib.SimulatorObject.logger.Error(ex.ToString());
+            }
         }
     }
 
