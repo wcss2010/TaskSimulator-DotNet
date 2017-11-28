@@ -75,6 +75,7 @@ namespace TaskSimulator
                     
                         //连接MQTT
                         RobotTaskSocket robotTaskSocket = new RobotTaskSocket(RobotFactory.Simulator.UserDict[vrc.VirtualRobotId], RobotListConfig.MQTTServerIP, RobotListConfig.MQTTServerPort, vrc.MQTTUser, vrc.MQTTPassword, RobotListConfig.IsTlsModeLoginMQTT);
+                        robotTaskSocket.BoatMoveLimit = RobotListConfig.RobotMoveLimit;
                         VirtualRobotSocketDict[vrc.VirtualRobotId] = robotTaskSocket;
 
                         ShowLogTextWithThread("创建机器人" + vrc.VirtualRobotId + "成功！");
@@ -211,6 +212,19 @@ namespace TaskSimulator
             }
             catch (Exception ex)
             {
+                TaskSimulatorLib.SimulatorObject.logger.Error(ex.ToString());
+            }
+        }
+
+        private void btnPlayAllTask_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                ShowLogTextWithThread(ex.ToString());
                 TaskSimulatorLib.SimulatorObject.logger.Error(ex.ToString());
             }
         }
