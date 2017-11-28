@@ -9,7 +9,7 @@ using TaskSimulatorLib.Entitys;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
-namespace TaskSimulator.RobotTaskFactory
+namespace TaskSimulator.RobotTasks
 {
     /// <summary>
     /// 把任务动作和MQTT相连

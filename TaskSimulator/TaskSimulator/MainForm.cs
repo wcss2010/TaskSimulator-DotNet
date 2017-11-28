@@ -21,9 +21,9 @@ namespace TaskSimulator
         {
             base.OnLoad(e);
 
-            RobotTaskFactory.RobotFactory.OnUiActionEvent += RobotFactory_OnUiActionEvent;
-            RobotTaskFactory.RobotFactory.Simulator.TaskProcessor.OnTaskCompleteEvent += TaskProcessor_OnTaskCompleteEvent;
-            RobotTaskFactory.RobotFactory.Simulator.Start();
+            RobotTasks.RobotFactory.OnUiActionEvent += RobotFactory_OnUiActionEvent;
+            RobotTasks.RobotFactory.Simulator.TaskProcessor.OnTaskCompleteEvent += TaskProcessor_OnTaskCompleteEvent;
+            RobotTasks.RobotFactory.Simulator.Start();
 
             OpenAllRobot();
         }
@@ -63,7 +63,7 @@ namespace TaskSimulator
             
         }
 
-        void RobotFactory_OnUiActionEvent(object sender, RobotTaskFactory.UIActionEventArgs args)
+        void RobotFactory_OnUiActionEvent(object sender, RobotTasks.UIActionEventArgs args)
         {
             
         }

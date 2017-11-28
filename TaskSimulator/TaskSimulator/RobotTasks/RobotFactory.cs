@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using TaskSimulatorLib.Processors;
 using TaskSimulatorLib.Processors.Task;
 
-namespace TaskSimulator.RobotTaskFactory
+namespace TaskSimulator.RobotTasks
 {
     public delegate void UIActionDelegate(object sender, UIActionEventArgs args);
 
