@@ -179,7 +179,18 @@ namespace TaskSimulator
 
         void RobotFactory_OnUiActionEvent(object sender, RobotTasks.UIActionEventArgs args)
         {
-            
+            try
+            {
+                VirtualRobotConfig VRConfig = VirtualRobotConfigDict[args.User.UserCode];
+                RobotTaskSocket taskSocket = VirtualRobotSocketDict[args.User.UserCode];
+
+
+            }
+            catch (Exception ex)
+            {
+                ShowLogTextWithThread(ex.ToString());
+                TaskSimulatorLib.SimulatorObject.logger.Error(ex.ToString());
+            }
         }
 
         void TaskProcessor_OnTaskCompleteEvent(object sender, TaskSimulatorLib.Processors.Task.TaskCompleteArgs args)
