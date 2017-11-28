@@ -233,10 +233,10 @@ namespace TaskSimulator.RobotTasks
         public void PublishBoatPos(double lat, double lng)
         {
             //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
-            string latString = Math.Abs(lat).ToString() + (lat > 0 ? "N" : (lat == 0 ? string.Empty : "S"));
-            string lngString = Math.Abs(lng).ToString() + (lng > 0 ? "E" : (lng == 0 ? string.Empty : "W"));
+            //string latString = Math.Abs(lat).ToString() + (lat > 0 ? "N" : (lat == 0 ? string.Empty : "S"));
+            //string lngString = Math.Abs(lng).ToString() + (lng > 0 ? "E" : (lng == 0 ? string.Empty : "W"));
 
-            PublishCommand("BOAT POS=" + latString + "," + lngString);
+            PublishCommand("POS=" + lat + "," + lng);
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace TaskSimulator.RobotTasks
         /// <param name="value"></param>
         public void PublishBoatSpeed(double value)
         {
-            PublishCommand("BOAT SPEED=" + value);
+            PublishCommand("SPEED=" + value);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace TaskSimulator.RobotTasks
         /// <param name="value"></param>
         public void PublishBoatSailDir(double value)
         {
-            PublishCommand("BOAT SAIL DIR=" + value);
+            PublishCommand("HEADING=" + value);
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace TaskSimulator.RobotTasks
         /// <param name="value"></param>
         public void PublishWaterTemp(double value)
         {
-            PublishCommand("WATER TEMP=" + value);
+            PublishCommand("WATER_TEMP=" + value);
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace TaskSimulator.RobotTasks
         /// <param name="value"></param>
         public void PublishAirTemp(double value)
         {
-            PublishCommand("AIR TEMP=" + value);
+            PublishCommand("AIR_TEMP=" + value);
         }
 
         /// <summary>
@@ -281,7 +281,7 @@ namespace TaskSimulator.RobotTasks
         /// <param name="value"></param>
         public void PublishWindSpeed(double value)
         {
-            PublishCommand("WIND SPEED=" + value);
+            PublishCommand("WIND_SPEED=" + value);
         }
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace TaskSimulator.RobotTasks
         /// <param name="value"></param>
         public void PublishWindDir(double value)
         {
-            PublishCommand("WIND DIR=" + value);
+            PublishCommand("WIND_DIR=" + value);
         }
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace TaskSimulator.RobotTasks
         /// <param name="value"></param>
         public void PublishBoatMainBattVol(double value)
         {
-            PublishCommand("BOAT MAIN BATT VOL=" + value);
+            PublishCommand("BATT_VOL=" + value);
         }
 
         /// <summary>
