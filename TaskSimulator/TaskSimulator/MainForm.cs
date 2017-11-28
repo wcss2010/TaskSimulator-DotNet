@@ -81,6 +81,9 @@ namespace TaskSimulator
                         //连接MQTT
                         RobotTaskSocket robotTaskSocket = new RobotTaskSocket(RobotFactory.Simulator.UserDict[vrc.VirtualRobotId], RobotListConfig.MQTTServerIP, RobotListConfig.MQTTServerPort, vrc.MQTTUser, vrc.MQTTPassword, RobotListConfig.IsTlsModeLoginMQTT);
                         robotTaskSocket.BoatMoveLimit = RobotListConfig.RobotMoveLimit;
+                        robotTaskSocket.DefaultCameraMonitorId = virtualCamerasList[0].Key;
+                        robotTaskSocket.EnabledAutoSendBoardPosition = vrc.EnabledAutoReportGpsLocation;
+                        robotTaskSocket.EnabledAutoSendBoardPic = vrc.EnabledAutoUploadVirtualCameraPicture;
                         VirtualRobotSocketDict[vrc.VirtualRobotId] = robotTaskSocket;
 
                         ShowLogTextWithThread("创建机器人" + vrc.VirtualRobotId + "成功！");
@@ -206,7 +209,7 @@ namespace TaskSimulator
                           taskSocket.PublishBoatPos(lat, lng);
                      }
 
-                     ShowLogTextWithThread("无人船" + args.User.UserName + "(" + args.User.UserCode + ") 移动到坐标(" + lat  + "," + lng + ")";
+                     ShowLogTextWithThread("无人船" + args.User.UserName + "(" + args.User.UserCode + ") 移动到坐标(" + lat + "," + lng + ")");
                 }
             }
             catch (Exception ex)
