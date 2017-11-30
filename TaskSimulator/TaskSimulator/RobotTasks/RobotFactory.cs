@@ -133,7 +133,7 @@ namespace TaskSimulator.RobotTasks
             //移动任务
             RobotTask rebotMoveTask = new RobotTask();
             rebotMoveTask.TaskCode = Task_RobotMove;
-            rebotMoveTask.TaskName = "机器人移动任务";
+            rebotMoveTask.TaskName = "自主航行任务";
 
             //位置移动指令
             RebotMoveActionWorkerThread shipMoveCmd = new RebotMoveActionWorkerThread();

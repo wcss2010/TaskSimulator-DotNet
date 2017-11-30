@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -388,6 +389,22 @@ namespace TaskSimulator
                 ShowLogTextWithThread(ex.ToString());
                 TaskSimulatorLib.SimulatorObject.logger.Error(ex.ToString());
             }
+        }
+
+        private void btnClearLogs_Click(object sender, EventArgs e)
+        {
+            tbLogs.Clear();
+        }
+
+        private void btnShowGisMonitor_Click(object sender, EventArgs e)
+        {
+            GisMonitor gisForm = new GisMonitor();
+            gisForm.Show();
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Process.GetCurrentProcess().Kill();
         }
     }
 
