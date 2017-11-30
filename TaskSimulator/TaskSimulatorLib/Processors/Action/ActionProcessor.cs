@@ -101,7 +101,7 @@ namespace TaskSimulatorLib.Processors.Action
                                         {
                                             if (cr.IsOK)                                        
                                             {
-                                                SimulatorObject.logger.Debug("设备(" + queueObject.User.UserCode + ")中的指令处理线程(" + queueObject.Command.CommandText + ")执行成功！");
+                                                //SimulatorObject.logger.Debug("设备(" + queueObject.User.UserCode + ")中的指令处理线程(" + queueObject.Command.CommandText + ")执行成功！");
                                             }
                                             else
                                             {

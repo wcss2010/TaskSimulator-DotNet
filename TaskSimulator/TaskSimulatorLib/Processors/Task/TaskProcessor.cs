@@ -127,7 +127,7 @@ namespace TaskSimulatorLib.Processors.Task
                                 //打印处理结果
                                 if (cr.IsOK)
                                 {
-                                    SimulatorObject.logger.Debug("设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理成功！");
+                                    //SimulatorObject.logger.Debug("设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理成功！");
                                 }
                                 else
                                 {
