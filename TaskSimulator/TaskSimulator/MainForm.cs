@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using TaskSimulator.RobotTasks;
+using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace TaskSimulator
 {
@@ -84,6 +85,12 @@ namespace TaskSimulator
                         robotTaskSocket.DefaultCameraMonitorId = virtualCamerasList[0].Key;
                         robotTaskSocket.EnabledAutoSendBoardPosition = vrc.EnabledAutoReportGpsLocation;
                         robotTaskSocket.EnabledAutoSendBoardPic = vrc.EnabledAutoUploadVirtualCameraPicture;
+                        robotTaskSocket.EnabledStartAndStopTaskWithOpenOrCloseEngine = vrc.EnabledStartAndStopTaskWithOpenOrCloseEngine;
+                        robotTaskSocket.qosLevels = vrc.DefaultQosLevels;
+                        robotTaskSocket.ListenSubject = vrc.ListenSubject;
+                        robotTaskSocket.CommandSendSubject = vrc.CommandSendSubject;
+                        robotTaskSocket.PictureSendSubject = vrc.PictureSendSubject;
+
                         VirtualRobotSocketDict.Add(vrc.VirtualRobotId, robotTaskSocket);
 
                         ShowLogTextWithThread("创建机器人" + vrc.VirtualRobotId + "成功！");
@@ -174,6 +181,11 @@ namespace TaskSimulator
                 RobotListConfig.RobotList[0].EnabledStartAndStopTaskWithOpenOrCloseEngine = false;
                 RobotListConfig.RobotList[0].MQTTUser = "gs";
                 RobotListConfig.RobotList[0].MQTTPassword = "gs_password";
+
+                RobotListConfig.RobotList[0].DefaultQosLevels = new byte[] { MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE };
+                RobotListConfig.RobotList[0].ListenSubject = "shore2boat";
+                RobotListConfig.RobotList[0].CommandSendSubject = "boat2shore";
+                RobotListConfig.RobotList[0].PictureSendSubject = "picture2shore";
 
                 RobotListConfig.RobotList[0].DefaultLat = 26.2120;
                 RobotListConfig.RobotList[0].DefaultLng = 129.4603;
@@ -399,8 +411,8 @@ namespace TaskSimulator
         /// <summary>
         /// qos=1
         /// </summary>
-        public byte[] DefaultAosLevels { get; set; }
-
+        public byte[] DefaultQosLevels { get; set; }
+        
         /// <summary>
         /// 监听主题
         /// </summary>
