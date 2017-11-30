@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using TaskSimulator.RobotTasks;
+using TaskSimulatorLib.Entitys;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace TaskSimulator
@@ -227,6 +228,40 @@ namespace TaskSimulator
                          {
                              //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
                              taskSocket.PublishBoatPos(lat, lng);
+
+                             //主电压
+                             taskSocket.PublishBoatMainBattVol(18.7);
+
+                             //航速
+                             taskSocket.PublishBoatSpeed(2.2);
+
+                             //航向
+                             taskSocket.PublishBoatSailDir(22.5);
+                         }
+
+                         if (taskSocket.EnabledWindSensor)
+                         {
+                             //风速
+                             taskSocket.PublishWindSpeed(2.7);
+                             
+                             //风向
+                             taskSocket.PublishWindDir(22.5);
+                         }
+
+                         if (taskSocket.EnabledTempSensor)
+                         {
+                             //水温
+                             taskSocket.PublishWaterTemp(33.3);
+                             
+                             //气温
+                             taskSocket.PublishAirTemp(27);
+                         }
+
+                         if (taskSocket.EnabledCameraSensor)
+                         {
+                             //图片
+                             Bitmap b12111 = (Bitmap)taskSocket.RobotUser.SupportedMonitor[taskSocket.DefaultCameraMonitorId].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
+                             taskSocket.PublishPicture(b12111);
                          }
                      }
 
@@ -244,6 +279,11 @@ namespace TaskSimulator
         {
             TaskSimulatorLib.SimulatorObject.logger.Info("无人船" + args.User.UserName + "的任务" + args.Task.TaskName + "完成！");
             ShowLogTextWithThread("无人船" + args.User.UserName + "的任务" + args.Task.TaskName + "完成！");
+
+            if (cbIsAlwaysRunMoveTask.Checked)
+            {
+                VirtualRobotSocketDict[args.User.UserCode].RandomRectOrRoundTask();
+            }
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
