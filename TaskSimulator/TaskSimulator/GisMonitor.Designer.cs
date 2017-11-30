@@ -59,6 +59,7 @@
             this.mapControl.TabIndex = 1;
             this.mapControl.Zoom = 0D;
             this.mapControl.Click += new System.EventHandler(this.mapControl_Click);
+            this.mapControl.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.mapControl_MouseDoubleClick);
             // 
             // GisMonitor
             // 

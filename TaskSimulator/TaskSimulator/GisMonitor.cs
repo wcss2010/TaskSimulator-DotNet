@@ -1,4 +1,5 @@
-﻿using GMap.NET.MapProviders;
+﻿using GMap.NET;
+using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using System;
@@ -105,7 +106,18 @@ namespace TaskSimulator
 
         private void mapControl_Click(object sender, EventArgs e)
         {
-            this.Text = this.Tag + "(" + mapControl.Position.Lat + "," + mapControl.Position.Lng + ")";
+
+        }
+
+        private void mapControl_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                PointLatLng latLng = mapControl.FromLocalToLatLng(e.X, e.Y);
+                var current = new PointLatLng(Math.Abs(latLng.Lat), latLng.Lng);
+                this.Text = this.Tag + "(" + current.Lat + "," + current.Lng + ")(已经复制到剪切板)";
+                Clipboard.SetData(DataFormats.Text, "(" + current.Lat + "," + current.Lng + ")");
+            }
         }
     }
 }

@@ -68,6 +68,9 @@ namespace TaskSimulator
                         }
                         else
                         {
+                            TaskSimulatorLib.SimulatorObject.logger.Warn("无人船" + socket.RobotUser.UserName + "的连接已经断开,正在恢复。。。！");
+                            ShowLogTextWithThread("无人船" + socket.RobotUser.UserName + "的连接已经断开,正在恢复。。。！");
+
                             socket.ConnectToServer();
 
                             if (socket.Client.IsConnected)
@@ -279,48 +282,55 @@ namespace TaskSimulator
                      double lat = double.Parse(args.Objects["lat"].ToString());
                      double lng = double.Parse(args.Objects["lng"].ToString());
 
-                     //Send Board GPS Position
-                     if (taskSocket != null)
+                     try
                      {
-                         if (taskSocket.EnabledPosSensor)
+                         //Send Board GPS Position
+                         if (taskSocket != null)
                          {
-                             //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
-                             taskSocket.PublishBoatPos(lat, lng);
+                             if (taskSocket.EnabledPosSensor)
+                             {
+                                 //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
+                                 taskSocket.PublishBoatPos(lat, lng);
 
-                             //主电压
-                             taskSocket.PublishBoatMainBattVol(18.7);
+                                 //主电压
+                                 taskSocket.PublishBoatMainBattVol(18.7);
 
-                             //航速
-                             taskSocket.PublishBoatSpeed(2.2);
+                                 //航速
+                                 taskSocket.PublishBoatSpeed(2.2);
 
-                             //航向
-                             taskSocket.PublishBoatSailDir(22.5);
+                                 //航向
+                                 taskSocket.PublishBoatSailDir(22.5);
+                             }
+
+                             if (taskSocket.EnabledWindSensor)
+                             {
+                                 //风速
+                                 taskSocket.PublishWindSpeed(2.7);
+
+                                 //风向
+                                 taskSocket.PublishWindDir(22.5);
+                             }
+
+                             if (taskSocket.EnabledTempSensor)
+                             {
+                                 //水温
+                                 taskSocket.PublishWaterTemp(33.3);
+
+                                 //气温
+                                 taskSocket.PublishAirTemp(27);
+                             }
+
+                             if (taskSocket.EnabledCameraSensor)
+                             {
+                                 //图片
+                                 Bitmap b12111 = (Bitmap)taskSocket.RobotUser.SupportedMonitor[taskSocket.DefaultCameraMonitorId].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
+                                 taskSocket.PublishPicture(b12111);
+                             }
                          }
-
-                         if (taskSocket.EnabledWindSensor)
-                         {
-                             //风速
-                             taskSocket.PublishWindSpeed(2.7);
-                             
-                             //风向
-                             taskSocket.PublishWindDir(22.5);
-                         }
-
-                         if (taskSocket.EnabledTempSensor)
-                         {
-                             //水温
-                             taskSocket.PublishWaterTemp(33.3);
-                             
-                             //气温
-                             taskSocket.PublishAirTemp(27);
-                         }
-
-                         if (taskSocket.EnabledCameraSensor)
-                         {
-                             //图片
-                             Bitmap b12111 = (Bitmap)taskSocket.RobotUser.SupportedMonitor[taskSocket.DefaultCameraMonitorId].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
-                             taskSocket.PublishPicture(b12111);
-                         }
+                     }
+                     catch (Exception ex)
+                     {
+                         TaskSimulatorLib.SimulatorObject.logger.Error(ex.ToString());
                      }
 
                      ShowLogTextWithThread("无人船" + args.User.UserName + "(" + args.User.UserCode + ") 移动到坐标(" + lat + "," + lng + ")");
