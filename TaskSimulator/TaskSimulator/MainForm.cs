@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -38,13 +39,69 @@ namespace TaskSimulator
         public static Dictionary<string, RobotTaskSocket> VirtualRobotSocketDict = new Dictionary<string, RobotTaskSocket>();
 
         private BackgroundWorker initWorker = new BackgroundWorker();
+        private BackgroundWorker MQTTKeepConnectionWorker = new BackgroundWorker();
 
         public MainForm()
         {
             InitializeComponent();
 
+            MQTTKeepConnectionWorker.WorkerSupportsCancellation = true;
+            MQTTKeepConnectionWorker.DoWork += MQTTKeepConnectionWorker_DoWork;
+
             initWorker.WorkerSupportsCancellation = true;
             initWorker.DoWork += initWorker_DoWork;
+            initWorker.RunWorkerCompleted += initWorker_RunWorkerCompleted;
+        }
+
+        void MQTTKeepConnectionWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (!MQTTKeepConnectionWorker.CancellationPending)
+            {
+                try
+                {
+                    foreach (RobotTaskSocket socket in VirtualRobotSocketDict.Values)
+                    {
+                        if (socket.Client.IsConnected)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            socket.ConnectToServer();
+
+                            if (socket.Client.IsConnected)
+                            {
+                                TaskSimulatorLib.SimulatorObject.logger.Warn("无人船" + socket.RobotUser.UserName + "的连接已经恢复！");
+                                ShowLogTextWithThread("无人船" + socket.RobotUser.UserName + "的连接已经恢复！");
+                            }
+                            else
+                            {
+                                TaskSimulatorLib.SimulatorObject.logger.Warn("无人船" + socket.RobotUser.UserName + "的连接恢复失败！");
+                                ShowLogTextWithThread("无人船" + socket.RobotUser.UserName + "的连接恢复失败！");
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    TaskSimulatorLib.SimulatorObject.logger.Error(ex.ToString());
+                }
+
+                try
+                {
+                    Thread.Sleep(500);
+                }catch(Exception ex){}
+            }
+        }
+
+        void initWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (MQTTKeepConnectionWorker.IsBusy)
+            {
+                return;
+            }
+
+            MQTTKeepConnectionWorker.RunWorkerAsync();
         }
 
         /// <summary>
@@ -304,6 +361,8 @@ namespace TaskSimulator
         {
             try
             {
+                MQTTKeepConnectionWorker.CancelAsync();
+
                 foreach (RobotTaskSocket taskSocket in VirtualRobotSocketDict.Values)
                 {
                     taskSocket.Client.Disconnect();
