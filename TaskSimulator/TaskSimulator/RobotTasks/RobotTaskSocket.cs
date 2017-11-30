@@ -19,7 +19,7 @@ namespace TaskSimulator.RobotTasks
         /// <summary>
         /// qos=1
         /// </summary>
-        byte[] qosLevels = new byte[] { MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE };
+        public byte[] qosLevels = new byte[] { MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE };
 
         /// <summary>
         /// 监听主题
@@ -79,6 +79,11 @@ namespace TaskSimulator.RobotTasks
         /// Enabled Send Pic
         /// </summary>
         public bool EnabledAutoSendBoardPic = false;
+
+        /// <summary>
+        /// 在打开或关闭发动时允许启动或停止自动航行任务
+        /// </summary>
+        public bool EnabledStartAndStopTaskWithOpenOrCloseEngine = false;
 
         /// <summary>
         /// 表示船画方框或圆圈时的边长或距离
@@ -492,7 +497,10 @@ namespace TaskSimulator.RobotTasks
         /// </summary>
         public void CloseBoatEngine()
         {
-            
+            if (EnabledStartAndStopTaskWithOpenOrCloseEngine)
+            {
+                RobotUser.SupportedTask[RobotFactory.Task_RobotMove].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ended;
+            }
         }
 
         /// <summary>
@@ -500,7 +508,10 @@ namespace TaskSimulator.RobotTasks
         /// </summary>
         public void OpenBoatEngine()
         {
-            
+            if (EnabledStartAndStopTaskWithOpenOrCloseEngine)
+            {
+                RandomRectOrRoundTask();
+            }
         }
         
         /// <summary>

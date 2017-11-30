@@ -397,6 +397,26 @@ namespace TaskSimulator
         public bool EnabledStartAndStopTaskWithOpenOrCloseEngine { get; set; }
 
         /// <summary>
+        /// qos=1
+        /// </summary>
+        public byte[] DefaultAosLevels { get; set; }
+
+        /// <summary>
+        /// 监听主题
+        /// </summary>
+        public string ListenSubject { get; set; }
+
+        /// <summary>
+        /// 指令发送主题
+        /// </summary>
+        public string CommandSendSubject { get; set; }
+
+        /// <summary>
+        /// 图片发送主题
+        /// </summary>
+        public string PictureSendSubject { get; set; }
+
+        /// <summary>
         /// MQTT用户
         /// </summary>
         public string MQTTUser { get; set; }
