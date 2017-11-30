@@ -72,18 +72,29 @@ namespace TaskSimulator.RobotTasks
         public string ClientId { get; set; }
 
         /// <summary>
-        /// Enabled Send GPS Position
+        /// GPS传感器
         /// </summary>
-        public bool EnabledAutoSendBoardPosition = false;
+        public bool EnabledPosSensor = false;
+
         /// <summary>
-        /// Enabled Send Pic
+        /// 摄像头传感器
         /// </summary>
-        public bool EnabledAutoSendBoardPic = false;
+        public bool EnabledCameraSensor = false;
+
+        /// <summary>
+        /// 风速风向传感器
+        /// </summary>
+        public bool EnabledWindSensor = false;
+
+        /// <summary>
+        /// 温度传感器
+        /// </summary>
+        public bool EnabledTempSensor = false;
 
         /// <summary>
         /// 在打开或关闭发动时允许启动或停止自动航行任务
         /// </summary>
-        public bool EnabledStartAndStopTaskWithOpenOrCloseEngine = false;
+        public bool EnabledMQTTControlTaskStartAndStop = false;
 
         /// <summary>
         /// 表示船画方框或圆圈时的边长或距离
@@ -346,52 +357,7 @@ namespace TaskSimulator.RobotTasks
                 //Reply OK
                 PublishCommand("ACK");
 
-                if (receiveString.Trim().StartsWith("GET WATER TEMP"))
-                {
-                    //水温
-                    PublishWaterTemp(23.2);
-                }
-                else if (receiveString.Trim().StartsWith("GET AIR TEMP"))
-                {
-                    //气温
-                    PublishAirTemp(23.2);
-                }
-                else if (receiveString.Trim().StartsWith("GET WIND SPEED"))
-                {
-                    //风速
-                    PublishWindSpeed(3.6);
-                }
-                else if (receiveString.Trim().StartsWith("GET WIND DIR"))
-                {
-                    //风向
-                    PublishWindDir(22.5);
-                }
-                else if (receiveString.Trim().StartsWith("GET BOAT POS"))
-                {
-                    //船经纬度
-                    //Get GPS
-                    double lat = ((GPSMonitor)RobotUser.SupportedMonitor[RobotFactory.Monitor_GPS]).Lat;
-                    double lng = ((GPSMonitor)RobotUser.SupportedMonitor[RobotFactory.Monitor_GPS]).Lng;
-
-                    //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
-                    PublishBoatPos(lat, lng);
-                }
-                else if (receiveString.Trim().StartsWith("GET BOAT SPEED"))
-                {
-                    //船速
-                    PublishBoatSpeed(3.2);
-                }
-                else if (receiveString.Trim().StartsWith("GET BOAT SAIL DIR"))
-                {
-                    //船航向
-                    PublishBoatSailDir(123.3);
-                }
-                else if (receiveString.Trim().StartsWith("GET BOAT MAIN BATT VOL"))
-                {
-                    //主电池电压
-                    PublishBoatMainBattVol(25.3);
-                }
-                else if (receiveString.Trim().StartsWith("GET_PIC"))
+                if (receiveString.Trim().StartsWith("GET PIC"))
                 {
                     //图片
                     Bitmap b12111 = (Bitmap)RobotUser.SupportedMonitor[DefaultCameraMonitorId].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
@@ -424,12 +390,12 @@ namespace TaskSimulator.RobotTasks
                     if (receiveString.ToUpper().EndsWith("=0"))
                     {
                         //close
-                        EnabledAutoSendBoardPosition = false;
+                        EnabledPosSensor = false;
                     }
                     else
                     {
                         //open
-                        EnabledAutoSendBoardPosition = true;
+                        EnabledPosSensor = true;
                     }
                 }
                 else if (receiveString.Trim().StartsWith("PIC_UPDATE"))
@@ -439,12 +405,12 @@ namespace TaskSimulator.RobotTasks
                     if (receiveString.ToUpper().EndsWith("=0"))
                     {
                         //close
-                        EnabledAutoSendBoardPic = false;
+                        EnabledCameraSensor = false;
                     }
                     else
                     {
                         //open
-                        EnabledAutoSendBoardPic = true;
+                        EnabledCameraSensor = true;
                     }
                 }
             }
@@ -500,7 +466,7 @@ namespace TaskSimulator.RobotTasks
         /// </summary>
         public void CloseBoatEngine()
         {
-            if (EnabledStartAndStopTaskWithOpenOrCloseEngine)
+            if (EnabledMQTTControlTaskStartAndStop)
             {
                 RobotUser.SupportedTask[RobotFactory.Task_RobotMove].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ended;
             }
@@ -511,7 +477,7 @@ namespace TaskSimulator.RobotTasks
         /// </summary>
         public void OpenBoatEngine()
         {
-            if (EnabledStartAndStopTaskWithOpenOrCloseEngine)
+            if (EnabledMQTTControlTaskStartAndStop)
             {
                 RandomRectOrRoundTask();
             }

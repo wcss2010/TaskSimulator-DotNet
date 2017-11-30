@@ -83,9 +83,9 @@ namespace TaskSimulator
                         RobotTaskSocket robotTaskSocket = new RobotTaskSocket(RobotFactory.Simulator.UserDict[vrc.VirtualRobotId], RobotListConfig.MQTTServerIP, RobotListConfig.MQTTServerPort, vrc.MQTTUser, vrc.MQTTPassword, RobotListConfig.IsTlsModeLoginMQTT);
                         robotTaskSocket.BoatMoveLimit = RobotListConfig.RobotMoveLimit;
                         robotTaskSocket.DefaultCameraMonitorId = virtualCamerasList[0].Key;
-                        robotTaskSocket.EnabledAutoSendBoardPosition = vrc.EnabledAutoReportGpsLocation;
-                        robotTaskSocket.EnabledAutoSendBoardPic = vrc.EnabledAutoUploadVirtualCameraPicture;
-                        robotTaskSocket.EnabledStartAndStopTaskWithOpenOrCloseEngine = vrc.EnabledStartAndStopTaskWithOpenOrCloseEngine;
+                        robotTaskSocket.EnabledPosSensor = vrc.EnabledPosSensor;
+                        robotTaskSocket.EnabledCameraSensor = vrc.EnabledCameraSensor;
+                        robotTaskSocket.EnabledMQTTControlTaskStartAndStop = vrc.EnabledMQTTControlTaskStartAndStop;
                         robotTaskSocket.qosLevels = vrc.DefaultQosLevels;
                         robotTaskSocket.ListenSubject = vrc.ListenSubject;
                         robotTaskSocket.CommandSendSubject = vrc.CommandSendSubject;
@@ -176,9 +176,9 @@ namespace TaskSimulator
                 RobotListConfig.RobotList = new VirtualRobotConfig[] { new VirtualRobotConfig() };
                 RobotListConfig.RobotList[0].VirtualRobotId = "test1";
                 RobotListConfig.RobotList[0].VirtualRobotName = "测试无人船1";
-                RobotListConfig.RobotList[0].EnabledAutoReportGpsLocation = true;
-                RobotListConfig.RobotList[0].EnabledAutoUploadVirtualCameraPicture = true;
-                RobotListConfig.RobotList[0].EnabledStartAndStopTaskWithOpenOrCloseEngine = false;
+                RobotListConfig.RobotList[0].EnabledPosSensor = true;
+                RobotListConfig.RobotList[0].EnabledCameraSensor = true;
+                RobotListConfig.RobotList[0].EnabledMQTTControlTaskStartAndStop = false;
                 RobotListConfig.RobotList[0].MQTTUser = "gs";
                 RobotListConfig.RobotList[0].MQTTPassword = "gs_password";
 
@@ -222,7 +222,7 @@ namespace TaskSimulator
                      //Send Board GPS Position
                      if (taskSocket != null)
                      {
-                         if (taskSocket.EnabledAutoSendBoardPosition)
+                         if (taskSocket.EnabledPosSensor)
                          {
                              //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
                              taskSocket.PublishBoatPos(lat, lng);
@@ -396,17 +396,17 @@ namespace TaskSimulator
         /// <summary>
         /// 自动报告我的位置
         /// </summary>
-        public bool EnabledAutoReportGpsLocation { get; set; }
+        public bool EnabledPosSensor { get; set; }
 
         /// <summary>
         /// 自动上传我的摄像头图片
         /// </summary>
-        public bool EnabledAutoUploadVirtualCameraPicture { get; set; }
+        public bool EnabledCameraSensor { get; set; }
 
         /// <summary>
         /// 在打开或关闭发动时允许启动或停止自动航行任务
         /// </summary>
-        public bool EnabledStartAndStopTaskWithOpenOrCloseEngine { get; set; }
+        public bool EnabledMQTTControlTaskStartAndStop { get; set; }
 
         /// <summary>
         /// qos=1

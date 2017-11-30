@@ -91,7 +91,7 @@ namespace TaskSimulator
                             double lng = double.Parse(args.Objects["lng"].ToString());
 
                             //Send Board GPS Position
-                            if (taskSocket.EnabledAutoSendBoardPosition)
+                            if (taskSocket.EnabledPosSensor)
                             {
                                 //BOAT POS=23.227N,37.223E	船的位置为北纬23.227度，东经37.223度
                                 taskSocket.PublishBoatPos(lat, lng);
@@ -290,7 +290,7 @@ namespace TaskSimulator
 
         private void trSendPic_Tick(object sender, EventArgs e)
         {
-            if (taskSocket.EnabledAutoSendBoardPic)
+            if (taskSocket.EnabledCameraSensor)
             {
                 Bitmap b12111 = (Bitmap)taskSocket.RobotUser.SupportedMonitor[taskSocket.DefaultCameraMonitorId].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
                 taskSocket.PublishPicture(b12111);
