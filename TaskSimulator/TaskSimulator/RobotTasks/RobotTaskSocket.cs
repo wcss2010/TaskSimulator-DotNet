@@ -373,20 +373,42 @@ namespace TaskSimulator.RobotTasks
                     //关闭船动力
                     CloseBoatEngine();
                 }
-                else if (receiveString.Trim().StartsWith("SET_BOAT_SPEED"))
+                else if (receiveString.Trim().StartsWith("SET BOAT SPEED"))
                 {
                     //设置船速度
                     SetBoatSpeed(receiveString);
                 }
-                else if (receiveString.Trim().StartsWith("SET_DEST_POS"))
+                else if (receiveString.Trim().StartsWith("SET DEST POS"))
                 {
                     //设置船的目的地的经纬度
                     SetBoatDest(receiveString);
                 }
-                else if (receiveString.Trim().StartsWith("POS_UPDATE"))
+                else if (receiveString.Trim().StartsWith("SET POS SENSOR=ON"))
                 {
-                    //设定船发送自身信息的时间间隔（秒），=0表示不发送
-                    //SET BOAT UPDATE INTERVAL
+                    EnabledPosSensor = true;
+                }
+                else if (receiveString.Trim().StartsWith("SET POS SENSOR=OFF"))
+                {
+                    EnabledPosSensor = false;
+                }
+                else if (receiveString.Trim().StartsWith("SET WIND SENSOR=ON"))
+                {
+                    EnabledWindSensor = true;
+                }
+                else if (receiveString.Trim().StartsWith("SET WIND SENSOR=OFF"))
+                {
+                    EnabledWindSensor = false;
+                }
+                else if (receiveString.Trim().StartsWith("SET TEMP SENSOR=ON"))
+                {
+                    EnabledTempSensor = true;
+                }
+                else if (receiveString.Trim().StartsWith("SET TEMP SENSOR=OFF"))
+                {
+                    EnabledTempSensor = false;
+                }
+                else if (receiveString.Trim().StartsWith("POS UPDATE="))
+                {
                     if (receiveString.ToUpper().EndsWith("=0"))
                     {
                         //close
@@ -398,10 +420,34 @@ namespace TaskSimulator.RobotTasks
                         EnabledPosSensor = true;
                     }
                 }
-                else if (receiveString.Trim().StartsWith("PIC_UPDATE"))
+                else if (receiveString.Trim().StartsWith("WIND UPDATE="))
                 {
-                    //设定船发送图片信息的时间间隔（秒），0表示不发送
-                    //SET PIC UPDATE INTERVAL
+                    if (receiveString.ToUpper().EndsWith("=0"))
+                    {
+                        //close
+                        EnabledWindSensor = false;
+                    }
+                    else
+                    {
+                        //open
+                        EnabledWindSensor = true;
+                    }
+                }
+                else if (receiveString.Trim().StartsWith("TEMP UPDATE="))
+                {
+                    if (receiveString.ToUpper().EndsWith("=0"))
+                    {
+                        //close
+                        EnabledTempSensor = false;
+                    }
+                    else
+                    {
+                        //open
+                        EnabledTempSensor = true;
+                    }
+                }
+                else if (receiveString.Trim().StartsWith("PIC UPDATE="))
+                {
                     if (receiveString.ToUpper().EndsWith("=0"))
                     {
                         //close
