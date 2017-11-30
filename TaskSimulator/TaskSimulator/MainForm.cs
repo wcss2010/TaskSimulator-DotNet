@@ -91,6 +91,7 @@ namespace TaskSimulator
                         robotTaskSocket.CommandSendSubject = vrc.CommandSendSubject;
                         robotTaskSocket.PictureSendSubject = vrc.PictureSendSubject;
 
+                        robotTaskSocket.ConnectToServer();
                         VirtualRobotSocketDict.Add(vrc.VirtualRobotId, robotTaskSocket);
 
                         ShowLogTextWithThread("创建机器人" + vrc.VirtualRobotId + "成功！");

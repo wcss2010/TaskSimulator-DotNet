@@ -101,7 +101,7 @@ namespace TaskSimulator.RobotTasks
         /// </summary>
         public double BoatMoveLimit { get; set; }
 
-        public RobotTaskSocket(RobotUser user,string ips,int ports,string username,string password,bool IsTls)
+        public RobotTaskSocket(RobotUser user,string ips,int ports,string username,string password,bool isTls)
         {
             //记录项
             this.RobotUser = user;
@@ -109,6 +109,16 @@ namespace TaskSimulator.RobotTasks
             this.RemotePort = ports;
             this.RemoteUserName = username;
             this.RemotePassword = password;
+            this.IsTls = isTls;
+
+            ConnectToServer();
+        }
+
+        /// <summary>
+        /// 登陆到服务器
+        /// </summary>
+        public void ConnectToServer()
+        {
             this.ClientId = Guid.NewGuid().ToString();
 
             //连接服务器
@@ -127,7 +137,7 @@ namespace TaskSimulator.RobotTasks
                                         RemotePassword,
                                         true, // cleanSession
                                         60); // keepAlivePeriod
-            
+
             //添加事件
             Client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
             Client.MqttMsgSubscribed += client_MqttMsgSubscribed;
@@ -560,5 +570,7 @@ namespace TaskSimulator.RobotTasks
         }
 
         public string DefaultCameraMonitorId { get; set; }
+
+        public bool IsTls { get; set; }
     }
 }
