@@ -138,6 +138,9 @@ namespace TaskSimulator.RobotTasks
         /// <param name="strValues"></param>
         public void Publish(string subjects,string strValues)
         {
+            //打印日志
+            TaskSimulatorLib.SimulatorObject.logger.Debug("机器人:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")向主题" + subjects + "发布内容" + strValues + "!");
+ 
             Client.Publish(subjects, Encoding.UTF8.GetBytes(strValues), qosLevels[0], false);
         }
 
