@@ -265,7 +265,7 @@ namespace TaskSimulator.RobotTasks
             //string latString = Math.Abs(lat).ToString() + (lat > 0 ? "N" : (lat == 0 ? string.Empty : "S"));
             //string lngString = Math.Abs(lng).ToString() + (lng > 0 ? "E" : (lng == 0 ? string.Empty : "W"));
 
-            PublishCommand("POS=" + lat + "," + lng);
+            PublishCommand("POS=" + lng + "," + lat);
         }
 
         /// <summary>
