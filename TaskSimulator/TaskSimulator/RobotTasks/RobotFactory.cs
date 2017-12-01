@@ -269,6 +269,7 @@ namespace TaskSimulator.RobotTasks
             }
             if (enabledAdd)
             {
+                pqo.Task.TaskWorkerThread.WorkerThreadState = WorkerThreadStateType.Started;
                 Simulator.TaskProcessor.Queues.Enqueue(pqo);
             }
         }
@@ -328,7 +329,10 @@ namespace TaskSimulator.RobotTasks
             cr.IsOK = true;
 
             //设置状态为正在运行
-            WorkerThreadState = WorkerThreadStateType.Running;
+            if (WorkerThreadState == WorkerThreadStateType.Started)
+            {
+                WorkerThreadState = WorkerThreadStateType.Running;
+            }
 
             //尝试初始化队列
             if (CommandQueues.Count == 0)

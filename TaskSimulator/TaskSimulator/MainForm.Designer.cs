@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnExit = new System.Windows.Forms.Button();
             this.btnShowGisMonitor = new System.Windows.Forms.Button();
             this.btnClearLogs = new System.Windows.Forms.Button();
             this.cbIsAlwaysRunMoveTask = new System.Windows.Forms.CheckBox();
             this.btnPlayAllTask = new System.Windows.Forms.Button();
             this.tbLogs = new System.Windows.Forms.RichTextBox();
-            this.btnExit = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,6 +53,16 @@
             this.groupBox1.Size = new System.Drawing.Size(1236, 99);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            // 
+            // btnExit
+            // 
+            this.btnExit.Location = new System.Drawing.Point(763, 28);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(165, 64);
+            this.btnExit.TabIndex = 3;
+            this.btnExit.Text = "退出";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // btnShowGisMonitor
             // 
@@ -106,21 +116,12 @@
             this.tbLogs.TabIndex = 1;
             this.tbLogs.Text = "";
             // 
-            // btnExit
-            // 
-            this.btnExit.Location = new System.Drawing.Point(763, 28);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(165, 64);
-            this.btnExit.TabIndex = 3;
-            this.btnExit.Text = "退出";
-            this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1236, 788);
+            this.ControlBox = false;
             this.Controls.Add(this.tbLogs);
             this.Controls.Add(this.groupBox1);
             this.Margin = new System.Windows.Forms.Padding(4);
