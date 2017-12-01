@@ -22,7 +22,7 @@ namespace TaskSimulator
         /// <summary>
         /// 最大日志显示行
         /// </summary>
-        public const int Max_Log_Line_Count = 800;
+        public const int Max_Log_Line_Count = 400;
 
         /// <summary>
         /// 机器人配置
@@ -293,31 +293,31 @@ namespace TaskSimulator
                                  taskSocket.PublishBoatPos(lat, lng);
 
                                  //主电压
-                                 taskSocket.PublishBoatMainBattVol(18.7);
+                                 taskSocket.PublishBoatMainBattVol(new Random().Next(18,22));
 
                                  //航速
-                                 taskSocket.PublishBoatSpeed(2.2);
+                                 taskSocket.PublishBoatSpeed(new Random().Next(2, 6));
 
                                  //航向
-                                 taskSocket.PublishBoatSailDir(22.5);
+                                 taskSocket.PublishBoatSailDir(new Random().Next(22, 44));
                              }
 
                              if (taskSocket.EnabledWindSensor)
                              {
                                  //风速
-                                 taskSocket.PublishWindSpeed(2.7);
+                                 taskSocket.PublishWindSpeed(new Random().Next(0, 100));
 
                                  //风向
-                                 taskSocket.PublishWindDir(22.5);
+                                 taskSocket.PublishWindDir(new Random().Next(0, 360));
                              }
 
                              if (taskSocket.EnabledTempSensor)
                              {
                                  //水温
-                                 taskSocket.PublishWaterTemp(33.3);
+                                 taskSocket.PublishWaterTemp(new Random().Next(-273, 1000));
 
                                  //气温
-                                 taskSocket.PublishAirTemp(27);
+                                 taskSocket.PublishAirTemp(new Random().Next(-273, 1000));
                              }
 
                              if (taskSocket.EnabledCameraSensor)
@@ -350,7 +350,10 @@ namespace TaskSimulator
 
             if (cbIsAlwaysRunMoveTask.Checked)
             {
-                VirtualRobotSocketDict[args.User.UserCode].RandomRectOrRoundTask();
+                if (VirtualRobotSocketDict[args.User.UserCode].EnabledPosSensor)
+                {
+                    VirtualRobotSocketDict[args.User.UserCode].RandomRectOrRoundTask();
+                }
             }
         }
 
