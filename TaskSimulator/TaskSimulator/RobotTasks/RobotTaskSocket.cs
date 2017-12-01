@@ -96,6 +96,16 @@ namespace TaskSimulator.RobotTasks
         /// </summary>
         public bool EnabledMQTTControlTaskStartAndStop = false;
 
+        private bool _isRunning = true;
+        /// <summary>
+        /// 无人船是否在运行
+        /// </summary>
+        public bool IsRunning
+        {
+            get { return _isRunning; }
+            set { _isRunning = value; }
+        }
+
         /// <summary>
         /// 表示船画方框或圆圈时的边长或距离
         /// </summary>
@@ -522,6 +532,8 @@ namespace TaskSimulator.RobotTasks
         /// </summary>
         public void CloseBoatEngine()
         {
+            IsRunning = false;
+
             if (EnabledMQTTControlTaskStartAndStop)
             {
                 RobotUser.SupportedTask[RobotFactory.Task_RobotMove].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ended;
@@ -533,6 +545,8 @@ namespace TaskSimulator.RobotTasks
         /// </summary>
         public void OpenBoatEngine()
         {
+            IsRunning = true;
+
             if (EnabledMQTTControlTaskStartAndStop)
             {
                 RandomRectOrRoundTask();

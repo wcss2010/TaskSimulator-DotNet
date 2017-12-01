@@ -350,7 +350,7 @@ namespace TaskSimulator
 
             if (cbIsAlwaysRunMoveTask.Checked)
             {
-                if (VirtualRobotSocketDict[args.User.UserCode].EnabledPosSensor)
+                if (VirtualRobotSocketDict[args.User.UserCode].IsRunning)
                 {
                     VirtualRobotSocketDict[args.User.UserCode].RandomRectOrRoundTask();
                 }
