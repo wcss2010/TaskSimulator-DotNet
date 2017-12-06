@@ -110,12 +110,21 @@ namespace TaskSimulatorLib.Processors.Task
         {
             if (Queues != null && Queues.Count > 0)
             {
+                ProcessorQueueObject queueObject = null;
+
                 try
                 {
                     //取一个对象
-                    ProcessorQueueObject queueObject = new ProcessorQueueObject();
+                    queueObject = new ProcessorQueueObject();
                     Queues.TryDequeue(out queueObject);
+                }
+                catch (Exception ex)
+                {
+                    SimulatorObject.logger.Error(ex.ToString());
+                }
 
+                try
+                {
                     //开始处理任务
                     if (queueObject != null && queueObject.Task != null && queueObject.User != null && queueObject.Command != null)
                     {
@@ -160,6 +169,13 @@ namespace TaskSimulatorLib.Processors.Task
                 catch (Exception ex)
                 {
                     SimulatorObject.logger.Error(ex.ToString());
+
+                    //出错的任务直接完成
+                    if (queueObject != null && queueObject.Task != null && queueObject.User != null && queueObject.Command != null)
+                    {
+                        //投递任务完成事件
+                        OnTaskComplete(queueObject.User, queueObject.Task);
+                    }
                 }
             }
         }
