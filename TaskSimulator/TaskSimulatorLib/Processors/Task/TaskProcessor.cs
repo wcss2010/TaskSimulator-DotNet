@@ -80,7 +80,7 @@ namespace TaskSimulatorLib.Processors.Task
 
                 try
                 {
-                    Thread.Sleep(100);
+                    Thread.Sleep(20);
                 }
                 catch (Exception ex) { }
             }
