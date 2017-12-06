@@ -185,6 +185,12 @@ namespace TaskSimulator.RobotTasks
                 //取出用户
                 RobotUser selectedUser = Simulator.UserDict[userCode];
 
+                //如果正在运行，则不添加新任务
+                if (selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Running)
+                {
+                    return;
+                }
+
                 //重置工作线程状态为Ready
                 selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
 
@@ -211,6 +217,12 @@ namespace TaskSimulator.RobotTasks
                 //取出用户
                 RobotUser selectedUser = Simulator.UserDict[userCode];
 
+                //如果正在运行，则不添加新任务
+                if (selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Running)
+                {
+                    return;
+                }
+
                 //重置工作线程状态为Ready
                 selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
 
@@ -236,6 +248,12 @@ namespace TaskSimulator.RobotTasks
             {
                 //取出用户
                 RobotUser selectedUser = Simulator.UserDict[userCode];
+
+                //如果正在运行，则不添加新任务
+                if (selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Running)
+                {
+                    return;
+                }
 
                 //重置工作线程状态为Ready
                 selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
