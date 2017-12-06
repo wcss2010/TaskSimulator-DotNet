@@ -9,7 +9,7 @@ using TaskSimulatorLib.Entitys;
 
 namespace TaskSimulatorLib.Processors.Task
 {
-    public delegate void TaskCompleteDelegate(object sender,TaskCompleteArgs args);
+    public delegate void TaskCompleteDelegate(object sender, TaskCompleteArgs args);
     public class TaskCompleteArgs : EventArgs
     {
         public RobotUser User { get; set; }
@@ -80,7 +80,7 @@ namespace TaskSimulatorLib.Processors.Task
 
                 try
                 {
-                    Thread.Sleep(5);
+                    Thread.Sleep(100);
                 }
                 catch (Exception ex) { }
             }
@@ -140,15 +140,15 @@ namespace TaskSimulatorLib.Processors.Task
                             }
 
                             //检查这个任务是不是没有完成
-                            if (queueObject.Task.TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Running)
-                            {
-                                //还在运行的任务需要再入队列
-                                Queues.Enqueue(queueObject);
-                            }
-                            else
+                            if (queueObject.Task.TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Ended)
                             {
                                 //投递任务完成事件
                                 OnTaskComplete(queueObject.User, queueObject.Task);
+                            }
+                            else
+                            {
+                                //还在运行的任务需要再入队列
+                                Queues.Enqueue(queueObject);
                             }
                         }
                         else
