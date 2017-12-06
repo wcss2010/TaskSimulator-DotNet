@@ -22,7 +22,7 @@ namespace TaskSimulator
         /// <summary>
         /// 最大日志显示行
         /// </summary>
-        public const int Max_Log_Line_Count = 400;
+        public const int Max_Log_Line_Count = 20;
 
         /// <summary>
         /// 机器人配置
@@ -71,8 +71,10 @@ namespace TaskSimulator
                             TaskSimulatorLib.SimulatorObject.logger.Warn("无人船" + socket.RobotUser.UserName + "的连接已经断开,正在恢复。。。！");
                             ShowLogTextWithThread("无人船" + socket.RobotUser.UserName + "的连接已经断开,正在恢复。。。！");
 
+                            //连接到服务器
                             socket.ConnectToServer();
 
+                            //检查是否成功
                             if (socket.Client.IsConnected)
                             {
                                 TaskSimulatorLib.SimulatorObject.logger.Warn("无人船" + socket.RobotUser.UserName + "的连接已经恢复！");
@@ -93,7 +95,7 @@ namespace TaskSimulator
 
                 try
                 {
-                    Thread.Sleep(500);
+                    Thread.Sleep(5000);
                 }catch(Exception ex){}
             }
         }
@@ -333,7 +335,7 @@ namespace TaskSimulator
                          TaskSimulatorLib.SimulatorObject.logger.Error(ex.ToString());
                      }
 
-                     ShowLogTextWithThread("无人船" + args.User.UserName + "(" + args.User.UserCode + ") 移动到坐标(" + lat + "," + lng + ")");
+                     TaskSimulatorLib.SimulatorObject.logger.Debug("无人船" + args.User.UserName + "(" + args.User.UserCode + ") 移动到坐标(" + lat + "," + lng + ")");
                 }
             }
             catch (Exception ex)
@@ -353,6 +355,8 @@ namespace TaskSimulator
                 if (VirtualRobotSocketDict[args.User.UserCode].IsRunning)
                 {
                     VirtualRobotSocketDict[args.User.UserCode].RandomRectOrRoundTask();
+
+                    ShowLogTextWithThread("无人船" + VirtualRobotSocketDict[args.User.UserCode].RobotUser.UserName + "的航行任务，正在执行中...");
                 }
             }
         }
@@ -395,6 +399,8 @@ namespace TaskSimulator
                 foreach (RobotTaskSocket taskSocket in VirtualRobotSocketDict.Values)
                 {
                     taskSocket.RandomRectOrRoundTask();
+
+                    ShowLogTextWithThread("无人船" + taskSocket.RobotUser.UserName + "的航行任务，正在执行中...");
                 }
             }
             catch (Exception ex)
