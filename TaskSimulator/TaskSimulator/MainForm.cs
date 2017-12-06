@@ -356,7 +356,7 @@ namespace TaskSimulator
                 {
                     VirtualRobotSocketDict[args.User.UserCode].RandomRectOrRoundTask();
 
-                    ShowLogTextWithThread("无人船" + VirtualRobotSocketDict[args.User.UserCode].RobotUser.UserName + "的航行任务，正在执行中...");
+                    ShowLogTextWithThread("无人船" + VirtualRobotSocketDict[args.User.UserCode].RobotUser.UserName + "的自主航行任务，正在执行中...");
                 }
             }
         }
@@ -400,7 +400,7 @@ namespace TaskSimulator
                 {
                     taskSocket.RandomRectOrRoundTask();
 
-                    ShowLogTextWithThread("无人船" + taskSocket.RobotUser.UserName + "的航行任务，正在执行中...");
+                    ShowLogTextWithThread("无人船" + taskSocket.RobotUser.UserName + "的自主航行任务，正在执行中...");
                 }
             }
             catch (Exception ex)
