@@ -347,7 +347,7 @@ namespace TaskSimulator
 
         void TaskProcessor_OnTaskCompleteEvent(object sender, TaskSimulatorLib.Processors.Task.TaskCompleteArgs args)
         {
-            TaskSimulatorLib.SimulatorObject.logger.Info("无人船" + args.User.UserName + "的任务" + args.Task.TaskName + "完成！");
+            TaskSimulatorLib.SimulatorObject.logger.Debug("无人船" + args.User.UserName + "的任务" + args.Task.TaskName + "完成！");
             ShowLogTextWithThread("无人船" + args.User.UserName + "的任务" + args.Task.TaskName + "完成！");
 
             if (cbIsAlwaysRunMoveTask.Checked)
