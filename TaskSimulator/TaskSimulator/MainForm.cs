@@ -136,9 +136,9 @@ namespace TaskSimulator
                         VirtualRobotConfigDict.Add(vrc.VirtualRobotId, vrc);
 
                         List<KeyValuePair<string, string>> virtualCamerasList = new List<KeyValuePair<string, string>>();
-                        for (int kkk = 0; kkk < RobotListConfig.VirtualCameraCount; kkk++)
+                        for (int kkkk = 0; kkkk < RobotListConfig.VirtualCameraNames.Length; kkkk++)
                         {
-                            virtualCamerasList.Add(new KeyValuePair<string, string>("Camera" + kkk, (kkk + 1) + "号摄像头"));
+                            virtualCamerasList.Add(new KeyValuePair<string, string>("VCamera" + kkkk, RobotListConfig.VirtualCameraNames[kkkk]));
                         }
                         //创建机器人
                         RobotFactory.CreateRobot(vrc.VirtualRobotId, vrc.VirtualRobotName, vrc.DefaultLat, vrc.DefaultLng, virtualCamerasList.ToArray());
@@ -149,6 +149,8 @@ namespace TaskSimulator
                         robotTaskSocket.DefaultCameraMonitorId = virtualCamerasList[0].Key;
                         robotTaskSocket.EnabledPosSensor = vrc.EnabledPosSensor;
                         robotTaskSocket.EnabledCameraSensor = vrc.EnabledCameraSensor;
+                        robotTaskSocket.EnabledWindSensor = vrc.EnabledWindSensor;
+                        robotTaskSocket.EnabledTempSensor = vrc.EnabledTempSensor;
                         robotTaskSocket.EnabledMQTTControlTaskStartAndStop = vrc.EnabledMQTTControlTaskStartAndStop;
                         robotTaskSocket.qosLevels = vrc.DefaultQosLevels;
                         robotTaskSocket.ListenSubject = vrc.ListenSubject;
@@ -234,7 +236,7 @@ namespace TaskSimulator
                 RobotListConfig.IsTlsModeLoginMQTT = false;
                 RobotListConfig.VirtualCameraPictureWidth = RobotFactory.VirtualCameraImageWidth;
                 RobotListConfig.VirtualCameraPictureHeight = RobotFactory.VirtualCameraImageHeight;
-                RobotListConfig.VirtualCameraCount = 2;
+                RobotListConfig.VirtualCameraNames = new string[] { "1号前方摄像头", "2号后方摄像头", "3号左侧摄像头", "4号右侧摄像头" };
                 RobotListConfig.VirtualCameraHintTextFontName = RobotFactory.VirtualCameraImageFont.Name;
                 RobotListConfig.VirtualCameraHintTextFontSize = RobotFactory.VirtualCameraImageFont.Size;
 
@@ -243,6 +245,8 @@ namespace TaskSimulator
                 RobotListConfig.RobotList[0].VirtualRobotName = "测试无人船1";
                 RobotListConfig.RobotList[0].EnabledPosSensor = true;
                 RobotListConfig.RobotList[0].EnabledCameraSensor = true;
+                RobotListConfig.RobotList[0].EnabledWindSensor = true;
+                RobotListConfig.RobotList[0].EnabledTempSensor = true;
                 RobotListConfig.RobotList[0].EnabledMQTTControlTaskStartAndStop = false;
                 RobotListConfig.RobotList[0].MQTTUser = "gs";
                 RobotListConfig.RobotList[0].MQTTPassword = "gs_password";
@@ -476,9 +480,9 @@ namespace TaskSimulator
         public bool IsTlsModeLoginMQTT { get; set; }
 
         /// <summary>
-        /// 虚拟摄像头数量
+        /// 虚拟摄像头名称列表
         /// </summary>
-        public int VirtualCameraCount { get; set; }
+        public string[] VirtualCameraNames { get; set; }
 
         /// <summary>
         /// 机器人列表
@@ -539,6 +543,16 @@ namespace TaskSimulator
         /// 自动上传我的摄像头图片
         /// </summary>
         public bool EnabledCameraSensor { get; set; }
+
+        /// <summary>
+        /// 风速风向传感器
+        /// </summary>
+        public bool EnabledWindSensor { get; set; }
+
+        /// <summary>
+        /// 温度传感器
+        /// </summary>
+        public bool EnabledTempSensor { get; set; }
 
         /// <summary>
         /// 在打开或关闭发动时允许启动或停止自动航行任务
