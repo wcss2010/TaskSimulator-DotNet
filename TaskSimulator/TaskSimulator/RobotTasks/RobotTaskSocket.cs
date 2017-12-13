@@ -92,6 +92,11 @@ namespace TaskSimulator.RobotTasks
         public bool EnabledTempSensor = false;
 
         /// <summary>
+        /// 图片最大分片大小
+        /// </summary>
+        public int MaxPicUnitSize = 28 * 1000;
+
+        /// <summary>
         /// 在打开或关闭发动时允许启动或停止自动航行任务
         /// </summary>
         public bool EnabledMQTTControlTaskStartAndStop = false;
@@ -202,65 +207,68 @@ namespace TaskSimulator.RobotTasks
             //PIC,JPEG,IMG_9987,3,5,12776，图片数据
             //传输图片，图片格式JPEG，文件名为IMG_9987,当前为第3包，总共5包，本包图片数据长度12776字节，图片数据
 
-            if (bmp != null)
+            try
             {
-                //Write BMP To Stream
-                MemoryStream ms = new MemoryStream();
-                bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                ms.Position = 0;
-
-                //Convert To Base64
-                byte[] total = new byte[ms.Length];
-                ms.Read(total, 0, total.Length);
-                ms = new MemoryStream();
-                total = Encoding.UTF8.GetBytes(Convert.ToBase64String(total));
-                ms.Write(total, 0, total.Length);
-                ms.Position = 0;
-
-                //Count PageSize
-                int MaxPicUnitSize = 28 * 1000;
-                int PicPageSize = 0;
-                if (ms.Length > MaxPicUnitSize)
+                if (bmp != null)
                 {
-                    //Need Split
-                    PicPageSize = (int)ms.Length / MaxPicUnitSize;
-                    if (ms.Length % MaxPicUnitSize > 0)
+                    //Write BMP To Stream
+                    MemoryStream imageDataBuffers = new MemoryStream();
+                    string base64Data = string.Empty;
+                    try
                     {
-                        PicPageSize++;
+                        bmp.Save(imageDataBuffers, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        imageDataBuffers.Position = 0;
+                        //Convert To Base64
+                        byte[] total = new byte[imageDataBuffers.Length];
+                        imageDataBuffers.Read(total, 0, total.Length);
+
+                        base64Data = Convert.ToBase64String(total);
+                        total = null;
                     }
-                }
-                else
-                {
-                    //No Split
-                    PicPageSize = 1;
-                }
-
-                //Send Pic Page
-                string fileName = "BMP_" + Guid.NewGuid().ToString();
-                for (int kkk = 0; kkk < PicPageSize; kkk++)
-                {
-                    //Read Pic Unit
-                    byte[] buffer = new byte[MaxPicUnitSize];
-                    if (ms.Length - ms.Position >= buffer.Length)
+                    finally
                     {
-                        ms.Read(buffer, 0, buffer.Length);
+                        imageDataBuffers.Dispose();
+                    }
+
+                    //Count PageSize                    
+                    int PicPageSize = 0;
+                    if (base64Data.Length > MaxPicUnitSize)
+                    {
+                        //Need Split
+                        PicPageSize = (int)base64Data.Length / MaxPicUnitSize;
+                        if (base64Data.Length % MaxPicUnitSize > 0)
+                        {
+                            PicPageSize++;
+                        }
                     }
                     else
                     {
-                        ms.Read(buffer, 0, (int)(ms.Length - ms.Position));
+                        //No Split
+                        PicPageSize = 1;
                     }
 
-                    //Convert To String
-                    string bufferString = Encoding.UTF8.GetString(buffer);
+                    //Send Pic Page
+                    string fileName = "BMP_" + Guid.NewGuid().ToString();
+                    int readStart = 0;
+                    for (int kkk = 0; kkk < PicPageSize; kkk++)
+                    {
+                        //Convert To String
+                        string bufferString = base64Data.Substring(readStart, readStart + MaxPicUnitSize > base64Data.Length ? base64Data.Length - readStart : MaxPicUnitSize);
+                        readStart += MaxPicUnitSize;
 
-                    //SendTo
-                    //PublishPicture("PIC,BMP," + fileName + "," + (kkk + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + bufferString);
-                    PublishPicture(bufferString);
+                        //SendTo
+                        //PublishPicture("PIC,BMP," + fileName + "," + (kkk + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + bufferString);
+                        PublishPicture(bufferString);
+                    }
+
+                    //End Send
+                    //PublishPicture("PIC,BMP," + fileName + "," + (PicPageSize + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + "=====");
+                    PublishPicture("=====");
                 }
-
-                //End Send
-                //PublishPicture("PIC,BMP," + fileName + "," + (PicPageSize + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + "=====");
-                PublishPicture("=====");
+            }
+            finally
+            {
+                bmp.Dispose();
             }
         }
 
