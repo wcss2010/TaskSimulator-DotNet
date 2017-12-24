@@ -245,9 +245,10 @@ namespace TaskSimulator
                 RobotListConfig.IsTlsModeLoginMQTT = false;
                 RobotListConfig.VirtualCameraPictureWidth = RobotFactory.VirtualCameraImageWidth;
                 RobotListConfig.VirtualCameraPictureHeight = RobotFactory.VirtualCameraImageHeight;
-                RobotListConfig.VirtualCameraNames = new string[] { "1号前方摄像头", "2号后方摄像头", "3号左侧摄像头", "4号右侧摄像头" };
+                RobotListConfig.VirtualCameraNames = new string[] { "1号前视摄像头", "2号后视摄像头", "3号左侧摄像头", "4号右侧摄像头" };
                 RobotListConfig.VirtualCameraHintTextFontName = RobotFactory.VirtualCameraImageFont.Name;
                 RobotListConfig.VirtualCameraHintTextFontSize = RobotFactory.VirtualCameraImageFont.Size;
+                RobotListConfig.VirtualCameraBackgroundImages = new string[] { };
 
                 RobotListConfig.RobotList = new VirtualRobotConfig[] { new VirtualRobotConfig() };
                 RobotListConfig.RobotList[0].VirtualRobotId = "test1";
@@ -263,10 +264,12 @@ namespace TaskSimulator
                 RobotListConfig.RobotList[0].DefaultQosLevels = new byte[] { MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE };
                 RobotListConfig.RobotList[0].ListenSubject = "shore2boat";
                 RobotListConfig.RobotList[0].CommandSendSubject = "boat2shore";
-                RobotListConfig.RobotList[0].PictureSendSubject = "picture2shore";
+                RobotListConfig.RobotList[0].PictureSendSubjects = new string[] { "picture2shore/1", "picture2shore2/1", "picture2shore3/1", "picture2shore4/1" };
 
                 RobotListConfig.RobotList[0].DefaultLat = 26.2120;
                 RobotListConfig.RobotList[0].DefaultLng = 129.4603;
+
+                RobotListConfig.RobotList[0].CustomMovePlans = new CustomMovePlanItem[] { };
 
                 File.WriteAllText(xmlConfig, XmlSerializeTool.Serializer<VirtualRobotListConfig>(MainForm.RobotListConfig));
             }
