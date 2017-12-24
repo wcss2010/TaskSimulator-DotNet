@@ -485,6 +485,11 @@ namespace TaskSimulator
         public string[] VirtualCameraNames { get; set; }
 
         /// <summary>
+        /// 虚拟摄像头背景文件列表
+        /// </summary>
+        public string[] VirtualCameraBackgroundImages { get; set; }
+
+        /// <summary>
         /// 机器人列表
         /// </summary>
         public VirtualRobotConfig[] RobotList { get; set; }
@@ -575,9 +580,9 @@ namespace TaskSimulator
         public string CommandSendSubject { get; set; }
 
         /// <summary>
-        /// 图片发送主题
+        /// 图片发送主题组
         /// </summary>
-        public string PictureSendSubject { get; set; }
+        public string[] PictureSendSubjects { get; set; }
 
         /// <summary>
         /// MQTT用户
@@ -598,5 +603,27 @@ namespace TaskSimulator
         /// 初始经度
         /// </summary>
         public double DefaultLng { get; set; }
+
+        /// <summary>
+        /// 自定义移动方案
+        /// </summary>
+        public CustomMovePlanItem[] CustomMovePlans { get; set; }
+    }
+
+    /// <summary>
+    /// 自定义机器人移动方案
+    /// </summary>
+    [Serializable]
+    public class CustomMovePlanItem
+    {
+        /// <summary>
+        /// 纬度
+        /// </summary>
+        public double Lat { get; set; }
+
+        /// <summary>
+        /// 经度
+        /// </summary>
+        public double Lng { get; set; }
     }
 }
