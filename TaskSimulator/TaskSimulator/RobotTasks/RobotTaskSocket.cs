@@ -17,6 +17,21 @@ namespace TaskSimulator.RobotTasks
     public class RobotTaskSocket
     {
         /// <summary>
+        /// 地面站到机器人主题
+        /// </summary>
+        public const string STATION_TO_BOAT = "shore2boat";
+
+        /// <summary>
+        /// 机器人到地面站主题
+        /// </summary>
+        public const string BOAT_TO_STATION = "boat2shore";
+
+        /// <summary>
+        /// 图片数据到地面站主题
+        /// </summary>
+        public const string PICTURE_TO_STATION = "picture2shore";
+
+        /// <summary>
         /// qos=1
         /// </summary>
         public byte[] qosLevels = new byte[] { MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE };
@@ -24,17 +39,17 @@ namespace TaskSimulator.RobotTasks
         /// <summary>
         /// 监听主题
         /// </summary>
-        public string ListenSubject = "shore2boat";
+        public string ListenSubject = string.Empty;
 
         /// <summary>
         /// 指令发送主题
         /// </summary>
-        public string CommandSendSubject = "boat2shore";
+        public string CommandSendSubject = string.Empty;
 
         /// <summary>
         /// 图片发送主题
         /// </summary>
-        public string PictureSendSubject = "picture2shore";
+        public string PictureSendSubject = string.Empty;
 
         /// <summary>
         /// 机器人用户
@@ -95,6 +110,25 @@ namespace TaskSimulator.RobotTasks
         /// 图片最大分片大小
         /// </summary>
         public int MaxPicUnitSize = 28 * 1000;
+
+        /// <summary>
+        /// 是否使用Tls连接MQTT
+        /// </summary>
+        public bool IsTls { get; set; }
+
+        /// <summary>
+        /// 自定义移动方案
+        /// </summary>
+        public CustomMovePlanItem[] CustomMovePlans { get; set; }
+
+        private List<PictureChannelConfig> pictureChannelConfigList = new List<PictureChannelConfig>();
+        /// <summary>
+        /// 图片传输配置
+        /// </summary>
+        public List<PictureChannelConfig> PictureChannelConfigList
+        {
+            get { return pictureChannelConfigList; }
+        }
 
         /// <summary>
         /// 在打开或关闭发动时允许启动或停止自动航行任务
@@ -590,9 +624,21 @@ namespace TaskSimulator.RobotTasks
         {
             TaskSimulatorLib.SimulatorObject.logger.Debug("机器人:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "连接已断开");
         }
+    }
 
-        public string DefaultCameraMonitorId { get; set; }
+    /// <summary>
+    /// 图片传输通道配置
+    /// </summary>
+    public class PictureChannelConfig
+    {
+        public PictureChannelConfig(string monitorIds, string subjects)
+        {
+            this.CameraMonitorId = monitorIds;
+            this.PictureSendSubject = subjects;
+        }
 
-        public bool IsTls { get; set; }
+        public string CameraMonitorId { get; set; }
+
+        public string PictureSendSubject { get; set; }
     }
 }

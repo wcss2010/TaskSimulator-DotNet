@@ -90,6 +90,11 @@ namespace TaskSimulator.RobotTasks
         /// </summary>
         public static Font VirtualCameraImageFont = new Font("宋体", 16);
 
+        /// <summary>
+        /// 虚拟摄像头背景
+        /// </summary>
+        public static string[] VirtualCameraBackgroundImages { get; set; }
+
         public static event UIActionDelegate OnUiActionEvent;
         public static void OnUiAction(string actionName,RobotUser user, RobotTask task,KeyValuePair<string,object>[] dataTeam)
         {

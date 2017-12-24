@@ -124,6 +124,7 @@ namespace TaskSimulator
                 RobotFactory.VirtualCameraImageWidth = RobotListConfig.VirtualCameraPictureWidth;
                 RobotFactory.VirtualCameraImageHeight = RobotListConfig.VirtualCameraPictureHeight;
                 RobotFactory.VirtualCameraImageFont = new Font(RobotListConfig.VirtualCameraHintTextFontName, RobotListConfig.VirtualCameraHintTextFontSize);
+                RobotFactory.VirtualCameraBackgroundImages = RobotListConfig.VirtualCameraBackgroundImages;
 
                 if (RobotListConfig.RobotList != null && RobotListConfig.RobotList.Length > 0)
                 {
@@ -145,8 +146,7 @@ namespace TaskSimulator
 
                         //连接MQTT
                         RobotTaskSocket robotTaskSocket = new RobotTaskSocket(RobotFactory.Simulator.UserDict[vrc.VirtualRobotId], RobotListConfig.MQTTServerIP, RobotListConfig.MQTTServerPort, vrc.MQTTUser, vrc.MQTTPassword, RobotListConfig.IsTlsModeLoginMQTT);
-                        robotTaskSocket.BoatMoveLimit = RobotListConfig.RobotMoveLimit;
-                        robotTaskSocket.DefaultCameraMonitorId = virtualCamerasList[0].Key;
+                        robotTaskSocket.BoatMoveLimit = RobotListConfig.RobotMoveLimit;                        
                         robotTaskSocket.EnabledPosSensor = vrc.EnabledPosSensor;
                         robotTaskSocket.EnabledCameraSensor = vrc.EnabledCameraSensor;
                         robotTaskSocket.EnabledWindSensor = vrc.EnabledWindSensor;
@@ -154,8 +154,17 @@ namespace TaskSimulator
                         robotTaskSocket.EnabledMQTTControlTaskStartAndStop = vrc.EnabledMQTTControlTaskStartAndStop;
                         robotTaskSocket.qosLevels = vrc.DefaultQosLevels;
                         robotTaskSocket.ListenSubject = vrc.ListenSubject;
-                        robotTaskSocket.CommandSendSubject = vrc.CommandSendSubject;
-                        robotTaskSocket.PictureSendSubject = vrc.PictureSendSubject;
+                        robotTaskSocket.CommandSendSubject = vrc.CommandSendSubject;                        
+                        robotTaskSocket.CustomMovePlans = vrc.CustomMovePlans;
+
+                        //摄像头配置
+                        for (int kkkk = 0; kkkk < virtualCamerasList.Count; kkkk++)
+                        {
+                            string monitorId = virtualCamerasList[kkkk].Key;
+                            string subject = vrc.PictureSendSubjects[kkkk];
+
+                            robotTaskSocket.PictureChannelConfigList.Add(new PictureChannelConfig(monitorId, subject));
+                        }
 
                         robotTaskSocket.ConnectToServer();
                         VirtualRobotSocketDict.Add(vrc.VirtualRobotId, robotTaskSocket);
