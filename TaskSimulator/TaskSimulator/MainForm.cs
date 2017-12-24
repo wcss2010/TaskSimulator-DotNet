@@ -340,9 +340,12 @@ namespace TaskSimulator
 
                              if (taskSocket.EnabledCameraSensor)
                              {
-                                 //图片
-                                 Bitmap b12111 = (Bitmap)taskSocket.RobotUser.SupportedMonitor[taskSocket.DefaultCameraMonitorId].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
-                                 taskSocket.PublishPicture(b12111);
+                                 foreach (PictureChannelConfig pcc in taskSocket.PictureChannelConfigList)
+                                 {
+                                     //图片
+                                     Bitmap b12111 = (Bitmap)taskSocket.RobotUser.SupportedMonitor[pcc.CameraMonitorId].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
+                                     taskSocket.PublishPicture(pcc.PictureSendSubject, b12111);
+                                 }
                              }
                          }
                      }
