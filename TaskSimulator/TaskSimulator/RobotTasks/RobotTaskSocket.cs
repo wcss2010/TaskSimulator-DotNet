@@ -408,8 +408,7 @@ namespace TaskSimulator.RobotTasks
                 if (receiveString.Trim().StartsWith("GET PIC"))
                 {
                     //图片
-                    Bitmap b12111 = (Bitmap)RobotUser.SupportedMonitor[DefaultCameraMonitorId].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
-                    PublishPicture(b12111);
+                    GetPic(receiveString);
                 }
                 else if (receiveString.Trim().StartsWith("GO"))
                 {
@@ -507,6 +506,32 @@ namespace TaskSimulator.RobotTasks
                         EnabledCameraSensor = true;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// 获得图片指令处理
+        /// </summary>
+        /// <param name="receiveString"></param>
+        public void GetPic(string receiveString)
+        {
+            string picString = receiveString.Replace("GET PIC", string.Empty);
+            int picNumber = 0;
+            try
+            {
+                picNumber = int.Parse(picString);
+            }
+            catch (Exception ex)
+            {
+                picNumber = 1;
+            }
+
+            picNumber--;
+            if (PictureChannelConfigList != null && PictureChannelConfigList.Count > picNumber)
+            {
+                PictureChannelConfig pcc = PictureChannelConfigList[picNumber];
+                Bitmap b12111 = (Bitmap)RobotUser.SupportedMonitor[pcc.CameraMonitorId].Process(new Command(CameraMonitor.Command_GetCameraImage, null)).Content;
+                PublishPicture(pcc.PictureSendSubject, b12111);
             }
         }
 
