@@ -641,20 +641,28 @@ namespace TaskSimulator.RobotTasks
                             if (File.Exists(destFile))
                             {
                                 //图片存在
+                                Image destImage = null;
                                 try
                                 {
-                                    Image destImage = Image.FromFile(destFile);
+                                    destImage = Image.FromFile(destFile);
                                     g.DrawImage(destImage, new Rectangle(0, 0, RobotFactory.VirtualCameraImageWidth, RobotFactory.VirtualCameraImageHeight));
                                 }
                                 catch (Exception ex)
                                 {
                                     SimulatorObject.logger.Error(ex.ToString());
-                                    
+
                                     //没有配置背景文件，使用随机颜色
                                     List<Color> backgroundColors = new List<Color>();
                                     backgroundColors.AddRange(RobotFactory.VirtualCameraImageBackgroundColors);
                                     //填充一个随机背景色
                                     g.FillRectangle(new SolidBrush(backgroundColors[random.Next(0, backgroundColors.Count)]), new Rectangle(0, 0, RobotFactory.VirtualCameraImageWidth, RobotFactory.VirtualCameraImageHeight));
+                                }
+                                finally
+                                {
+                                    if (destImage != null)
+                                    {
+                                        destImage.Dispose();
+                                    }
                                 }
                             }
                             else
