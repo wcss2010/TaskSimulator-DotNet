@@ -114,7 +114,7 @@ namespace TaskSimulator.RobotTasks
         /// <summary>
         /// 自定义移动方案
         /// </summary>
-        public CustomMovePlanItem[] CustomMovePlans { get; set; }
+        public CustomMovePlan[] CustomMovePlans { get; set; }
 
         private List<PictureChannelConfig> pictureChannelConfigList = new List<PictureChannelConfig>();
         /// <summary>
@@ -557,7 +557,7 @@ namespace TaskSimulator.RobotTasks
                 //检查到有效移动方案
                 TaskSimulatorLib.SimulatorObject.logger.Debug("为机器人(" + RobotUser.UserName + ")选择了自定义的移动方案!");
                 List<double[]> posList = new List<double[]>();
-                foreach (CustomMovePlanItem mpi in CustomMovePlans)
+                foreach (CustomMovePlan mpi in CustomMovePlans)
                 {
                     posList.Add(new double[] { mpi.Lat, mpi.Lng });
                 }

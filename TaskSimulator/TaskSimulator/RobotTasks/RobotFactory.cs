@@ -637,7 +637,7 @@ namespace TaskSimulator.RobotTasks
                         }
                         else
                         {
-                            string destFile = RobotFactory.VirtualCameraBackgroundImages[randomPictureIndex].Contains(":/") ? RobotFactory.VirtualCameraBackgroundImages[randomPictureIndex] : Path.Combine(Application.StartupPath, RobotFactory.VirtualCameraBackgroundImages[randomPictureIndex]);
+                            string destFile = RobotFactory.VirtualCameraBackgroundImages[randomPictureIndex].Contains(@":\") ? RobotFactory.VirtualCameraBackgroundImages[randomPictureIndex] : Path.Combine(Application.StartupPath, RobotFactory.VirtualCameraBackgroundImages[randomPictureIndex]);
                             if (File.Exists(destFile))
                             {
                                 //图片存在

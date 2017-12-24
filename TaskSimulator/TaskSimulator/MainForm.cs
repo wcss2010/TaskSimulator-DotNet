@@ -269,7 +269,7 @@ namespace TaskSimulator
                 RobotListConfig.RobotList[0].DefaultLat = 26.2120;
                 RobotListConfig.RobotList[0].DefaultLng = 129.4603;
 
-                RobotListConfig.RobotList[0].CustomMovePlans = new CustomMovePlanItem[] { };
+                RobotListConfig.RobotList[0].CustomMovePlans = new CustomMovePlan[] { };
 
                 File.WriteAllText(xmlConfig, XmlSerializeTool.Serializer<VirtualRobotListConfig>(MainForm.RobotListConfig));
             }
@@ -622,14 +622,14 @@ namespace TaskSimulator
         /// <summary>
         /// 自定义移动方案
         /// </summary>
-        public CustomMovePlanItem[] CustomMovePlans { get; set; }
+        public CustomMovePlan[] CustomMovePlans { get; set; }
     }
 
     /// <summary>
     /// 自定义机器人移动方案
     /// </summary>
     [Serializable]
-    public class CustomMovePlanItem
+    public class CustomMovePlan
     {
         /// <summary>
         /// 纬度
