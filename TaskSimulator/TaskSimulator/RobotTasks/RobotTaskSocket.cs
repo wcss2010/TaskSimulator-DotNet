@@ -219,19 +219,10 @@ namespace TaskSimulator.RobotTasks
         }
 
         /// <summary>
-        /// 发布图片到服务器
-        /// </summary>
-        /// <param name="strValue"></param>
-        public void PublishPicture(string strValue)
-        {
-            Publish(PictureSendSubject, strValue);
-        }
-
-        /// <summary>
         /// Send Picture
         /// </summary>
         /// <param name="bmp"></param>
-        public void PublishPicture(Bitmap bmp)
+        public void PublishPicture(string subject,Bitmap bmp)
         {
             //PIC,JPEG,IMG_9987,3,5,12776，图片数据
             //传输图片，图片格式JPEG，文件名为IMG_9987,当前为第3包，总共5包，本包图片数据长度12776字节，图片数据
@@ -287,12 +278,12 @@ namespace TaskSimulator.RobotTasks
 
                         //SendTo
                         //PublishPicture("PIC,BMP," + fileName + "," + (kkk + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + bufferString);
-                        PublishPicture(bufferString);
+                        Publish(subject, bufferString);
                     }
 
                     //End Send
                     //PublishPicture("PIC,BMP," + fileName + "," + (PicPageSize + 1) + "," + (PicPageSize + 1) + "," + ms.Length + "," + "=====");
-                    PublishPicture("=====");
+                    Publish(subject, "=====");
                 }
             }
             finally
