@@ -536,22 +536,37 @@ namespace TaskSimulator.RobotTasks
         /// </summary>
         public void RandomRectOrRoundTask()
         {
-            Random random = new Random((int)DateTime.Now.Ticks);
-
-            //1=方框，2=圆圈
-            int taskIndex = random.Next(1, 3);
-
-            TaskSimulatorLib.SimulatorObject.logger.Debug("为机器人(" + RobotUser.UserName + ")选择了按指定 边长或半径 行走" + (taskIndex == 1 ? "方形" : "圆形") + "的任务！");
-
-            if (taskIndex == 1)
+            if (CustomMovePlans != null && CustomMovePlans.Length >= 4)
             {
-                //方框
-                RobotFactory.StartMoveShipWithRect(RobotUser.UserCode, BoatMoveLimit);
+                //检查到有效移动方案
+                TaskSimulatorLib.SimulatorObject.logger.Debug("为机器人(" + RobotUser.UserName + ")选择了自定义的移动方案!");
+                List<double[]> posList = new List<double[]>();
+                foreach (CustomMovePlanItem mpi in CustomMovePlans)
+                {
+                    posList.Add(new double[] { mpi.Lat, mpi.Lng });
+                }
+                RobotFactory.StartMoveShipWithPosList(RobotUser.UserCode, posList);
+
+                //分配完成任务后需要把当前这个自定义方案顺序翻转，以使机器人能回到原点
+                Array.Reverse(CustomMovePlans);
             }
             else
             {
-                //圆圈
-                RobotFactory.StartMoveShipWithRound(RobotUser.UserCode, BoatMoveLimit);
+                //没有配置移动方案，取随机方案
+                Random random = new Random((int)DateTime.Now.Ticks);
+                //1=方框，2=圆圈
+                int taskIndex = random.Next(1, 3);
+                TaskSimulatorLib.SimulatorObject.logger.Debug("为机器人(" + RobotUser.UserName + ")选择了按指定 边长或半径 行走" + (taskIndex == 1 ? "方形" : "圆形") + "的任务！");
+                if (taskIndex == 1)
+                {
+                    //方框
+                    RobotFactory.StartMoveShipWithRect(RobotUser.UserCode, BoatMoveLimit);
+                }
+                else
+                {
+                    //圆圈
+                    RobotFactory.StartMoveShipWithRound(RobotUser.UserCode, BoatMoveLimit);
+                }
             }
         }
 
