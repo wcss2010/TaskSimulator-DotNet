@@ -22,7 +22,7 @@ namespace TaskSimulator.RobotTasks
         public string ActionName { get; set; }
 
         public RobotUser User { get; set; }
-        
+
         public RobotTask Task { get; set; }
 
         private Dictionary<string, object> objects = new Dictionary<string, object>();
@@ -96,7 +96,7 @@ namespace TaskSimulator.RobotTasks
         public static string[] VirtualCameraBackgroundImages { get; set; }
 
         public static event UIActionDelegate OnUiActionEvent;
-        public static void OnUiAction(string actionName,RobotUser user, RobotTask task,KeyValuePair<string,object>[] dataTeam)
+        public static void OnUiAction(string actionName, RobotUser user, RobotTask task, KeyValuePair<string, object>[] dataTeam)
         {
             if (OnUiActionEvent != null)
             {
@@ -128,7 +128,7 @@ namespace TaskSimulator.RobotTasks
         /// <param name="userCode"></param>
         /// <param name="userName"></param>
         /// <param name="objects"></param>
-        public static void CreateRobot(string userCode, string userName, double defaultLat, double defaultLng,KeyValuePair<string,string>[] virtualCameras)
+        public static void CreateRobot(string userCode, string userName, double defaultLat, double defaultLng, KeyValuePair<string, string>[] virtualCameras)
         {
             //用户名称和用户代码
             RobotUser curUser = new RobotUser();
@@ -203,8 +203,8 @@ namespace TaskSimulator.RobotTasks
                 string currentCommand = RebotMoveTaskWorkerThread.Command_UsePosList;
 
                 //参数
-                List<KeyValuePair<string,object>> paramList = new List<KeyValuePair<string,object>>();
-                paramList.Add(new KeyValuePair<string,object>(RebotMoveTaskWorkerThread.Property_PosList, posList));
+                List<KeyValuePair<string, object>> paramList = new List<KeyValuePair<string, object>>();
+                paramList.Add(new KeyValuePair<string, object>(RebotMoveTaskWorkerThread.Property_PosList, posList));
 
                 //添加到任务队列
                 AddTaskToRobot(new ProcessorQueueObject(selectedUser, selectedUser.SupportedTask[Task_RobotMove], new Command(currentCommand, paramList.ToArray())));
@@ -235,8 +235,8 @@ namespace TaskSimulator.RobotTasks
                 string currentCommand = RebotMoveTaskWorkerThread.Command_UseDefaultRect;
 
                 //参数
-                List<KeyValuePair<string,object>> paramList = new List<KeyValuePair<string,object>>();
-                paramList.Add(new KeyValuePair<string,object>(RebotMoveTaskWorkerThread.Property_Limit, limit));
+                List<KeyValuePair<string, object>> paramList = new List<KeyValuePair<string, object>>();
+                paramList.Add(new KeyValuePair<string, object>(RebotMoveTaskWorkerThread.Property_Limit, limit));
 
                 //添加到任务队列
                 AddTaskToRobot(new ProcessorQueueObject(selectedUser, selectedUser.SupportedTask[Task_RobotMove], new Command(currentCommand, paramList.ToArray())));
@@ -267,8 +267,8 @@ namespace TaskSimulator.RobotTasks
                 string currentCommand = RebotMoveTaskWorkerThread.Command_UseDefaultRound;
 
                 //参数
-                List<KeyValuePair<string,object>> paramList = new List<KeyValuePair<string,object>>();
-                paramList.Add(new KeyValuePair<string,object>(RebotMoveTaskWorkerThread.Property_Limit, limit));
+                List<KeyValuePair<string, object>> paramList = new List<KeyValuePair<string, object>>();
+                paramList.Add(new KeyValuePair<string, object>(RebotMoveTaskWorkerThread.Property_Limit, limit));
 
                 //添加到任务队列
                 AddTaskToRobot(new ProcessorQueueObject(selectedUser, selectedUser.SupportedTask[Task_RobotMove], new Command(currentCommand, paramList.ToArray())));
@@ -339,9 +339,9 @@ namespace TaskSimulator.RobotTasks
         /// <returns></returns>
         private Command CreateMoveCommand(double lat, double lng)
         {
-            List<KeyValuePair<string,object>> paramList = new List<KeyValuePair<string,object>>();
-            paramList.Add(new KeyValuePair<string,object>("lat", lat));
-            paramList.Add(new KeyValuePair<string,object>("lng", lng));
+            List<KeyValuePair<string, object>> paramList = new List<KeyValuePair<string, object>>();
+            paramList.Add(new KeyValuePair<string, object>("lat", lat));
+            paramList.Add(new KeyValuePair<string, object>("lng", lng));
 
             return new Command(RobotFactory.Action_RebotMove, paramList.ToArray());
         }
@@ -601,7 +601,7 @@ namespace TaskSimulator.RobotTasks
     /// <summary>
     /// 摄像头监视器
     /// </summary>
-    public class CameraMonitor :BaseMonitor
+    public class CameraMonitor : BaseMonitor
     {
         /// <summary>
         /// 获得摄像头指令
@@ -612,7 +612,7 @@ namespace TaskSimulator.RobotTasks
 
         public override CommandResult Process(Command commandObj)
         {
-            List<KeyValuePair<string,object>> resultParams = new List<KeyValuePair<string,object>>();
+            List<KeyValuePair<string, object>> resultParams = new List<KeyValuePair<string, object>>();
 
             Bitmap bmp = null;
             if (Command_GetCameraImage.Equals(commandObj.CommandText))
@@ -622,11 +622,60 @@ namespace TaskSimulator.RobotTasks
                 Graphics g = Graphics.FromImage(bmp);
                 try
                 {
-                    List<Color> backgroundColors = new List<Color>();
-                    backgroundColors.AddRange(RobotFactory.VirtualCameraImageBackgroundColors);
+                    //填充背景
+                    if (RobotFactory.VirtualCameraBackgroundImages != null && RobotFactory.VirtualCameraBackgroundImages.Length >= 1)
+                    {
+                        //有配置背景文件，直接使用
+                        int randomPictureIndex = random.Next(0, RobotFactory.VirtualCameraBackgroundImages.Length);
+                        if (string.IsNullOrEmpty(RobotFactory.VirtualCameraBackgroundImages[randomPictureIndex]))
+                        {
+                            //没有配置背景文件，使用随机颜色
+                            List<Color> backgroundColors = new List<Color>();
+                            backgroundColors.AddRange(RobotFactory.VirtualCameraImageBackgroundColors);
+                            //填充一个随机背景色
+                            g.FillRectangle(new SolidBrush(backgroundColors[random.Next(0, backgroundColors.Count)]), new Rectangle(0, 0, RobotFactory.VirtualCameraImageWidth, RobotFactory.VirtualCameraImageHeight));
+                        }
+                        else
+                        {
+                            string destFile = RobotFactory.VirtualCameraBackgroundImages[randomPictureIndex].Contains(":/") ? RobotFactory.VirtualCameraBackgroundImages[randomPictureIndex] : Path.Combine(Application.StartupPath, RobotFactory.VirtualCameraBackgroundImages[randomPictureIndex]);
+                            if (File.Exists(destFile))
+                            {
+                                //图片存在
+                                try
+                                {
+                                    Image destImage = Image.FromFile(destFile);
+                                    g.DrawImage(destImage, new Rectangle(0, 0, RobotFactory.VirtualCameraImageWidth, RobotFactory.VirtualCameraImageHeight));
+                                }
+                                catch (Exception ex)
+                                {
+                                    SimulatorObject.logger.Error(ex.ToString());
+                                    
+                                    //没有配置背景文件，使用随机颜色
+                                    List<Color> backgroundColors = new List<Color>();
+                                    backgroundColors.AddRange(RobotFactory.VirtualCameraImageBackgroundColors);
+                                    //填充一个随机背景色
+                                    g.FillRectangle(new SolidBrush(backgroundColors[random.Next(0, backgroundColors.Count)]), new Rectangle(0, 0, RobotFactory.VirtualCameraImageWidth, RobotFactory.VirtualCameraImageHeight));
+                                }
+                            }
+                            else
+                            {
+                                //没有配置背景文件，使用随机颜色
+                                List<Color> backgroundColors = new List<Color>();
+                                backgroundColors.AddRange(RobotFactory.VirtualCameraImageBackgroundColors);
+                                //填充一个随机背景色
+                                g.FillRectangle(new SolidBrush(backgroundColors[random.Next(0, backgroundColors.Count)]), new Rectangle(0, 0, RobotFactory.VirtualCameraImageWidth, RobotFactory.VirtualCameraImageHeight));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //没有配置背景文件，使用随机颜色
+                        List<Color> backgroundColors = new List<Color>();
+                        backgroundColors.AddRange(RobotFactory.VirtualCameraImageBackgroundColors);
+                        //填充一个随机背景色
+                        g.FillRectangle(new SolidBrush(backgroundColors[random.Next(0, backgroundColors.Count)]), new Rectangle(0, 0, RobotFactory.VirtualCameraImageWidth, RobotFactory.VirtualCameraImageHeight));
+                    }
 
-                    //填充一个随机背景色
-                    g.FillRectangle(new SolidBrush(backgroundColors[random.Next(0, backgroundColors.Count)]), new Rectangle(0, 0, RobotFactory.VirtualCameraImageWidth, RobotFactory.VirtualCameraImageHeight));
                     //写RobotUser名称
                     StringFormat sf = new StringFormat();
                     sf.Alignment = StringAlignment.Center;
@@ -645,7 +694,7 @@ namespace TaskSimulator.RobotTasks
                 }
             }
 
-            return new CommandResult(commandObj.CommandText, true, string.Empty, bmp,resultParams.ToArray());
+            return new CommandResult(commandObj.CommandText, true, string.Empty, bmp, resultParams.ToArray());
         }
     }
 }

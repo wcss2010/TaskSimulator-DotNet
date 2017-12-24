@@ -47,11 +47,6 @@ namespace TaskSimulator.RobotTasks
         public string CommandSendSubject = string.Empty;
 
         /// <summary>
-        /// 图片发送主题
-        /// </summary>
-        public string PictureSendSubject = string.Empty;
-
-        /// <summary>
         /// 机器人用户
         /// </summary>
         public RobotUser RobotUser { get; set; }
