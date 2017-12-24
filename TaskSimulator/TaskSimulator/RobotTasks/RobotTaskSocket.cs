@@ -154,8 +154,6 @@ namespace TaskSimulator.RobotTasks
             this.RemoteUserName = username;
             this.RemotePassword = password;
             this.IsTls = isTls;
-
-            ConnectToServer();
         }
 
         /// <summary>
