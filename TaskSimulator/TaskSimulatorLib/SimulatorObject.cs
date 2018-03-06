@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TaskSimulatorLib.Entitys;
+using TaskSimulatorLib.Processors;
 using TaskSimulatorLib.Processors.Action;
 using TaskSimulatorLib.Processors.Task;
 
@@ -73,6 +74,59 @@ namespace TaskSimulatorLib
        {
            TaskProcessor.Stop();
            ActionProcessor.Stop();
+       }
+
+       /// <summary>
+       /// 添加一个任务到任务队列中准备执行
+       /// </summary>
+       /// <param name="pqo"></param>
+       public void AddTaskToRunningQueue(ProcessorQueueObject pqo)
+       {
+           bool enabledAdd = true;
+           foreach (ProcessorQueueObject queue in taskProcessor.Queues)
+           {
+               if (queue.User.Equals(pqo.User) && queue.Task.Equals(pqo.Task))
+               {
+                   enabledAdd = false;
+                   break;
+               }
+           }
+           if (enabledAdd)
+           {
+               pqo.Task.TaskWorkerThread.WorkerThreadState = WorkerThreadStateType.Started;
+               taskProcessor.Queues.Enqueue(pqo);
+           }
+       }
+
+       /// <summary>
+       /// 启动一个任务
+       /// </summary>
+       /// <param name="userCode"></param>
+       public void StartTask(string userCode, string taskCode,Command taskCommand)
+       {
+           if (UserDict.ContainsKey(userCode))
+           {
+               //取出用户
+               RobotUser selectedUser = UserDict[userCode];
+
+               //如果不存在这个任务，则不添加新任务
+               if (selectedUser == null || !selectedUser.SupportedTask.ContainsKey(taskCode))
+               {
+                   return;
+               }
+
+               //如果正在运行，则不添加新任务
+               if (selectedUser.SupportedTask[taskCode].TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Running)
+               {
+                   return;
+               }
+
+               //重置工作线程状态为Ready
+               selectedUser.SupportedTask[taskCode].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
+
+               //添加到任务队列
+               AddTaskToRunningQueue(new ProcessorQueueObject(selectedUser, selectedUser.SupportedTask[taskCode], taskCommand));
+           }
        }
     }
 }
