@@ -55,6 +55,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CSScriptLib">
+      <HintPath>..\..\Lib\C#Script\CSScriptLib.dll</HintPath>
+    </Reference>
     <Reference Include="GMap.NET.Core">
       <HintPath>..\..\Lib\GreatMaps-v2015.26\Release-NETv4.0\GMap.NET.Core.dll</HintPath>
     </Reference>
@@ -92,10 +95,16 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="NewRobotTask\Entitys\LatAndLng.cs" />
+    <Compile Include="NewRobotTask\Entitys\Robot.cs" />
+    <Compile Include="NewRobotTask\Entitys\RobotSimulatorConfig.cs" />
+    <Compile Include="NewRobotTask\RobotManager.cs" />
     <Compile Include="RobotTasks\RobotFactory.cs" />
     <Compile Include="RobotTasks\RobotTaskSocket.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\SerializableDictionary.cs" />
+    <Compile Include="Util\XmlSerializeTool.cs" />
     <EmbeddedResource Include="GisMonitor.resx">
       <DependentUpon>GisMonitor.cs</DependentUpon>
     </EmbeddedResource>
@@ -134,6 +143,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
