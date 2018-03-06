@@ -83,6 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoatRobot\Entitys\DynamicComponent.cs" />
     <Compile Include="GisMonitor.cs">
       <SubType>Form</SubType>
     </Compile>
