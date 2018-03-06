@@ -30,7 +30,17 @@ namespace TaskSimulatorLib
        {
            return log4net.LogManager.GetLogger(t);
        }
-       
+
+       private static SimulatorObject simulator = new SimulatorObject();
+       /// <summary>
+       /// 机器人模拟器实例
+       /// </summary>
+       public static SimulatorObject Simulator
+       {
+           get { return SimulatorObject.simulator; }
+           set { SimulatorObject.simulator = value; }
+       }       
+
        ConcurrentDictionary<string, RobotUser> userDict = new ConcurrentDictionary<string, RobotUser>();
        /// <summary>
        /// 无人船用户字典
