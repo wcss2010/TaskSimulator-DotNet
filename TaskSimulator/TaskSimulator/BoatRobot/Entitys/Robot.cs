@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskSimulator.Util;
 
-namespace TaskSimulator.NewRobotTask.Entitys
+namespace TaskSimulator.BoatRobot.Entitys
 {
     /// <summary>
     ///  机器人配置

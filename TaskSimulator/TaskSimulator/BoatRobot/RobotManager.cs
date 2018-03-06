@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskSimulator.NewRobotTask
+namespace TaskSimulator.BoatRobot
 {
     /// <summary>
     /// 无人船管理器

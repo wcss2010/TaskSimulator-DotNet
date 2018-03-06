@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskSimulator.NewRobotTask.Entitys
+namespace TaskSimulator.BoatRobot.Entitys
 {
     /// <summary>
     /// 坐标点

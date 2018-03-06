@@ -95,10 +95,10 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewRobotTask\Entitys\LatAndLng.cs" />
-    <Compile Include="NewRobotTask\Entitys\Robot.cs" />
-    <Compile Include="NewRobotTask\Entitys\RobotSimulatorConfig.cs" />
-    <Compile Include="NewRobotTask\RobotManager.cs" />
+    <Compile Include="BoatRobot\Entitys\LatAndLng.cs" />
+    <Compile Include="BoatRobot\Entitys\Robot.cs" />
+    <Compile Include="BoatRobot\Entitys\RobotSimulatorConfig.cs" />
+    <Compile Include="BoatRobot\RobotManager.cs" />
     <Compile Include="RobotTasks\RobotFactory.cs" />
     <Compile Include="RobotTasks\RobotTaskSocket.cs" />
     <Compile Include="Program.cs" />
