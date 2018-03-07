@@ -29,6 +29,11 @@ namespace TaskSimulatorLib.Entitys
         public string TaskName { get; set; }
 
         /// <summary>
+        /// 是否可用
+        /// </summary>
+        bool Enabled { get; set; }
+
+        /// <summary>
         /// 任务处理器(用于生成Command)
         /// </summary>
         public ITaskWorkerThread TaskWorkerThread { get; set; }

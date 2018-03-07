@@ -43,5 +43,10 @@ namespace TaskSimulatorLib.Monitors
         /// 监视器名称
         /// </summary>
         string Name { get; set; }
+
+        /// <summary>
+        /// 是否可用
+        /// </summary>
+        bool Enabled { get; set; }
     }
 }
