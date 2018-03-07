@@ -69,7 +69,7 @@ namespace TaskSimulator.BoatRobot
         /// </summary>
         public const string CAMERA_ID_HEAD = "camera_";
 
-        public TaskSimulatorLib.Entitys.RobotSimulatorConfig SimulatorConfig
+        public static TaskSimulatorLib.Entitys.RobotSimulatorConfig SimulatorConfig
         {
             get { return SimulatorObject.Simulator.SimulatorConfig; }
         }
