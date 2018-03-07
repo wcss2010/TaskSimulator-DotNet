@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TaskSimulator.BoatRobot.Components;
 using TaskSimulator.BoatRobot.Entitys;
 using TaskSimulator.Util;
 using TaskSimulatorLib;
@@ -67,6 +69,11 @@ namespace TaskSimulator.BoatRobot
         /// 动态组件目录
         /// </summary>
         public const string ROBOT_DYNAMIC_COMPONENT_DIR = "components";
+
+        /// <summary>
+        /// 摄像头ID前缀
+        /// </summary>
+        public const string CAMERA_ID_HEAD = "camera_";
 
         private static RobotSimulatorConfig simulatorConfig = null;
         /// <summary>
@@ -240,11 +247,87 @@ namespace TaskSimulator.BoatRobot
                 {
                     foreach (Robot rb in SimulatorConfig.Robots)
                     {
+                        //创建新的无人船
                         RobotUser curUser = new RobotUser();
                         curUser.UserCode = rb.RobotId;
                         curUser.UserName = rb.RobotName;
 
-                        
+                        #region 加载机器人默认的模块
+                          //加载摄像头
+                          int cameraIndex = 0;
+                          foreach (string cameraName in rb.CameraNames)
+                          {
+                              cameraIndex++;
+
+                              CameraMonitor cm = new CameraMonitor();
+                              cm.Name = cameraName;
+                              cm.Enabled = false;
+                              cm.User = curUser;
+                              cm.VirtualCameraImageWidth = rb.CameraPictureWidth;
+                              cm.VirtualCameraImageHeight = rb.CameraPictureHeight;
+                              cm.VirtualCameraImageFont = new Font(rb.CameraHintTextFontName, rb.CameraHintTextFontSize);
+                              cm.VirtualCameraBackgroundImages = rb.CameraBackgrounds;
+
+                              curUser.SupportedMonitor.TryAdd(CAMERA_ID_HEAD + cameraIndex, cm);
+                          }
+                          
+                          //加载GPS监视器
+                          GPSMonitor gpsmonitor = new GPSMonitor();
+                          gpsmonitor.Enabled = true;
+                          gpsmonitor.Name = "GPS监视器";
+                          gpsmonitor.User = curUser;
+                          gpsmonitor.GPSCurrent = rb.DefaultGpsPos;
+                          
+                          curUser.SupportedMonitor.TryAdd(Monitor_GPS, gpsmonitor);
+                          
+                          //加载行动任务
+                          RobotTask boatFly = new RobotTask();
+                          boatFly.TaskCode = Task_BoatFly;
+                          boatFly.TaskName = "自主航行任务";
+                          boatFly.TaskWorkerThread = new BoatFlyTask();
+                          ((BoatFlyTask)boatFly.TaskWorkerThread).StepWithSecond = rb.StepWithSecond;
+                          ((BoatFlyTask)boatFly.TaskWorkerThread).Task = boatFly;
+                          ((BoatFlyTask)boatFly.TaskWorkerThread).User = curUser;
+                          ((BoatFlyTask)boatFly.TaskWorkerThread).WorkerThreadState = WorkerThreadStateType.Ready;
+                          
+                          curUser.SupportedTask.TryAdd(boatFly.TaskCode, boatFly);
+                        #endregion
+
+                        #region 加载自定义模块
+                        //监视器
+                        foreach (KeyValuePair<string, bool> kvp in rb.MonitorStateMap)
+                        {
+                            if (monitorDict.ContainsKey(kvp.Key))
+                            {
+                                curUser.SupportedMonitor.TryAdd(kvp.Key, (IMonitor)monitorDict[kvp.Key].Clone());
+
+                                curUser.SupportedMonitor[kvp.Key].Name = SimulatorConfig.MonitorComponentMap[kvp.Key].ComponentName;
+                                curUser.SupportedMonitor[kvp.Key].User = curUser;
+                                curUser.SupportedMonitor[kvp.Key].Enabled = kvp.Value;
+                            }
+                            else
+                            {
+                                throw new Exception("对不起，机器人" + rb.RobotId + "的配置有错误,没有找到自定义监视器！请检查！");
+                            }
+                        }
+
+                        //任务处理器
+                        foreach (KeyValuePair<string, bool> kvp in rb.TaskStateMap)
+                        {
+                            if (taskDict.ContainsKey(kvp.Key))
+                            {
+                                RobotTask rt = new RobotTask();
+                                rt.TaskCode = SimulatorConfig.TaskComponentMap[kvp.Key].ComponentId;
+                                rt.TaskName = SimulatorConfig.TaskComponentMap[kvp.Key].ComponentName;
+                                rt.TaskWorkerThread = (ITaskWorkerThread)taskDict[kvp.Key].Clone();
+                                
+                                curUser.SupportedTask.TryAdd(kvp.Key, rt);
+                            }
+                        }
+                        #endregion
+
+                        //添加用户
+                        SimulatorObject.Simulator.UserDict.TryAdd(curUser.UserCode, curUser);
                     }
                 }
                 #endregion

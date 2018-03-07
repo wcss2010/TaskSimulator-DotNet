@@ -24,12 +24,6 @@ namespace TaskSimulator.BoatRobot.Components
         /// </summary>
         public const string Command_GetGPS = "GetGPS";
 
-        public GPSMonitor(double lat, double lng)
-        {
-            Lat = lat;
-            Lng = lng;
-        }
-
         public override CommandResult Process(Command commandObj)
         {
             TaskSimulatorLib.Entitys.CommandResult cr = new TaskSimulatorLib.Entitys.CommandResult();

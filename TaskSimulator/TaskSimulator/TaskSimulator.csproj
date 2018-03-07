@@ -80,6 +80,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoatRobot\Components\BoatFlyTask.cs" />
+    <Compile Include="BoatRobot\Components\CameraMonitor.cs" />
+    <Compile Include="BoatRobot\Components\GPSMonitor.cs" />
     <Compile Include="BoatRobot\Entitys\DynamicComponent.cs" />
     <Compile Include="GisMonitor.cs">
       <SubType>Form</SubType>

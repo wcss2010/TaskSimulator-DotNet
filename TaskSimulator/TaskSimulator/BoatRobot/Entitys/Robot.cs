@@ -49,7 +49,7 @@ namespace TaskSimulator.BoatRobot.Entitys
         /// <summary>
         /// 初始的虚拟船位置
         /// </summary>
-        public LatAndLng DefaultGPSPos { get; set; }
+        public LatAndLng DefaultGpsPos { get; set; }
 
         /// <summary>
         /// 航行路线(如果规划了航行路线就按照它走，如果没有默认就是围着初始位置画圈圈)
@@ -77,9 +77,14 @@ namespace TaskSimulator.BoatRobot.Entitys
         public float CameraHintTextFontSize { get; set; }
 
         /// <summary>
-        /// 虚拟摄像头名称及背景文件列表
+        /// 虚拟摄像头名称
         /// </summary>
-        public SerializableDictionary<string, string> CameraNameAndBackgroundMap { get; set; }
+        public string[] CameraNames { get; set; }
+
+        /// <summary>
+        /// 虚拟摄像头背景文件列表
+        /// </summary>
+        public string[] CameraBackgrounds { get; set; }
 
         /// <summary>
         /// 无人船监视器状态(Key=MonitorId,Value=当前是否可用)
