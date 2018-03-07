@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using TaskSimulatorLib.Entitys;
 using TaskSimulatorLib.Processors;
-using TaskSimulatorLib.Processors.Action;
 using TaskSimulatorLib.Processors.Task;
 
 namespace TaskSimulatorLib
@@ -65,7 +64,7 @@ namespace TaskSimulatorLib
        public void Start()
        {
            TaskProcessor.Start();
-           ActionProcessor.Start();
+           //ActionProcessor.Start();
        }
        
        /// <summary>
@@ -74,7 +73,7 @@ namespace TaskSimulatorLib
        public void Stop()
        {
            TaskProcessor.Stop();
-           ActionProcessor.Stop();
+           //ActionProcessor.Stop();
        }
 
        /// <summary>

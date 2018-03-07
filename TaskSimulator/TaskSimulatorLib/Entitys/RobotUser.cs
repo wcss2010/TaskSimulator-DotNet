@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TaskSimulatorLib.Monitors;
-using TaskSimulatorLib.Processors.Action;
 
 namespace TaskSimulatorLib.Entitys
 {
@@ -53,15 +52,6 @@ namespace TaskSimulatorLib.Entitys
         public ConcurrentDictionary<string, IMonitor> SupportedMonitor
         {
             get { return supportedMonitor; }
-        }
-
-        ConcurrentDictionary<string, IActionWorkerThread> supportedAction = new ConcurrentDictionary<string, IActionWorkerThread>();
-        /// <summary>
-        /// 所支持的动作
-        /// </summary>
-        public ConcurrentDictionary<string, IActionWorkerThread> SupportedAction
-        {
-            get { return supportedAction; }
         }
 
         /// <summary>
