@@ -65,6 +65,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entitys\DynamicComponent.cs" />
+    <Compile Include="Entitys\LatAndLng.cs" />
+    <Compile Include="Entitys\Robot.cs" />
+    <Compile Include="Entitys\RobotSimulatorConfig.cs" />
     <Compile Include="Extends\Base\BaseMonitor.cs" />
     <Compile Include="Extends\Base\BaseTaskWorkerThread.cs" />
     <Compile Include="Entitys\Command.cs" />
@@ -78,6 +82,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimulatorObject.cs" />
     <Compile Include="Util\BaseDoPlan.cs" />
+    <Compile Include="Util\SerializableDictionary.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="log4net.config">
