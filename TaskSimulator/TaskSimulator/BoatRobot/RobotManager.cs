@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TaskSimulator.BoatRobot.Entitys;
 using TaskSimulatorLib;
+using TaskSimulatorLib.Monitors;
 using TaskSimulatorLib.Processors.Action;
 using TaskSimulatorLib.Processors.Task;
 
@@ -79,7 +80,7 @@ namespace TaskSimulator.BoatRobot
             if (SimulatorConfig != null)
             {
                 Dictionary<string, ITaskWorkerThread> taskDict = new Dictionary<string, ITaskWorkerThread>();
-                Dictionary<string, IActionWorkerThread> actionDict = new Dictionary<string, IActionWorkerThread>();
+                Dictionary<string, IMonitor> monitorDict = new Dictionary<string, IMonitor>();
 
                 #region Socket控制器编译选项
                 //SimulatorConfig.SocketController;
@@ -133,7 +134,48 @@ namespace TaskSimulator.BoatRobot
                 #endregion
 
                 #region Monitor控制器编译选项
+                if (SimulatorConfig.MonitorComponentMap != null)
+                {
+                    foreach (DynamicComponent kvp in SimulatorConfig.MonitorComponentMap.Values)
+                    {
+                        if (string.IsNullOrEmpty(kvp.ComponentId) || string.IsNullOrEmpty(kvp.ComponentName) || string.IsNullOrEmpty(kvp.ComponentClassFullName) || string.IsNullOrEmpty(kvp.ComponentClassFile))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            string classFile = kvp.ComponentClassFile;
+                            if (kvp.ComponentClassFile.StartsWith("./"))
+                            {
+                                //需要修饰一下目录
+                                classFile = Path.Combine(Application.StartupPath, Path.Combine(ROBOT_DYNAMIC_COMPONENT_DIR, kvp.ComponentClassFile.Replace("./", string.Empty)));
+                            }
 
+                            if (File.Exists(classFile))
+                            {
+                                try
+                                {
+                                    Assembly result = CSScript.Evaluator.CompileCode(File.ReadAllText(classFile));
+                                    Type objType = result.GetType(kvp.ComponentClassFullName);
+
+                                    Type[] faceTypes = objType.GetInterfaces();
+                                    foreach (Type interfaceType in faceTypes)
+                                    {
+                                        if (interfaceType.FullName.Equals(typeof(IMonitor).FullName))
+                                        {
+                                            monitorDict.Add(kvp.ComponentId, (IMonitor)objType.GetConstructor(Type.EmptyTypes).Invoke(null));
+                                            break;
+                                        }
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    SimulatorObject.logger.Error(ex.ToString());
+                                }
+                            }
+                        }
+                    }
+                }
                 #endregion
 
             }
