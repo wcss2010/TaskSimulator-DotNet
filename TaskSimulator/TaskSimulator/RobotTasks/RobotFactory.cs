@@ -260,11 +260,6 @@ namespace TaskSimulator.RobotTasks
     }
 
     /// <summary>
-    /// 内部使用一个队列来指示机器人移动坐标
-    /// </summary>
-    public class RebotMoveTaskWorkerThread
-
-    /// <summary>
     /// 负责按照坐标来让机器人移动
     /// </summary>
     public class RebotMoveActionWorkerThread : BaseActionWorkerThread
