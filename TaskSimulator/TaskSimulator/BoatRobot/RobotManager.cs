@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using TaskSimulator.BoatRobot.Entitys;
 using TaskSimulator.Util;
 using TaskSimulatorLib;
+using TaskSimulatorLib.Entitys;
 using TaskSimulatorLib.Monitors;
 using TaskSimulatorLib.Processors.Action;
 using TaskSimulatorLib.Processors.Task;
@@ -178,6 +179,19 @@ namespace TaskSimulator.BoatRobot
                 }
                 #endregion
 
+                #region 生成机器人列表
+                if (SimulatorConfig.Robots != null)
+                {
+                    foreach (Robot rb in SimulatorConfig.Robots)
+                    {
+                        RobotUser curUser = new RobotUser();
+                        curUser.UserCode = rb.RobotId;
+                        curUser.UserName = rb.RobotName;
+
+
+                    }
+                }
+                #endregion
             }
         }
     }
