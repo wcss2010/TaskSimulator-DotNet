@@ -58,15 +58,6 @@ namespace TaskSimulatorLib
        {
            get { return taskProcessor; }
        }
-
-       private ActionProcessor actionProcessor = new ActionProcessor();
-       /// <summary>
-       /// 动作处理器
-       /// </summary>
-       public ActionProcessor ActionProcessor
-       {
-           get { return actionProcessor; }
-       }
        
        /// <summary>
        /// 开始
