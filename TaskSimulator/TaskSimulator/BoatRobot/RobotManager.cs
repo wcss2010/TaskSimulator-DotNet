@@ -1,11 +1,16 @@
-﻿using System;
+﻿using CSScriptLib;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TaskSimulator.BoatRobot.Entitys;
+using TaskSimulatorLib;
+using TaskSimulatorLib.Processors.Action;
+using TaskSimulatorLib.Processors.Task;
 
 namespace TaskSimulator.BoatRobot
 {
@@ -21,6 +26,11 @@ namespace TaskSimulator.BoatRobot
         /// 配置文件名称
         /// </summary>
         public const string ROBOT_CONFIG_FILENAME = "config.xml";
+
+        /// <summary>
+        /// 动态组件目录
+        /// </summary>
+        public const string ROBOT_DYNAMIC_COMPONENT_DIR = "components";
 
         private static RobotSimulatorConfig simulatorConfig = null;
         /// <summary>
@@ -58,6 +68,74 @@ namespace TaskSimulator.BoatRobot
             else
             {
                 File.WriteAllText(Path.Combine(Application.StartupPath, ROBOT_CONFIG_FILENAME), xml);
+            }
+        }
+
+        /// <summary>
+        /// 初始化机器人管理器
+        /// </summary>
+        public static void Init()
+        {
+            if (SimulatorConfig != null)
+            {
+                Dictionary<string, ITaskWorkerThread> taskDict = new Dictionary<string, ITaskWorkerThread>();
+                Dictionary<string, IActionWorkerThread> actionDict = new Dictionary<string, IActionWorkerThread>();
+
+                #region Socket控制器编译选项
+                //SimulatorConfig.SocketController;
+
+                #endregion
+
+                #region Task控制器编译选项
+                if (SimulatorConfig.TaskComponentMap != null)
+                {
+                    foreach (DynamicComponent kvp in SimulatorConfig.TaskComponentMap.Values)
+                    {
+                        if (string.IsNullOrEmpty(kvp.ComponentId) || string.IsNullOrEmpty(kvp.ComponentName) || string.IsNullOrEmpty(kvp.ComponentClassFullName) || string.IsNullOrEmpty(kvp.ComponentClassFile))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            string classFile = kvp.ComponentClassFile;
+                            if (kvp.ComponentClassFile.StartsWith("./"))
+                            {
+                                //需要修饰一下目录
+                                classFile = Path.Combine(Application.StartupPath, Path.Combine(ROBOT_DYNAMIC_COMPONENT_DIR, kvp.ComponentClassFile.Replace("./", string.Empty)));
+                            }
+
+                            if (File.Exists(classFile))
+                            {
+                                try
+                                {
+                                   Assembly result = CSScript.Evaluator.CompileCode(File.ReadAllText(classFile));
+                                   Type objType = result.GetType(kvp.ComponentClassFullName);
+
+                                   Type[] faceTypes = objType.GetInterfaces();
+                                   foreach (Type interfaceType in faceTypes)
+                                   {
+                                       if (interfaceType.FullName.Equals(typeof(ITaskWorkerThread).FullName))
+                                       {
+                                           taskDict.Add(kvp.ComponentId, (ITaskWorkerThread)objType.GetConstructor(Type.EmptyTypes).Invoke(null));
+                                           break;
+                                       }
+                                   }
+                                   
+                                }
+                                catch (Exception ex)
+                                {
+                                    SimulatorObject.logger.Error(ex.ToString());
+                                }
+                            }
+                        }
+                    }
+                }
+                #endregion
+
+                #region Monitor控制器编译选项
+
+                #endregion
+
             }
         }
     }
