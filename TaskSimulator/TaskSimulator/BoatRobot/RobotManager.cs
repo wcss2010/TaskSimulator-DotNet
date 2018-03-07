@@ -15,6 +15,26 @@ using TaskSimulatorLib.Processors.Task;
 
 namespace TaskSimulator.BoatRobot
 {
+    public delegate void UIActionDelegate(object sender, UIActionEventArgs args);
+
+    public class UIActionEventArgs : EventArgs
+    {
+        public string ActionName { get; set; }
+
+        public RobotUser User { get; set; }
+
+        public RobotTask Task { get; set; }
+
+        private Dictionary<string, object> objects = new Dictionary<string, object>();
+        /// <summary>
+        /// 参数对象(key=参数名，Value=参数值)
+        /// </summary>
+        public Dictionary<string, object> Objects
+        {
+            get { return objects; }
+        }
+    }
+
     /// <summary>
     /// 无人船管理器
     /// 作者:李文龙
@@ -23,6 +43,21 @@ namespace TaskSimulator.BoatRobot
     /// </summary>
     public class RobotManager
     {
+        /// <summary>
+        /// 船模拟航行任务
+        /// </summary>
+        public const string Task_BoatFly = "Task_BoatFly";
+
+        /// <summary>
+        /// GPS监视器
+        /// </summary>
+        public const string Monitor_GPS = "Monitor_GPS";
+
+        /// <summary>
+        /// UI动作移动小船到新坐标
+        /// </summary>
+        public const string UIAction_Move = "Move";
+
         /// <summary>
         /// 配置文件名称
         /// </summary>
@@ -41,6 +76,28 @@ namespace TaskSimulator.BoatRobot
         {
             get { return RobotManager.simulatorConfig; }
             set { RobotManager.simulatorConfig = value; }
+        }
+
+        public static event UIActionDelegate OnUiActionEvent;
+        public static void OnUiAction(string actionName, RobotUser user, RobotTask task, KeyValuePair<string, object>[] dataTeam)
+        {
+            if (OnUiActionEvent != null)
+            {
+                UIActionEventArgs eventargs = new UIActionEventArgs();
+                eventargs.ActionName = actionName;
+                eventargs.User = user;
+                eventargs.Task = task;
+
+                if (dataTeam != null)
+                {
+                    foreach (KeyValuePair<string, object> kvp in dataTeam)
+                    {
+                        eventargs.Objects.Add(kvp.Key, kvp.Value);
+                    }
+                }
+
+                OnUiActionEvent(null, eventargs);
+            }
         }
 
         /// <summary>

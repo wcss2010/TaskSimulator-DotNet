@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskSimulator.BoatRobot.Entitys;
 using TaskSimulatorLib.Entitys;
 using TaskSimulatorLib.Extends.Base;
 
@@ -38,23 +39,19 @@ namespace TaskSimulator.BoatRobot.Components
             switch (commandObj.CommandText)
             {
                 case Command_ReportGPS:
-                    if (commandObj.Objects.ContainsKey("lat") && commandObj.Objects.ContainsKey("lng"))
+                    if (commandObj.Objects.ContainsKey("pos"))
                     {
-                        Lat = double.Parse(commandObj.Objects["lat"].ToString());
-                        Lng = double.Parse(commandObj.Objects["lng"].ToString());
+                        GPSCurrent = (LatAndLng)commandObj.Objects["pos"];
                     }
                     break;
                 case Command_GetGPS:
-                    cr.Objects.Add("lat", Lat);
-                    cr.Objects.Add("lng", Lng);
+                    cr.Objects.Add("pos", GPSCurrent);
                     break;
             }
 
             return cr;
         }
 
-        public double Lat { get; set; }
-
-        public double Lng { get; set; }
+        public LatAndLng GPSCurrent { get; set; }
     }
 }
