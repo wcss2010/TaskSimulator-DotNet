@@ -55,9 +55,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CSScriptLib">
-      <HintPath>..\..\Lib\C#Script\CSScriptLib.dll</HintPath>
-    </Reference>
     <Reference Include="GMap.NET.Core">
       <HintPath>..\..\Lib\GreatMaps-v2015.26\Release-NETv4.0\GMap.NET.Core.dll</HintPath>
     </Reference>
@@ -104,6 +101,7 @@
     <Compile Include="RobotTasks\RobotTaskSocket.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\CSharpCompiler.cs" />
     <Compile Include="Util\SerializableDictionary.cs" />
     <Compile Include="Util\XmlSerializeTool.cs" />
     <EmbeddedResource Include="GisMonitor.resx">

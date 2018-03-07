@@ -21,7 +21,7 @@ namespace TaskSimulator.Util
         /// </summary>
         /// <param name="csharpCodes"></param>
         /// <returns></returns>
-        private Assembly Compile(string[] csharpCodes)
+        public static Assembly Compile(string[] csharpCodes)
         {
             //创建C#编译器实例
             CSharpCodeProvider comp = new CSharpCodeProvider();
