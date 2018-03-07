@@ -31,7 +31,7 @@ namespace TaskSimulatorLib.Entitys
         /// <summary>
         /// 是否可用
         /// </summary>
-        bool Enabled { get; set; }
+        public bool Enabled { get; set; }
 
         /// <summary>
         /// 任务处理器(用于生成Command)

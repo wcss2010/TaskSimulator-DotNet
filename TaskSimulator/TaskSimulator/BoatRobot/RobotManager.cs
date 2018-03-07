@@ -280,7 +280,11 @@ namespace TaskSimulator.BoatRobot
                                 rt.TaskCode = SimulatorConfig.TaskComponentMap[kvp.Key].ComponentId;
                                 rt.TaskName = SimulatorConfig.TaskComponentMap[kvp.Key].ComponentName;
                                 rt.TaskWorkerThread = (ITaskWorkerThread)taskDict[kvp.Key].Clone();
-                                
+                                rt.TaskWorkerThread.WorkerThreadState = WorkerThreadStateType.Ready;
+                                rt.TaskWorkerThread.User = curUser;
+                                rt.TaskWorkerThread.Task = rt;
+                                rt.Enabled = kvp.Value;
+
                                 curUser.SupportedTask.TryAdd(kvp.Key, rt);
                             }
                         }
