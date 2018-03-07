@@ -11,7 +11,6 @@ using TaskSimulator.Util;
 using TaskSimulatorLib;
 using TaskSimulatorLib.Entitys;
 using TaskSimulatorLib.Monitors;
-using TaskSimulatorLib.Processors.Action;
 using TaskSimulatorLib.Processors.Task;
 
 namespace TaskSimulator.BoatRobot
@@ -188,7 +187,7 @@ namespace TaskSimulator.BoatRobot
                         curUser.UserCode = rb.RobotId;
                         curUser.UserName = rb.RobotName;
 
-
+                        
                     }
                 }
                 #endregion
