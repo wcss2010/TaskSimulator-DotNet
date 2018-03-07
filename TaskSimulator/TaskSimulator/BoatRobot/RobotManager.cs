@@ -1,5 +1,4 @@
-﻿using CSScriptLib;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TaskSimulator.BoatRobot.Entitys;
+using TaskSimulator.Util;
 using TaskSimulatorLib;
 using TaskSimulatorLib.Monitors;
 using TaskSimulatorLib.Processors.Action;
@@ -109,7 +109,7 @@ namespace TaskSimulator.BoatRobot
                             {
                                 try
                                 {
-                                   Assembly result = CSScript.Evaluator.CompileCode(File.ReadAllText(classFile));
+                                   Assembly result = CSharpCompiler.Compile(new string[] { File.ReadAllText(classFile) });
                                    Type objType = result.GetType(kvp.ComponentClassFullName);
 
                                    Type[] faceTypes = objType.GetInterfaces();
@@ -155,7 +155,7 @@ namespace TaskSimulator.BoatRobot
                             {
                                 try
                                 {
-                                    Assembly result = CSScript.Evaluator.CompileCode(File.ReadAllText(classFile));
+                                    Assembly result = CSharpCompiler.Compile(new string[] { File.ReadAllText(classFile) });
                                     Type objType = result.GetType(kvp.ComponentClassFullName);
 
                                     Type[] faceTypes = objType.GetInterfaces();
