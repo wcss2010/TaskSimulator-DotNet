@@ -11,7 +11,7 @@ namespace TaskSimulatorLib.Sockets
      * 机器人的Socket接口，用于适配MQTT,TCP,UCP等通信方式
      * 
      */
-    public interface IRobotSocket
+    public interface IRobotSocket :ICloneable
     {
         /// <summary>
         /// 初始化
