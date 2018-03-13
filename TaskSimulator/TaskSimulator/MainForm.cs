@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using TaskSimulator.BoatRobot;
+using TaskSimulator.BoatRobot.Components;
 using TaskSimulator.RobotTasks;
 using TaskSimulatorLib.Entitys;
 using uPLibrary.Networking.M2Mqtt.Messages;
@@ -186,7 +187,7 @@ namespace TaskSimulator
         {
             base.OnLoad(e);
 
-            RobotTasks.RobotFactory.OnUiActionEvent += RobotFactory_OnUiActionEvent;
+            //RobotTasks.RobotFactory.OnUiActionEvent += RobotFactory_OnUiActionEvent;
             RobotTasks.RobotFactory.Simulator.TaskProcessor.OnTaskCompleteEvent += TaskProcessor_OnTaskCompleteEvent;
             RobotTasks.RobotFactory.Simulator.Start();
 

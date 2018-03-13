@@ -100,6 +100,12 @@
     <Compile Include="RobotTasks\RobotTaskSocket.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestMainForm.Designer.cs">
+      <DependentUpon>TestMainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Util\CSharpCompiler.cs" />
     <EmbeddedResource Include="GisMonitor.resx">
       <DependentUpon>GisMonitor.cs</DependentUpon>
@@ -117,6 +123,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TestMainForm.resx">
+      <DependentUpon>TestMainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
