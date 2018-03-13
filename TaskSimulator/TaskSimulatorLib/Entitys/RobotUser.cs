@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TaskSimulatorLib.Monitors;
+using TaskSimulatorLib.Sockets;
 
 namespace TaskSimulatorLib.Entitys
 {
@@ -26,6 +27,11 @@ namespace TaskSimulatorLib.Entitys
         /// 用户名称
         /// </summary>
         public string UserName { get; set; }
+
+        /// <summary>
+        /// 机器人控制通道
+        /// </summary>
+        public IRobotSocket RobotSocket { get; set; }
 
         private Dictionary<string, object> objects = new Dictionary<string, object>();
         /// <summary>
