@@ -82,6 +82,7 @@
     <Compile Include="Processors\Task\TaskProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimulatorObject.cs" />
+    <Compile Include="Sockets\IRobotSocket.cs" />
     <Compile Include="Util\BaseDoPlan.cs" />
     <Compile Include="Util\SerializableDictionary.cs" />
     <Compile Include="Util\XmlSerializeTool.cs" />

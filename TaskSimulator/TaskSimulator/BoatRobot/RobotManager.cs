@@ -13,6 +13,7 @@ using TaskSimulatorLib;
 using TaskSimulatorLib.Entitys;
 using TaskSimulatorLib.Monitors;
 using TaskSimulatorLib.Processors.Task;
+using TaskSimulatorLib.Sockets;
 
 namespace TaskSimulator.BoatRobot
 {
@@ -105,10 +106,45 @@ namespace TaskSimulator.BoatRobot
             {
                 Dictionary<string, ITaskWorkerThread> taskDict = new Dictionary<string, ITaskWorkerThread>();
                 Dictionary<string, IMonitor> monitorDict = new Dictionary<string, IMonitor>();
+                IRobotSocket robotSocketTemp = null;
 
                 #region Socket控制器编译选项
-                //SimulatorConfig.SocketController;
+                if (string.IsNullOrEmpty(SimulatorConfig.SocketController.ComponentId) || string.IsNullOrEmpty(SimulatorConfig.SocketController.ComponentName) || string.IsNullOrEmpty(SimulatorConfig.SocketController.ComponentClassFullName) || string.IsNullOrEmpty(SimulatorConfig.SocketController.ComponentClassFile))
+                {
+                    //continue;
+                }
+                else
+                {
+                    string classFile = SimulatorConfig.SocketController.ComponentClassFile;
+                    if (SimulatorConfig.SocketController.ComponentClassFile.StartsWith("./"))
+                    {
+                        //需要修饰一下目录
+                        classFile = Path.Combine(Application.StartupPath, Path.Combine(ROBOT_DYNAMIC_COMPONENT_DIR, SimulatorConfig.SocketController.ComponentClassFile.Replace("./", string.Empty)));
+                    }
 
+                    if (File.Exists(classFile))
+                    {
+                        try
+                        {
+                            Assembly result = CSharpCompiler.Compile(new string[] { File.ReadAllText(classFile) });
+                            Type objType = result.GetType(SimulatorConfig.SocketController.ComponentClassFullName);
+
+                            Type[] faceTypes = objType.GetInterfaces();
+                            foreach (Type interfaceType in faceTypes)
+                            {
+                                if (interfaceType.FullName.Equals(typeof(IRobotSocket).FullName))
+                                {
+                                    robotSocketTemp = (IRobotSocket)objType.GetConstructor(Type.EmptyTypes).Invoke(null);
+                                    break;
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            SimulatorObject.logger.Error(ex.ToString());
+                        }
+                    }
+                }
                 #endregion
 
                 #region Task控制器编译选项
@@ -211,6 +247,12 @@ namespace TaskSimulator.BoatRobot
                         RobotUser curUser = new RobotUser();
                         curUser.UserCode = rb.RobotId;
                         curUser.UserName = rb.RobotName;
+
+                        //检查Socket是否可用
+                        if (robotSocketTemp != null)
+                        {
+                            curUser.RobotSocket = (IRobotSocket)robotSocketTemp.Clone();
+                        }
 
                         #region 加载机器人默认的模块
                           //加载摄像头
