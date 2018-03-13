@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TaskSimulator.BoatRobot;
 using TaskSimulator.RobotTasks;
 using TaskSimulatorLib.Entitys;
 
@@ -32,7 +33,7 @@ namespace TaskSimulator
 
         private void GisMonitor_Load(object sender, EventArgs e)
         {
-            RobotFactory.OnUiActionEvent += new UIActionDelegate(RobotFactory_OnShipMoveEvent);
+            //RobotFactory.OnUiActionEvent += new UIActionDelegate(RobotFactory_OnShipMoveEvent);
 
             mapControl.CacheLocation = Environment.CurrentDirectory + "\\GMapCache\\"; //缓存位置
             mapControl.MaxZoom = 8;

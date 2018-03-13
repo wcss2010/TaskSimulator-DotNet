@@ -15,8 +15,6 @@ using TaskSimulatorLib.Processors.Task;
 
 namespace TaskSimulator.RobotTasks
 {
-
-
     /// <summary>
     /// 机器人工厂
     /// </summary>
@@ -91,53 +89,53 @@ namespace TaskSimulator.RobotTasks
         /// <param name="objects"></param>
         public static void CreateRobot(string userCode, string userName, double defaultLat, double defaultLng, KeyValuePair<string, string>[] virtualCameras)
         {
-            //用户名称和用户代码
-            RobotUser curUser = new RobotUser();
-            curUser.UserCode = userCode;
-            curUser.UserName = userName;
+            ////用户名称和用户代码
+            //RobotUser curUser = new RobotUser();
+            //curUser.UserCode = userCode;
+            //curUser.UserName = userName;
 
-            //移动任务
-            RobotTask rebotMoveTask = new RobotTask();
-            rebotMoveTask.TaskCode = Task_RobotMove;
-            rebotMoveTask.TaskName = "自主航行任务";
+            ////移动任务
+            //RobotTask rebotMoveTask = new RobotTask();
+            //rebotMoveTask.TaskCode = Task_RobotMove;
+            //rebotMoveTask.TaskName = "自主航行任务";
 
-            //位置移动指令
-            RebotMoveActionWorkerThread shipMoveCmd = new RebotMoveActionWorkerThread();
-            shipMoveCmd.User = curUser;
-            shipMoveCmd.Task = rebotMoveTask;
-            curUser.SupportedAction.TryAdd(shipMoveCmd.SupportedActionCommand, shipMoveCmd);
+            ////位置移动指令
+            //RebotMoveActionWorkerThread shipMoveCmd = new RebotMoveActionWorkerThread();
+            //shipMoveCmd.User = curUser;
+            //shipMoveCmd.Task = rebotMoveTask;
+            //curUser.SupportedAction.TryAdd(shipMoveCmd.SupportedActionCommand, shipMoveCmd);
 
-            //位置移动任务
-            RebotMoveTaskWorkerThread taskWorkerThread = new RebotMoveTaskWorkerThread();
-            taskWorkerThread.Task = rebotMoveTask;
-            taskWorkerThread.User = curUser;
-            taskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
-            rebotMoveTask.TaskWorkerThread = taskWorkerThread;
+            ////位置移动任务
+            //RebotMoveTaskWorkerThread taskWorkerThread = new RebotMoveTaskWorkerThread();
+            //taskWorkerThread.Task = rebotMoveTask;
+            //taskWorkerThread.User = curUser;
+            //taskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
+            //rebotMoveTask.TaskWorkerThread = taskWorkerThread;
 
-            curUser.SupportedTask.TryAdd(rebotMoveTask.TaskCode, rebotMoveTask);
+            //curUser.SupportedTask.TryAdd(rebotMoveTask.TaskCode, rebotMoveTask);
 
-            //GPS监视器
-            GPSMonitor gpsmonitor = new GPSMonitor(defaultLat, defaultLng);
-            curUser.SupportedMonitor.TryAdd(Monitor_GPS, gpsmonitor);
+            ////GPS监视器
+            //GPSMonitor gpsmonitor = new GPSMonitor(defaultLat, defaultLng);
+            //curUser.SupportedMonitor.TryAdd(Monitor_GPS, gpsmonitor);
 
-            //虚拟摄像头
-            if (virtualCameras != null)
-            {
-                foreach (KeyValuePair<string, string> kvp in virtualCameras)
-                {
-                    CameraMonitor cm = new CameraMonitor();
-                    cm.User = curUser;
-                    cm.Name = kvp.Value;
+            ////虚拟摄像头
+            //if (virtualCameras != null)
+            //{
+            //    foreach (KeyValuePair<string, string> kvp in virtualCameras)
+            //    {
+            //        CameraMonitor cm = new CameraMonitor();
+            //        cm.User = curUser;
+            //        cm.Name = kvp.Value;
 
-                    curUser.SupportedMonitor.TryAdd(kvp.Key, cm);
-                }
-            }
+            //        curUser.SupportedMonitor.TryAdd(kvp.Key, cm);
+            //    }
+            //}
 
-            //添加用户
-            Simulator.UserDict.TryAdd(curUser.UserCode, curUser);
+            ////添加用户
+            //Simulator.UserDict.TryAdd(curUser.UserCode, curUser);
 
-            //显示初始位置
-            RobotFactory.OnUiAction(RobotFactory.UIAction_Move, curUser, rebotMoveTask, new KeyValuePair<string, object>[] { new KeyValuePair<string, object>("lat", defaultLat), new KeyValuePair<string, object>("lng", defaultLng) });
+            ////显示初始位置
+            //RobotFactory.OnUiAction(RobotFactory.UIAction_Move, curUser, rebotMoveTask, new KeyValuePair<string, object>[] { new KeyValuePair<string, object>("lat", defaultLat), new KeyValuePair<string, object>("lng", defaultLng) });
         }
 
         /// <summary>
@@ -146,30 +144,30 @@ namespace TaskSimulator.RobotTasks
         /// <param name="userCode"></param>
         public static void StartMoveShipWithPosList(string userCode, List<double[]> posList)
         {
-            if (Simulator.UserDict.ContainsKey(userCode))
-            {
-                //取出用户
-                RobotUser selectedUser = Simulator.UserDict[userCode];
+            //if (Simulator.UserDict.ContainsKey(userCode))
+            //{
+            //    //取出用户
+            //    RobotUser selectedUser = Simulator.UserDict[userCode];
 
-                //如果正在运行，则不添加新任务
-                if (selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Running)
-                {
-                    return;
-                }
+            //    //如果正在运行，则不添加新任务
+            //    if (selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Running)
+            //    {
+            //        return;
+            //    }
 
-                //重置工作线程状态为Ready
-                selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
+            //    //重置工作线程状态为Ready
+            //    selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
 
-                //当前要执行的命令
-                string currentCommand = RebotMoveTaskWorkerThread.Command_UsePosList;
+            //    //当前要执行的命令
+            //    string currentCommand = RebotMoveTaskWorkerThread.Command_UsePosList;
 
-                //参数
-                List<KeyValuePair<string, object>> paramList = new List<KeyValuePair<string, object>>();
-                paramList.Add(new KeyValuePair<string, object>(RebotMoveTaskWorkerThread.Property_PosList, posList));
+            //    //参数
+            //    List<KeyValuePair<string, object>> paramList = new List<KeyValuePair<string, object>>();
+            //    paramList.Add(new KeyValuePair<string, object>(RebotMoveTaskWorkerThread.Property_PosList, posList));
 
-                //添加到任务队列
-                AddTaskToRobot(new ProcessorQueueObject(selectedUser, selectedUser.SupportedTask[Task_RobotMove], new Command(currentCommand, paramList.ToArray())));
-            }
+            //    //添加到任务队列
+            //    AddTaskToRobot(new ProcessorQueueObject(selectedUser, selectedUser.SupportedTask[Task_RobotMove], new Command(currentCommand, paramList.ToArray())));
+            //}
         }
 
         /// <summary>
@@ -178,30 +176,30 @@ namespace TaskSimulator.RobotTasks
         /// <param name="userCode"></param>
         public static void StartMoveShipWithRect(string userCode, double limit)
         {
-            if (Simulator.UserDict.ContainsKey(userCode))
-            {
-                //取出用户
-                RobotUser selectedUser = Simulator.UserDict[userCode];
+            //if (Simulator.UserDict.ContainsKey(userCode))
+            //{
+            //    //取出用户
+            //    RobotUser selectedUser = Simulator.UserDict[userCode];
 
-                //如果正在运行，则不添加新任务
-                if (selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Running)
-                {
-                    return;
-                }
+            //    //如果正在运行，则不添加新任务
+            //    if (selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Running)
+            //    {
+            //        return;
+            //    }
 
-                //重置工作线程状态为Ready
-                selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
+            //    //重置工作线程状态为Ready
+            //    selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
 
-                //当前要执行的命令
-                string currentCommand = RebotMoveTaskWorkerThread.Command_UseDefaultRect;
+            //    //当前要执行的命令
+            //    string currentCommand = RebotMoveTaskWorkerThread.Command_UseDefaultRect;
 
-                //参数
-                List<KeyValuePair<string, object>> paramList = new List<KeyValuePair<string, object>>();
-                paramList.Add(new KeyValuePair<string, object>(RebotMoveTaskWorkerThread.Property_Limit, limit));
+            //    //参数
+            //    List<KeyValuePair<string, object>> paramList = new List<KeyValuePair<string, object>>();
+            //    paramList.Add(new KeyValuePair<string, object>(RebotMoveTaskWorkerThread.Property_Limit, limit));
 
-                //添加到任务队列
-                AddTaskToRobot(new ProcessorQueueObject(selectedUser, selectedUser.SupportedTask[Task_RobotMove], new Command(currentCommand, paramList.ToArray())));
-            }
+            //    //添加到任务队列
+            //    AddTaskToRobot(new ProcessorQueueObject(selectedUser, selectedUser.SupportedTask[Task_RobotMove], new Command(currentCommand, paramList.ToArray())));
+            //}
         }
 
         /// <summary>
@@ -210,30 +208,30 @@ namespace TaskSimulator.RobotTasks
         /// <param name="userCode"></param>
         public static void StartMoveShipWithRound(string userCode, double limit)
         {
-            if (Simulator.UserDict.ContainsKey(userCode))
-            {
-                //取出用户
-                RobotUser selectedUser = Simulator.UserDict[userCode];
+            //if (Simulator.UserDict.ContainsKey(userCode))
+            //{
+            //    //取出用户
+            //    RobotUser selectedUser = Simulator.UserDict[userCode];
 
-                //如果正在运行，则不添加新任务
-                if (selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Running)
-                {
-                    return;
-                }
+            //    //如果正在运行，则不添加新任务
+            //    if (selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Running)
+            //    {
+            //        return;
+            //    }
 
-                //重置工作线程状态为Ready
-                selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
+            //    //重置工作线程状态为Ready
+            //    selectedUser.SupportedTask[Task_RobotMove].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
 
-                //当前要执行的命令
-                string currentCommand = RebotMoveTaskWorkerThread.Command_UseDefaultRound;
+            //    //当前要执行的命令
+            //    string currentCommand = RebotMoveTaskWorkerThread.Command_UseDefaultRound;
 
-                //参数
-                List<KeyValuePair<string, object>> paramList = new List<KeyValuePair<string, object>>();
-                paramList.Add(new KeyValuePair<string, object>(RebotMoveTaskWorkerThread.Property_Limit, limit));
+            //    //参数
+            //    List<KeyValuePair<string, object>> paramList = new List<KeyValuePair<string, object>>();
+            //    paramList.Add(new KeyValuePair<string, object>(RebotMoveTaskWorkerThread.Property_Limit, limit));
 
-                //添加到任务队列
-                AddTaskToRobot(new ProcessorQueueObject(selectedUser, selectedUser.SupportedTask[Task_RobotMove], new Command(currentCommand, paramList.ToArray())));
-            }
+            //    //添加到任务队列
+            //    AddTaskToRobot(new ProcessorQueueObject(selectedUser, selectedUser.SupportedTask[Task_RobotMove], new Command(currentCommand, paramList.ToArray())));
+            //}
         }
 
         /// <summary>
@@ -242,65 +240,20 @@ namespace TaskSimulator.RobotTasks
         /// <param name="pqo"></param>
         private static void AddTaskToRobot(ProcessorQueueObject pqo)
         {
-            bool enabledAdd = true;
-            foreach (ProcessorQueueObject queue in Simulator.TaskProcessor.Queues)
-            {
-                if (queue.User.Equals(pqo.User) && queue.Task.Equals(pqo.Task))
-                {
-                    enabledAdd = false;
-                    break;
-                }
-            }
-            if (enabledAdd)
-            {
-                pqo.Task.TaskWorkerThread.WorkerThreadState = WorkerThreadStateType.Started;
-                Simulator.TaskProcessor.Queues.Enqueue(pqo);
-            }
+            //bool enabledAdd = true;
+            //foreach (ProcessorQueueObject queue in Simulator.TaskProcessor.Queues)
+            //{
+            //    if (queue.User.Equals(pqo.User) && queue.Task.Equals(pqo.Task))
+            //    {
+            //        enabledAdd = false;
+            //        break;
+            //    }
+            //}
+            //if (enabledAdd)
+            //{
+            //    pqo.Task.TaskWorkerThread.WorkerThreadState = WorkerThreadStateType.Started;
+            //    Simulator.TaskProcessor.Queues.Enqueue(pqo);
+            //}
         }
     }
-
-    /// <summary>
-    /// 负责按照坐标来让机器人移动
-    /// </summary>
-    public class RebotMoveActionWorkerThread : BaseActionWorkerThread
-    {
-        public RebotMoveActionWorkerThread()
-        {
-            this.SupportedActionCommand = RobotFactory.Action_RebotMove;
-        }
-
-        public override CommandResult Process(Command commandObj)
-        {
-            CommandResult cr = new CommandResult();
-            cr.CommandText = this.SupportedActionCommand;
-
-            if (commandObj.CommandText != null && commandObj.CommandText.Equals(this.SupportedActionCommand) && commandObj.Objects.ContainsKey("lat") && commandObj.Objects.ContainsKey("lng"))
-            {
-                try
-                {
-                    double lat = double.Parse(commandObj.Objects["lat"].ToString());
-                    double lng = double.Parse(commandObj.Objects["lng"].ToString());
-
-
-
-                    cr.IsOK = true;
-                }
-                catch (Exception ex)
-                {
-                    cr.IsOK = false;
-                    cr.ErrorReason = ex.ToString();
-                }
-            }
-            else
-            {
-                cr.IsOK = false;
-            }
-
-            return cr;
-        }
-    }
-
-
-
-
 }
