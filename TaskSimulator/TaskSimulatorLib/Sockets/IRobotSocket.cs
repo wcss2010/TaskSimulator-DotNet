@@ -41,5 +41,11 @@ namespace TaskSimulatorLib.Sockets
         /// </summary>
         /// <param name="msg"></param>
         void Receive(object source,byte[] msg);
+
+        /// <summary>
+        /// 是否已连接
+        /// </summary>
+        /// <returns></returns>
+        bool IsConnected();
     }
 }
