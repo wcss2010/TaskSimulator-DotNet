@@ -96,6 +96,16 @@
             this.gbFlyPaths = new System.Windows.Forms.GroupBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label18 = new System.Windows.Forms.Label();
+            this.richTextBox3 = new System.Windows.Forms.RichTextBox();
+            this.richTextBox4 = new System.Windows.Forms.RichTextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpBase.SuspendLayout();
@@ -122,6 +132,7 @@
             this.panel9.SuspendLayout();
             this.plRobotConfigList.SuspendLayout();
             this.gbConnections.SuspendLayout();
+            this.gbCameras.SuspendLayout();
             this.gbFlyPaths.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -132,13 +143,13 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 526);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1131, 51);
+            this.panel1.Size = new System.Drawing.Size(1230, 51);
             this.panel1.TabIndex = 0;
             // 
             // btnOK
             // 
             this.btnOK.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOK.Location = new System.Drawing.Point(953, 0);
+            this.btnOK.Location = new System.Drawing.Point(1052, 0);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(89, 51);
             this.btnOK.TabIndex = 1;
@@ -149,7 +160,7 @@
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(1042, 0);
+            this.btnCancel.Location = new System.Drawing.Point(1141, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(89, 51);
             this.btnCancel.TabIndex = 0;
@@ -165,7 +176,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1131, 526);
+            this.tabControl1.Size = new System.Drawing.Size(1230, 526);
             this.tabControl1.TabIndex = 1;
             // 
             // tpBase
@@ -441,7 +452,7 @@
             this.tpRobotList.Location = new System.Drawing.Point(4, 25);
             this.tpRobotList.Name = "tpRobotList";
             this.tpRobotList.Padding = new System.Windows.Forms.Padding(3);
-            this.tpRobotList.Size = new System.Drawing.Size(1123, 497);
+            this.tpRobotList.Size = new System.Drawing.Size(1222, 497);
             this.tpRobotList.TabIndex = 1;
             this.tpRobotList.Text = "机器人列表";
             this.tpRobotList.UseVisualStyleBackColor = true;
@@ -464,8 +475,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.gbRobotDetail);
-            this.splitContainer2.Size = new System.Drawing.Size(1117, 491);
-            this.splitContainer2.SplitterDistance = 349;
+            this.splitContainer2.Size = new System.Drawing.Size(1216, 491);
+            this.splitContainer2.SplitterDistance = 359;
             this.splitContainer2.TabIndex = 0;
             // 
             // tvRobots
@@ -474,7 +485,7 @@
             this.tvRobots.HideSelection = false;
             this.tvRobots.Location = new System.Drawing.Point(0, 0);
             this.tvRobots.Name = "tvRobots";
-            this.tvRobots.Size = new System.Drawing.Size(349, 435);
+            this.tvRobots.Size = new System.Drawing.Size(359, 435);
             this.tvRobots.TabIndex = 2;
             this.tvRobots.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvRobots_AfterSelect);
             // 
@@ -486,13 +497,13 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel3.Location = new System.Drawing.Point(0, 435);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(349, 56);
+            this.panel3.Size = new System.Drawing.Size(359, 56);
             this.panel3.TabIndex = 3;
             // 
             // btnRobotAdd
             // 
             this.btnRobotAdd.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnRobotAdd.Location = new System.Drawing.Point(124, 0);
+            this.btnRobotAdd.Location = new System.Drawing.Point(134, 0);
             this.btnRobotAdd.Name = "btnRobotAdd";
             this.btnRobotAdd.Size = new System.Drawing.Size(75, 56);
             this.btnRobotAdd.TabIndex = 2;
@@ -503,7 +514,7 @@
             // btnRobotSave
             // 
             this.btnRobotSave.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnRobotSave.Location = new System.Drawing.Point(199, 0);
+            this.btnRobotSave.Location = new System.Drawing.Point(209, 0);
             this.btnRobotSave.Name = "btnRobotSave";
             this.btnRobotSave.Size = new System.Drawing.Size(75, 56);
             this.btnRobotSave.TabIndex = 1;
@@ -514,7 +525,7 @@
             // btnRobotDel
             // 
             this.btnRobotDel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnRobotDel.Location = new System.Drawing.Point(274, 0);
+            this.btnRobotDel.Location = new System.Drawing.Point(284, 0);
             this.btnRobotDel.Name = "btnRobotDel";
             this.btnRobotDel.Size = new System.Drawing.Size(75, 56);
             this.btnRobotDel.TabIndex = 0;
@@ -528,7 +539,7 @@
             this.gbRobotDetail.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbRobotDetail.Location = new System.Drawing.Point(0, 0);
             this.gbRobotDetail.Name = "gbRobotDetail";
-            this.gbRobotDetail.Size = new System.Drawing.Size(764, 491);
+            this.gbRobotDetail.Size = new System.Drawing.Size(853, 491);
             this.gbRobotDetail.TabIndex = 0;
             this.gbRobotDetail.TabStop = false;
             this.gbRobotDetail.Text = "机器人详细";
@@ -562,7 +573,7 @@
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 21);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(758, 467);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(847, 467);
             this.flowLayoutPanel1.TabIndex = 8;
             this.flowLayoutPanel1.WrapContents = false;
             // 
@@ -578,7 +589,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(31, 5);
+            this.label10.Location = new System.Drawing.Point(32, 5);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(52, 15);
             this.label10.TabIndex = 0;
@@ -601,7 +612,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(31, 5);
+            this.label9.Location = new System.Drawing.Point(32, 5);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(52, 15);
             this.label9.TabIndex = 0;
@@ -747,7 +758,7 @@
             this.plRobotConfigList.Controls.Add(this.gbConnections);
             this.plRobotConfigList.Location = new System.Drawing.Point(3, 183);
             this.plRobotConfigList.Name = "plRobotConfigList";
-            this.plRobotConfigList.Size = new System.Drawing.Size(642, 480);
+            this.plRobotConfigList.Size = new System.Drawing.Size(642, 1080);
             this.plRobotConfigList.TabIndex = 4;
             // 
             // gbConnections
@@ -756,48 +767,58 @@
             this.gbConnections.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbConnections.Location = new System.Drawing.Point(0, 0);
             this.gbConnections.Name = "gbConnections";
-            this.gbConnections.Size = new System.Drawing.Size(642, 120);
+            this.gbConnections.Size = new System.Drawing.Size(642, 220);
             this.gbConnections.TabIndex = 0;
             this.gbConnections.TabStop = false;
-            this.gbConnections.Text = "连接配置(写法：参数名称=参数值，例如：RemoteIP=127.0.0.1,一行只能写一个键值对！)：";
+            this.gbConnections.Text = "连接配置(写法:参数名称=参数值,例如:RemoteIP=127.0.0.1,一行只能写一个键值对!):";
             // 
             // gbCameras
             // 
+            this.gbCameras.Controls.Add(this.richTextBox4);
+            this.gbCameras.Controls.Add(this.label20);
+            this.gbCameras.Controls.Add(this.richTextBox3);
+            this.gbCameras.Controls.Add(this.label19);
+            this.gbCameras.Controls.Add(this.button1);
+            this.gbCameras.Controls.Add(this.textBox8);
+            this.gbCameras.Controls.Add(this.textBox7);
+            this.gbCameras.Controls.Add(this.label17);
+            this.gbCameras.Controls.Add(this.label18);
+            this.gbCameras.Controls.Add(this.label16);
             this.gbCameras.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbCameras.Location = new System.Drawing.Point(0, 120);
+            this.gbCameras.Location = new System.Drawing.Point(0, 220);
             this.gbCameras.Name = "gbCameras";
-            this.gbCameras.Size = new System.Drawing.Size(642, 120);
+            this.gbCameras.Size = new System.Drawing.Size(642, 320);
             this.gbCameras.TabIndex = 1;
             this.gbCameras.TabStop = false;
-            this.gbCameras.Text = "虚拟摄像头配置：";
+            this.gbCameras.Text = "虚拟摄像头配置:";
             // 
             // gbComponents
             // 
             this.gbComponents.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbComponents.Location = new System.Drawing.Point(0, 240);
+            this.gbComponents.Location = new System.Drawing.Point(0, 540);
             this.gbComponents.Name = "gbComponents";
-            this.gbComponents.Size = new System.Drawing.Size(642, 120);
+            this.gbComponents.Size = new System.Drawing.Size(642, 320);
             this.gbComponents.TabIndex = 2;
             this.gbComponents.TabStop = false;
-            this.gbComponents.Text = "监视器与任务控制器配置：";
+            this.gbComponents.Text = "监视器与任务控制器配置:";
             // 
             // gbFlyPaths
             // 
             this.gbFlyPaths.Controls.Add(this.richTextBox2);
             this.gbFlyPaths.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbFlyPaths.Location = new System.Drawing.Point(0, 360);
+            this.gbFlyPaths.Location = new System.Drawing.Point(0, 860);
             this.gbFlyPaths.Name = "gbFlyPaths";
-            this.gbFlyPaths.Size = new System.Drawing.Size(642, 120);
+            this.gbFlyPaths.Size = new System.Drawing.Size(642, 220);
             this.gbFlyPaths.TabIndex = 3;
             this.gbFlyPaths.TabStop = false;
-            this.gbFlyPaths.Text = "自定义飞行路径(Lat=纬度，Lng=经度，写法：Lat,Lng，一行只能写一个经纬度！)：";
+            this.gbFlyPaths.Text = "自定义飞行路径(Lat=纬度,Lng=经度,写法:Lat:Lng,一行只能写一个经纬度!):";
             // 
             // richTextBox1
             // 
             this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBox1.Location = new System.Drawing.Point(3, 21);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(636, 96);
+            this.richTextBox1.Size = new System.Drawing.Size(636, 196);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             // 
@@ -806,15 +827,97 @@
             this.richTextBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBox2.Location = new System.Drawing.Point(3, 21);
             this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(636, 96);
+            this.richTextBox2.Size = new System.Drawing.Size(636, 196);
             this.richTextBox2.TabIndex = 1;
             this.richTextBox2.Text = "";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(15, 25);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(82, 15);
+            this.label16.TabIndex = 0;
+            this.label16.Text = "图片大小：";
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(96, 20);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(74, 25);
+            this.textBox7.TabIndex = 1;
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(194, 20);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(74, 25);
+            this.textBox8.TabIndex = 1;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(15, 55);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(82, 15);
+            this.label17.TabIndex = 0;
+            this.label17.Text = "字体大小：";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(95, 51);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(173, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(173, 25);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(15, 15);
+            this.label18.TabIndex = 0;
+            this.label18.Text = "X";
+            // 
+            // richTextBox3
+            // 
+            this.richTextBox3.Location = new System.Drawing.Point(95, 80);
+            this.richTextBox3.Name = "richTextBox3";
+            this.richTextBox3.Size = new System.Drawing.Size(522, 106);
+            this.richTextBox3.TabIndex = 3;
+            this.richTextBox3.Text = "";
+            // 
+            // richTextBox4
+            // 
+            this.richTextBox4.Location = new System.Drawing.Point(95, 192);
+            this.richTextBox4.Name = "richTextBox4";
+            this.richTextBox4.Size = new System.Drawing.Size(522, 119);
+            this.richTextBox4.TabIndex = 4;
+            this.richTextBox4.Text = "";
+            // 
+            // label19
+            // 
+            this.label19.Location = new System.Drawing.Point(15, 124);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(82, 36);
+            this.label19.TabIndex = 5;
+            this.label19.Text = "   摄像头    名称：";
+            // 
+            // label20
+            // 
+            this.label20.Location = new System.Drawing.Point(15, 250);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(82, 34);
+            this.label20.TabIndex = 6;
+            this.label20.Text = "图片背景：";
             // 
             // SimulatorConfigEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1131, 577);
+            this.ClientSize = new System.Drawing.Size(1230, 577);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.panel1);
             this.MaximizeBox = false;
@@ -856,6 +959,8 @@
             this.panel9.PerformLayout();
             this.plRobotConfigList.ResumeLayout(false);
             this.gbConnections.ResumeLayout(false);
+            this.gbCameras.ResumeLayout(false);
+            this.gbCameras.PerformLayout();
             this.gbFlyPaths.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -931,5 +1036,15 @@
         private System.Windows.Forms.GroupBox gbConnections;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.RichTextBox richTextBox2;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.RichTextBox richTextBox4;
+        private System.Windows.Forms.RichTextBox richTextBox3;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
     }
 }

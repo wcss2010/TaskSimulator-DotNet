@@ -87,7 +87,7 @@ namespace TaskSimulator.Forms
         private void btnCodeAdd_Click(object sender, EventArgs e)
         {
             gbComponentDetail.Enabled = true;
-            ClearDynamicComponentEditor();
+            ClearComponentDetail();
             tvDynamicComponents.SelectedNode = null;
         }
 
@@ -119,7 +119,7 @@ namespace TaskSimulator.Forms
                 tvDynamicComponents.Nodes.Add(selected);
             }
 
-            ClearDynamicComponentEditor();
+            ClearComponentDetail();
         }
 
         private void btnCodeDel_Click(object sender, EventArgs e)
@@ -129,12 +129,15 @@ namespace TaskSimulator.Forms
                 if (MessageBox.Show("真的要删除吗？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                 {
                     tvDynamicComponents.SelectedNode.Remove();
-                    ClearDynamicComponentEditor();
+                    ClearComponentDetail();
                 }
             }
         }
 
-        private void ClearDynamicComponentEditor()
+        /// <summary>
+        /// 清理动态组件详细
+        /// </summary>
+        private void ClearComponentDetail()
         {
             tbComponentId.Text = "";
             tbComponentName.Text = "";
@@ -172,7 +175,7 @@ namespace TaskSimulator.Forms
 
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            ClearDynamicComponentEditor();
+            ClearComponentDetail();
             gbComponentDetail.Enabled = true;
 
             if (tvDynamicComponents.SelectedNode != null && tvDynamicComponents.SelectedNode.Tag is DynamicComponent)
