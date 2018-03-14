@@ -59,7 +59,37 @@ namespace TaskSimulator
 
         private void TestMainForm_Load(object sender, EventArgs e)
         {
+            try
+            {
+                TaskSimulatorLib.SimulatorObject.Simulator.LoadConfig();
+                if (TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig == null)
+                {
+                    MessageBox.Show("对不起，没有找到配置文件！");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("对不起，配置文件加载失败！Ex:" + ex.ToString());
+            }
 
+            //初始化对象
+            TaskSimulator.BoatRobot.RobotManager.Init();
+
+            //开启模拟器
+            TaskSimulatorLib.SimulatorObject.Simulator.Start();
+
+            //初始化
+            InitSimulator();
+        }
+
+        private void InitSimulator()
+        {
+            
+        }
+
+        private void TestMainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            TaskSimulatorLib.SimulatorObject.Simulator.Stop();
         }
     }
 }
