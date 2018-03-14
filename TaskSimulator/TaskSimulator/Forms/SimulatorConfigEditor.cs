@@ -30,8 +30,16 @@ namespace TaskSimulator.Forms
         /// </summary>
         private void InitConfig()
         {
+            //Socket控制器
+            if (TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.SocketController != null)
+            {
+                tbSocketControllerFile.Text = TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.SocketController.ComponentClassFile;
+                tbSocketControllerClassFullName.Text = TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.SocketController.ComponentClassFullName;
+            }
+
+            #region 显示动态组件列表
             List<DynamicComponent> dynamicComponentList = new List<DynamicComponent>();
-            treeView.Nodes.Clear();
+            tvDynamicComponents.Nodes.Clear();
 
             //加载动态组件列表
             dynamicComponentList.AddRange(TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.MonitorComponentMap.Values);
@@ -53,8 +61,9 @@ namespace TaskSimulator.Forms
                     tnComponent.Text = dc.ComponentName + "(任务控制器)";
                 }
 
-                treeView.Nodes.Add(tnComponent);
+                tvDynamicComponents.Nodes.Add(tnComponent);
             }
+            #endregion
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -79,7 +88,7 @@ namespace TaskSimulator.Forms
         {
             gbComponentDetail.Enabled = true;
             ClearDynamicComponentEditor();
-            treeView.SelectedNode = null;
+            tvDynamicComponents.SelectedNode = null;
         }
 
         private void btnCodeSave_Click(object sender, EventArgs e)
@@ -92,7 +101,7 @@ namespace TaskSimulator.Forms
 
             gbComponentDetail.Enabled = false;
 
-            TreeNode selected = treeView.SelectedNode != null ? treeView.SelectedNode : new TreeNode();
+            TreeNode selected = tvDynamicComponents.SelectedNode != null ? tvDynamicComponents.SelectedNode : new TreeNode();
             DynamicComponent selectedComponent = selected.Tag != null ? (DynamicComponent)selected.Tag : new DynamicComponent();
 
             selectedComponent.ComponentId = tbComponentId.Text.Trim();
@@ -105,9 +114,9 @@ namespace TaskSimulator.Forms
 
             selected.Tag = selectedComponent;
 
-            if (treeView.SelectedNode == null)
+            if (tvDynamicComponents.SelectedNode == null)
             {
-                treeView.Nodes.Add(selected);
+                tvDynamicComponents.Nodes.Add(selected);
             }
 
             ClearDynamicComponentEditor();
@@ -115,11 +124,11 @@ namespace TaskSimulator.Forms
 
         private void btnCodeDel_Click(object sender, EventArgs e)
         {
-            if (treeView.SelectedNode != null)
+            if (tvDynamicComponents.SelectedNode != null)
             {
                 if (MessageBox.Show("真的要删除吗？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                 {
-                    treeView.SelectedNode.Remove();
+                    tvDynamicComponents.SelectedNode.Remove();
                     ClearDynamicComponentEditor();
                 }
             }
@@ -166,9 +175,9 @@ namespace TaskSimulator.Forms
             ClearDynamicComponentEditor();
             gbComponentDetail.Enabled = true;
 
-            if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is DynamicComponent)
+            if (tvDynamicComponents.SelectedNode != null && tvDynamicComponents.SelectedNode.Tag is DynamicComponent)
             {
-                DynamicComponent dc = (DynamicComponent)treeView.SelectedNode.Tag;
+                DynamicComponent dc = (DynamicComponent)tvDynamicComponents.SelectedNode.Tag;
                 tbComponentId.Text = dc.ComponentId;
                 tbComponentName.Text = dc.ComponentName;
                 tbComponentClassFullName.Text = dc.ComponentClassFullName;
@@ -197,6 +206,26 @@ namespace TaskSimulator.Forms
             {
                 tbClassCode.Text = System.IO.File.ReadAllText(tbComponentClassFile.Text.Trim());
             }
+        }
+
+        private void tvRobots_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
+        }
+
+        private void btnRobotAdd_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRobotSave_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRobotDel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -35,7 +35,7 @@
             this.tpBase = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.treeView = new System.Windows.Forms.TreeView();
+            this.tvDynamicComponents = new System.Windows.Forms.TreeView();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnCodeAdd = new System.Windows.Forms.Button();
             this.btnCodeSave = new System.Windows.Forms.Button();
@@ -59,6 +59,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tpRobotList = new System.Windows.Forms.TabPage();
             this.ofdCSFile = new System.Windows.Forms.OpenFileDialog();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.tvRobots = new System.Windows.Forms.TreeView();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.btnRobotAdd = new System.Windows.Forms.Button();
+            this.btnRobotSave = new System.Windows.Forms.Button();
+            this.btnRobotDel = new System.Windows.Forms.Button();
+            this.gbRobotDetail = new System.Windows.Forms.GroupBox();
+            this.tbSocketControllerClassFullName = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpBase.SuspendLayout();
@@ -70,6 +79,12 @@
             this.panel2.SuspendLayout();
             this.gbComponentDetail.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.tpRobotList.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -77,7 +92,7 @@
             this.panel1.Controls.Add(this.btnOK);
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 515);
+            this.panel1.Location = new System.Drawing.Point(0, 521);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1041, 51);
             this.panel1.TabIndex = 0;
@@ -112,11 +127,13 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1041, 515);
+            this.tabControl1.Size = new System.Drawing.Size(1041, 521);
             this.tabControl1.TabIndex = 1;
             // 
             // tpBase
             // 
+            this.tpBase.Controls.Add(this.tbSocketControllerClassFullName);
+            this.tpBase.Controls.Add(this.label6);
             this.tpBase.Controls.Add(this.groupBox1);
             this.tpBase.Controls.Add(this.btnSelectSocketController);
             this.tpBase.Controls.Add(this.tbSocketControllerFile);
@@ -124,7 +141,7 @@
             this.tpBase.Location = new System.Drawing.Point(4, 25);
             this.tpBase.Name = "tpBase";
             this.tpBase.Padding = new System.Windows.Forms.Padding(3);
-            this.tpBase.Size = new System.Drawing.Size(1033, 486);
+            this.tpBase.Size = new System.Drawing.Size(1033, 492);
             this.tpBase.TabIndex = 0;
             this.tpBase.Text = "基础配置";
             this.tpBase.UseVisualStyleBackColor = true;
@@ -133,7 +150,7 @@
             // 
             this.groupBox1.Controls.Add(this.splitContainer1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox1.Location = new System.Drawing.Point(3, 59);
+            this.groupBox1.Location = new System.Drawing.Point(3, 65);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(1027, 424);
             this.groupBox1.TabIndex = 3;
@@ -148,7 +165,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.treeView);
+            this.splitContainer1.Panel1.Controls.Add(this.tvDynamicComponents);
             this.splitContainer1.Panel1.Controls.Add(this.panel2);
             // 
             // splitContainer1.Panel2
@@ -158,15 +175,15 @@
             this.splitContainer1.SplitterDistance = 302;
             this.splitContainer1.TabIndex = 0;
             // 
-            // treeView
+            // tvDynamicComponents
             // 
-            this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView.HideSelection = false;
-            this.treeView.Location = new System.Drawing.Point(0, 0);
-            this.treeView.Name = "treeView";
-            this.treeView.Size = new System.Drawing.Size(302, 344);
-            this.treeView.TabIndex = 0;
-            this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
+            this.tvDynamicComponents.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvDynamicComponents.HideSelection = false;
+            this.tvDynamicComponents.Location = new System.Drawing.Point(0, 0);
+            this.tvDynamicComponents.Name = "tvDynamicComponents";
+            this.tvDynamicComponents.Size = new System.Drawing.Size(302, 344);
+            this.tvDynamicComponents.TabIndex = 0;
+            this.tvDynamicComponents.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
             // 
             // panel2
             // 
@@ -356,7 +373,7 @@
             // 
             // btnSelectSocketController
             // 
-            this.btnSelectSocketController.Location = new System.Drawing.Point(455, 15);
+            this.btnSelectSocketController.Location = new System.Drawing.Point(455, 21);
             this.btnSelectSocketController.Name = "btnSelectSocketController";
             this.btnSelectSocketController.Size = new System.Drawing.Size(75, 25);
             this.btnSelectSocketController.TabIndex = 2;
@@ -366,7 +383,7 @@
             // 
             // tbSocketControllerFile
             // 
-            this.tbSocketControllerFile.Location = new System.Drawing.Point(159, 15);
+            this.tbSocketControllerFile.Location = new System.Drawing.Point(159, 21);
             this.tbSocketControllerFile.Name = "tbSocketControllerFile";
             this.tbSocketControllerFile.Size = new System.Drawing.Size(290, 25);
             this.tbSocketControllerFile.TabIndex = 1;
@@ -374,7 +391,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 18);
+            this.label1.Location = new System.Drawing.Point(18, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(145, 15);
             this.label1.TabIndex = 0;
@@ -382,10 +399,11 @@
             // 
             // tpRobotList
             // 
+            this.tpRobotList.Controls.Add(this.splitContainer2);
             this.tpRobotList.Location = new System.Drawing.Point(4, 25);
             this.tpRobotList.Name = "tpRobotList";
             this.tpRobotList.Padding = new System.Windows.Forms.Padding(3);
-            this.tpRobotList.Size = new System.Drawing.Size(1033, 486);
+            this.tpRobotList.Size = new System.Drawing.Size(1033, 492);
             this.tpRobotList.TabIndex = 1;
             this.tpRobotList.Text = "机器人列表";
             this.tpRobotList.UseVisualStyleBackColor = true;
@@ -394,11 +412,108 @@
             // 
             this.ofdCSFile.Filter = "C#动态脚本|*.cs";
             // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer2.Name = "splitContainer2";
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.tvRobots);
+            this.splitContainer2.Panel1.Controls.Add(this.panel3);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.gbRobotDetail);
+            this.splitContainer2.Size = new System.Drawing.Size(1027, 486);
+            this.splitContainer2.SplitterDistance = 342;
+            this.splitContainer2.TabIndex = 0;
+            // 
+            // tvRobots
+            // 
+            this.tvRobots.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvRobots.HideSelection = false;
+            this.tvRobots.Location = new System.Drawing.Point(0, 0);
+            this.tvRobots.Name = "tvRobots";
+            this.tvRobots.Size = new System.Drawing.Size(342, 430);
+            this.tvRobots.TabIndex = 2;
+            this.tvRobots.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvRobots_AfterSelect);
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.btnRobotAdd);
+            this.panel3.Controls.Add(this.btnRobotSave);
+            this.panel3.Controls.Add(this.btnRobotDel);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel3.Location = new System.Drawing.Point(0, 430);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(342, 56);
+            this.panel3.TabIndex = 3;
+            // 
+            // btnRobotAdd
+            // 
+            this.btnRobotAdd.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnRobotAdd.Location = new System.Drawing.Point(117, 0);
+            this.btnRobotAdd.Name = "btnRobotAdd";
+            this.btnRobotAdd.Size = new System.Drawing.Size(75, 56);
+            this.btnRobotAdd.TabIndex = 2;
+            this.btnRobotAdd.Text = "新增";
+            this.btnRobotAdd.UseVisualStyleBackColor = true;
+            this.btnRobotAdd.Click += new System.EventHandler(this.btnRobotAdd_Click);
+            // 
+            // btnRobotSave
+            // 
+            this.btnRobotSave.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnRobotSave.Location = new System.Drawing.Point(192, 0);
+            this.btnRobotSave.Name = "btnRobotSave";
+            this.btnRobotSave.Size = new System.Drawing.Size(75, 56);
+            this.btnRobotSave.TabIndex = 1;
+            this.btnRobotSave.Text = "保存";
+            this.btnRobotSave.UseVisualStyleBackColor = true;
+            this.btnRobotSave.Click += new System.EventHandler(this.btnRobotSave_Click);
+            // 
+            // btnRobotDel
+            // 
+            this.btnRobotDel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnRobotDel.Location = new System.Drawing.Point(267, 0);
+            this.btnRobotDel.Name = "btnRobotDel";
+            this.btnRobotDel.Size = new System.Drawing.Size(75, 56);
+            this.btnRobotDel.TabIndex = 0;
+            this.btnRobotDel.Text = "删除";
+            this.btnRobotDel.UseVisualStyleBackColor = true;
+            this.btnRobotDel.Click += new System.EventHandler(this.btnRobotDel_Click);
+            // 
+            // gbRobotDetail
+            // 
+            this.gbRobotDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbRobotDetail.Location = new System.Drawing.Point(0, 0);
+            this.gbRobotDetail.Name = "gbRobotDetail";
+            this.gbRobotDetail.Size = new System.Drawing.Size(681, 486);
+            this.gbRobotDetail.TabIndex = 0;
+            this.gbRobotDetail.TabStop = false;
+            // 
+            // tbSocketControllerClassFullName
+            // 
+            this.tbSocketControllerClassFullName.Location = new System.Drawing.Point(702, 21);
+            this.tbSocketControllerClassFullName.Name = "tbSocketControllerClassFullName";
+            this.tbSocketControllerClassFullName.Size = new System.Drawing.Size(278, 25);
+            this.tbSocketControllerClassFullName.TabIndex = 5;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(549, 24);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(160, 15);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "Socket控制器类全名：";
+            // 
             // SimulatorConfigEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1041, 566);
+            this.ClientSize = new System.Drawing.Size(1041, 572);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.panel1);
             this.MaximizeBox = false;
@@ -420,6 +535,12 @@
             this.gbComponentDetail.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.tpRobotList.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -438,7 +559,7 @@
         private System.Windows.Forms.Button btnSelectSocketController;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.TreeView treeView;
+        private System.Windows.Forms.TreeView tvDynamicComponents;
         private System.Windows.Forms.GroupBox gbComponentDetail;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnCodeAdd;
@@ -457,5 +578,14 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.RadioButton rbIsTaskController;
         private System.Windows.Forms.RadioButton rbIsMonitor;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.TreeView tvRobots;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button btnRobotAdd;
+        private System.Windows.Forms.Button btnRobotSave;
+        private System.Windows.Forms.Button btnRobotDel;
+        private System.Windows.Forms.GroupBox gbRobotDetail;
+        private System.Windows.Forms.TextBox tbSocketControllerClassFullName;
+        private System.Windows.Forms.Label label6;
     }
 }
