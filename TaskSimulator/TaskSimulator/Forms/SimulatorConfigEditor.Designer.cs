@@ -327,6 +327,7 @@
             this.tbComponentClassFile.Name = "tbComponentClassFile";
             this.tbComponentClassFile.Size = new System.Drawing.Size(319, 25);
             this.tbComponentClassFile.TabIndex = 5;
+            this.tbComponentClassFile.TextChanged += new System.EventHandler(this.tbComponentClassFile_TextChanged);
             // 
             // label5
             // 

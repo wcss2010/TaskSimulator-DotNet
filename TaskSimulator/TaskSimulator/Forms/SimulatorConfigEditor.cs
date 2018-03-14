@@ -24,19 +24,38 @@ namespace TaskSimulator.Forms
                 TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig = new TaskSimulatorLib.Entitys.RobotSimulatorConfig();
             }
 
+            InitConfig();
+        }
+
+        /// <summary>
+        /// 初始化配置显示控件
+        /// </summary>
+        private void InitConfig()
+        {
+            dynamicComponentList.Clear();
+            treeView.Nodes.Clear();
+
             //加载动态组件列表
             dynamicComponentList.AddRange(TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.MonitorComponentMap.Values);
             dynamicComponentList.AddRange(TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.TaskComponentMap.Values);
+            
             foreach (DynamicComponent dc in dynamicComponentList)
             {
+                TreeNode tnComponent = new TreeNode();
+                tnComponent.Tag = dc;
+
                 if (dc.ComponentType == DynamicComponentType.Monitor)
                 {
                     //监视器
+                    tnComponent.Text = dc.ComponentName + "(监视器)";
                 }
                 else
                 {
                     //任务控制器
+                    tnComponent.Text = dc.ComponentName + "(任务控制器)";
                 }
+
+                treeView.Nodes.Add(tnComponent);
             }
         }
 
@@ -93,7 +112,6 @@ namespace TaskSimulator.Forms
             if (ofdCSFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 tbComponentClassFile.Text = ofdCSFile.FileName;
-                tbClassCode.Text = System.IO.File.ReadAllText(tbComponentClassFile.Text.Trim());
             }
         }
 
@@ -120,7 +138,26 @@ namespace TaskSimulator.Forms
             ClearDynamicComponentEditor();
             gbComponentDetail.Enabled = false;
 
+            if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is DynamicComponent)
+            {
+                DynamicComponent dc = (DynamicComponent)treeView.SelectedNode.Tag;
+                tbComponentId.Text = dc.ComponentId;
+                tbComponentName.Text = dc.ComponentName;
+                tbComponentClassFullName.Text = dc.ComponentClassFullName;
+                tbComponentClassFile.Text = dc.ComponentClassFile;
+            }
+        }
 
+        private void tbComponentClassFile_TextChanged(object sender, EventArgs e)
+        {
+            if (tbComponentClassFile.Text.Trim().StartsWith(@"./"))
+            {
+                tbClassCode.Text = System.IO.File.ReadAllText(System.IO.Path.Combine(System.IO.Path.Combine(Application.StartupPath, TaskSimulator.BoatRobot.RobotManager.ROBOT_DYNAMIC_COMPONENT_DIR), tbComponentClassFile.Text.Trim().Replace(@"./", "")));
+            }
+            else
+            {
+                tbClassCode.Text = System.IO.File.ReadAllText(tbComponentClassFile.Text.Trim());
+            }
         }
     }
 }
