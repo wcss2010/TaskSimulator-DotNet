@@ -13,8 +13,6 @@ namespace TaskSimulator.Forms
 {
     public partial class SimulatorConfigEditor : Form
     {
-        private List<DynamicComponent> dynamicComponentList = new List<DynamicComponent>();
-
         public SimulatorConfigEditor()
         {
             InitializeComponent();
@@ -32,7 +30,7 @@ namespace TaskSimulator.Forms
         /// </summary>
         private void InitConfig()
         {
-            dynamicComponentList.Clear();
+            List<DynamicComponent> dynamicComponentList = new List<DynamicComponent>();
             treeView.Nodes.Clear();
 
             //加载动态组件列表
@@ -81,20 +79,50 @@ namespace TaskSimulator.Forms
         {
             gbComponentDetail.Enabled = true;
             ClearDynamicComponentEditor();
+            treeView.SelectedNode = null;
         }
 
         private void btnCodeSave_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(tbComponentId.Text) || string.IsNullOrEmpty(tbComponentName.Text) || string.IsNullOrEmpty(tbComponentClassFullName.Text) || string.IsNullOrEmpty(tbComponentClassFile.Text))
+            {
+                MessageBox.Show("对不起，所填项目不能为空！");
+                return;
+            }
+
             gbComponentDetail.Enabled = false;
 
+            TreeNode selected = treeView.SelectedNode != null ? treeView.SelectedNode : new TreeNode();
+            DynamicComponent selectedComponent = selected.Tag != null ? (DynamicComponent)selected.Tag : new DynamicComponent();
 
+            selectedComponent.ComponentId = tbComponentId.Text.Trim();
+            selectedComponent.ComponentName = tbComponentName.Text.Trim();
+            selectedComponent.ComponentClassFullName = tbComponentClassFullName.Text.Trim();
+            selectedComponent.ComponentClassFile = tbComponentClassFile.Text.Trim();
+            selectedComponent.ComponentType = this.rbIsMonitor.Checked ? DynamicComponentType.Monitor : DynamicComponentType.Task;
+
+            selected.Text = tbComponentName.Text.Trim() + (this.rbIsMonitor.Checked ? "(监视器)" : "(任务控制器)");
+
+            selected.Tag = selectedComponent;
+
+            if (treeView.SelectedNode == null)
+            {
+                treeView.Nodes.Add(selected);
+            }
 
             ClearDynamicComponentEditor();
         }
 
         private void btnCodeDel_Click(object sender, EventArgs e)
         {
-
+            if (treeView.SelectedNode != null)
+            {
+                if (MessageBox.Show("真的要删除吗？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                {
+                    treeView.SelectedNode.Remove();
+                    ClearDynamicComponentEditor();
+                }
+            }
         }
 
         private void ClearDynamicComponentEditor()
@@ -136,7 +164,7 @@ namespace TaskSimulator.Forms
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             ClearDynamicComponentEditor();
-            gbComponentDetail.Enabled = false;
+            gbComponentDetail.Enabled = true;
 
             if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is DynamicComponent)
             {
@@ -145,11 +173,22 @@ namespace TaskSimulator.Forms
                 tbComponentName.Text = dc.ComponentName;
                 tbComponentClassFullName.Text = dc.ComponentClassFullName;
                 tbComponentClassFile.Text = dc.ComponentClassFile;
+
+                if (dc.ComponentType == DynamicComponentType.Monitor)
+                {
+                    rbIsMonitor.Checked = true;
+                }
+                else
+                {
+                    rbIsTaskController.Checked = true;
+                }
             }
         }
 
         private void tbComponentClassFile_TextChanged(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(tbComponentClassFile.Text)) { return; }
+
             if (tbComponentClassFile.Text.Trim().StartsWith(@"./"))
             {
                 tbClassCode.Text = System.IO.File.ReadAllText(System.IO.Path.Combine(System.IO.Path.Combine(Application.StartupPath, TaskSimulator.BoatRobot.RobotManager.ROBOT_DYNAMIC_COMPONENT_DIR), tbComponentClassFile.Text.Trim().Replace(@"./", "")));
