@@ -205,6 +205,7 @@
             this.treeView.Name = "treeView";
             this.treeView.Size = new System.Drawing.Size(302, 344);
             this.treeView.TabIndex = 0;
+            this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
             // 
             // gbComponentDetail
             // 

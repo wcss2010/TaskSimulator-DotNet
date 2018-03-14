@@ -7,11 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TaskSimulatorLib.Entitys;
 
 namespace TaskSimulator.Forms
 {
     public partial class SimulatorConfigEditor : Form
     {
+        private List<DynamicComponent> dynamicComponentList = new List<DynamicComponent>();
+
         public SimulatorConfigEditor()
         {
             InitializeComponent();
@@ -20,8 +23,21 @@ namespace TaskSimulator.Forms
             {
                 TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig = new TaskSimulatorLib.Entitys.RobotSimulatorConfig();
             }
-                       
-            
+
+            //加载动态组件列表
+            dynamicComponentList.AddRange(TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.MonitorComponentMap.Values);
+            dynamicComponentList.AddRange(TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.TaskComponentMap.Values);
+            foreach (DynamicComponent dc in dynamicComponentList)
+            {
+                if (dc.ComponentType == DynamicComponentType.Monitor)
+                {
+                    //监视器
+                }
+                else
+                {
+                    //任务控制器
+                }
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -44,12 +60,17 @@ namespace TaskSimulator.Forms
 
         private void btnCodeAdd_Click(object sender, EventArgs e)
         {
-
+            gbComponentDetail.Enabled = true;
+            ClearDynamicComponentEditor();
         }
 
         private void btnCodeSave_Click(object sender, EventArgs e)
         {
+            gbComponentDetail.Enabled = false;
 
+
+
+            ClearDynamicComponentEditor();
         }
 
         private void btnCodeDel_Click(object sender, EventArgs e)
@@ -59,7 +80,12 @@ namespace TaskSimulator.Forms
 
         private void ClearDynamicComponentEditor()
         {
-           
+            tbComponentId.Text = "";
+            tbComponentName.Text = "";
+            tbComponentClassFile.Text = "";
+            tbComponentClassFullName.Text = "";
+            tbClassCode.Text = "";
+            rbIsMonitor.Checked = true;
         }
 
         private void btnSelectComponentFile_Click(object sender, EventArgs e)
@@ -87,6 +113,14 @@ namespace TaskSimulator.Forms
             {
                 gbComponentDetail.Text = "动态" + radioButton.Text + "详细";
             }
+        }
+
+        private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            ClearDynamicComponentEditor();
+            gbComponentDetail.Enabled = false;
+
+
         }
     }
 }

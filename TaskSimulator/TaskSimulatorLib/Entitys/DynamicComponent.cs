@@ -22,6 +22,11 @@ namespace TaskSimulatorLib.Entitys
         public string ComponentName { get; set; }
 
         /// <summary>
+        /// 动态组件类型
+        /// </summary>
+        public DynamicComponentType ComponentType { get; set; }
+
+        /// <summary>
         /// 类全名
         /// </summary>
         public string ComponentClassFullName { get; set; }
@@ -30,5 +35,13 @@ namespace TaskSimulatorLib.Entitys
         /// 类文件
         /// </summary>
         public string ComponentClassFile { get; set; }
+    }
+
+    /// <summary>
+    /// 动态组件类型
+    /// </summary>
+    public enum DynamicComponentType
+    {
+       Monitor,Task
     }
 }
