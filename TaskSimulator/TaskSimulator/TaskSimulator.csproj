@@ -83,6 +83,12 @@
     <Compile Include="BoatRobot\Components\BoatFlyTask.cs" />
     <Compile Include="BoatRobot\Components\CameraMonitor.cs" />
     <Compile Include="BoatRobot\Components\GPSMonitor.cs" />
+    <Compile Include="Forms\SimulatorConfigEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SimulatorConfigEditor.Designer.cs">
+      <DependentUpon>SimulatorConfigEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="GisMonitor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +113,9 @@
       <DependentUpon>TestMainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Util\CSharpCompiler.cs" />
+    <EmbeddedResource Include="Forms\SimulatorConfigEditor.resx">
+      <DependentUpon>SimulatorConfigEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GisMonitor.resx">
       <DependentUpon>GisMonitor.cs</DependentUpon>
     </EmbeddedResource>

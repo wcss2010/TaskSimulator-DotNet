@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TaskSimulator.Forms;
 
 namespace TaskSimulator
 {
@@ -90,6 +91,12 @@ namespace TaskSimulator
         private void TestMainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             TaskSimulatorLib.SimulatorObject.Simulator.Stop();
+        }
+
+        private void tbtnConfig_Click(object sender, EventArgs e)
+        {
+            SimulatorConfigEditor editor = new SimulatorConfigEditor();
+            editor.ShowDialog();
         }
     }
 }

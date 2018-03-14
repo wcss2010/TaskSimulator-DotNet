@@ -37,6 +37,7 @@
             this.tpLog = new System.Windows.Forms.TabPage();
             this.tbLogs = new System.Windows.Forms.RichTextBox();
             this.tpStatusList = new System.Windows.Forms.TabPage();
+            this.tbtnConfig = new System.Windows.Forms.ToolStripButton();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.tcMain.SuspendLayout();
@@ -62,6 +63,7 @@
             // toolStrip
             // 
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tbtnConfig,
             this.tbtnStart});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
@@ -120,6 +122,16 @@
             this.tpStatusList.Text = "无人机状态列表";
             this.tpStatusList.UseVisualStyleBackColor = true;
             // 
+            // tbtnConfig
+            // 
+            this.tbtnConfig.Image = ((System.Drawing.Image)(resources.GetObject("tbtnConfig.Image")));
+            this.tbtnConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnConfig.Name = "tbtnConfig";
+            this.tbtnConfig.Size = new System.Drawing.Size(43, 40);
+            this.tbtnConfig.Text = "配置";
+            this.tbtnConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tbtnConfig.Click += new System.EventHandler(this.tbtnConfig_Click);
+            // 
             // TestMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -154,5 +166,6 @@
         private System.Windows.Forms.TabPage tpStatusList;
         private System.Windows.Forms.ToolStripButton tbtnStart;
         private System.Windows.Forms.RichTextBox tbLogs;
+        private System.Windows.Forms.ToolStripButton tbtnConfig;
     }
 }
