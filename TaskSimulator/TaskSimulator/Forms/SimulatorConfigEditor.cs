@@ -210,7 +210,8 @@ namespace TaskSimulator.Forms
 
         private void tvRobots_AfterSelect(object sender, TreeViewEventArgs e)
         {
-
+            Robot r = new Robot();
+            
         }
 
         private void btnRobotAdd_Click(object sender, EventArgs e)
