@@ -282,9 +282,42 @@ namespace TaskSimulator.Forms
             tbRobotFlyPaths.Text = flyPathString.ToString();
 
             //组件状态
+            foreach (DataGridViewRow dRow in dgvRobotComponents.Rows)
+            {
+                if (dRow.Tag != null && dRow.Tag is DynamicComponent)
+                {
+                    DynamicComponent dc = (DynamicComponent)dRow.Tag;
+
+                    if (robotData.MonitorStateMap.ContainsKey(dc.ComponentId))
+                    {
+                        dRow.Cells[2].Value = robotData.MonitorStateMap[dc.ComponentId];
+                    }
+                    else if (robotData.TaskStateMap.ContainsKey(dc.ComponentId))
+                    {
+                        dRow.Cells[2].Value = robotData.TaskStateMap[dc.ComponentId];
+                    }
+                }
+            }
 
             //摄像头名称及背景
-
+            if (robotData.CameraNames != null)
+            {
+                StringBuilder cameraNameBuilder = new StringBuilder();
+                foreach (string cName in robotData.CameraNames)
+                {
+                    cameraNameBuilder.Append(cName).Append("\n");
+                }
+                tbRobotCameraNames.Text = cameraNameBuilder.ToString();
+            }
+            if (robotData.CameraBackgrounds != null)
+            {
+                StringBuilder cameraImageBuilder = new StringBuilder();
+                foreach (string cImage in robotData.CameraBackgrounds)
+                {
+                    cameraImageBuilder.Append(cImage).Append("\n");
+                }
+                tbRobotCameraImages.Text = cameraImageBuilder.ToString();
+            }
         }
 
         private void btnRobotAdd_Click(object sender, EventArgs e)
