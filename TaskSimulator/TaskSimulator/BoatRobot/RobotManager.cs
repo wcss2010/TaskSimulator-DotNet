@@ -307,10 +307,6 @@ namespace TaskSimulator.BoatRobot
                                 curUser.SupportedMonitor[kvp.Key].User = curUser;
                                 curUser.SupportedMonitor[kvp.Key].Enabled = kvp.Value;
                             }
-                            else
-                            {
-                                throw new Exception("对不起，机器人" + rb.RobotId + "的配置有错误,没有找到自定义监视器！请检查！");
-                            }
                         }
 
                         //任务处理器

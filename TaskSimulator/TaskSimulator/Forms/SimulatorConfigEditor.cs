@@ -147,6 +147,43 @@ namespace TaskSimulator.Forms
             rbIsMonitor.Checked = true;
         }
 
+        /// <summary>
+        /// 清理机器人详细
+        /// </summary>
+        private void ClearRobotDetail()
+        {
+            tbRobotId.Text = "";
+            tbRobotName.Text = "";
+            tbRobotRadius.Text = "" + (0.15 * 15);
+            tbRobotStepWithSecond.Text = "0.15";
+            tbRobotFlyPaths.Text = "IP=127.0.0.1\nPort=8788\nUserName=admin\nPassword=123123";
+            tbRobotConnectionInfos.Text = "";
+            tbRobotCameraNames.Text = "一号前视摄像头\n二号后视摄像头\n三号左侧摄像头\n四号右侧摄像头";
+            tbRobotCameraImages.Text = "";
+            tbRobotCameraWidth.Text = "200";
+            tbRobotCameraHeight.Text = "180";
+            btnRobotFonts.Text = "选择字体及字号";
+            dgvRobotComponents.Rows.Clear();
+
+            btnRobotFonts.Tag = new Font("宋体", 16);
+            btnRobotFonts.Text = ((Font)btnRobotFonts.Tag).ToString();
+
+            foreach (TreeNode componentNode in tvDynamicComponents.Nodes)
+            {
+                if (componentNode.Tag != null && componentNode.Tag is DynamicComponent)
+                {
+                    DynamicComponent dc = (DynamicComponent)componentNode.Tag;
+
+                    int rowIndex = dgvRobotComponents.Rows.Add();
+
+                    dgvRobotComponents.Rows[rowIndex].Cells[0].Value = dc.ComponentName;
+                    dgvRobotComponents.Rows[rowIndex].Cells[1].Value = dc.ComponentType == DynamicComponentType.Monitor ? "监视器" : "任务控制器";
+                    dgvRobotComponents.Rows[rowIndex].Cells[2].Value = false;
+                    dgvRobotComponents.Rows[rowIndex].Tag = dc;
+                }
+            }
+        }
+
         private void btnSelectComponentFile_Click(object sender, EventArgs e)
         {
             if (ofdCSFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -214,7 +251,7 @@ namespace TaskSimulator.Forms
         private void tvRobots_AfterSelect(object sender, TreeViewEventArgs e)
         {
             Robot r = new Robot();
-            
+            //r.Radius
         }
 
         private void btnRobotAdd_Click(object sender, EventArgs e)
