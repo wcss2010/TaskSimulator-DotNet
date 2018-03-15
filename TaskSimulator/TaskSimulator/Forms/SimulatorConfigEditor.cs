@@ -329,6 +329,19 @@ namespace TaskSimulator.Forms
 
         private void btnRobotSave_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(tbRobotId.Text) || string.IsNullOrEmpty(tbRobotName.Text) || string.IsNullOrEmpty(tbRobotRadius.Text) || string.IsNullOrEmpty(tbRobotStepWithSecond.Text) || string.IsNullOrEmpty(tbRobotCameraWidth.Text) || string.IsNullOrEmpty(tbRobotCameraHeight.Text))
+            {
+                MessageBox.Show("对不起，所填项目不能为空！");
+                return;
+            }
+            string[] flyPaths = tbRobotFlyPaths.Text.Trim().Split(new string[] { "\n" }, StringSplitOptions.None);
+            if (flyPaths != null && flyPaths.Length > 1 && flyPaths.Length < 4)
+            {
+                MessageBox.Show("对不起，如果要规划飞行路径必须写三个以上的经纬度坐标点！");
+                return;
+            }
+            string[] nameTeams = tbRobotCameraNames.Text.Split(new string[] { "\n" }, StringSplitOptions.None);
+            string[] imageTeams = tbRobotCameraImages.Text.Split(new string[] { "\n" }, StringSplitOptions.None);
 
         }
 
