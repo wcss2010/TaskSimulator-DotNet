@@ -263,12 +263,28 @@ namespace TaskSimulator.Forms
             tbRobotCameraHeight.Text = robotData.CameraPictureHeight + "";
 
             //连接参数
-
+            StringBuilder connectionString = new StringBuilder();
+            foreach (KeyValuePair<string, string> kvp in robotData.ConnectionMap)
+            {
+                connectionString.Append(kvp.Key).Append("=").Append(kvp.Value).Append("\n");
+            }
+            tbRobotConnectionInfos.Text = connectionString.ToString();
+            
             //飞行路径
+            StringBuilder flyPathString = new StringBuilder();
+            if (robotData.VoyageRoutes != null)
+            {
+                foreach (LatAndLng lal in robotData.VoyageRoutes)
+                {
+                    flyPathString.Append(lal.Lat).Append(":").Append(lal.Lng).Append("\n");
+                }
+            }
+            tbRobotFlyPaths.Text = flyPathString.ToString();
 
             //组件状态
 
             //摄像头名称及背景
+
         }
 
         private void btnRobotAdd_Click(object sender, EventArgs e)
