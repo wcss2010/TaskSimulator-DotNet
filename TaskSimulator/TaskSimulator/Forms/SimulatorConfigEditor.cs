@@ -251,7 +251,24 @@ namespace TaskSimulator.Forms
 
         private void tvRobots_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            Robot robotData = (Robot)tvRobots.SelectedNode.Tag;
+            plRobotDetail.Enabled = true;
+            ClearRobotDetail();
 
+            tbRobotId.Text = robotData.RobotId;
+            tbRobotName.Text = robotData.RobotName;
+            tbRobotRadius.Text = robotData.Radius + "";
+            tbRobotStepWithSecond.Text = robotData.StepWithSecond + "";
+            tbRobotCameraWidth.Text = robotData.CameraPictureWidth + "";
+            tbRobotCameraHeight.Text = robotData.CameraPictureHeight + "";
+
+            //连接参数
+
+            //飞行路径
+
+            //组件状态
+
+            //摄像头名称及背景
         }
 
         private void btnRobotAdd_Click(object sender, EventArgs e)
