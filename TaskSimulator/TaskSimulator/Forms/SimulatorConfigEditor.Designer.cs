@@ -88,7 +88,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.plRobotConfigList = new System.Windows.Forms.Panel();
+            this.plRobotDetail = new System.Windows.Forms.Panel();
             this.gbFlyPaths = new System.Windows.Forms.GroupBox();
             this.tbRobotFlyPaths = new System.Windows.Forms.RichTextBox();
             this.gbComponents = new System.Windows.Forms.GroupBox();
@@ -134,7 +134,7 @@
             this.panel7.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel9.SuspendLayout();
-            this.plRobotConfigList.SuspendLayout();
+            this.plRobotDetail.SuspendLayout();
             this.gbFlyPaths.SuspendLayout();
             this.gbComponents.SuspendLayout();
             this.gbCameras.SuspendLayout();
@@ -570,7 +570,7 @@
             this.flowLayoutPanel1.Controls.Add(this.panel7);
             this.flowLayoutPanel1.Controls.Add(this.panel8);
             this.flowLayoutPanel1.Controls.Add(this.panel9);
-            this.flowLayoutPanel1.Controls.Add(this.plRobotConfigList);
+            this.flowLayoutPanel1.Controls.Add(this.plRobotDetail);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 21);
@@ -752,16 +752,16 @@
             this.label15.TabIndex = 6;
             this.label15.Text = "Lng";
             // 
-            // plRobotConfigList
+            // plRobotDetail
             // 
-            this.plRobotConfigList.Controls.Add(this.gbFlyPaths);
-            this.plRobotConfigList.Controls.Add(this.gbComponents);
-            this.plRobotConfigList.Controls.Add(this.gbCameras);
-            this.plRobotConfigList.Controls.Add(this.gbConnections);
-            this.plRobotConfigList.Location = new System.Drawing.Point(3, 183);
-            this.plRobotConfigList.Name = "plRobotConfigList";
-            this.plRobotConfigList.Size = new System.Drawing.Size(642, 1080);
-            this.plRobotConfigList.TabIndex = 4;
+            this.plRobotDetail.Controls.Add(this.gbFlyPaths);
+            this.plRobotDetail.Controls.Add(this.gbComponents);
+            this.plRobotDetail.Controls.Add(this.gbCameras);
+            this.plRobotDetail.Controls.Add(this.gbConnections);
+            this.plRobotDetail.Location = new System.Drawing.Point(3, 183);
+            this.plRobotDetail.Name = "plRobotDetail";
+            this.plRobotDetail.Size = new System.Drawing.Size(642, 1080);
+            this.plRobotDetail.TabIndex = 4;
             // 
             // gbFlyPaths
             // 
@@ -1000,7 +1000,7 @@
             this.panel8.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
-            this.plRobotConfigList.ResumeLayout(false);
+            this.plRobotDetail.ResumeLayout(false);
             this.gbFlyPaths.ResumeLayout(false);
             this.gbComponents.ResumeLayout(false);
             this.gbCameras.ResumeLayout(false);
@@ -1074,7 +1074,7 @@
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Panel plRobotConfigList;
+        private System.Windows.Forms.Panel plRobotDetail;
         private System.Windows.Forms.GroupBox gbFlyPaths;
         private System.Windows.Forms.GroupBox gbComponents;
         private System.Windows.Forms.GroupBox gbCameras;

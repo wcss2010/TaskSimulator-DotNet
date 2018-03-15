@@ -130,6 +130,7 @@ namespace TaskSimulator.Forms
                 {
                     tvDynamicComponents.SelectedNode.Remove();
                     ClearComponentDetail();
+                    gbComponentDetail.Enabled = false;
                 }
             }
         }
@@ -250,13 +251,14 @@ namespace TaskSimulator.Forms
 
         private void tvRobots_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            Robot r = new Robot();
-            //r.Radius
+
         }
 
         private void btnRobotAdd_Click(object sender, EventArgs e)
         {
-
+            plRobotDetail.Enabled = true;
+            ClearRobotDetail();
+            tvRobots.SelectedNode = null;
         }
 
         private void btnRobotSave_Click(object sender, EventArgs e)
@@ -266,7 +268,15 @@ namespace TaskSimulator.Forms
 
         private void btnRobotDel_Click(object sender, EventArgs e)
         {
-
+            if (tvRobots.SelectedNode != null)
+            {
+                if (MessageBox.Show("真的要删除吗？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                {
+                    tvRobots.SelectedNode.Remove();
+                    ClearRobotDetail();
+                    plRobotDetail.Enabled = false;
+                }
+            }
         }
     }
 }
