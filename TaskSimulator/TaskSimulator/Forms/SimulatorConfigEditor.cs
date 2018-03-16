@@ -482,6 +482,8 @@ namespace TaskSimulator.Forms
             string[] flyPathTeams = tbRobotFlyPaths.Text.Split(new string[] { "\n" }, StringSplitOptions.None);
             if (flyPathTeams != null)
             {
+                List<LatAndLng> posList = new List<LatAndLng>();
+
                 foreach (string flyPos in flyPathTeams)
                 {
                     if (string.IsNullOrEmpty(flyPos) || flyPos.IndexOf(":") < 0)
@@ -493,14 +495,12 @@ namespace TaskSimulator.Forms
                         string[] kvp = flyPos.Split(new string[] { ":" }, StringSplitOptions.None);
                         if (kvp != null && kvp.Length >= 2)
                         {
-                            List<LatAndLng> posList = new List<LatAndLng>();
-                            posList.AddRange(robot.VoyageRoutes);
                             posList.Add(new LatAndLng(double.Parse(kvp[0]), double.Parse(kvp[1])));
-
-                            robot.VoyageRoutes = posList.ToArray();
                         }
                     }
                 }
+
+                robot.VoyageRoutes = posList.ToArray();
             }
 
             //组件状态

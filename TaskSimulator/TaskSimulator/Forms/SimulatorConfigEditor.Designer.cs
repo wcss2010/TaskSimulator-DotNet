@@ -966,8 +966,6 @@
             this.ClientSize = new System.Drawing.Size(1225, 630);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.panel1);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "SimulatorConfigEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "模拟器配置编辑器";
