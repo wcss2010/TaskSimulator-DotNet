@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TaskSimulator.BoatRobot;
 using TaskSimulatorLib.Entitys;
 
 namespace TaskSimulator.Forms
@@ -168,6 +169,28 @@ namespace TaskSimulator.Forms
 
             btnRobotFonts.Tag = new Font("宋体", 16);
             btnRobotFonts.Text = ((Font)btnRobotFonts.Tag).ToString();
+
+            //GPS监视器(默认)
+            DynamicComponent gpsMonitor = new DynamicComponent();
+            gpsMonitor.ComponentId = RobotManager.Monitor_GPS;
+            gpsMonitor.ComponentName = "GPS监视器";
+            gpsMonitor.ComponentType = DynamicComponentType.Monitor;
+            int rowIndexs = dgvRobotComponents.Rows.Add();
+            dgvRobotComponents.Rows[rowIndexs].Cells[0].Value = gpsMonitor.ComponentName;
+            dgvRobotComponents.Rows[rowIndexs].Cells[1].Value = gpsMonitor.ComponentType == DynamicComponentType.Monitor ? "监视器" : "任务控制器";
+            dgvRobotComponents.Rows[rowIndexs].Cells[2].Value = false;
+            dgvRobotComponents.Rows[rowIndexs].Tag = gpsMonitor;
+
+            //自主飞行控制器
+            DynamicComponent boatFly = new DynamicComponent();
+            boatFly.ComponentId = RobotManager.Task_BoatFly;
+            boatFly.ComponentName = "自主航行任务";
+            boatFly.ComponentType = DynamicComponentType.Task;
+            rowIndexs = dgvRobotComponents.Rows.Add();
+            dgvRobotComponents.Rows[rowIndexs].Cells[0].Value = boatFly.ComponentName;
+            dgvRobotComponents.Rows[rowIndexs].Cells[1].Value = boatFly.ComponentType == DynamicComponentType.Monitor ? "监视器" : "任务控制器";
+            dgvRobotComponents.Rows[rowIndexs].Cells[2].Value = false;
+            dgvRobotComponents.Rows[rowIndexs].Tag = boatFly;
 
             foreach (TreeNode componentNode in tvDynamicComponents.Nodes)
             {
