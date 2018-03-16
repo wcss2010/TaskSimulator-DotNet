@@ -342,7 +342,35 @@ namespace TaskSimulator.Forms
             }
             string[] nameTeams = tbRobotCameraNames.Text.Split(new string[] { "\n" }, StringSplitOptions.None);
             string[] imageTeams = tbRobotCameraImages.Text.Split(new string[] { "\n" }, StringSplitOptions.None);
+            if (nameTeams == null || nameTeams.Length < 1)
+            {
+                MessageBox.Show("对不起，必须设置虚拟摄像头的名称！");
+                return;
+            }
+            if (imageTeams != null && imageTeams.Length < 2)
+            {
+                MessageBox.Show("对不起，必须设置两张以上的背景图！");
+                return;
+            }
 
+            plRobotDetail.Enabled = false;
+
+            TreeNode selected = tvRobots.SelectedNode != null ? tvRobots.SelectedNode : new TreeNode();
+            Robot robot = selected.Tag != null ? (Robot)selected.Tag : new Robot();
+
+            //填充数据
+            robot.RobotId = tbRobotId.Text;
+            robot.RobotName = tbRobotName.Text;
+            robot.StepWithSecond = double.Parse(tbRobotStepWithSecond.Text);
+            robot.Radius = double.Parse(tbRobotRadius.Text);
+
+
+            selected.Tag = robot;
+            selected.Text = robot.RobotName;
+            if (tvRobots.SelectedNode == null)
+            {
+                tvRobots.Nodes.Add(selected);
+            }
         }
 
         private void btnRobotDel_Click(object sender, EventArgs e)
