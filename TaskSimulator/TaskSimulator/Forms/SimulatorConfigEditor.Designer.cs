@@ -556,6 +556,7 @@
             // 
             this.gbRobotDetail.Controls.Add(this.flpFlowPanel);
             this.gbRobotDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbRobotDetail.Enabled = false;
             this.gbRobotDetail.Location = new System.Drawing.Point(0, 0);
             this.gbRobotDetail.Name = "gbRobotDetail";
             this.gbRobotDetail.Size = new System.Drawing.Size(853, 491);
