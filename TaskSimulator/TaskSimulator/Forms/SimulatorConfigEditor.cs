@@ -287,6 +287,18 @@ namespace TaskSimulator.Forms
             tbRobotCameraWidth.Text = robotData.CameraPictureWidth + "";
             tbRobotCameraHeight.Text = robotData.CameraPictureHeight + "";
 
+            if (robotData.DefaultGpsPos != null)
+            {
+                rbRobotDefaultLat.Text = robotData.DefaultGpsPos.Lat + "";
+                rbRobotDefaultLng.Text = robotData.DefaultGpsPos.Lng + "";
+            }
+
+            if (!string.IsNullOrEmpty(robotData.CameraHintTextFontName))
+            {
+                btnRobotFonts.Tag = new Font(robotData.CameraHintTextFontName, robotData.CameraHintTextFontSize);
+                btnRobotFonts.Text = btnRobotFonts.Tag.ToString();
+            }
+
             //连接参数
             StringBuilder connectionString = new StringBuilder();
             foreach (KeyValuePair<string, string> kvp in robotData.ConnectionMap)
@@ -499,6 +511,8 @@ namespace TaskSimulator.Forms
             {
                 tvRobots.Nodes.Add(selected);
             }
+
+            ClearRobotDetail();
         }
 
         private void btnRobotDel_Click(object sender, EventArgs e)

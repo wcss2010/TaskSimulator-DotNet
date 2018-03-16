@@ -148,15 +148,15 @@
             this.panel1.Controls.Add(this.btnOK);
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 526);
+            this.panel1.Location = new System.Drawing.Point(0, 579);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1230, 51);
+            this.panel1.Size = new System.Drawing.Size(1225, 51);
             this.panel1.TabIndex = 0;
             // 
             // btnOK
             // 
             this.btnOK.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOK.Location = new System.Drawing.Point(1052, 0);
+            this.btnOK.Location = new System.Drawing.Point(1047, 0);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(89, 51);
             this.btnOK.TabIndex = 1;
@@ -167,7 +167,7 @@
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(1141, 0);
+            this.btnCancel.Location = new System.Drawing.Point(1136, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(89, 51);
             this.btnCancel.TabIndex = 0;
@@ -183,7 +183,7 @@
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(1230, 526);
+            this.tabControl.Size = new System.Drawing.Size(1225, 579);
             this.tabControl.TabIndex = 1;
             // 
             // tpBase
@@ -475,7 +475,7 @@
             this.tpRobotList.Location = new System.Drawing.Point(4, 25);
             this.tpRobotList.Name = "tpRobotList";
             this.tpRobotList.Padding = new System.Windows.Forms.Padding(3);
-            this.tpRobotList.Size = new System.Drawing.Size(1222, 497);
+            this.tpRobotList.Size = new System.Drawing.Size(1217, 550);
             this.tpRobotList.TabIndex = 1;
             this.tpRobotList.Text = "机器人列表";
             this.tpRobotList.UseVisualStyleBackColor = true;
@@ -494,8 +494,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.gbRobotDetail);
-            this.splitContainer2.Size = new System.Drawing.Size(1216, 491);
-            this.splitContainer2.SplitterDistance = 359;
+            this.splitContainer2.Size = new System.Drawing.Size(1211, 544);
+            this.splitContainer2.SplitterDistance = 357;
             this.splitContainer2.TabIndex = 0;
             // 
             // tvRobots
@@ -504,7 +504,7 @@
             this.tvRobots.HideSelection = false;
             this.tvRobots.Location = new System.Drawing.Point(0, 0);
             this.tvRobots.Name = "tvRobots";
-            this.tvRobots.Size = new System.Drawing.Size(359, 435);
+            this.tvRobots.Size = new System.Drawing.Size(357, 488);
             this.tvRobots.TabIndex = 2;
             this.tvRobots.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvRobots_AfterSelect);
             // 
@@ -514,15 +514,15 @@
             this.panel3.Controls.Add(this.btnRobotSave);
             this.panel3.Controls.Add(this.btnRobotDel);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 435);
+            this.panel3.Location = new System.Drawing.Point(0, 488);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(359, 56);
+            this.panel3.Size = new System.Drawing.Size(357, 56);
             this.panel3.TabIndex = 3;
             // 
             // btnRobotAdd
             // 
             this.btnRobotAdd.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnRobotAdd.Location = new System.Drawing.Point(134, 0);
+            this.btnRobotAdd.Location = new System.Drawing.Point(132, 0);
             this.btnRobotAdd.Name = "btnRobotAdd";
             this.btnRobotAdd.Size = new System.Drawing.Size(75, 56);
             this.btnRobotAdd.TabIndex = 2;
@@ -533,7 +533,7 @@
             // btnRobotSave
             // 
             this.btnRobotSave.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnRobotSave.Location = new System.Drawing.Point(209, 0);
+            this.btnRobotSave.Location = new System.Drawing.Point(207, 0);
             this.btnRobotSave.Name = "btnRobotSave";
             this.btnRobotSave.Size = new System.Drawing.Size(75, 56);
             this.btnRobotSave.TabIndex = 1;
@@ -544,7 +544,7 @@
             // btnRobotDel
             // 
             this.btnRobotDel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnRobotDel.Location = new System.Drawing.Point(284, 0);
+            this.btnRobotDel.Location = new System.Drawing.Point(282, 0);
             this.btnRobotDel.Name = "btnRobotDel";
             this.btnRobotDel.Size = new System.Drawing.Size(75, 56);
             this.btnRobotDel.TabIndex = 0;
@@ -559,7 +559,7 @@
             this.gbRobotDetail.Enabled = false;
             this.gbRobotDetail.Location = new System.Drawing.Point(0, 0);
             this.gbRobotDetail.Name = "gbRobotDetail";
-            this.gbRobotDetail.Size = new System.Drawing.Size(853, 491);
+            this.gbRobotDetail.Size = new System.Drawing.Size(850, 544);
             this.gbRobotDetail.TabIndex = 0;
             this.gbRobotDetail.TabStop = false;
             this.gbRobotDetail.Text = "机器人详细";
@@ -577,7 +577,7 @@
             this.flpFlowPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpFlowPanel.Location = new System.Drawing.Point(3, 21);
             this.flpFlowPanel.Name = "flpFlowPanel";
-            this.flpFlowPanel.Size = new System.Drawing.Size(847, 467);
+            this.flpFlowPanel.Size = new System.Drawing.Size(844, 520);
             this.flpFlowPanel.TabIndex = 8;
             this.flpFlowPanel.WrapContents = false;
             // 
@@ -963,7 +963,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1230, 577);
+            this.ClientSize = new System.Drawing.Size(1225, 630);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.panel1);
             this.MaximizeBox = false;
