@@ -65,6 +65,22 @@ namespace TaskSimulator.Forms
                 tvDynamicComponents.Nodes.Add(tnComponent);
             }
             #endregion
+
+            #region 显示机器人列表
+            if (TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.Robots != null)
+            {
+                tvRobots.Nodes.Clear();
+
+                foreach (Robot robot in TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.Robots)
+                {
+                    TreeNode item = new TreeNode();
+                    item.Text = robot.RobotName;
+                    item.Tag = robot;
+
+                    tvRobots.Nodes.Add(item);
+                }
+            }
+            #endregion
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -74,6 +90,38 @@ namespace TaskSimulator.Forms
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            RobotSimulatorConfig rsc = new RobotSimulatorConfig();
+            
+            //Socket控制器
+            rsc.SocketController.ComponentClassFile = tbSocketControllerFile.Text;
+            rsc.SocketController.ComponentClassFullName = tbSocketControllerClassFullName.Text;
+
+            //监视器
+            foreach (TreeNode tn in tvDynamicComponents.Nodes)
+            {
+                DynamicComponent dc = (DynamicComponent)tn.Tag;
+                if (dc.ComponentType == DynamicComponentType.Monitor)
+                {
+                    rsc.MonitorComponentMap.Add(dc.ComponentId, dc);
+                }
+                else
+                {
+                    rsc.TaskComponentMap.Add(dc.ComponentId, dc);
+                }
+            }
+
+            //机器人
+            List<Robot> robotList = new List<Robot>();
+            foreach (TreeNode tn in tvRobots.Nodes)
+            {
+                Robot robot = (Robot)tn.Tag;
+                robotList.Add(robot);
+            }
+            rsc.Robots = robotList.ToArray();
+
+            TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig = rsc;
+            TaskSimulatorLib.SimulatorObject.Simulator.SaveConfig();
+
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
         }
 
