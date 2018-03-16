@@ -158,8 +158,8 @@ namespace TaskSimulator.Forms
             tbRobotName.Text = "";
             tbRobotRadius.Text = "" + (0.15 * 15);
             tbRobotStepWithSecond.Text = "0.15";
-            tbRobotFlyPaths.Text = "IP=127.0.0.1\nPort=8788\nUserName=admin\nPassword=123123";
-            tbRobotConnectionInfos.Text = "";
+            tbRobotFlyPaths.Text = "";
+            tbRobotConnectionInfos.Text = "IP=127.0.0.1\nPort=8788\nUserName=admin\nPassword=123123"; 
             tbRobotCameraNames.Text = "一号前视摄像头\n二号后视摄像头\n三号左侧摄像头\n四号右侧摄像头";
             tbRobotCameraImages.Text = "";
             tbRobotCameraWidth.Text = "200";

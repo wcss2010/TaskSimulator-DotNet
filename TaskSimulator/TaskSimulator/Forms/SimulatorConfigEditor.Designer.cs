@@ -31,7 +31,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControl = new System.Windows.Forms.TabControl();
             this.tpBase = new System.Windows.Forms.TabPage();
             this.tbSocketControllerClassFullName = new System.Windows.Forms.TextBox();
             this.tbSocketControllerFile = new System.Windows.Forms.TextBox();
@@ -67,7 +67,7 @@
             this.btnRobotSave = new System.Windows.Forms.Button();
             this.btnRobotDel = new System.Windows.Forms.Button();
             this.gbRobotDetail = new System.Windows.Forms.GroupBox();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.plRobotDetail = new System.Windows.Forms.FlowLayoutPanel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.tbRobotId = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -88,10 +88,14 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.plRobotDetail = new System.Windows.Forms.Panel();
+            this.plRobotDetailMap = new System.Windows.Forms.Panel();
             this.gbFlyPaths = new System.Windows.Forms.GroupBox();
             this.tbRobotFlyPaths = new System.Windows.Forms.RichTextBox();
             this.gbComponents = new System.Windows.Forms.GroupBox();
+            this.dgvRobotComponents = new System.Windows.Forms.DataGridView();
+            this.compName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.compType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.compEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.gbCameras = new System.Windows.Forms.GroupBox();
             this.tbRobotCameraImages = new System.Windows.Forms.RichTextBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -106,12 +110,8 @@
             this.gbConnections = new System.Windows.Forms.GroupBox();
             this.tbRobotConnectionInfos = new System.Windows.Forms.RichTextBox();
             this.ofdCSFile = new System.Windows.Forms.OpenFileDialog();
-            this.dgvRobotComponents = new System.Windows.Forms.DataGridView();
-            this.compName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.compType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.compEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.tabControl.SuspendLayout();
             this.tpBase.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -128,18 +128,18 @@
             this.splitContainer2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.gbRobotDetail.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
+            this.plRobotDetail.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel9.SuspendLayout();
-            this.plRobotDetail.SuspendLayout();
+            this.plRobotDetailMap.SuspendLayout();
             this.gbFlyPaths.SuspendLayout();
             this.gbComponents.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRobotComponents)).BeginInit();
             this.gbCameras.SuspendLayout();
             this.gbConnections.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvRobotComponents)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -174,16 +174,16 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // tabControl1
+            // tabControl
             // 
-            this.tabControl1.Controls.Add(this.tpBase);
-            this.tabControl1.Controls.Add(this.tpRobotList);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1230, 526);
-            this.tabControl1.TabIndex = 1;
+            this.tabControl.Controls.Add(this.tpBase);
+            this.tabControl.Controls.Add(this.tpRobotList);
+            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl.Location = new System.Drawing.Point(0, 0);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(1230, 526);
+            this.tabControl.TabIndex = 1;
             // 
             // tpBase
             // 
@@ -553,7 +553,7 @@
             // 
             // gbRobotDetail
             // 
-            this.gbRobotDetail.Controls.Add(this.flowLayoutPanel1);
+            this.gbRobotDetail.Controls.Add(this.plRobotDetail);
             this.gbRobotDetail.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbRobotDetail.Location = new System.Drawing.Point(0, 0);
             this.gbRobotDetail.Name = "gbRobotDetail";
@@ -562,22 +562,22 @@
             this.gbRobotDetail.TabStop = false;
             this.gbRobotDetail.Text = "机器人详细";
             // 
-            // flowLayoutPanel1
+            // plRobotDetail
             // 
-            this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.Controls.Add(this.panel5);
-            this.flowLayoutPanel1.Controls.Add(this.panel6);
-            this.flowLayoutPanel1.Controls.Add(this.panel7);
-            this.flowLayoutPanel1.Controls.Add(this.panel8);
-            this.flowLayoutPanel1.Controls.Add(this.panel9);
-            this.flowLayoutPanel1.Controls.Add(this.plRobotDetail);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 21);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(847, 467);
-            this.flowLayoutPanel1.TabIndex = 8;
-            this.flowLayoutPanel1.WrapContents = false;
+            this.plRobotDetail.AutoScroll = true;
+            this.plRobotDetail.Controls.Add(this.panel5);
+            this.plRobotDetail.Controls.Add(this.panel6);
+            this.plRobotDetail.Controls.Add(this.panel7);
+            this.plRobotDetail.Controls.Add(this.panel8);
+            this.plRobotDetail.Controls.Add(this.panel9);
+            this.plRobotDetail.Controls.Add(this.plRobotDetailMap);
+            this.plRobotDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.plRobotDetail.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.plRobotDetail.Location = new System.Drawing.Point(3, 21);
+            this.plRobotDetail.Name = "plRobotDetail";
+            this.plRobotDetail.Size = new System.Drawing.Size(847, 467);
+            this.plRobotDetail.TabIndex = 8;
+            this.plRobotDetail.WrapContents = false;
             // 
             // panel5
             // 
@@ -752,16 +752,16 @@
             this.label15.TabIndex = 6;
             this.label15.Text = "Lng";
             // 
-            // plRobotDetail
+            // plRobotDetailMap
             // 
-            this.plRobotDetail.Controls.Add(this.gbFlyPaths);
-            this.plRobotDetail.Controls.Add(this.gbComponents);
-            this.plRobotDetail.Controls.Add(this.gbCameras);
-            this.plRobotDetail.Controls.Add(this.gbConnections);
-            this.plRobotDetail.Location = new System.Drawing.Point(3, 183);
-            this.plRobotDetail.Name = "plRobotDetail";
-            this.plRobotDetail.Size = new System.Drawing.Size(642, 1080);
-            this.plRobotDetail.TabIndex = 4;
+            this.plRobotDetailMap.Controls.Add(this.gbFlyPaths);
+            this.plRobotDetailMap.Controls.Add(this.gbComponents);
+            this.plRobotDetailMap.Controls.Add(this.gbCameras);
+            this.plRobotDetailMap.Controls.Add(this.gbConnections);
+            this.plRobotDetailMap.Location = new System.Drawing.Point(3, 183);
+            this.plRobotDetailMap.Name = "plRobotDetailMap";
+            this.plRobotDetailMap.Size = new System.Drawing.Size(642, 1080);
+            this.plRobotDetailMap.TabIndex = 4;
             // 
             // gbFlyPaths
             // 
@@ -793,6 +793,42 @@
             this.gbComponents.TabIndex = 2;
             this.gbComponents.TabStop = false;
             this.gbComponents.Text = "监视器与任务控制器配置:";
+            // 
+            // dgvRobotComponents
+            // 
+            this.dgvRobotComponents.AllowUserToAddRows = false;
+            this.dgvRobotComponents.AllowUserToDeleteRows = false;
+            this.dgvRobotComponents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRobotComponents.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.compName,
+            this.compType,
+            this.compEnabled});
+            this.dgvRobotComponents.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvRobotComponents.Location = new System.Drawing.Point(3, 21);
+            this.dgvRobotComponents.Name = "dgvRobotComponents";
+            this.dgvRobotComponents.RowTemplate.Height = 27;
+            this.dgvRobotComponents.Size = new System.Drawing.Size(636, 296);
+            this.dgvRobotComponents.TabIndex = 0;
+            // 
+            // compName
+            // 
+            this.compName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.compName.HeaderText = "组件名称";
+            this.compName.Name = "compName";
+            // 
+            // compType
+            // 
+            this.compType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.compType.HeaderText = "组件类型";
+            this.compType.Name = "compType";
+            // 
+            // compEnabled
+            // 
+            this.compEnabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.compEnabled.HeaderText = "是否自动启用";
+            this.compEnabled.Name = "compEnabled";
+            this.compEnabled.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.compEnabled.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // gbCameras
             // 
@@ -920,48 +956,12 @@
             // 
             this.ofdCSFile.Filter = "C#动态脚本|*.cs";
             // 
-            // dgvRobotComponents
-            // 
-            this.dgvRobotComponents.AllowUserToAddRows = false;
-            this.dgvRobotComponents.AllowUserToDeleteRows = false;
-            this.dgvRobotComponents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRobotComponents.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.compName,
-            this.compType,
-            this.compEnabled});
-            this.dgvRobotComponents.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvRobotComponents.Location = new System.Drawing.Point(3, 21);
-            this.dgvRobotComponents.Name = "dgvRobotComponents";
-            this.dgvRobotComponents.RowTemplate.Height = 27;
-            this.dgvRobotComponents.Size = new System.Drawing.Size(636, 296);
-            this.dgvRobotComponents.TabIndex = 0;
-            // 
-            // compName
-            // 
-            this.compName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.compName.HeaderText = "组件名称";
-            this.compName.Name = "compName";
-            // 
-            // compType
-            // 
-            this.compType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.compType.HeaderText = "组件类型";
-            this.compType.Name = "compType";
-            // 
-            // compEnabled
-            // 
-            this.compEnabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.compEnabled.HeaderText = "是否自动启用";
-            this.compEnabled.Name = "compEnabled";
-            this.compEnabled.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.compEnabled.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
             // SimulatorConfigEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1230, 577);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControl);
             this.Controls.Add(this.panel1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -969,7 +969,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "模拟器配置编辑器";
             this.panel1.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
             this.tpBase.ResumeLayout(false);
             this.tpBase.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -989,7 +989,7 @@
             this.splitContainer2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.gbRobotDetail.ResumeLayout(false);
-            this.flowLayoutPanel1.ResumeLayout(false);
+            this.plRobotDetail.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             this.panel6.ResumeLayout(false);
@@ -1000,13 +1000,13 @@
             this.panel8.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
-            this.plRobotDetail.ResumeLayout(false);
+            this.plRobotDetailMap.ResumeLayout(false);
             this.gbFlyPaths.ResumeLayout(false);
             this.gbComponents.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRobotComponents)).EndInit();
             this.gbCameras.ResumeLayout(false);
             this.gbCameras.PerformLayout();
             this.gbConnections.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvRobotComponents)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1016,7 +1016,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tpBase;
         private System.Windows.Forms.TabPage tpRobotList;
         private System.Windows.Forms.TextBox tbSocketControllerFile;
@@ -1053,7 +1053,7 @@
         private System.Windows.Forms.GroupBox gbRobotDetail;
         private System.Windows.Forms.TextBox tbSocketControllerClassFullName;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.FlowLayoutPanel plRobotDetail;
         private System.Windows.Forms.TextBox tbRobotRadius;
         private System.Windows.Forms.TextBox tbRobotStepWithSecond;
         private System.Windows.Forms.TextBox tbRobotId;
@@ -1074,7 +1074,7 @@
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Panel plRobotDetail;
+        private System.Windows.Forms.Panel plRobotDetailMap;
         private System.Windows.Forms.GroupBox gbFlyPaths;
         private System.Windows.Forms.GroupBox gbComponents;
         private System.Windows.Forms.GroupBox gbCameras;
