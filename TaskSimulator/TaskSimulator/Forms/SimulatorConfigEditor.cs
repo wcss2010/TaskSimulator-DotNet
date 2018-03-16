@@ -277,7 +277,7 @@ namespace TaskSimulator.Forms
         private void tvRobots_AfterSelect(object sender, TreeViewEventArgs e)
         {
             Robot robotData = (Robot)tvRobots.SelectedNode.Tag;
-            plRobotDetail.Enabled = true;
+            gbRobotDetail.Enabled = true;
             ClearRobotDetail();
 
             tbRobotId.Text = robotData.RobotId;
@@ -347,7 +347,7 @@ namespace TaskSimulator.Forms
 
         private void btnRobotAdd_Click(object sender, EventArgs e)
         {
-            plRobotDetail.Enabled = true;
+            gbRobotDetail.Enabled = true;
             ClearRobotDetail();
             tvRobots.SelectedNode = null;
         }
@@ -382,7 +382,7 @@ namespace TaskSimulator.Forms
                 MessageBox.Show("对不起，必须设置字体！");
                 return;
             }
-            plRobotDetail.Enabled = false;
+            gbRobotDetail.Enabled = false;
 
             TreeNode selected = tvRobots.SelectedNode != null ? tvRobots.SelectedNode : new TreeNode();
             Robot robot = selected.Tag != null ? (Robot)selected.Tag : new Robot();
@@ -509,7 +509,7 @@ namespace TaskSimulator.Forms
                 {
                     tvRobots.SelectedNode.Remove();
                     ClearRobotDetail();
-                    plRobotDetail.Enabled = false;
+                    gbRobotDetail.Enabled = false;
                 }
             }
         }

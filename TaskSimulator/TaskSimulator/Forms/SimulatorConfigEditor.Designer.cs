@@ -67,7 +67,7 @@
             this.btnRobotSave = new System.Windows.Forms.Button();
             this.btnRobotDel = new System.Windows.Forms.Button();
             this.gbRobotDetail = new System.Windows.Forms.GroupBox();
-            this.plRobotDetail = new System.Windows.Forms.FlowLayoutPanel();
+            this.flpFlowPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.tbRobotId = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -129,7 +129,7 @@
             this.splitContainer2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.gbRobotDetail.SuspendLayout();
-            this.plRobotDetail.SuspendLayout();
+            this.flpFlowPanel.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -554,7 +554,7 @@
             // 
             // gbRobotDetail
             // 
-            this.gbRobotDetail.Controls.Add(this.plRobotDetail);
+            this.gbRobotDetail.Controls.Add(this.flpFlowPanel);
             this.gbRobotDetail.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbRobotDetail.Location = new System.Drawing.Point(0, 0);
             this.gbRobotDetail.Name = "gbRobotDetail";
@@ -563,23 +563,22 @@
             this.gbRobotDetail.TabStop = false;
             this.gbRobotDetail.Text = "机器人详细";
             // 
-            // plRobotDetail
+            // flpFlowPanel
             // 
-            this.plRobotDetail.AutoScroll = true;
-            this.plRobotDetail.Controls.Add(this.panel5);
-            this.plRobotDetail.Controls.Add(this.panel6);
-            this.plRobotDetail.Controls.Add(this.panel7);
-            this.plRobotDetail.Controls.Add(this.panel8);
-            this.plRobotDetail.Controls.Add(this.panel9);
-            this.plRobotDetail.Controls.Add(this.plRobotDetailMap);
-            this.plRobotDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.plRobotDetail.Enabled = false;
-            this.plRobotDetail.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.plRobotDetail.Location = new System.Drawing.Point(3, 21);
-            this.plRobotDetail.Name = "plRobotDetail";
-            this.plRobotDetail.Size = new System.Drawing.Size(847, 467);
-            this.plRobotDetail.TabIndex = 8;
-            this.plRobotDetail.WrapContents = false;
+            this.flpFlowPanel.AutoScroll = true;
+            this.flpFlowPanel.Controls.Add(this.panel5);
+            this.flpFlowPanel.Controls.Add(this.panel6);
+            this.flpFlowPanel.Controls.Add(this.panel7);
+            this.flpFlowPanel.Controls.Add(this.panel8);
+            this.flpFlowPanel.Controls.Add(this.panel9);
+            this.flpFlowPanel.Controls.Add(this.plRobotDetailMap);
+            this.flpFlowPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpFlowPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpFlowPanel.Location = new System.Drawing.Point(3, 21);
+            this.flpFlowPanel.Name = "flpFlowPanel";
+            this.flpFlowPanel.Size = new System.Drawing.Size(847, 467);
+            this.flpFlowPanel.TabIndex = 8;
+            this.flpFlowPanel.WrapContents = false;
             // 
             // panel5
             // 
@@ -992,7 +991,7 @@
             this.splitContainer2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.gbRobotDetail.ResumeLayout(false);
-            this.plRobotDetail.ResumeLayout(false);
+            this.flpFlowPanel.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             this.panel6.ResumeLayout(false);
@@ -1056,7 +1055,7 @@
         private System.Windows.Forms.GroupBox gbRobotDetail;
         private System.Windows.Forms.TextBox tbSocketControllerClassFullName;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.FlowLayoutPanel plRobotDetail;
+        private System.Windows.Forms.FlowLayoutPanel flpFlowPanel;
         private System.Windows.Forms.TextBox tbRobotRadius;
         private System.Windows.Forms.TextBox tbRobotStepWithSecond;
         private System.Windows.Forms.TextBox tbRobotId;
