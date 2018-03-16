@@ -352,7 +352,11 @@ namespace TaskSimulator.Forms
                 MessageBox.Show("对不起，必须设置两张以上的背景图！");
                 return;
             }
-
+            if (btnRobotFonts.Tag == null)
+            {
+                MessageBox.Show("对不起，必须设置字体！");
+                return;
+            }
             plRobotDetail.Enabled = false;
 
             TreeNode selected = tvRobots.SelectedNode != null ? tvRobots.SelectedNode : new TreeNode();
@@ -363,7 +367,106 @@ namespace TaskSimulator.Forms
             robot.RobotName = tbRobotName.Text;
             robot.StepWithSecond = double.Parse(tbRobotStepWithSecond.Text);
             robot.Radius = double.Parse(tbRobotRadius.Text);
+            robot.DefaultGpsPos = new LatAndLng(double.Parse(rbRobotDefaultLat.Text), double.Parse(rbRobotDefaultLng.Text));
+            robot.CameraPictureWidth = int.Parse(tbRobotCameraWidth.Text);
+            robot.CameraPictureHeight = int.Parse(tbRobotCameraHeight.Text);
+            robot.CameraHintTextFontName = ((Font)btnRobotFonts.Tag).Name;
+            robot.CameraHintTextFontSize = ((Font)btnRobotFonts.Tag).Size;
+            
+            //连接配置
+            string[] connectionTeams = tbRobotConnectionInfos.Text.Split(new string[] { "\n" }, StringSplitOptions.None);
+            if (connectionTeams != null)
+            {
+                foreach (string conn in connectionTeams)
+                {
+                    if (string.IsNullOrEmpty(conn) || conn.IndexOf("=") < 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        string[] kvp = conn.Split(new string[] { "=" }, StringSplitOptions.None);
+                        if (kvp != null && kvp.Length >= 2)
+                        {
+                            robot.ConnectionMap[kvp[0].Trim()] = kvp[1].Trim();
+                        }
+                    }
+                }
+            }
+            //行动路径
+            string[] flyPathTeams = tbRobotFlyPaths.Text.Split(new string[] { "\n" }, StringSplitOptions.None);
+            if (flyPathTeams != null)
+            {
+                foreach (string flyPos in flyPathTeams)
+                {
+                    if (string.IsNullOrEmpty(flyPos) || flyPos.IndexOf(":") < 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        string[] kvp = flyPos.Split(new string[] { ":" }, StringSplitOptions.None);
+                        if (kvp != null && kvp.Length >= 2)
+                        {
+                            List<LatAndLng> posList = new List<LatAndLng>();
+                            posList.AddRange(robot.VoyageRoutes);
+                            posList.Add(new LatAndLng(double.Parse(kvp[0]), double.Parse(kvp[1])));
 
+                            robot.VoyageRoutes = posList.ToArray();
+                        }
+                    }
+                }
+            }
+
+            //组件状态
+            foreach (DataGridViewRow dRow in dgvRobotComponents.Rows)
+            {
+                if (dRow.Tag != null && dRow.Tag is DynamicComponent)
+                {
+                    DynamicComponent dc = (DynamicComponent)dRow.Tag;
+                    bool checkResult = (bool)dRow.Cells[2].Value;
+
+                    if (dc.ComponentType == DynamicComponentType.Monitor)
+                    {
+                        robot.MonitorStateMap[dc.ComponentId] = checkResult;
+                    }
+                    else
+                    {
+                        robot.TaskStateMap[dc.ComponentId] = checkResult;
+                    }
+                }
+            }
+
+            //摄像头名称及背景图
+            List<string> nameResults = new List<string>();
+            List<string> imageResults = new List<string>();
+            foreach (string s in nameTeams)
+            {
+                if (string.IsNullOrEmpty(s))
+                {
+                    continue;
+                }
+                else
+                {
+                    nameResults.Add(s);
+                }
+            }
+            if (imageTeams != null)
+            {
+                foreach (string s in imageTeams)
+                {
+                    if (string.IsNullOrEmpty(s))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        imageResults.Add(s);
+                    }
+                }
+            }
+            robot.CameraNames = nameResults.ToArray();
+            robot.CameraBackgrounds = imageResults.ToArray();
 
             selected.Tag = robot;
             selected.Text = robot.RobotName;
