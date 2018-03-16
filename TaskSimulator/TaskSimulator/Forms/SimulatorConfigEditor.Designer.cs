@@ -110,6 +110,7 @@
             this.gbConnections = new System.Windows.Forms.GroupBox();
             this.tbRobotConnectionInfos = new System.Windows.Forms.RichTextBox();
             this.ofdCSFile = new System.Windows.Forms.OpenFileDialog();
+            this.fdImageFont = new System.Windows.Forms.FontDialog();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tpBase.SuspendLayout();
@@ -572,6 +573,7 @@
             this.plRobotDetail.Controls.Add(this.panel9);
             this.plRobotDetail.Controls.Add(this.plRobotDetailMap);
             this.plRobotDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.plRobotDetail.Enabled = false;
             this.plRobotDetail.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.plRobotDetail.Location = new System.Drawing.Point(3, 21);
             this.plRobotDetail.Name = "plRobotDetail";
@@ -890,6 +892,7 @@
             this.btnRobotFonts.TabIndex = 2;
             this.btnRobotFonts.Text = "选择字体及字号";
             this.btnRobotFonts.UseVisualStyleBackColor = true;
+            this.btnRobotFonts.Click += new System.EventHandler(this.btnRobotFonts_Click);
             // 
             // tbRobotCameraHeight
             // 
@@ -1095,5 +1098,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn compName;
         private System.Windows.Forms.DataGridViewTextBoxColumn compType;
         private System.Windows.Forms.DataGridViewCheckBoxColumn compEnabled;
+        private System.Windows.Forms.FontDialog fdImageFont;
     }
 }

@@ -165,6 +165,8 @@ namespace TaskSimulator.Forms
             tbRobotCameraWidth.Text = "200";
             tbRobotCameraHeight.Text = "180";
             btnRobotFonts.Text = "选择字体及字号";
+            rbRobotDefaultLat.Text = "0.0";
+            rbRobotDefaultLng.Text = "0.0";
             dgvRobotComponents.Rows.Clear();
 
             btnRobotFonts.Tag = new Font("宋体", 16);
@@ -509,6 +511,16 @@ namespace TaskSimulator.Forms
                     ClearRobotDetail();
                     plRobotDetail.Enabled = false;
                 }
+            }
+        }
+
+        private void btnRobotFonts_Click(object sender, EventArgs e)
+        {
+            fdImageFont.Font = (Font)btnRobotFonts.Tag;
+            if (fdImageFont.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                btnRobotFonts.Tag = fdImageFont.Font;
+                btnRobotFonts.Text = btnRobotFonts.Tag.ToString();
             }
         }
     }
