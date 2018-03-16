@@ -169,6 +169,7 @@ namespace TaskSimulator.Forms
             }
 
             ClearComponentDetail();
+            tvDynamicComponents.SelectedNode = null;
         }
 
         private void btnCodeDel_Click(object sender, EventArgs e)
