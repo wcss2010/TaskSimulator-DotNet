@@ -183,7 +183,20 @@ namespace TaskSimulator
 
         private void lbxSocketCommands_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            if (tvRobotList.SelectedNode != null && lbxSocketCommands.SelectedItem != null)
+            {
+                TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
+                TaskSimulatorLib.Sockets.RobotCommand robotCommand = (TaskSimulatorLib.Sockets.RobotCommand)lbxSocketCommands.SelectedItem;
 
+                if (ru.RobotSocket != null)
+                {
+                    //运行相关指令
+                    ru.RobotSocket.ProcessRobotCommand(robotCommand.Code, new object[] { });
+
+                    TaskSimulatorLib.SimulatorObject.logger.Debug("无人船" + ru.UserName + "执行了" + robotCommand + "指令！");
+                    ShowLogTextWithThread("无人船" + ru.UserName + "执行了" + robotCommand + "指令！");
+                }
+            }
         }
 
         private void rbRoatWorkModeAlways_CheckedChanged(object sender, EventArgs e)
