@@ -87,7 +87,7 @@
             this.tbtnStart.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbtnStart.Name = "tbtnStart";
             this.tbtnStart.Size = new System.Drawing.Size(43, 40);
-            this.tbtnStart.Text = "启动";
+            this.tbtnStart.Text = "重启";
             this.tbtnStart.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tbtnStart.Click += new System.EventHandler(this.tbtnStart_Click);
             // 

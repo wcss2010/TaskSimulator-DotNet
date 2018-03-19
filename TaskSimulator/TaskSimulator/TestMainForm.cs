@@ -73,9 +73,6 @@ namespace TaskSimulator
                 MessageBox.Show("对不起，配置文件加载失败！Ex:" + ex.ToString());
             }
 
-            //初始化对象
-            TaskSimulator.BoatRobot.RobotManager.Init();
-
             //开启模拟器
             TaskSimulatorLib.SimulatorObject.Simulator.Start();
 
@@ -85,7 +82,7 @@ namespace TaskSimulator
 
         private void InitSimulator()
         {
-            
+
         }
 
         private void TestMainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -96,25 +93,34 @@ namespace TaskSimulator
         private void tbtnConfig_Click(object sender, EventArgs e)
         {
             SimulatorConfigEditor editor = new SimulatorConfigEditor();
-            editor.ShowDialog();
+            if (editor.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbtnStart.PerformClick();
+            }
         }
 
         private void tbtnStart_Click(object sender, EventArgs e)
         {
-            //检查当前是不是已经一份配置的运行了
-            if (TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Count > 0)
+            if (MessageBox.Show("真的要重启吗？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
             {
+                //检查当前是不是已经一份配置的运行了
                 TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Clear();
+                TaskSimulatorLib.SimulatorObject.Simulator.TaskProcessor.Queues = new System.Collections.Concurrent.ConcurrentQueue<TaskSimulatorLib.Processors.ProcessorQueueObject>();
 
-                foreach (TaskSimulatorLib.Processors.ProcessorQueueObject pqo in TaskSimulatorLib.SimulatorObject.Simulator.TaskProcessor.Queues)
+
+                //准备初始化无人船对象
+                TaskSimulator.BoatRobot.RobotManager.Init();
+                TaskSimulatorLib.SimulatorObject.Simulator.TaskProcessor.Queues = new System.Collections.Concurrent.ConcurrentQueue<TaskSimulatorLib.Processors.ProcessorQueueObject>();
+
+                //无人船启动
+                foreach (TaskSimulatorLib.Entitys.RobotUser ru in TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Values)
                 {
-                    pqo.Task.TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ended;
+                    if (ru.RobotSocket != null)
+                    {
+                        ru.RobotSocket.RobotStart(null);
+                    }
                 }
             }
-
-            //准备初始化无人船对象
-            TaskSimulator.BoatRobot.RobotManager.Init();
-
         }
     }
 }
