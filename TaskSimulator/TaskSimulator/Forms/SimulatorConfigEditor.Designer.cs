@@ -1062,7 +1062,8 @@
             this.tbCompileRefDLLPaths.Name = "tbCompileRefDLLPaths";
             this.tbCompileRefDLLPaths.Size = new System.Drawing.Size(1069, 86);
             this.tbCompileRefDLLPaths.TabIndex = 1;
-            this.tbCompileRefDLLPaths.Text = "";
+            this.tbCompileRefDLLPaths.Text = "system.data.dll\nsystem.xml.dll\nsystem.windows.forms.dll\nsystem.net.dll \nsystem.we" +
+    "b.dll";
             // 
             // SimulatorConfigEditor
             // 

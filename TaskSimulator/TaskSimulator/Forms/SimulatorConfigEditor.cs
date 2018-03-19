@@ -228,8 +228,6 @@ namespace TaskSimulator.Forms
             tbComponentClassFullName.Text = "";
             tbClassCode.Text = "";
             rbIsMonitor.Checked = true;
-
-            tbCompileRefDLLPaths.Text = "system.data.dll \n system.xml.dll \n system.windows.forms.dll \n system.net.dll \n system.web.dll";
         }
 
         /// <summary>
