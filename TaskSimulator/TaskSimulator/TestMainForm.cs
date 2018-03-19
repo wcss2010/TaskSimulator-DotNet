@@ -35,6 +35,16 @@ namespace TaskSimulator
             TaskSimulatorLib.SimulatorObject.logger.Debug("无人船" + args.User.UserName + "的任务" + args.Task.TaskName + "完成！");
             ShowLogTextWithThread("无人船" + args.User.UserName + "的任务" + args.Task.TaskName + "完成！");
 
+            //继续出自主航行任务
+            if (args.User != null && (string.IsNullOrEmpty(args.User.WorkMode) || args.User.WorkMode == "always"))
+            {
+                if (args.User.RobotSocket.IsConnected())
+                {
+                    args.User.RobotSocket.RobotStart(null);
+
+                    ShowLogTextWithThread("无人船" + args.User.UserName + "的自主航行任务，正在执行中...");
+                }
+            }
         }
 
         /// <summary>
