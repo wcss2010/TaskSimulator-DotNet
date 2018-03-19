@@ -133,34 +133,41 @@ namespace TaskSimulatorLib.Processors.Task
                             {
                                 if (queueObject.Task.TaskWorkerThread != null)
                                 {
-                                    CommandResult cr = queueObject.Task.TaskWorkerThread.Process(queueObject.Command);
-                                    if (cr != null)
+                                    if (queueObject.Task.Enabled)
                                     {
-                                        //打印处理结果
-                                        if (cr.IsOK)
+                                        CommandResult cr = queueObject.Task.TaskWorkerThread.Process(queueObject.Command);
+                                        if (cr != null)
                                         {
-                                            //SimulatorObject.logger.Debug("设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理成功！");
+                                            //打印处理结果
+                                            if (cr.IsOK)
+                                            {
+                                                //SimulatorObject.logger.Debug("设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理成功！");
+                                            }
+                                            else
+                                            {
+                                                SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理失败！原因：" + cr.ErrorReason);
+                                            }
                                         }
                                         else
                                         {
-                                            SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理失败！原因：" + cr.ErrorReason);
+                                            SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")没有返回处理结果!");
+                                        }
+
+                                        //检查这个任务是不是没有完成
+                                        if (queueObject.Task.TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Ended)
+                                        {
+                                            //投递任务完成事件
+                                            OnTaskComplete(queueObject.User, queueObject.Task);
+                                        }
+                                        else
+                                        {
+                                            //还在运行的任务需要再入队列
+                                            Queues.Enqueue(queueObject);
                                         }
                                     }
                                     else
                                     {
-                                        SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")没有返回处理结果!");
-                                    }
-
-                                    //检查这个任务是不是没有完成
-                                    if (queueObject.Task.TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Ended)
-                                    {
-                                        //投递任务完成事件
-                                        OnTaskComplete(queueObject.User, queueObject.Task);
-                                    }
-                                    else
-                                    {
-                                        //还在运行的任务需要再入队列
-                                        Queues.Enqueue(queueObject);
+                                        SimulatorObject.logger.Error("对不起，设备(" + queueObject.User.UserCode + ")不支持任务(" + queueObject.Task.TaskCode + ")");
                                     }
                                 }
                                 else
