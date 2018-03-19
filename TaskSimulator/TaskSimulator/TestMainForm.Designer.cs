@@ -309,7 +309,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(97, 136);
             this.label3.TabIndex = 0;
-            this.label3.Text = "当前";
+            this.label3.Text = "所支持的控制台指令（双击即可运行）：";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lbxSocketCommands

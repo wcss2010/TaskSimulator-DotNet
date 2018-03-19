@@ -251,7 +251,40 @@ namespace TaskSimulator
 
         private void trBoatStateUpdater_Tick(object sender, EventArgs e)
         {
+            try
+            {
+                if (tvRobotList.SelectedNode != null)
+                {
+                    TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
 
+                    dgvTaskStateList.Rows.Clear();
+                    foreach (TaskSimulatorLib.Entitys.RobotTask rt in ru.SupportedTask.Values)
+                    {
+                        List<object> cells = new List<object>();
+                        cells.Add(rt.TaskName + "(" + rt.TaskCode + ")");
+                        switch (rt.TaskWorkerThread.WorkerThreadState)
+                        {
+                            case TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready:
+                                cells.Add("准备");
+                                break;
+                            case TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Started:
+                                cells.Add("已开始");
+                                break;
+                            case TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Running:
+                                cells.Add("运行中");
+                                break;
+                            case TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ended:
+                                cells.Add("已结束");
+                                break;
+                        }
+                        int rowIndex = dgvTaskStateList.Rows.Add(cells.ToArray());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TaskSimulatorLib.SimulatorObject.logger.Error(ex.ToString());
+            }
         }
     }
 }
