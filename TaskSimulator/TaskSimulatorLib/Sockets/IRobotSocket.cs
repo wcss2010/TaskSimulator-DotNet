@@ -59,27 +59,27 @@ namespace TaskSimulatorLib.Sockets
         void RobotStop();
 
         /// <summary>
-        /// 获得所支持的指令列表
+        /// 获得所支持的控制台指令列表
         /// </summary>
         /// <returns></returns>
-        RobotCommand[] GetSupportedRobotCommands();
+        ConsoleCommand[] GetSupportedConsoleCommands();
 
         /// <summary>
         /// 执行相关指令
         /// </summary>
         /// <param name="code"></param>
         /// <param name="args"></param>
-        object ProcessRobotCommand(string code, object[] args);
+        object ProcessConsoleCommand(string code, object[] args);
     }
 
     /// <summary>
-    /// 机器人支持的指令
+    /// 机器人支持的控制台指令
     /// </summary>
-    public class RobotCommand
+    public class ConsoleCommand
     {
-        public RobotCommand() { }
+        public ConsoleCommand() { }
 
-        public RobotCommand(string code, string name)
+        public ConsoleCommand(string code, string name)
         {
             this.Code = code;
             this.Name = name;

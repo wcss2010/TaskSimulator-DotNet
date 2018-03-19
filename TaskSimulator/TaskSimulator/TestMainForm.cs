@@ -186,12 +186,12 @@ namespace TaskSimulator
             if (tvRobotList.SelectedNode != null && lbxSocketCommands.SelectedItem != null)
             {
                 TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
-                TaskSimulatorLib.Sockets.RobotCommand robotCommand = (TaskSimulatorLib.Sockets.RobotCommand)lbxSocketCommands.SelectedItem;
+                TaskSimulatorLib.Sockets.ConsoleCommand robotCommand = (TaskSimulatorLib.Sockets.ConsoleCommand)lbxSocketCommands.SelectedItem;
 
                 if (ru.RobotSocket != null)
                 {
                     //运行相关指令
-                    ru.RobotSocket.ProcessRobotCommand(robotCommand.Code, new object[] { });
+                    ru.RobotSocket.ProcessConsoleCommand(robotCommand.Code, new object[] { });
 
                     TaskSimulatorLib.SimulatorObject.logger.Debug("无人船" + ru.UserName + "执行了" + robotCommand + "指令！");
                     ShowLogTextWithThread("无人船" + ru.UserName + "执行了" + robotCommand + "指令！");
@@ -237,10 +237,10 @@ namespace TaskSimulator
                 lbxSocketCommands.Items.Clear();
                 if (ru.RobotSocket != null)
                 {
-                    TaskSimulatorLib.Sockets.RobotCommand[] robotCmdTeams = ru.RobotSocket.GetSupportedRobotCommands();
+                    TaskSimulatorLib.Sockets.ConsoleCommand[] robotCmdTeams = ru.RobotSocket.GetSupportedConsoleCommands();
                     if (robotCmdTeams != null)
                     {
-                        foreach (TaskSimulatorLib.Sockets.RobotCommand cmd in robotCmdTeams)
+                        foreach (TaskSimulatorLib.Sockets.ConsoleCommand cmd in robotCmdTeams)
                         {
                             lbxSocketCommands.Items.Add(cmd);
                         }
