@@ -132,6 +132,9 @@ namespace TaskSimulator
                     if (ru.RobotSocket != null)
                     {
                         ru.RobotSocket.RobotStart(null);
+
+                        TaskSimulatorLib.SimulatorObject.logger.Debug("无人船" + ru.UserName + "已启动！");
+                        ShowLogTextWithThread("无人船" + ru.UserName + "已启动！");
                     }
                 }
             }
