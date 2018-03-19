@@ -173,7 +173,7 @@
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(89, 51);
             this.btnOK.TabIndex = 1;
-            this.btnOK.Text = "确定";
+            this.btnOK.Text = "保存所有";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
