@@ -229,7 +229,8 @@ namespace TaskSimulator.Forms
             int rowIndexs = dgvRobotComponents.Rows.Add();
             dgvRobotComponents.Rows[rowIndexs].Cells[0].Value = gpsMonitor.ComponentName;
             dgvRobotComponents.Rows[rowIndexs].Cells[1].Value = gpsMonitor.ComponentType == DynamicComponentType.Monitor ? "监视器" : "任务控制器";
-            dgvRobotComponents.Rows[rowIndexs].Cells[2].Value = false;
+            dgvRobotComponents.Rows[rowIndexs].Cells[2].Value = true;
+            dgvRobotComponents.Rows[rowIndexs].ReadOnly = true;
             dgvRobotComponents.Rows[rowIndexs].Tag = gpsMonitor;
 
             //自主飞行控制器
@@ -240,7 +241,8 @@ namespace TaskSimulator.Forms
             rowIndexs = dgvRobotComponents.Rows.Add();
             dgvRobotComponents.Rows[rowIndexs].Cells[0].Value = boatFly.ComponentName;
             dgvRobotComponents.Rows[rowIndexs].Cells[1].Value = boatFly.ComponentType == DynamicComponentType.Monitor ? "监视器" : "任务控制器";
-            dgvRobotComponents.Rows[rowIndexs].Cells[2].Value = false;
+            dgvRobotComponents.Rows[rowIndexs].Cells[2].Value = true;
+            dgvRobotComponents.Rows[rowIndexs].ReadOnly = true;
             dgvRobotComponents.Rows[rowIndexs].Tag = boatFly;
 
             foreach (TreeNode componentNode in tvDynamicComponents.Nodes)

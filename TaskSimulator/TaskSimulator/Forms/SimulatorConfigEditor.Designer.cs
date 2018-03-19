@@ -93,9 +93,6 @@
             this.tbRobotFlyPaths = new System.Windows.Forms.RichTextBox();
             this.gbComponents = new System.Windows.Forms.GroupBox();
             this.dgvRobotComponents = new System.Windows.Forms.DataGridView();
-            this.compName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.compType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.compEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.gbCameras = new System.Windows.Forms.GroupBox();
             this.tbRobotCameraImages = new System.Windows.Forms.RichTextBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -111,6 +108,9 @@
             this.tbRobotConnectionInfos = new System.Windows.Forms.RichTextBox();
             this.ofdCSFile = new System.Windows.Forms.OpenFileDialog();
             this.fdImageFont = new System.Windows.Forms.FontDialog();
+            this.compName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.compType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.compEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tpBase.SuspendLayout();
@@ -197,7 +197,7 @@
             this.tpBase.Location = new System.Drawing.Point(4, 25);
             this.tpBase.Name = "tpBase";
             this.tpBase.Padding = new System.Windows.Forms.Padding(3);
-            this.tpBase.Size = new System.Drawing.Size(1222, 497);
+            this.tpBase.Size = new System.Drawing.Size(1217, 550);
             this.tpBase.TabIndex = 0;
             this.tpBase.Text = "基础配置";
             this.tpBase.UseVisualStyleBackColor = true;
@@ -229,9 +229,9 @@
             // 
             this.groupBox1.Controls.Add(this.splitContainer1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox1.Location = new System.Drawing.Point(3, 70);
+            this.groupBox1.Location = new System.Drawing.Point(3, 123);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1216, 424);
+            this.groupBox1.Size = new System.Drawing.Size(1211, 424);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "监视器与任务控制器脚本";
@@ -250,8 +250,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gbComponentDetail);
-            this.splitContainer1.Size = new System.Drawing.Size(1210, 400);
-            this.splitContainer1.SplitterDistance = 357;
+            this.splitContainer1.Size = new System.Drawing.Size(1205, 400);
+            this.splitContainer1.SplitterDistance = 355;
             this.splitContainer1.TabIndex = 0;
             // 
             // tvDynamicComponents
@@ -260,7 +260,7 @@
             this.tvDynamicComponents.HideSelection = false;
             this.tvDynamicComponents.Location = new System.Drawing.Point(0, 0);
             this.tvDynamicComponents.Name = "tvDynamicComponents";
-            this.tvDynamicComponents.Size = new System.Drawing.Size(357, 344);
+            this.tvDynamicComponents.Size = new System.Drawing.Size(355, 344);
             this.tvDynamicComponents.TabIndex = 0;
             this.tvDynamicComponents.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
             // 
@@ -272,13 +272,13 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 344);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(357, 56);
+            this.panel2.Size = new System.Drawing.Size(355, 56);
             this.panel2.TabIndex = 1;
             // 
             // btnCodeAdd
             // 
             this.btnCodeAdd.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCodeAdd.Location = new System.Drawing.Point(132, 0);
+            this.btnCodeAdd.Location = new System.Drawing.Point(130, 0);
             this.btnCodeAdd.Name = "btnCodeAdd";
             this.btnCodeAdd.Size = new System.Drawing.Size(75, 56);
             this.btnCodeAdd.TabIndex = 2;
@@ -289,7 +289,7 @@
             // btnCodeSave
             // 
             this.btnCodeSave.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCodeSave.Location = new System.Drawing.Point(207, 0);
+            this.btnCodeSave.Location = new System.Drawing.Point(205, 0);
             this.btnCodeSave.Name = "btnCodeSave";
             this.btnCodeSave.Size = new System.Drawing.Size(75, 56);
             this.btnCodeSave.TabIndex = 1;
@@ -300,7 +300,7 @@
             // btnCodeDel
             // 
             this.btnCodeDel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCodeDel.Location = new System.Drawing.Point(282, 0);
+            this.btnCodeDel.Location = new System.Drawing.Point(280, 0);
             this.btnCodeDel.Name = "btnCodeDel";
             this.btnCodeDel.Size = new System.Drawing.Size(75, 56);
             this.btnCodeDel.TabIndex = 0;
@@ -325,7 +325,7 @@
             this.gbComponentDetail.Enabled = false;
             this.gbComponentDetail.Location = new System.Drawing.Point(0, 0);
             this.gbComponentDetail.Name = "gbComponentDetail";
-            this.gbComponentDetail.Size = new System.Drawing.Size(849, 400);
+            this.gbComponentDetail.Size = new System.Drawing.Size(846, 400);
             this.gbComponentDetail.TabIndex = 0;
             this.gbComponentDetail.TabStop = false;
             this.gbComponentDetail.Text = "动态监视器详细";
@@ -371,7 +371,7 @@
             this.tbClassCode.Location = new System.Drawing.Point(3, 202);
             this.tbClassCode.Name = "tbClassCode";
             this.tbClassCode.ReadOnly = true;
-            this.tbClassCode.Size = new System.Drawing.Size(843, 195);
+            this.tbClassCode.Size = new System.Drawing.Size(840, 195);
             this.tbClassCode.TabIndex = 7;
             this.tbClassCode.Text = "";
             // 
@@ -812,26 +812,6 @@
             this.dgvRobotComponents.Size = new System.Drawing.Size(636, 296);
             this.dgvRobotComponents.TabIndex = 0;
             // 
-            // compName
-            // 
-            this.compName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.compName.HeaderText = "组件名称";
-            this.compName.Name = "compName";
-            // 
-            // compType
-            // 
-            this.compType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.compType.HeaderText = "组件类型";
-            this.compType.Name = "compType";
-            // 
-            // compEnabled
-            // 
-            this.compEnabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.compEnabled.HeaderText = "是否自动启用";
-            this.compEnabled.Name = "compEnabled";
-            this.compEnabled.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.compEnabled.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
             // gbCameras
             // 
             this.gbCameras.Controls.Add(this.tbRobotCameraImages);
@@ -958,6 +938,26 @@
             // ofdCSFile
             // 
             this.ofdCSFile.Filter = "C#动态脚本|*.cs";
+            // 
+            // compName
+            // 
+            this.compName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.compName.HeaderText = "组件名称";
+            this.compName.Name = "compName";
+            // 
+            // compType
+            // 
+            this.compType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.compType.HeaderText = "组件类型";
+            this.compType.Name = "compType";
+            // 
+            // compEnabled
+            // 
+            this.compEnabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.compEnabled.HeaderText = "是否支持";
+            this.compEnabled.Name = "compEnabled";
+            this.compEnabled.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.compEnabled.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // SimulatorConfigEditor
             // 
@@ -1093,9 +1093,9 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.DataGridView dgvRobotComponents;
+        private System.Windows.Forms.FontDialog fdImageFont;
         private System.Windows.Forms.DataGridViewTextBoxColumn compName;
         private System.Windows.Forms.DataGridViewTextBoxColumn compType;
         private System.Windows.Forms.DataGridViewCheckBoxColumn compEnabled;
-        private System.Windows.Forms.FontDialog fdImageFont;
     }
 }
