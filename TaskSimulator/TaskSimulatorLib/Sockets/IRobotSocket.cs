@@ -69,7 +69,7 @@ namespace TaskSimulatorLib.Sockets
         /// </summary>
         /// <param name="code"></param>
         /// <param name="args"></param>
-        void ProcessRobotCommand(string code, object[] args);
+        object ProcessRobotCommand(string code, object[] args);
     }
 
     /// <summary>
