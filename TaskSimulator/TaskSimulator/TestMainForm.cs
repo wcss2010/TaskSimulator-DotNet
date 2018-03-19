@@ -21,6 +21,20 @@ namespace TaskSimulator
         public TestMainForm()
         {
             InitializeComponent();
+
+            TaskSimulatorLib.SimulatorObject.Simulator.TaskProcessor.OnTaskCompleteEvent += TaskProcessor_OnTaskCompleteEvent;
+        }
+
+        /// <summary>
+        /// 任务完成时间
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        void TaskProcessor_OnTaskCompleteEvent(object sender, TaskSimulatorLib.Processors.Task.TaskCompleteArgs args)
+        {
+            TaskSimulatorLib.SimulatorObject.logger.Debug("无人船" + args.User.UserName + "的任务" + args.Task.TaskName + "完成！");
+            ShowLogTextWithThread("无人船" + args.User.UserName + "的任务" + args.Task.TaskName + "完成！");
+
         }
 
         /// <summary>
