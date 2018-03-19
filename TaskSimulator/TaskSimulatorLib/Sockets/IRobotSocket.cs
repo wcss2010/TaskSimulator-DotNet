@@ -14,18 +14,18 @@ namespace TaskSimulatorLib.Sockets
     public interface IRobotSocket :ICloneable
     {
         /// <summary>
-        /// 初始化
+        /// 初始化Socket
         /// </summary>
         /// <param name="robot">机器人信息</param>
         void Init(Robot robot);
 
         /// <summary>
-        /// 开始
+        /// 开始Socket
         /// </summary>
         void Start();
 
         /// <summary>
-        /// 结束
+        /// 结束Socket
         /// </summary>
         void Stop();
 
@@ -47,5 +47,15 @@ namespace TaskSimulatorLib.Sockets
         /// </summary>
         /// <returns></returns>
         bool IsConnected();
+
+        /// <summary>
+        /// 机器人启动
+        /// </summary>
+        void RobotStart(object args);
+
+        /// <summary>
+        /// 机器人停止
+        /// </summary>
+        void RobotStop();
     }
 }
