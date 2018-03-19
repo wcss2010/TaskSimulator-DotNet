@@ -126,7 +126,7 @@ namespace TaskSimulator.BoatRobot
                     {
                         try
                         {
-                            Assembly result = CSharpCompiler.Compile(new string[] { File.ReadAllText(classFile) });
+                            Assembly result = CSharpCompiler.Compile(SimulatorConfig.RefDLL, new string[] { File.ReadAllText(classFile) });
                             Type objType = result.GetType(SimulatorConfig.SocketController.ComponentClassFullName);
 
                             Type[] faceTypes = objType.GetInterfaces();
@@ -169,7 +169,7 @@ namespace TaskSimulator.BoatRobot
                             {
                                 try
                                 {
-                                   Assembly result = CSharpCompiler.Compile(new string[] { File.ReadAllText(classFile) });
+                                    Assembly result = CSharpCompiler.Compile(SimulatorConfig.RefDLL, new string[] { File.ReadAllText(classFile) });
                                    Type objType = result.GetType(kvp.ComponentClassFullName);
 
                                    Type[] faceTypes = objType.GetInterfaces();
@@ -215,7 +215,7 @@ namespace TaskSimulator.BoatRobot
                             {
                                 try
                                 {
-                                    Assembly result = CSharpCompiler.Compile(new string[] { File.ReadAllText(classFile) });
+                                    Assembly result = CSharpCompiler.Compile(SimulatorConfig.RefDLL, new string[] { File.ReadAllText(classFile) });
                                     Type objType = result.GetType(kvp.ComponentClassFullName);
 
                                     Type[] faceTypes = objType.GetInterfaces();
