@@ -33,6 +33,7 @@ namespace TaskSimulatorLib.Processors.Task
         public ConcurrentQueue<ProcessorQueueObject> Queues
         {
             get { return queues; }
+            set { queues = value; }
         }
 
         /// <summary>
