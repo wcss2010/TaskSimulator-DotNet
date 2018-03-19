@@ -159,7 +159,43 @@ namespace TaskSimulator
                         ShowLogTextWithThread("无人船" + ru.UserName + "已启动！");
                     }
                 }
+
+                //初始化无人船状态列表
+                InitBoatStateList();
             }
+        }
+
+        /// <summary>
+        /// 初始化无人船状态
+        /// </summary>
+        private void InitBoatStateList()
+        {
+            
+        }
+
+        private void lbxSocketCommands_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void rbRoatWorkModeAlways_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbRoatWorkModeOnce_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tvRobotList_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
+        }
+
+        private void trBoatStateUpdater_Tick(object sender, EventArgs e)
+        {
+
         }
     }
 }
