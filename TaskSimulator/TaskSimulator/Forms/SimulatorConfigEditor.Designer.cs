@@ -93,6 +93,9 @@
             this.tbRobotFlyPaths = new System.Windows.Forms.RichTextBox();
             this.gbComponents = new System.Windows.Forms.GroupBox();
             this.dgvRobotComponents = new System.Windows.Forms.DataGridView();
+            this.compName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.compType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.compEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.gbCameras = new System.Windows.Forms.GroupBox();
             this.tbRobotCameraImages = new System.Windows.Forms.RichTextBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -108,9 +111,15 @@
             this.tbRobotConnectionInfos = new System.Windows.Forms.RichTextBox();
             this.ofdCSFile = new System.Windows.Forms.OpenFileDialog();
             this.fdImageFont = new System.Windows.Forms.FontDialog();
-            this.compName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.compType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.compEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.btnRobotSelectAllComponents = new System.Windows.Forms.Button();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.btnRobotEditFlyPathInMap = new System.Windows.Forms.Button();
+            this.btnRobotoSelectDefaultPos = new System.Windows.Forms.Button();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.panel12 = new System.Windows.Forms.Panel();
+            this.label21 = new System.Windows.Forms.Label();
+            this.tbCompileRefDLLPaths = new System.Windows.Forms.RichTextBox();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tpBase.SuspendLayout();
@@ -141,6 +150,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvRobotComponents)).BeginInit();
             this.gbCameras.SuspendLayout();
             this.gbConnections.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel10.SuspendLayout();
+            this.panel11.SuspendLayout();
+            this.panel12.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -188,12 +201,9 @@
             // 
             // tpBase
             // 
-            this.tpBase.Controls.Add(this.tbSocketControllerClassFullName);
-            this.tpBase.Controls.Add(this.tbSocketControllerFile);
-            this.tpBase.Controls.Add(this.label6);
+            this.tpBase.Controls.Add(this.panel12);
+            this.tpBase.Controls.Add(this.panel11);
             this.tpBase.Controls.Add(this.groupBox1);
-            this.tpBase.Controls.Add(this.btnSelectSocketController);
-            this.tpBase.Controls.Add(this.label1);
             this.tpBase.Location = new System.Drawing.Point(4, 25);
             this.tpBase.Name = "tpBase";
             this.tpBase.Padding = new System.Windows.Forms.Padding(3);
@@ -204,14 +214,14 @@
             // 
             // tbSocketControllerClassFullName
             // 
-            this.tbSocketControllerClassFullName.Location = new System.Drawing.Point(705, 21);
+            this.tbSocketControllerClassFullName.Location = new System.Drawing.Point(690, 3);
             this.tbSocketControllerClassFullName.Name = "tbSocketControllerClassFullName";
             this.tbSocketControllerClassFullName.Size = new System.Drawing.Size(275, 25);
             this.tbSocketControllerClassFullName.TabIndex = 5;
             // 
             // tbSocketControllerFile
             // 
-            this.tbSocketControllerFile.Location = new System.Drawing.Point(159, 21);
+            this.tbSocketControllerFile.Location = new System.Drawing.Point(144, 3);
             this.tbSocketControllerFile.Name = "tbSocketControllerFile";
             this.tbSocketControllerFile.Size = new System.Drawing.Size(290, 25);
             this.tbSocketControllerFile.TabIndex = 1;
@@ -219,7 +229,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(549, 24);
+            this.label6.Location = new System.Drawing.Point(534, 6);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(160, 15);
             this.label6.TabIndex = 4;
@@ -452,7 +462,7 @@
             // 
             // btnSelectSocketController
             // 
-            this.btnSelectSocketController.Location = new System.Drawing.Point(455, 21);
+            this.btnSelectSocketController.Location = new System.Drawing.Point(440, 3);
             this.btnSelectSocketController.Name = "btnSelectSocketController";
             this.btnSelectSocketController.Size = new System.Drawing.Size(75, 25);
             this.btnSelectSocketController.TabIndex = 2;
@@ -463,7 +473,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 24);
+            this.label1.Location = new System.Drawing.Point(3, 6);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(145, 15);
             this.label1.TabIndex = 0;
@@ -703,6 +713,7 @@
             // 
             // panel9
             // 
+            this.panel9.Controls.Add(this.btnRobotoSelectDefaultPos);
             this.panel9.Controls.Add(this.rbRobotDefaultLat);
             this.panel9.Controls.Add(this.rbRobotDefaultLng);
             this.panel9.Controls.Add(this.label11);
@@ -768,6 +779,7 @@
             // gbFlyPaths
             // 
             this.gbFlyPaths.Controls.Add(this.tbRobotFlyPaths);
+            this.gbFlyPaths.Controls.Add(this.panel10);
             this.gbFlyPaths.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbFlyPaths.Location = new System.Drawing.Point(0, 860);
             this.gbFlyPaths.Name = "gbFlyPaths";
@@ -779,15 +791,16 @@
             // tbRobotFlyPaths
             // 
             this.tbRobotFlyPaths.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbRobotFlyPaths.Location = new System.Drawing.Point(3, 21);
+            this.tbRobotFlyPaths.Location = new System.Drawing.Point(3, 56);
             this.tbRobotFlyPaths.Name = "tbRobotFlyPaths";
-            this.tbRobotFlyPaths.Size = new System.Drawing.Size(636, 196);
+            this.tbRobotFlyPaths.Size = new System.Drawing.Size(636, 161);
             this.tbRobotFlyPaths.TabIndex = 1;
             this.tbRobotFlyPaths.Text = "";
             // 
             // gbComponents
             // 
             this.gbComponents.Controls.Add(this.dgvRobotComponents);
+            this.gbComponents.Controls.Add(this.panel4);
             this.gbComponents.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbComponents.Location = new System.Drawing.Point(0, 540);
             this.gbComponents.Name = "gbComponents";
@@ -806,11 +819,31 @@
             this.compType,
             this.compEnabled});
             this.dgvRobotComponents.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvRobotComponents.Location = new System.Drawing.Point(3, 21);
+            this.dgvRobotComponents.Location = new System.Drawing.Point(3, 56);
             this.dgvRobotComponents.Name = "dgvRobotComponents";
             this.dgvRobotComponents.RowTemplate.Height = 27;
-            this.dgvRobotComponents.Size = new System.Drawing.Size(636, 296);
+            this.dgvRobotComponents.Size = new System.Drawing.Size(636, 261);
             this.dgvRobotComponents.TabIndex = 0;
+            // 
+            // compName
+            // 
+            this.compName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.compName.HeaderText = "组件名称";
+            this.compName.Name = "compName";
+            // 
+            // compType
+            // 
+            this.compType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.compType.HeaderText = "组件类型";
+            this.compType.Name = "compType";
+            // 
+            // compEnabled
+            // 
+            this.compEnabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.compEnabled.HeaderText = "是否支持";
+            this.compEnabled.Name = "compEnabled";
+            this.compEnabled.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.compEnabled.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // gbCameras
             // 
@@ -939,25 +972,97 @@
             // 
             this.ofdCSFile.Filter = "C#动态脚本|*.cs";
             // 
-            // compName
+            // panel4
             // 
-            this.compName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.compName.HeaderText = "组件名称";
-            this.compName.Name = "compName";
+            this.panel4.Controls.Add(this.btnRobotSelectAllComponents);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel4.Location = new System.Drawing.Point(3, 21);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(636, 35);
+            this.panel4.TabIndex = 1;
             // 
-            // compType
+            // btnRobotSelectAllComponents
             // 
-            this.compType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.compType.HeaderText = "组件类型";
-            this.compType.Name = "compType";
+            this.btnRobotSelectAllComponents.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnRobotSelectAllComponents.Location = new System.Drawing.Point(561, 0);
+            this.btnRobotSelectAllComponents.Name = "btnRobotSelectAllComponents";
+            this.btnRobotSelectAllComponents.Size = new System.Drawing.Size(75, 35);
+            this.btnRobotSelectAllComponents.TabIndex = 0;
+            this.btnRobotSelectAllComponents.Text = "选择所有";
+            this.btnRobotSelectAllComponents.UseVisualStyleBackColor = true;
+            this.btnRobotSelectAllComponents.Click += new System.EventHandler(this.btnRobotSelectAllComponents_Click);
             // 
-            // compEnabled
+            // panel10
             // 
-            this.compEnabled.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.compEnabled.HeaderText = "是否支持";
-            this.compEnabled.Name = "compEnabled";
-            this.compEnabled.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.compEnabled.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.panel10.Controls.Add(this.btnRobotEditFlyPathInMap);
+            this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel10.Location = new System.Drawing.Point(3, 21);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(636, 35);
+            this.panel10.TabIndex = 2;
+            // 
+            // btnRobotEditFlyPathInMap
+            // 
+            this.btnRobotEditFlyPathInMap.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnRobotEditFlyPathInMap.Location = new System.Drawing.Point(504, 0);
+            this.btnRobotEditFlyPathInMap.Name = "btnRobotEditFlyPathInMap";
+            this.btnRobotEditFlyPathInMap.Size = new System.Drawing.Size(132, 35);
+            this.btnRobotEditFlyPathInMap.TabIndex = 0;
+            this.btnRobotEditFlyPathInMap.Text = "在地图上编辑";
+            this.btnRobotEditFlyPathInMap.UseVisualStyleBackColor = true;
+            this.btnRobotEditFlyPathInMap.Click += new System.EventHandler(this.btnRobotEditFlyPathInMap_Click);
+            // 
+            // btnRobotoSelectDefaultPos
+            // 
+            this.btnRobotoSelectDefaultPos.Location = new System.Drawing.Point(359, 2);
+            this.btnRobotoSelectDefaultPos.Name = "btnRobotoSelectDefaultPos";
+            this.btnRobotoSelectDefaultPos.Size = new System.Drawing.Size(131, 23);
+            this.btnRobotoSelectDefaultPos.TabIndex = 7;
+            this.btnRobotoSelectDefaultPos.Text = "在地图上选择";
+            this.btnRobotoSelectDefaultPos.UseVisualStyleBackColor = true;
+            this.btnRobotoSelectDefaultPos.Click += new System.EventHandler(this.btnRobotoSelectDefaultPos_Click);
+            // 
+            // panel11
+            // 
+            this.panel11.Controls.Add(this.tbSocketControllerFile);
+            this.panel11.Controls.Add(this.tbSocketControllerClassFullName);
+            this.panel11.Controls.Add(this.label1);
+            this.panel11.Controls.Add(this.btnSelectSocketController);
+            this.panel11.Controls.Add(this.label6);
+            this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel11.Location = new System.Drawing.Point(3, 3);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(1211, 34);
+            this.panel11.TabIndex = 6;
+            // 
+            // panel12
+            // 
+            this.panel12.Controls.Add(this.tbCompileRefDLLPaths);
+            this.panel12.Controls.Add(this.label21);
+            this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel12.Location = new System.Drawing.Point(3, 37);
+            this.panel12.Name = "panel12";
+            this.panel12.Size = new System.Drawing.Size(1211, 86);
+            this.panel12.TabIndex = 7;
+            // 
+            // label21
+            // 
+            this.label21.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label21.Location = new System.Drawing.Point(0, 0);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(142, 86);
+            this.label21.TabIndex = 0;
+            this.label21.Text = "编译所需DLL（一行只能有一个文件）：";
+            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbCompileRefDLLPaths
+            // 
+            this.tbCompileRefDLLPaths.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbCompileRefDLLPaths.Location = new System.Drawing.Point(142, 0);
+            this.tbCompileRefDLLPaths.Name = "tbCompileRefDLLPaths";
+            this.tbCompileRefDLLPaths.Size = new System.Drawing.Size(1069, 86);
+            this.tbCompileRefDLLPaths.TabIndex = 1;
+            this.tbCompileRefDLLPaths.Text = "";
             // 
             // SimulatorConfigEditor
             // 
@@ -972,7 +1077,6 @@
             this.panel1.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
             this.tpBase.ResumeLayout(false);
-            this.tpBase.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -1008,6 +1112,11 @@
             this.gbCameras.ResumeLayout(false);
             this.gbCameras.PerformLayout();
             this.gbConnections.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.panel10.ResumeLayout(false);
+            this.panel11.ResumeLayout(false);
+            this.panel11.PerformLayout();
+            this.panel12.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1097,5 +1206,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn compName;
         private System.Windows.Forms.DataGridViewTextBoxColumn compType;
         private System.Windows.Forms.DataGridViewCheckBoxColumn compEnabled;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Button btnRobotSelectAllComponents;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.Button btnRobotEditFlyPathInMap;
+        private System.Windows.Forms.Button btnRobotoSelectDefaultPos;
+        private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.Panel panel12;
+        private System.Windows.Forms.RichTextBox tbCompileRefDLLPaths;
+        private System.Windows.Forms.Label label21;
     }
 }

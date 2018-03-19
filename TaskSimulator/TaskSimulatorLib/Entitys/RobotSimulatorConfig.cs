@@ -22,6 +22,11 @@ namespace TaskSimulatorLib.Entitys
         }
 
         /// <summary>
+        ///  编译所需DLL引用
+        /// </summary>
+        public string[] RefDLL { get; set; }
+
+        /// <summary>
         /// 机器人列表
         /// </summary>
         public Robot[] Robots { get; set; }

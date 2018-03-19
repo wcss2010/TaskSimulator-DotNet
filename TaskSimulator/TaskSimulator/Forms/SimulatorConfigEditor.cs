@@ -38,6 +38,17 @@ namespace TaskSimulator.Forms
                 tbSocketControllerClassFullName.Text = TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.SocketController.ComponentClassFullName;
             }
 
+            //编译配置
+            if (TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.RefDLL != null)
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (string s in TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.RefDLL)
+                {
+                    sb.Append(s).Append("\n");
+                }
+                tbCompileRefDLLPaths.Text = sb.ToString();
+            }
+
             #region 显示动态组件列表
             List<DynamicComponent> dynamicComponentList = new List<DynamicComponent>();
             tvDynamicComponents.Nodes.Clear();
@@ -95,6 +106,27 @@ namespace TaskSimulator.Forms
             //Socket控制器
             rsc.SocketController.ComponentClassFile = tbSocketControllerFile.Text;
             rsc.SocketController.ComponentClassFullName = tbSocketControllerClassFullName.Text;
+
+            //编译配置
+            string[] compileTeams = tbCompileRefDLLPaths.Text.Split(new string[] { "\n" }, StringSplitOptions.None);
+            List<string> compileRefDlls = new List<string>();
+
+            if (compileTeams != null)
+            {
+                foreach (string s in compileTeams)
+                {
+                    if (string.IsNullOrEmpty(s))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        compileRefDlls.Add(s.Trim());
+                    }
+                }
+            }
+
+            rsc.RefDLL = compileRefDlls.ToArray();
 
             //监视器
             foreach (TreeNode tn in tvDynamicComponents.Nodes)
@@ -196,6 +228,8 @@ namespace TaskSimulator.Forms
             tbComponentClassFullName.Text = "";
             tbClassCode.Text = "";
             rbIsMonitor.Checked = true;
+
+            tbCompileRefDLLPaths.Text = "system.data.dll \n system.xml.dll \n system.windows.forms.dll \n system.net.dll \n system.web.dll";
         }
 
         /// <summary>
@@ -600,6 +634,26 @@ namespace TaskSimulator.Forms
                 btnRobotFonts.Tag = fdImageFont.Font;
                 btnRobotFonts.Text = btnRobotFonts.Tag.ToString();
             }
+        }
+
+        private void btnRobotoSelectDefaultPos_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRobotSelectAllComponents_Click(object sender, EventArgs e)
+        {
+            for (int k = 2; k < dgvRobotComponents.Rows.Count; k++)
+            {
+                bool val = (bool)dgvRobotComponents.Rows[k].Cells[2].Value;
+
+                dgvRobotComponents.Rows[k].Cells[2].Value = !val;
+            }
+        }
+
+        private void btnRobotEditFlyPathInMap_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
