@@ -252,6 +252,9 @@ namespace TaskSimulator.BoatRobot
                         if (robotSocketTemp != null)
                         {
                             curUser.RobotSocket = (IRobotSocket)robotSocketTemp.Clone();
+
+                            //初始化Socket
+                            curUser.RobotSocket.Init(rb);
                         }
 
                         #region 加载机器人默认的模块

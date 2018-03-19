@@ -101,7 +101,24 @@ namespace TaskSimulator
 
         private void TestMainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            //停止模拟器
             TaskSimulatorLib.SimulatorObject.Simulator.Stop();
+
+            //停止无人船的Socket
+            if (TaskSimulatorLib.SimulatorObject.Simulator.UserDict != null) 
+            {
+                foreach (TaskSimulatorLib.Entitys.RobotUser ru in TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Values)
+                {
+                    if (ru.RobotSocket != null)
+                    {
+                        try
+                        {
+                            ru.RobotSocket.Stop();
+                        }
+                        catch (Exception ex) { }
+                    }
+                }
+            }
         }
 
         private void tbtnConfig_Click(object sender, EventArgs e)
@@ -115,7 +132,7 @@ namespace TaskSimulator
 
         private void tbtnStart_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("真的要重启吗？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+            if (MessageBox.Show("真的要重启所有无人船吗？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
             {
                 //检查当前是不是已经一份配置的运行了
                 TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Clear();
@@ -131,8 +148,13 @@ namespace TaskSimulator
                 {
                     if (ru.RobotSocket != null)
                     {
+                        //启动Socket
+                        ru.RobotSocket.Start();
+
+                        //启动无人船
                         ru.RobotSocket.RobotStart(null);
 
+                        //打印日志
                         TaskSimulatorLib.SimulatorObject.logger.Debug("无人船" + ru.UserName + "已启动！");
                         ShowLogTextWithThread("无人船" + ru.UserName + "已启动！");
                     }

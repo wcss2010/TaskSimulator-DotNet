@@ -771,7 +771,7 @@
             // 
             this.btnRobotoSelectDefaultPos.Location = new System.Drawing.Point(359, 2);
             this.btnRobotoSelectDefaultPos.Name = "btnRobotoSelectDefaultPos";
-            this.btnRobotoSelectDefaultPos.Size = new System.Drawing.Size(131, 23);
+            this.btnRobotoSelectDefaultPos.Size = new System.Drawing.Size(131, 25);
             this.btnRobotoSelectDefaultPos.TabIndex = 7;
             this.btnRobotoSelectDefaultPos.Text = "在地图上选择";
             this.btnRobotoSelectDefaultPos.UseVisualStyleBackColor = true;
