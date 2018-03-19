@@ -41,6 +41,11 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tvRobotList = new System.Windows.Forms.TreeView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.rbRoatWorkModeAlways = new System.Windows.Forms.RadioButton();
+            this.rbRoatWorkModeOnce = new System.Windows.Forms.RadioButton();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.tcMain.SuspendLayout();
@@ -50,6 +55,9 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -162,6 +170,8 @@
             // tvRobotList
             // 
             this.tvRobotList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvRobotList.FullRowSelect = true;
+            this.tvRobotList.HideSelection = false;
             this.tvRobotList.Location = new System.Drawing.Point(0, 0);
             this.tvRobotList.Name = "tvRobotList";
             this.tvRobotList.Size = new System.Drawing.Size(317, 380);
@@ -169,13 +179,65 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.panel2);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(632, 380);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "无人船状态:";
+            this.groupBox1.Text = "无人船详细";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(11, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(82, 15);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "工作模式：";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.rbRoatWorkModeOnce);
+            this.panel1.Controls.Add(this.rbRoatWorkModeAlways);
+            this.panel1.Location = new System.Drawing.Point(99, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(522, 27);
+            this.panel1.TabIndex = 1;
+            // 
+            // rbRoatWorkModeAlways
+            // 
+            this.rbRoatWorkModeAlways.AutoSize = true;
+            this.rbRoatWorkModeAlways.Checked = true;
+            this.rbRoatWorkModeAlways.Location = new System.Drawing.Point(4, 4);
+            this.rbRoatWorkModeAlways.Name = "rbRoatWorkModeAlways";
+            this.rbRoatWorkModeAlways.Size = new System.Drawing.Size(163, 19);
+            this.rbRoatWorkModeAlways.TabIndex = 0;
+            this.rbRoatWorkModeAlways.TabStop = true;
+            this.rbRoatWorkModeAlways.Text = "无人船需要连续航行";
+            this.rbRoatWorkModeAlways.UseVisualStyleBackColor = true;
+            // 
+            // rbRoatWorkModeOnce
+            // 
+            this.rbRoatWorkModeOnce.AutoSize = true;
+            this.rbRoatWorkModeOnce.Location = new System.Drawing.Point(175, 4);
+            this.rbRoatWorkModeOnce.Name = "rbRoatWorkModeOnce";
+            this.rbRoatWorkModeOnce.Size = new System.Drawing.Size(343, 19);
+            this.rbRoatWorkModeOnce.TabIndex = 1;
+            this.rbRoatWorkModeOnce.TabStop = true;
+            this.rbRoatWorkModeOnce.Text = "无人船航行任务停止后不需要再次自动规划行程";
+            this.rbRoatWorkModeOnce.UseVisualStyleBackColor = true;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.panel1);
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(3, 21);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(626, 33);
+            this.panel2.TabIndex = 2;
             // 
             // TestMainForm
             // 
@@ -201,6 +263,11 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -220,5 +287,10 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TreeView tvRobotList;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.RadioButton rbRoatWorkModeAlways;
+        private System.Windows.Forms.RadioButton rbRoatWorkModeOnce;
+        private System.Windows.Forms.Panel panel2;
     }
 }

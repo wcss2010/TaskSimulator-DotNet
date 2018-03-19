@@ -329,6 +329,7 @@
             // tvDynamicComponents
             // 
             this.tvDynamicComponents.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvDynamicComponents.FullRowSelect = true;
             this.tvDynamicComponents.HideSelection = false;
             this.tvDynamicComponents.Location = new System.Drawing.Point(0, 0);
             this.tvDynamicComponents.Name = "tvDynamicComponents";
@@ -554,6 +555,7 @@
             // tvRobots
             // 
             this.tvRobots.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvRobots.FullRowSelect = true;
             this.tvRobots.HideSelection = false;
             this.tvRobots.Location = new System.Drawing.Point(0, 0);
             this.tvRobots.Name = "tvRobots";

@@ -29,6 +29,11 @@ namespace TaskSimulatorLib.Entitys
         public string UserName { get; set; }
 
         /// <summary>
+        /// 工作模式(用于指定连续航行任务或者是单圈任务)
+        /// </summary>
+        public string WorkMode { get; set; }
+
+        /// <summary>
         /// 机器人控制通道
         /// </summary>
         public IRobotSocket RobotSocket { get; set; }
