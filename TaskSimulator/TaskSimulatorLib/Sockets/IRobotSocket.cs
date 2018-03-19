@@ -96,5 +96,17 @@ namespace TaskSimulatorLib.Sockets
         public string Name { get; set; }
 
         public object Tag { get; set; }
+
+        public override string ToString()
+        {
+            if (string.IsNullOrEmpty(Code) || string.IsNullOrEmpty(Name))
+            {
+                return base.ToString();
+            }
+            else
+            {
+                return Name + "(" + Code + ")";
+            }
+        }
     }
 }

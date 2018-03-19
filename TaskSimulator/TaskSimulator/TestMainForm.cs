@@ -188,17 +188,52 @@ namespace TaskSimulator
 
         private void rbRoatWorkModeAlways_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (tvRobotList.SelectedNode != null)
+            {
+                TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
+                ru.WorkMode = "always";
+            }
         }
 
         private void rbRoatWorkModeOnce_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (tvRobotList.SelectedNode != null)
+            {
+                TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
+                ru.WorkMode = "once";
+            }
         }
 
         private void tvRobotList_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            if (tvRobotList.SelectedNode != null)
+            {
+                TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
 
+                //工作状态
+                if (ru.WorkMode == "always")
+                {
+                    rbRoatWorkModeAlways.Checked = true;
+                }
+                else
+                {
+                    rbRoatWorkModeOnce.Checked = true;
+                }
+
+                //Socket指令
+                lbxSocketCommands.Items.Clear();
+                if (ru.RobotSocket != null)
+                {
+                    TaskSimulatorLib.Sockets.RobotCommand[] robotCmdTeams = ru.RobotSocket.GetSupportedRobotCommands();
+                    if (robotCmdTeams != null)
+                    {
+                        foreach (TaskSimulatorLib.Sockets.RobotCommand cmd in robotCmdTeams)
+                        {
+                            lbxSocketCommands.Items.Add(cmd);
+                        }
+                    }
+                }
+            }
         }
 
         private void trBoatStateUpdater_Tick(object sender, EventArgs e)
