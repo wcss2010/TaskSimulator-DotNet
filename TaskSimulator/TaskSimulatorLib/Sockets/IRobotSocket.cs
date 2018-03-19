@@ -94,5 +94,7 @@ namespace TaskSimulatorLib.Sockets
         /// 名称
         /// </summary>
         public string Name { get; set; }
+
+        public object Tag { get; set; }
     }
 }
