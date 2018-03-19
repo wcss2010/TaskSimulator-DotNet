@@ -19,9 +19,8 @@ namespace TaskSimulator.Util
         /// <summary>
         /// 编译程序集
         /// </summary>
-        /// <param name="csharpCodes"></param>
         /// <returns></returns>
-        public static Assembly Compile(string[] csharpCodes)
+        public static Assembly Compile(string[] refDLL,string[] csharpCodes)
         {
             //创建C#编译器实例
             CSharpCodeProvider comp = new CSharpCodeProvider();
@@ -29,16 +28,13 @@ namespace TaskSimulator.Util
             CompilerParameters cp = new CompilerParameters();  
 
             cp.ReferencedAssemblies.Add("system.dll");              //添加程序集 system.dll 的引用     
-            cp.ReferencedAssemblies.Add("system.data.dll");         //添加程序集 system.data.dll 的引用     
-            cp.ReferencedAssemblies.Add("system.xml.dll");          //添加程序集 system.xml.dll 的引用     
-            cp.ReferencedAssemblies.Add("system.windows.forms.dll");  //添加程序集 system.windows.forms.dll 的引用
-            cp.ReferencedAssemblies.Add("system.core.dll");              //添加程序集 system.core.dll 的引用
-            cp.ReferencedAssemblies.Add("system.design.dll");              //添加程序集 system.design.dll 的引用
-            cp.ReferencedAssemblies.Add("system.drawing.dll");              //添加程序集 system.drawing.dll 的引用
-            cp.ReferencedAssemblies.Add("system.net.dll");              //添加程序集 system.net.dll 的引用
-            cp.ReferencedAssemblies.Add("system.web.dll");              //添加程序集 system.web.dll 的引用
-            
+           
             cp.ReferencedAssemblies.Add(Path.Combine(Application.StartupPath, "TaskSimulatorLib.dll")); //添加程序集 TaskSimulatorLib.dll 的引用
+
+            if (refDLL != null)
+            {
+                cp.ReferencedAssemblies.AddRange(refDLL);
+            }
 
             cp.GenerateExecutable = false;
             cp.GenerateInMemory = true;
