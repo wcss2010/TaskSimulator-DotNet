@@ -298,33 +298,33 @@ namespace TaskSimulator.BoatRobot
 
                         #region 加载自定义模块
                         //监视器
-                        foreach (KeyValuePair<string, bool> kvp in rb.MonitorStateMap)
+                        foreach(DynamicComponent dc in SimulatorConfig.MonitorComponentMap.Values)
                         {
-                            if (monitorDict.ContainsKey(kvp.Key))
+                            if (monitorDict.ContainsKey(dc.ComponentId) && rb.MonitorStateMap.ContainsKey(dc.ComponentId))
                             {
-                                curUser.SupportedMonitor.TryAdd(kvp.Key, (IMonitor)monitorDict[kvp.Key].Clone());
+                                curUser.SupportedMonitor.TryAdd(dc.ComponentId, (IMonitor)monitorDict[dc.ComponentId].Clone());
 
-                                curUser.SupportedMonitor[kvp.Key].Name = SimulatorConfig.MonitorComponentMap[kvp.Key].ComponentName;
-                                curUser.SupportedMonitor[kvp.Key].User = curUser;
-                                curUser.SupportedMonitor[kvp.Key].Enabled = kvp.Value;
+                                curUser.SupportedMonitor[dc.ComponentId].Name = dc.ComponentName;
+                                curUser.SupportedMonitor[dc.ComponentId].User = curUser;
+                                curUser.SupportedMonitor[dc.ComponentId].Enabled = rb.MonitorStateMap[dc.ComponentId];
                             }
                         }
 
                         //任务处理器
-                        foreach (KeyValuePair<string, bool> kvp in rb.TaskStateMap)
+                        foreach (DynamicComponent dc in SimulatorConfig.TaskComponentMap.Values)
                         {
-                            if (taskDict.ContainsKey(kvp.Key))
+                            if (taskDict.ContainsKey(dc.ComponentId) && rb.TaskStateMap.ContainsKey(dc.ComponentId))
                             {
                                 RobotTask rt = new RobotTask();
-                                rt.TaskCode = SimulatorConfig.TaskComponentMap[kvp.Key].ComponentId;
-                                rt.TaskName = SimulatorConfig.TaskComponentMap[kvp.Key].ComponentName;
-                                rt.TaskWorkerThread = (ITaskWorkerThread)taskDict[kvp.Key].Clone();
+                                rt.TaskCode = dc.ComponentId;
+                                rt.TaskName = dc.ComponentName;
+                                rt.TaskWorkerThread = (ITaskWorkerThread)taskDict[dc.ComponentId].Clone();
                                 rt.TaskWorkerThread.WorkerThreadState = WorkerThreadStateType.Ready;
                                 rt.TaskWorkerThread.User = curUser;
                                 rt.TaskWorkerThread.Task = rt;
-                                rt.Enabled = kvp.Value;
+                                rt.Enabled = rb.TaskStateMap[dc.ComponentId];
 
-                                curUser.SupportedTask.TryAdd(kvp.Key, rt);
+                                curUser.SupportedTask.TryAdd(dc.ComponentId, rt);
                             }
                         }
                         #endregion
