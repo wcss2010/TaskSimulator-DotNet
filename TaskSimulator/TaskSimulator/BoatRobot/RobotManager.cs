@@ -263,7 +263,7 @@ namespace TaskSimulator.BoatRobot
 
                               CameraMonitor cm = new CameraMonitor();
                               cm.Name = cameraName;
-                              cm.Enabled = false;
+                              cm.Enabled = true;
                               cm.User = curUser;
                               cm.VirtualCameraImageWidth = rb.CameraPictureWidth;
                               cm.VirtualCameraImageHeight = rb.CameraPictureHeight;
@@ -286,6 +286,7 @@ namespace TaskSimulator.BoatRobot
                           RobotTask boatFly = new RobotTask();
                           boatFly.TaskCode = Task_BoatFly;
                           boatFly.TaskName = "自主航行任务";
+                          boatFly.Enabled = true;
                           boatFly.TaskWorkerThread = new BoatFlyTask();
                           ((BoatFlyTask)boatFly.TaskWorkerThread).StepWithSecond = rb.StepWithSecond;
                           ((BoatFlyTask)boatFly.TaskWorkerThread).Task = boatFly;

@@ -98,5 +98,23 @@ namespace TaskSimulator
             SimulatorConfigEditor editor = new SimulatorConfigEditor();
             editor.ShowDialog();
         }
+
+        private void tbtnStart_Click(object sender, EventArgs e)
+        {
+            //检查当前是不是已经一份配置的运行了
+            if (TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Count > 0)
+            {
+                TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Clear();
+
+                foreach (TaskSimulatorLib.Processors.ProcessorQueueObject pqo in TaskSimulatorLib.SimulatorObject.Simulator.TaskProcessor.Queues)
+                {
+                    pqo.Task.TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ended;
+                }
+            }
+
+            //准备初始化无人船对象
+            TaskSimulator.BoatRobot.RobotManager.Init();
+
+        }
     }
 }
