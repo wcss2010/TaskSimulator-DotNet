@@ -170,7 +170,15 @@ namespace TaskSimulator
         /// </summary>
         private void InitBoatStateList()
         {
-            
+            tvRobotList.Nodes.Clear();
+            foreach (TaskSimulatorLib.Entitys.RobotUser ru in TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Values)
+            {
+                TreeNode tn = new TreeNode();
+                tn.Text = ru.UserName + "(" + ru.UserCode + ")";
+                tn.Tag = ru;
+
+                tvRobotList.Nodes.Add(tn);
+            }
         }
 
         private void lbxSocketCommands_MouseDoubleClick(object sender, MouseEventArgs e)

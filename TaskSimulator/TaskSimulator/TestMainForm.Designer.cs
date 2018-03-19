@@ -160,7 +160,7 @@
             this.tpStatusList.Padding = new System.Windows.Forms.Padding(3);
             this.tpStatusList.Size = new System.Drawing.Size(1138, 407);
             this.tpStatusList.TabIndex = 1;
-            this.tpStatusList.Text = "无人机状态列表";
+            this.tpStatusList.Text = "无人船状态列表";
             this.tpStatusList.UseVisualStyleBackColor = true;
             // 
             // splitContainer1
@@ -309,7 +309,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(97, 136);
             this.label3.TabIndex = 0;
-            this.label3.Text = "label3";
+            this.label3.Text = "当前";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lbxSocketCommands
@@ -339,6 +339,7 @@
             // 
             // trBoatStateUpdater
             // 
+            this.trBoatStateUpdater.Enabled = true;
             this.trBoatStateUpdater.Interval = 500;
             this.trBoatStateUpdater.Tick += new System.EventHandler(this.trBoatStateUpdater_Tick);
             // 
@@ -352,7 +353,7 @@
             this.Controls.Add(this.statusStrip);
             this.Name = "TestMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "无人机模拟器 V1.1";
+            this.Text = "无人船模拟器 V1.1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TestMainForm_FormClosing);
             this.Load += new System.EventHandler(this.TestMainForm_Load);
             this.statusStrip.ResumeLayout(false);
