@@ -19,6 +19,16 @@ namespace TaskSimulatorLib.Entitys
     public class RobotUser
     {
         /// <summary>
+        /// 用于表示机器人需要连续运动
+        /// </summary>
+        public const string WORKMODE_ALWAYS = "always";
+
+        /// <summary>
+        /// 用于表示机器人运动不需要连续
+        /// </summary>
+        public const string WORKMODE_ONCE = "once";
+
+        /// <summary>
         /// 用户代码
         /// </summary>
         public string UserCode { get; set; }
