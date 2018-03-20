@@ -12,6 +12,24 @@ using TaskSimulatorLib.Util;
 
 namespace TaskSimulatorLib
 {
+    /// <summary>
+    /// 控制台日志显示接口
+    /// </summary>
+    public interface IConsoleWindowLogger
+    {
+        /// <summary>
+        /// 显示一段提示文字(UI操作)
+        /// </summary>
+        /// <param name="txt"></param>
+        void ShowLogTextWithUI(string txt);
+
+        /// <summary>
+        /// 显示一段提示文字(线程中)
+        /// </summary>
+        /// <param name="txt"></param>
+        void ShowLogTextWithThread(string txt);
+    }
+
     /**
      *  无人船自主任务模拟器 V1.0
      * 
@@ -37,6 +55,11 @@ namespace TaskSimulatorLib
         {
             return log4net.LogManager.GetLogger(t);
         }
+
+        /// <summary>
+        /// 在主窗体上的一个接口用于显示一些提示性的文字
+        /// </summary>
+        public static IConsoleWindowLogger ConsoleLoggerWindow { get; set; }
 
         private static SimulatorObject simulator = new SimulatorObject();
         /// <summary>

@@ -8,20 +8,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TaskSimulator.Forms;
+using TaskSimulatorLib;
 
 namespace TaskSimulator
 {
-    public partial class TestMainForm : Form
+    public partial class TestMainForm : Form, IConsoleWindowLogger
     {
         /// <summary>
         /// 最大日志显示行
         /// </summary>
-        public const int Max_Log_Line_Count = 20;
+        public const int Max_Log_Line_Count = 23;
 
         public TestMainForm()
         {
             InitializeComponent();
 
+            TaskSimulatorLib.SimulatorObject.ConsoleLoggerWindow = this;
             TaskSimulatorLib.SimulatorObject.Simulator.TaskProcessor.OnTaskCompleteEvent += TaskProcessor_OnTaskCompleteEvent;
         }
 
@@ -51,7 +53,7 @@ namespace TaskSimulator
         /// 显示一段提示文字(UI操作)
         /// </summary>
         /// <param name="txt"></param>
-        protected void ShowLogTextWithUI(string txt)
+        public void ShowLogTextWithUI(string txt)
         {
             if (tbLogs.Lines != null && tbLogs.Lines.Length >= Max_Log_Line_Count)
             {
@@ -71,7 +73,7 @@ namespace TaskSimulator
         /// 显示一段提示文字(线程中)
         /// </summary>
         /// <param name="txt"></param>
-        protected void ShowLogTextWithThread(string txt)
+        public void ShowLogTextWithThread(string txt)
         {
             if (IsHandleCreated)
             {
