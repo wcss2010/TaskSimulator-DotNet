@@ -36,7 +36,7 @@ namespace TaskSimulator
             ShowLogTextWithThread("无人船" + args.User.UserName + "的任务" + args.Task.TaskName + "完成！");
 
             //继续出自主航行任务
-            if (args.User != null && (string.IsNullOrEmpty(args.User.WorkMode) || args.User.WorkMode == "always"))
+            if (args.User != null && (string.IsNullOrEmpty(args.User.WorkMode) || args.User.WorkMode == TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ALWAYS))
             {
                 if (args.User.RobotSocket.IsConnected())
                 {
@@ -214,7 +214,7 @@ namespace TaskSimulator
             if (tvRobotList.SelectedNode != null)
             {
                 TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
-                ru.WorkMode = "always";
+                ru.WorkMode = TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ALWAYS;
             }
         }
 
@@ -223,7 +223,7 @@ namespace TaskSimulator
             if (tvRobotList.SelectedNode != null)
             {
                 TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
-                ru.WorkMode = "once";
+                ru.WorkMode = TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ONCE;
             }
         }
 
@@ -234,7 +234,7 @@ namespace TaskSimulator
                 TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
 
                 //工作状态
-                if (ru.WorkMode == "always")
+                if (ru.WorkMode == TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ALWAYS)
                 {
                     rbRoatWorkModeAlways.Checked = true;
                 }
