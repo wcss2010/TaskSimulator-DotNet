@@ -109,7 +109,7 @@ namespace TaskSimulator.BoatRobot
                 IRobotSocket robotSocketTemp = null;
 
                 #region Socket控制器编译选项
-                if (string.IsNullOrEmpty(SimulatorConfig.SocketController.ComponentId) || string.IsNullOrEmpty(SimulatorConfig.SocketController.ComponentName) || string.IsNullOrEmpty(SimulatorConfig.SocketController.ComponentClassFullName) || string.IsNullOrEmpty(SimulatorConfig.SocketController.ComponentClassFile))
+                if (string.IsNullOrEmpty(SimulatorConfig.SocketController.ComponentClassFullName) || string.IsNullOrEmpty(SimulatorConfig.SocketController.ComponentClassFile))
                 {
                     //continue;
                 }
