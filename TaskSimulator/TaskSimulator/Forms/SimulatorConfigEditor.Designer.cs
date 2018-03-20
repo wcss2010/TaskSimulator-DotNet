@@ -531,7 +531,7 @@
             this.tpRobotList.Padding = new System.Windows.Forms.Padding(3);
             this.tpRobotList.Size = new System.Drawing.Size(1217, 550);
             this.tpRobotList.TabIndex = 1;
-            this.tpRobotList.Text = "机器人列表";
+            this.tpRobotList.Text = "无人船列表";
             this.tpRobotList.UseVisualStyleBackColor = true;
             // 
             // splitContainer2
@@ -617,7 +617,7 @@
             this.gbRobotDetail.Size = new System.Drawing.Size(850, 544);
             this.gbRobotDetail.TabIndex = 0;
             this.gbRobotDetail.TabStop = false;
-            this.gbRobotDetail.Text = "机器人详细";
+            this.gbRobotDetail.Text = "无人船详细";
             // 
             // flpFlowPanel
             // 
@@ -659,7 +659,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(83, 15);
             this.label7.TabIndex = 0;
-            this.label7.Text = "机器人ID：";
+            this.label7.Text = "无人船ID：";
             // 
             // panel6
             // 
@@ -684,7 +684,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(82, 15);
             this.label8.TabIndex = 0;
-            this.label8.Text = "机器人名：";
+            this.label8.Text = "无人船名：";
             // 
             // panel7
             // 
@@ -710,7 +710,7 @@
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(279, 15);
             this.label12.TabIndex = 3;
-            this.label12.Text = "/秒 (表示机器人每秒行进的经纬度数值)";
+            this.label12.Text = "/秒 (表示无人船每秒行进的经纬度数值)";
             // 
             // label9
             // 
@@ -745,7 +745,7 @@
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(293, 15);
             this.label13.TabIndex = 4;
-            this.label13.Text = "(表示机器人在围绕默认位置画圈时的半径)";
+            this.label13.Text = "(表示无人船在围绕默认位置画圈时的半径)";
             // 
             // label10
             // 

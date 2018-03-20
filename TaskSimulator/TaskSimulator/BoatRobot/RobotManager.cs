@@ -98,7 +98,7 @@ namespace TaskSimulator.BoatRobot
         }
         
         /// <summary>
-        /// 初始化机器人管理器
+        /// 初始化无人船管理器
         /// </summary>
         public static void Init()
         {
@@ -253,7 +253,7 @@ namespace TaskSimulator.BoatRobot
                 }
                 #endregion
 
-                #region 生成机器人列表
+                #region 生成无人船列表
                 if (SimulatorConfig.Robots != null)
                 {
                     foreach (Robot rb in SimulatorConfig.Robots)
@@ -274,7 +274,7 @@ namespace TaskSimulator.BoatRobot
                                 curUser.RobotSocket.Init(rb);
                             }
 
-                            #region 加载机器人默认的模块
+                            #region 加载无人船默认的模块
                             //加载摄像头
                             int cameraIndex = 0;
                             foreach (string cameraName in rb.CameraNames)

@@ -18,12 +18,12 @@ namespace TaskSimulator.RobotTasks
     public class RobotTaskSocket
     {
         /// <summary>
-        /// 地面站到机器人主题
+        /// 地面站到无人船主题
         /// </summary>
         public const string STATION_TO_BOAT = "shore2boat";
 
         /// <summary>
-        /// 机器人到地面站主题
+        /// 无人船到地面站主题
         /// </summary>
         public const string BOAT_TO_STATION = "boat2shore";
 
@@ -48,7 +48,7 @@ namespace TaskSimulator.RobotTasks
         public string CommandSendSubject = string.Empty;
 
         /// <summary>
-        /// 机器人用户
+        /// 无人船用户
         /// </summary>
         public RobotUser RobotUser { get; set; }
 
@@ -189,7 +189,7 @@ namespace TaskSimulator.RobotTasks
             Client.ConnectionClosed += client_ConnectionClosed;
 
             //打印日志
-            TaskSimulatorLib.SimulatorObject.logger.Info(Client.IsConnected ? "机器人(" + RobotUser.UserName + ")已连接到服务器(" + RemoteIP + ")!Code:" + code + ",ClientId:" + ClientId : "机器人(" + RobotUser.UserName + ")未能连接到服务器(" + RemoteIP + ")!");
+            TaskSimulatorLib.SimulatorObject.logger.Info(Client.IsConnected ? "无人船(" + RobotUser.UserName + ")已连接到服务器(" + RemoteIP + ")!Code:" + code + ",ClientId:" + ClientId : "无人船(" + RobotUser.UserName + ")未能连接到服务器(" + RemoteIP + ")!");
 
             //监听主题
             Client.Subscribe(new string[] { ListenSubject }, qosLevels); // sub 的qos=1
@@ -203,7 +203,7 @@ namespace TaskSimulator.RobotTasks
         public void Publish(string subjects,string strValues)
         {
             //打印日志
-            TaskSimulatorLib.SimulatorObject.logger.Debug("机器人:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")向主题" + subjects + "发布内容" + strValues + "!");
+            TaskSimulatorLib.SimulatorObject.logger.Debug("无人船:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")向主题" + subjects + "发布内容" + strValues + "!");
  
             Client.Publish(subjects, Encoding.UTF8.GetBytes(strValues), qosLevels[0], false);
         }
@@ -375,7 +375,7 @@ namespace TaskSimulator.RobotTasks
         /// <param name="e"></param>
         void client_MqttMsgSubscribed(object sender, MqttMsgSubscribedEventArgs e)
         {
-            TaskSimulatorLib.SimulatorObject.logger.Debug("机器人:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "已订阅的主题的Id = " + e.MessageId);
+            TaskSimulatorLib.SimulatorObject.logger.Debug("无人船:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "已订阅的主题的Id = " + e.MessageId);
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace TaskSimulator.RobotTasks
             }
 
             //打印日志
-            TaskSimulatorLib.SimulatorObject.logger.Debug("机器人:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "收到消息 = " + receiveString + " 来自主题 " + e.Topic);
+            TaskSimulatorLib.SimulatorObject.logger.Debug("无人船:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "收到消息 = " + receiveString + " 来自主题 " + e.Topic);
 
             if (string.IsNullOrEmpty(receiveString))
             {
@@ -554,7 +554,7 @@ namespace TaskSimulator.RobotTasks
             if (CustomMovePlans != null && CustomMovePlans.Length >= 4)
             {
                 //检查到有效移动方案
-                TaskSimulatorLib.SimulatorObject.logger.Debug("为机器人(" + RobotUser.UserName + ")选择了自定义的移动方案!");
+                TaskSimulatorLib.SimulatorObject.logger.Debug("为无人船(" + RobotUser.UserName + ")选择了自定义的移动方案!");
                 List<double[]> posList = new List<double[]>();
                 foreach (CustomMovePlan mpi in CustomMovePlans)
                 {
@@ -562,7 +562,7 @@ namespace TaskSimulator.RobotTasks
                 }
                 RobotFactory.StartMoveShipWithPosList(RobotUser.UserCode, posList);
 
-                //分配完成任务后需要把当前这个自定义方案顺序翻转，以使机器人能回到原点
+                //分配完成任务后需要把当前这个自定义方案顺序翻转，以使无人船能回到原点
                 Array.Reverse(CustomMovePlans);
             }
             else
@@ -571,7 +571,7 @@ namespace TaskSimulator.RobotTasks
                 Random random = new Random((int)DateTime.Now.Ticks);
                 //1=方框，2=圆圈
                 int taskIndex = random.Next(1, 3);
-                TaskSimulatorLib.SimulatorObject.logger.Debug("为机器人(" + RobotUser.UserName + ")选择了按指定 边长或半径 行走" + (taskIndex == 1 ? "方形" : "圆形") + "的任务！");
+                TaskSimulatorLib.SimulatorObject.logger.Debug("为无人船(" + RobotUser.UserName + ")选择了按指定 边长或半径 行走" + (taskIndex == 1 ? "方形" : "圆形") + "的任务！");
                 if (taskIndex == 1)
                 {
                     //方框
@@ -627,7 +627,7 @@ namespace TaskSimulator.RobotTasks
         /// <param name="e"></param>
         void client_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
         {
-            TaskSimulatorLib.SimulatorObject.logger.Debug("机器人:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "消息ID = " + e.MessageId + " 是否发布成功 = " + (e.IsPublished ? "成功" : "失败"));
+            TaskSimulatorLib.SimulatorObject.logger.Debug("无人船:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "消息ID = " + e.MessageId + " 是否发布成功 = " + (e.IsPublished ? "成功" : "失败"));
         }
         
         /// <summary>
@@ -637,7 +637,7 @@ namespace TaskSimulator.RobotTasks
         /// <param name="e"></param>
         void client_ConnectionClosed(object sender, EventArgs e)
         {
-            TaskSimulatorLib.SimulatorObject.logger.Debug("机器人:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "连接已断开"); ;
+            TaskSimulatorLib.SimulatorObject.logger.Debug("无人船:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "连接已断开"); ;
         }
         
         /// <summary>
@@ -647,7 +647,7 @@ namespace TaskSimulator.RobotTasks
         /// <param name="e"></param>
         void client_MqttMsgUnsubscribed(object sender, MqttMsgUnsubscribedEventArgs e)
         {
-            TaskSimulatorLib.SimulatorObject.logger.Debug("机器人:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "连接已断开");
+            TaskSimulatorLib.SimulatorObject.logger.Debug("无人船:" + RobotUser.UserName + "(" + RobotUser.UserCode + ")" + "," + "连接已断开");
         }
     }
 

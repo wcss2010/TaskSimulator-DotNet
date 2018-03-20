@@ -77,7 +77,7 @@ namespace TaskSimulator.Forms
             }
             #endregion
 
-            #region 显示机器人列表
+            #region 显示无人船列表
             if (TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.Robots != null)
             {
                 tvRobots.Nodes.Clear();
@@ -142,7 +142,7 @@ namespace TaskSimulator.Forms
                 }
             }
 
-            //机器人
+            //无人船
             List<Robot> robotList = new List<Robot>();
             foreach (TreeNode tn in tvRobots.Nodes)
             {
@@ -231,7 +231,7 @@ namespace TaskSimulator.Forms
         }
 
         /// <summary>
-        /// 清理机器人详细
+        /// 清理无人船详细
         /// </summary>
         private void ClearRobotDetail()
         {

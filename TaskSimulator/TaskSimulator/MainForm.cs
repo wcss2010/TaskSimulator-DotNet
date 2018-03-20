@@ -27,17 +27,17 @@ namespace TaskSimulator
         public const int Max_Log_Line_Count = 20;
 
         /// <summary>
-        /// 机器人配置
+        /// 无人船配置
         /// </summary>
         public static VirtualRobotListConfig RobotListConfig { get; set; }
 
         /// <summary>
-        /// 虚拟机器人配置字典(Key=机器人ID,Value=配置)
+        /// 虚拟无人船配置字典(Key=无人船ID,Value=配置)
         /// </summary>
         public static Dictionary<string, VirtualRobotConfig> VirtualRobotConfigDict = new Dictionary<string, VirtualRobotConfig>();
 
         /// <summary>
-        /// 虚拟机器人MQTT连接配置(Key=机器人ID,Value=MQTT连接)
+        /// 虚拟无人船MQTT连接配置(Key=无人船ID,Value=MQTT连接)
         /// </summary>
         public static Dictionary<string, RobotTaskSocket> VirtualRobotSocketDict = new Dictionary<string, RobotTaskSocket>();
 
@@ -113,7 +113,7 @@ namespace TaskSimulator
         }
 
         /// <summary>
-        /// 机器人初始化
+        /// 无人船初始化
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -132,8 +132,8 @@ namespace TaskSimulator
                 {
                     foreach (VirtualRobotConfig vrc in RobotListConfig.RobotList)
                     {
-                        ShowLogTextWithThread("正在创建机器人" + vrc.VirtualRobotId + "......");
-                        TaskSimulatorLib.SimulatorObject.logger.Info("正在创建机器人" + vrc.VirtualRobotId + "......");
+                        ShowLogTextWithThread("正在创建无人船" + vrc.VirtualRobotId + "......");
+                        TaskSimulatorLib.SimulatorObject.logger.Info("正在创建无人船" + vrc.VirtualRobotId + "......");
 
                         //添加配置字典
                         VirtualRobotConfigDict.Add(vrc.VirtualRobotId, vrc);
@@ -143,7 +143,7 @@ namespace TaskSimulator
                         {
                             virtualCamerasList.Add(new KeyValuePair<string, string>("VCamera" + kkkk, RobotListConfig.VirtualCameraNames[kkkk]));
                         }
-                        //创建机器人
+                        //创建无人船
                         RobotFactory.CreateRobot(vrc.VirtualRobotId, vrc.VirtualRobotName, vrc.DefaultLat, vrc.DefaultLng, virtualCamerasList.ToArray());
 
                         //连接MQTT
@@ -171,8 +171,8 @@ namespace TaskSimulator
                         robotTaskSocket.ConnectToServer();
                         VirtualRobotSocketDict.Add(vrc.VirtualRobotId, robotTaskSocket);
 
-                        ShowLogTextWithThread("创建机器人" + vrc.VirtualRobotId + "成功！");
-                        TaskSimulatorLib.SimulatorObject.logger.Info("创建机器人" + vrc.VirtualRobotId + "成功！");
+                        ShowLogTextWithThread("创建无人船" + vrc.VirtualRobotId + "成功！");
+                        TaskSimulatorLib.SimulatorObject.logger.Info("创建无人船" + vrc.VirtualRobotId + "成功！");
                     }
                 }
             }
@@ -389,12 +389,12 @@ namespace TaskSimulator
             //停止任务处理器
             RobotTasks.RobotFactory.Simulator.Stop();
 
-            //关闭所有机器人
+            //关闭所有无人船
             CloseAllRobot();
         }
 
         /// <summary>
-        /// 关闭所有机器人
+        /// 关闭所有无人船
         /// </summary>
         private void CloseAllRobot()
         {
@@ -457,7 +457,7 @@ namespace TaskSimulator
         public double StepWithSecond { get; set; }
 
         /// <summary>
-        /// 机器人在画方框时的边长或画圆形时的半径
+        /// 无人船在画方框时的边长或画圆形时的半径
         /// </summary>
         public double RobotMoveLimit { get; set; }
 
@@ -507,7 +507,7 @@ namespace TaskSimulator
         public string[] VirtualCameraBackgroundImages { get; set; }
 
         /// <summary>
-        /// 机器人列表
+        /// 无人船列表
         /// </summary>
         public VirtualRobotConfig[] RobotList { get; set; }
     }
@@ -547,12 +547,12 @@ namespace TaskSimulator
     public class VirtualRobotConfig
     {
         /// <summary>
-        /// 虚拟机器人ID
+        /// 虚拟无人船ID
         /// </summary>
         public string VirtualRobotId { get; set; }
 
         /// <summary>
-        /// 虚拟机器人名称
+        /// 虚拟无人船名称
         /// </summary>
         public string VirtualRobotName { get; set; }
 
@@ -628,7 +628,7 @@ namespace TaskSimulator
     }
 
     /// <summary>
-    /// 自定义机器人移动方案
+    /// 自定义无人船移动方案
     /// </summary>
     [Serializable]
     public class CustomMovePlan

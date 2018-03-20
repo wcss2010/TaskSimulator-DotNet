@@ -16,7 +16,7 @@ using TaskSimulatorLib.Processors.Task;
 namespace TaskSimulator.RobotTasks
 {
     /// <summary>
-    /// 机器人工厂
+    /// 无人船工厂
     /// </summary>
     public class RobotFactory
     {
@@ -82,7 +82,7 @@ namespace TaskSimulator.RobotTasks
         public static SimulatorObject Simulator = new SimulatorObject();
 
         /// <summary>
-        /// 创建机器人用户
+        /// 创建无人船用户
         /// </summary>
         /// <param name="userCode"></param>
         /// <param name="userName"></param>
