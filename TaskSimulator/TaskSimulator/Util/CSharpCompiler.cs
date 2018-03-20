@@ -48,7 +48,7 @@ namespace TaskSimulator.Util
                 sb.Append("C#动态编译错误：").Append("\n");
                 foreach (CompilerError err in cr.Errors)
                 {
-                    sb.Append(err.ErrorText).Append("\n");
+                    sb.Append(err.ToString()).Append("\n");
                 }
 
                 throw new Exception(sb.ToString());

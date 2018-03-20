@@ -351,6 +351,7 @@
             this.Controls.Add(this.tcMain);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.statusStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TestMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "无人船模拟器 V1.1";
