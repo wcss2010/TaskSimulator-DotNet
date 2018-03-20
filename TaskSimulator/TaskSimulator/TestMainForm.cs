@@ -17,7 +17,7 @@ namespace TaskSimulator
         /// <summary>
         /// 最大日志显示行
         /// </summary>
-        public const int Max_Log_Line_Count = 23;
+        public const int Max_Log_Line_Count = 30;
 
         public TestMainForm()
         {
