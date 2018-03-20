@@ -44,7 +44,14 @@ namespace TaskSimulator.Util
 
             if (cr.Errors.HasErrors)
             {
-                throw new Exception(" CSharpCompiler 编译出错!");
+                StringBuilder sb = new StringBuilder();
+                sb.Append("C#动态编译错误：").Append("\n");
+                foreach (CompilerError err in cr.Errors)
+                {
+                    sb.Append(err.ErrorText).Append("\n");
+                }
+
+                throw new Exception(sb.ToString());
             }
             else
             {
