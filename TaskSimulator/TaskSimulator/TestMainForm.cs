@@ -265,6 +265,8 @@ namespace TaskSimulator
                     rbRoatWorkModeOnce.Checked = true;
                 }
 
+                gbBoatDetail.Text = "无人船详细(ID:" + ru.UserCode + ",名称:" + ru.UserName + ",Socket状态:" + (ru.RobotSocket != null ? (ru.RobotSocket.IsConnected() ? "在线" : "离线") : ("离线")) + ")";
+
                 //Socket指令
                 lbxSocketCommands.Items.Clear();
                 if (ru.RobotSocket != null)

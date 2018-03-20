@@ -41,20 +41,20 @@
             this.tpStatusList = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tvRobotList = new System.Windows.Forms.TreeView();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.rbRoatWorkModeAlways = new System.Windows.Forms.RadioButton();
-            this.rbRoatWorkModeOnce = new System.Windows.Forms.RadioButton();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dgvTaskStateList = new System.Windows.Forms.DataGridView();
+            this.gbBoatDetail = new System.Windows.Forms.GroupBox();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
             this.lbxSocketCommands = new System.Windows.Forms.ListBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.dgvTaskStateList = new System.Windows.Forms.DataGridView();
             this.cTaskName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cTaskState = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.rbRoatWorkModeOnce = new System.Windows.Forms.RadioButton();
+            this.rbRoatWorkModeAlways = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
             this.trBoatStateUpdater = new System.Windows.Forms.Timer(this.components);
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -65,12 +65,12 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.gbBoatDetail.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTaskStateList)).BeginInit();
-            this.panel4.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -137,7 +137,7 @@
             this.tpLog.Location = new System.Drawing.Point(4, 25);
             this.tpLog.Name = "tpLog";
             this.tpLog.Padding = new System.Windows.Forms.Padding(3);
-            this.tpLog.Size = new System.Drawing.Size(959, 386);
+            this.tpLog.Size = new System.Drawing.Size(1138, 407);
             this.tpLog.TabIndex = 0;
             this.tpLog.Text = "运行日志";
             this.tpLog.UseVisualStyleBackColor = true;
@@ -148,7 +148,7 @@
             this.tbLogs.Location = new System.Drawing.Point(3, 3);
             this.tbLogs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbLogs.Name = "tbLogs";
-            this.tbLogs.Size = new System.Drawing.Size(953, 380);
+            this.tbLogs.Size = new System.Drawing.Size(1132, 401);
             this.tbLogs.TabIndex = 2;
             this.tbLogs.Text = "";
             // 
@@ -175,7 +175,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.groupBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.gbBoatDetail);
             this.splitContainer1.Size = new System.Drawing.Size(1132, 401);
             this.splitContainer1.SplitterDistance = 377;
             this.splitContainer1.TabIndex = 0;
@@ -191,70 +191,49 @@
             this.tvRobotList.TabIndex = 0;
             this.tvRobotList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvRobotList_AfterSelect);
             // 
-            // groupBox1
+            // gbBoatDetail
             // 
-            this.groupBox1.Controls.Add(this.panel4);
-            this.groupBox1.Controls.Add(this.panel3);
-            this.groupBox1.Controls.Add(this.panel2);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(751, 401);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "无人船详细";
+            this.gbBoatDetail.Controls.Add(this.panel4);
+            this.gbBoatDetail.Controls.Add(this.panel3);
+            this.gbBoatDetail.Controls.Add(this.panel2);
+            this.gbBoatDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbBoatDetail.Location = new System.Drawing.Point(0, 0);
+            this.gbBoatDetail.Name = "gbBoatDetail";
+            this.gbBoatDetail.Size = new System.Drawing.Size(751, 401);
+            this.gbBoatDetail.TabIndex = 0;
+            this.gbBoatDetail.TabStop = false;
+            this.gbBoatDetail.Text = "无人船详细";
             // 
-            // label1
+            // panel4
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "工作模式：";
+            this.panel4.Controls.Add(this.lbxSocketCommands);
+            this.panel4.Controls.Add(this.label3);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(3, 262);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(745, 136);
+            this.panel4.TabIndex = 4;
             // 
-            // panel1
+            // lbxSocketCommands
             // 
-            this.panel1.Controls.Add(this.rbRoatWorkModeOnce);
-            this.panel1.Controls.Add(this.rbRoatWorkModeAlways);
-            this.panel1.Location = new System.Drawing.Point(99, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(643, 27);
-            this.panel1.TabIndex = 1;
+            this.lbxSocketCommands.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbxSocketCommands.FormattingEnabled = true;
+            this.lbxSocketCommands.ItemHeight = 15;
+            this.lbxSocketCommands.Location = new System.Drawing.Point(97, 0);
+            this.lbxSocketCommands.Name = "lbxSocketCommands";
+            this.lbxSocketCommands.Size = new System.Drawing.Size(648, 136);
+            this.lbxSocketCommands.TabIndex = 1;
+            this.lbxSocketCommands.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbxSocketCommands_MouseDoubleClick);
             // 
-            // rbRoatWorkModeAlways
+            // label3
             // 
-            this.rbRoatWorkModeAlways.AutoSize = true;
-            this.rbRoatWorkModeAlways.Checked = true;
-            this.rbRoatWorkModeAlways.Location = new System.Drawing.Point(4, 4);
-            this.rbRoatWorkModeAlways.Name = "rbRoatWorkModeAlways";
-            this.rbRoatWorkModeAlways.Size = new System.Drawing.Size(163, 19);
-            this.rbRoatWorkModeAlways.TabIndex = 0;
-            this.rbRoatWorkModeAlways.TabStop = true;
-            this.rbRoatWorkModeAlways.Text = "无人船需要连续航行";
-            this.rbRoatWorkModeAlways.UseVisualStyleBackColor = true;
-            this.rbRoatWorkModeAlways.CheckedChanged += new System.EventHandler(this.rbRoatWorkModeAlways_CheckedChanged);
-            // 
-            // rbRoatWorkModeOnce
-            // 
-            this.rbRoatWorkModeOnce.AutoSize = true;
-            this.rbRoatWorkModeOnce.Location = new System.Drawing.Point(184, 4);
-            this.rbRoatWorkModeOnce.Name = "rbRoatWorkModeOnce";
-            this.rbRoatWorkModeOnce.Size = new System.Drawing.Size(343, 19);
-            this.rbRoatWorkModeOnce.TabIndex = 1;
-            this.rbRoatWorkModeOnce.Text = "无人船航行任务停止后不需要再次自动规划行程";
-            this.rbRoatWorkModeOnce.UseVisualStyleBackColor = true;
-            this.rbRoatWorkModeOnce.CheckedChanged += new System.EventHandler(this.rbRoatWorkModeOnce_CheckedChanged);
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.panel1);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(3, 21);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(745, 33);
-            this.panel2.TabIndex = 2;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label3.Location = new System.Drawing.Point(0, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(97, 136);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "所支持的控制台指令（双击即可运行）：";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // panel3
             // 
@@ -265,16 +244,6 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(745, 208);
             this.panel3.TabIndex = 3;
-            // 
-            // label2
-            // 
-            this.label2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label2.Location = new System.Drawing.Point(0, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(98, 208);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "任务状态：";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // dgvTaskStateList
             // 
@@ -292,37 +261,6 @@
             this.dgvTaskStateList.Size = new System.Drawing.Size(647, 208);
             this.dgvTaskStateList.TabIndex = 1;
             // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.lbxSocketCommands);
-            this.panel4.Controls.Add(this.label3);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(3, 262);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(745, 136);
-            this.panel4.TabIndex = 4;
-            // 
-            // label3
-            // 
-            this.label3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label3.Location = new System.Drawing.Point(0, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(97, 136);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "所支持的控制台指令（双击即可运行）：";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lbxSocketCommands
-            // 
-            this.lbxSocketCommands.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbxSocketCommands.FormattingEnabled = true;
-            this.lbxSocketCommands.ItemHeight = 15;
-            this.lbxSocketCommands.Location = new System.Drawing.Point(97, 0);
-            this.lbxSocketCommands.Name = "lbxSocketCommands";
-            this.lbxSocketCommands.Size = new System.Drawing.Size(648, 136);
-            this.lbxSocketCommands.TabIndex = 1;
-            this.lbxSocketCommands.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbxSocketCommands_MouseDoubleClick);
-            // 
             // cTaskName
             // 
             this.cTaskName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -336,6 +274,68 @@
             this.cTaskState.HeaderText = "任务状态";
             this.cTaskState.Name = "cTaskState";
             this.cTaskState.ReadOnly = true;
+            // 
+            // label2
+            // 
+            this.label2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(98, 208);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "任务状态：";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.panel1);
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(3, 21);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(745, 33);
+            this.panel2.TabIndex = 2;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.rbRoatWorkModeOnce);
+            this.panel1.Controls.Add(this.rbRoatWorkModeAlways);
+            this.panel1.Location = new System.Drawing.Point(99, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(643, 27);
+            this.panel1.TabIndex = 1;
+            // 
+            // rbRoatWorkModeOnce
+            // 
+            this.rbRoatWorkModeOnce.AutoSize = true;
+            this.rbRoatWorkModeOnce.Location = new System.Drawing.Point(184, 4);
+            this.rbRoatWorkModeOnce.Name = "rbRoatWorkModeOnce";
+            this.rbRoatWorkModeOnce.Size = new System.Drawing.Size(343, 19);
+            this.rbRoatWorkModeOnce.TabIndex = 1;
+            this.rbRoatWorkModeOnce.Text = "无人船航行任务停止后不需要再次自动规划行程";
+            this.rbRoatWorkModeOnce.UseVisualStyleBackColor = true;
+            this.rbRoatWorkModeOnce.CheckedChanged += new System.EventHandler(this.rbRoatWorkModeOnce_CheckedChanged);
+            // 
+            // rbRoatWorkModeAlways
+            // 
+            this.rbRoatWorkModeAlways.AutoSize = true;
+            this.rbRoatWorkModeAlways.Checked = true;
+            this.rbRoatWorkModeAlways.Location = new System.Drawing.Point(4, 4);
+            this.rbRoatWorkModeAlways.Name = "rbRoatWorkModeAlways";
+            this.rbRoatWorkModeAlways.Size = new System.Drawing.Size(163, 19);
+            this.rbRoatWorkModeAlways.TabIndex = 0;
+            this.rbRoatWorkModeAlways.TabStop = true;
+            this.rbRoatWorkModeAlways.Text = "无人船需要连续航行";
+            this.rbRoatWorkModeAlways.UseVisualStyleBackColor = true;
+            this.rbRoatWorkModeAlways.CheckedChanged += new System.EventHandler(this.rbRoatWorkModeAlways_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(11, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(82, 15);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "工作模式：";
             // 
             // trBoatStateUpdater
             // 
@@ -367,14 +367,14 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.gbBoatDetail.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTaskStateList)).EndInit();
-            this.panel4.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -393,7 +393,7 @@
         private System.Windows.Forms.ToolStripButton tbtnConfig;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TreeView tvRobotList;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gbBoatDetail;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RadioButton rbRoatWorkModeAlways;
