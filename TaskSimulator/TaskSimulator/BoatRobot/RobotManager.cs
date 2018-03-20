@@ -142,6 +142,11 @@ namespace TaskSimulator.BoatRobot
                         catch (Exception ex)
                         {
                             SimulatorObject.logger.Error(ex.ToString());
+
+                            if (SimulatorObject.ConsoleLoggerWindow != null)
+                            {
+                                SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread(ex.ToString());
+                            }
                         }
                     }
                 }
@@ -186,6 +191,11 @@ namespace TaskSimulator.BoatRobot
                                 catch (Exception ex)
                                 {
                                     SimulatorObject.logger.Error(ex.ToString());
+
+                                    if (SimulatorObject.ConsoleLoggerWindow != null)
+                                    {
+                                        SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread(ex.ToString());
+                                    }
                                 }
                             }
                         }
@@ -231,6 +241,11 @@ namespace TaskSimulator.BoatRobot
                                 catch (Exception ex)
                                 {
                                     SimulatorObject.logger.Error(ex.ToString());
+
+                                    if (SimulatorObject.ConsoleLoggerWindow != null)
+                                    {
+                                        SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread(ex.ToString());
+                                    }
                                 }
                             }
                         }
@@ -243,97 +258,109 @@ namespace TaskSimulator.BoatRobot
                 {
                     foreach (Robot rb in SimulatorConfig.Robots)
                     {
-                        //创建新的无人船
-                        RobotUser curUser = new RobotUser();
-                        curUser.UserCode = rb.RobotId;
-                        curUser.UserName = rb.RobotName;
-
-                        //检查Socket是否可用
-                        if (robotSocketTemp != null)
+                        try
                         {
-                            curUser.RobotSocket = (IRobotSocket)robotSocketTemp.Clone();
+                            //创建新的无人船
+                            RobotUser curUser = new RobotUser();
+                            curUser.UserCode = rb.RobotId;
+                            curUser.UserName = rb.RobotName;
 
-                            //初始化Socket
-                            curUser.RobotSocket.Init(rb);
-                        }
-
-                        #region 加载机器人默认的模块
-                          //加载摄像头
-                          int cameraIndex = 0;
-                          foreach (string cameraName in rb.CameraNames)
-                          {
-                              cameraIndex++;
-
-                              CameraMonitor cm = new CameraMonitor();
-                              cm.Name = cameraName;
-                              cm.Enabled = true;
-                              cm.User = curUser;
-                              cm.VirtualCameraImageWidth = rb.CameraPictureWidth;
-                              cm.VirtualCameraImageHeight = rb.CameraPictureHeight;
-                              cm.VirtualCameraImageFont = new Font(rb.CameraHintTextFontName, rb.CameraHintTextFontSize);
-                              cm.VirtualCameraBackgroundImages = rb.CameraBackgrounds;
-
-                              curUser.SupportedMonitor.TryAdd(CAMERA_ID_HEAD + cameraIndex, cm);
-                          }
-                          
-                          //加载GPS监视器
-                          GPSMonitor gpsmonitor = new GPSMonitor();
-                          gpsmonitor.Enabled = true;
-                          gpsmonitor.Name = "GPS监视器";
-                          gpsmonitor.User = curUser;
-                          gpsmonitor.GPSCurrent = rb.DefaultGpsPos;
-                          
-                          curUser.SupportedMonitor.TryAdd(Monitor_GPS, gpsmonitor);
-                          
-                          //加载行动任务
-                          RobotTask boatFly = new RobotTask();
-                          boatFly.TaskCode = Task_BoatFly;
-                          boatFly.TaskName = "自主航行任务";
-                          boatFly.Enabled = true;
-                          boatFly.TaskWorkerThread = new BoatFlyTask();
-                          ((BoatFlyTask)boatFly.TaskWorkerThread).StepWithSecond = rb.StepWithSecond;
-                          ((BoatFlyTask)boatFly.TaskWorkerThread).Task = boatFly;
-                          ((BoatFlyTask)boatFly.TaskWorkerThread).User = curUser;
-                          ((BoatFlyTask)boatFly.TaskWorkerThread).WorkerThreadState = WorkerThreadStateType.Ready;
-                          
-                          curUser.SupportedTask.TryAdd(boatFly.TaskCode, boatFly);
-                        #endregion
-
-                        #region 加载自定义模块
-                        //监视器
-                        foreach(DynamicComponent dc in SimulatorConfig.MonitorComponentMap.Values)
-                        {
-                            if (monitorDict.ContainsKey(dc.ComponentId) && rb.MonitorStateMap.ContainsKey(dc.ComponentId))
+                            //检查Socket是否可用
+                            if (robotSocketTemp != null)
                             {
-                                curUser.SupportedMonitor.TryAdd(dc.ComponentId, (IMonitor)monitorDict[dc.ComponentId].Clone());
+                                curUser.RobotSocket = (IRobotSocket)robotSocketTemp.Clone();
 
-                                curUser.SupportedMonitor[dc.ComponentId].Name = dc.ComponentName;
-                                curUser.SupportedMonitor[dc.ComponentId].User = curUser;
-                                curUser.SupportedMonitor[dc.ComponentId].Enabled = rb.MonitorStateMap[dc.ComponentId];
+                                //初始化Socket
+                                curUser.RobotSocket.Init(rb);
+                            }
+
+                            #region 加载机器人默认的模块
+                            //加载摄像头
+                            int cameraIndex = 0;
+                            foreach (string cameraName in rb.CameraNames)
+                            {
+                                cameraIndex++;
+
+                                CameraMonitor cm = new CameraMonitor();
+                                cm.Name = cameraName;
+                                cm.Enabled = true;
+                                cm.User = curUser;
+                                cm.VirtualCameraImageWidth = rb.CameraPictureWidth;
+                                cm.VirtualCameraImageHeight = rb.CameraPictureHeight;
+                                cm.VirtualCameraImageFont = new Font(rb.CameraHintTextFontName, rb.CameraHintTextFontSize);
+                                cm.VirtualCameraBackgroundImages = rb.CameraBackgrounds;
+
+                                curUser.SupportedMonitor.TryAdd(CAMERA_ID_HEAD + cameraIndex, cm);
+                            }
+
+                            //加载GPS监视器
+                            GPSMonitor gpsmonitor = new GPSMonitor();
+                            gpsmonitor.Enabled = true;
+                            gpsmonitor.Name = "GPS监视器";
+                            gpsmonitor.User = curUser;
+                            gpsmonitor.GPSCurrent = rb.DefaultGpsPos;
+
+                            curUser.SupportedMonitor.TryAdd(Monitor_GPS, gpsmonitor);
+
+                            //加载行动任务
+                            RobotTask boatFly = new RobotTask();
+                            boatFly.TaskCode = Task_BoatFly;
+                            boatFly.TaskName = "自主航行任务";
+                            boatFly.Enabled = true;
+                            boatFly.TaskWorkerThread = new BoatFlyTask();
+                            ((BoatFlyTask)boatFly.TaskWorkerThread).StepWithSecond = rb.StepWithSecond;
+                            ((BoatFlyTask)boatFly.TaskWorkerThread).Task = boatFly;
+                            ((BoatFlyTask)boatFly.TaskWorkerThread).User = curUser;
+                            ((BoatFlyTask)boatFly.TaskWorkerThread).WorkerThreadState = WorkerThreadStateType.Ready;
+
+                            curUser.SupportedTask.TryAdd(boatFly.TaskCode, boatFly);
+                            #endregion
+
+                            #region 加载自定义模块
+                            //监视器
+                            foreach (DynamicComponent dc in SimulatorConfig.MonitorComponentMap.Values)
+                            {
+                                if (monitorDict.ContainsKey(dc.ComponentId) && rb.MonitorStateMap.ContainsKey(dc.ComponentId))
+                                {
+                                    curUser.SupportedMonitor.TryAdd(dc.ComponentId, (IMonitor)monitorDict[dc.ComponentId].Clone());
+
+                                    curUser.SupportedMonitor[dc.ComponentId].Name = dc.ComponentName;
+                                    curUser.SupportedMonitor[dc.ComponentId].User = curUser;
+                                    curUser.SupportedMonitor[dc.ComponentId].Enabled = rb.MonitorStateMap[dc.ComponentId];
+                                }
+                            }
+
+                            //任务处理器
+                            foreach (DynamicComponent dc in SimulatorConfig.TaskComponentMap.Values)
+                            {
+                                if (taskDict.ContainsKey(dc.ComponentId) && rb.TaskStateMap.ContainsKey(dc.ComponentId))
+                                {
+                                    RobotTask rt = new RobotTask();
+                                    rt.TaskCode = dc.ComponentId;
+                                    rt.TaskName = dc.ComponentName;
+                                    rt.TaskWorkerThread = (ITaskWorkerThread)taskDict[dc.ComponentId].Clone();
+                                    rt.TaskWorkerThread.WorkerThreadState = WorkerThreadStateType.Ready;
+                                    rt.TaskWorkerThread.User = curUser;
+                                    rt.TaskWorkerThread.Task = rt;
+                                    rt.Enabled = rb.TaskStateMap[dc.ComponentId];
+
+                                    curUser.SupportedTask.TryAdd(dc.ComponentId, rt);
+                                }
+                            }
+                            #endregion
+
+                            //添加用户
+                            SimulatorObject.Simulator.UserDict.TryAdd(curUser.UserCode, curUser);
+                        }
+                        catch (Exception ex)
+                        {
+                            SimulatorObject.logger.Error(ex.ToString());
+
+                            if (SimulatorObject.ConsoleLoggerWindow != null)
+                            {
+                                SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread(ex.ToString());
                             }
                         }
-
-                        //任务处理器
-                        foreach (DynamicComponent dc in SimulatorConfig.TaskComponentMap.Values)
-                        {
-                            if (taskDict.ContainsKey(dc.ComponentId) && rb.TaskStateMap.ContainsKey(dc.ComponentId))
-                            {
-                                RobotTask rt = new RobotTask();
-                                rt.TaskCode = dc.ComponentId;
-                                rt.TaskName = dc.ComponentName;
-                                rt.TaskWorkerThread = (ITaskWorkerThread)taskDict[dc.ComponentId].Clone();
-                                rt.TaskWorkerThread.WorkerThreadState = WorkerThreadStateType.Ready;
-                                rt.TaskWorkerThread.User = curUser;
-                                rt.TaskWorkerThread.Task = rt;
-                                rt.Enabled = rb.TaskStateMap[dc.ComponentId];
-
-                                curUser.SupportedTask.TryAdd(dc.ComponentId, rt);
-                            }
-                        }
-                        #endregion
-
-                        //添加用户
-                        SimulatorObject.Simulator.UserDict.TryAdd(curUser.UserCode, curUser);
                     }
                 }
                 #endregion

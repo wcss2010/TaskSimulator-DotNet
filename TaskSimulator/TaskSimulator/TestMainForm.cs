@@ -146,14 +146,31 @@ namespace TaskSimulator
         {
             if (MessageBox.Show("真的要重启所有无人船吗？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
             {
+                TaskSimulatorLib.SimulatorObject.logger.Info("正在进行重启操作，请稍等...");
+                ShowLogTextWithThread("正在进行重启操作，请稍等...");
+
                 //检查当前是不是已经一份配置的运行了
                 TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Clear();
+                foreach (TaskSimulatorLib.Processors.ProcessorQueueObject pqo in TaskSimulatorLib.SimulatorObject.Simulator.TaskProcessor.Queues)
+                {
+                    if (pqo.Task != null && pqo.Task.TaskWorkerThread != null)
+                    {
+                        pqo.Task.TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ended;
+                    }
+                }
                 TaskSimulatorLib.SimulatorObject.Simulator.TaskProcessor.Queues = new System.Collections.Concurrent.ConcurrentQueue<TaskSimulatorLib.Processors.ProcessorQueueObject>();
 
+                TaskSimulatorLib.SimulatorObject.logger.Info("运行缓存清理完毕...");
+                ShowLogTextWithThread("运行缓存清理完毕...");
+
+                TaskSimulatorLib.SimulatorObject.logger.Info("正在初始化无人船相关数据...");
+                ShowLogTextWithThread("正在初始化无人船相关数据...");
 
                 //准备初始化无人船对象
                 TaskSimulator.BoatRobot.RobotManager.Init();
-                TaskSimulatorLib.SimulatorObject.Simulator.TaskProcessor.Queues = new System.Collections.Concurrent.ConcurrentQueue<TaskSimulatorLib.Processors.ProcessorQueueObject>();
+
+                TaskSimulatorLib.SimulatorObject.logger.Info("无人船相关数据初始化完毕...");
+                ShowLogTextWithThread("无人船相关数据初始化完毕...");
 
                 //无人船启动
                 foreach (TaskSimulatorLib.Entitys.RobotUser ru in TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Values)
@@ -174,6 +191,9 @@ namespace TaskSimulator
 
                 //初始化无人船状态列表
                 InitBoatStateList();
+
+                TaskSimulatorLib.SimulatorObject.logger.Info("无人船模拟器重启完毕.");
+                ShowLogTextWithThread("无人船模拟器重启完毕.");
             }
         }
 
@@ -236,7 +256,7 @@ namespace TaskSimulator
                 TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
 
                 //工作状态
-                if (ru.WorkMode == TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ALWAYS)
+                if (ru.WorkMode == TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ALWAYS || string.IsNullOrEmpty(ru.WorkMode))
                 {
                     rbRoatWorkModeAlways.Checked = true;
                 }
