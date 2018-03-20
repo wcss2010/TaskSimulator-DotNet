@@ -350,8 +350,8 @@
             this.tbtnMapMonitor.Image = ((System.Drawing.Image)(resources.GetObject("tbtnMapMonitor.Image")));
             this.tbtnMapMonitor.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbtnMapMonitor.Name = "tbtnMapMonitor";
-            this.tbtnMapMonitor.Size = new System.Drawing.Size(118, 56);
-            this.tbtnMapMonitor.Text = "打开地图监视器";
+            this.tbtnMapMonitor.Size = new System.Drawing.Size(163, 56);
+            this.tbtnMapMonitor.Text = "打开无人船地图监视器";
             this.tbtnMapMonitor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tbtnMapMonitor.Click += new System.EventHandler(this.tbtnMapMonitor_Click);
             // 

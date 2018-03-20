@@ -323,7 +323,8 @@ namespace TaskSimulator
 
         private void tbtnMapMonitor_Click(object sender, EventArgs e)
         {
-
+            BoatMapMonitor mapMonitor = new BoatMapMonitor();
+            mapMonitor.Show();
         }
     }
 }
