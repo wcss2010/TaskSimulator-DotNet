@@ -320,5 +320,10 @@ namespace TaskSimulator
                 TaskSimulatorLib.SimulatorObject.logger.Error(ex.ToString());
             }
         }
+
+        private void tbtnMapMonitor_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

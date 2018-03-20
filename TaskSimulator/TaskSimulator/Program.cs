@@ -13,6 +13,13 @@ namespace TaskSimulator
         [STAThread]
         static void Main()
         {
+            //创建动态代码目录
+            try
+            {
+                System.IO.Directory.CreateDirectory(System.IO.Path.Combine(Application.StartupPath, TaskSimulator.BoatRobot.RobotManager.ROBOT_DYNAMIC_COMPONENT_DIR));
+            }
+            catch (Exception ex) { }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new TestMainForm());
