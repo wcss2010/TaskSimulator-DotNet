@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GMap.NET;
+using GMap.NET.WindowsForms;
+using GMap.NET.WindowsForms.Markers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,6 +20,16 @@ namespace TaskSimulator.Forms
         /// </summary>
         public string FlyPathText { get; set; }
 
+        /// <summary>
+        /// 船的初始位置
+        /// </summary>
+        public TaskSimulatorLib.Entitys.LatAndLng BoatDefaultPoint { get; set; }
+
+        /// <summary>
+        /// 多边形的点集
+        /// </summary>
+        private List<PointLatLng> drawingPoints = new List<PointLatLng>();
+        
         public FlyPathMapMonitor()
         {
             InitializeComponent();
@@ -31,15 +44,30 @@ namespace TaskSimulator.Forms
             MapControl.OnPolygonLeave += MapControl_OnPolygonLeave;
             MapControl.OnPolygonEnter += MapControl_OnPolygonEnter;
         }
-
-        void MapControl_OnPolygonEnter(GMap.NET.WindowsForms.GMapPolygon item)
+       
+        /// <summary>
+        /// 画出两点直接的直线
+        /// </summary>
+        /// <param name="pointLatLng_S"></param>
+        /// <param name="pointLatLng_E"></param>
+        private void DrawLineBetweenTwoPoint(PointLatLng pointLatLng_S, PointLatLng pointLatLng_E)
         {
-            
+            List<PointLatLng> points = new List<PointLatLng>();
+            points.Add(pointLatLng_S);
+            points.Add(pointLatLng_E);
+            GMapRoute r = new GMapRoute(points, "");
+            r.Stroke = new Pen(Color.Green, 1);
+            DefaultOverlay.Routes.Add(r);
         }
 
-        void MapControl_OnPolygonLeave(GMap.NET.WindowsForms.GMapPolygon item)
+        void MapControl_OnPolygonLeave(GMapPolygon item)
         {
-            
+
+        }
+
+        void MapControl_OnPolygonEnter(GMapPolygon item)
+        {
+
         }
 
         void MapControl_MouseUp(object sender, MouseEventArgs e)
@@ -49,7 +77,18 @@ namespace TaskSimulator.Forms
 
         void MapControl_MouseDown(object sender, MouseEventArgs e)
         {
-            
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                drawingPoints.Add(MapControl.FromLocalToLatLng(e.X, e.Y));
+
+                if (drawingPoints.Count >= 2)
+                {
+                    PointLatLng endPoint = drawingPoints[drawingPoints.Count - 1];
+                    PointLatLng startPoint = drawingPoints[drawingPoints.Count - 2];
+
+                    DrawLineBetweenTwoPoint(startPoint, endPoint);
+                }
+            }
         }
 
         void MapControl_MouseClick(object sender, MouseEventArgs e)
@@ -59,9 +98,7 @@ namespace TaskSimulator.Forms
 
         void MapControl_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            
+
         }
-
-
     }
 }

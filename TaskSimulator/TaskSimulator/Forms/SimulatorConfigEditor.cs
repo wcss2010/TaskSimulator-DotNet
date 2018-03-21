@@ -657,10 +657,20 @@ namespace TaskSimulator.Forms
 
         private void btnRobotEditFlyPathInMap_Click(object sender, EventArgs e)
         {
-            FlyPathMapMonitor fmm = new FlyPathMapMonitor();
-            if (fmm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            try
             {
-                tbRobotFlyPaths.Text = fmm.FlyPathText;
+                FlyPathMapMonitor fmm = new FlyPathMapMonitor();
+                fmm.BoatDefaultPoint = new LatAndLng(double.Parse(rbRobotDefaultLat.Text), double.Parse(rbRobotDefaultLng.Text));
+                fmm.FlyPathText = tbRobotFlyPaths.Text;
+
+                if (fmm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    tbRobotFlyPaths.Text = fmm.FlyPathText;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("显示地图监视器出错！Ex:" + ex.ToString());
             }
         }
     }
