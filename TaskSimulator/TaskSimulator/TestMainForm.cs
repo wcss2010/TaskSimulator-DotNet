@@ -249,11 +249,15 @@ namespace TaskSimulator
             if (tvRobotList.SelectedNode != null)
             {
                 TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
-                ru.WorkMode = TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ALWAYS;
-
-                if (ru.RobotSocket != null)
+                
+                if (rbRoatWorkModeAlways.Checked)
                 {
-                    ru.RobotSocket.RobotStart(null);
+                    ru.WorkMode = TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ALWAYS;
+
+                    if (ru.RobotSocket != null)
+                    {
+                        ru.RobotSocket.RobotStart(null);
+                    }
                 }
             }
         }
@@ -263,7 +267,11 @@ namespace TaskSimulator
             if (tvRobotList.SelectedNode != null)
             {
                 TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
-                ru.WorkMode = TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ONCE;
+
+                if (rbRoatWorkModeOnce.Checked)
+                {
+                    ru.WorkMode = TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ONCE;
+                }
             }
         }
 
