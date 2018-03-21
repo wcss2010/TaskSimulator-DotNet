@@ -42,6 +42,6 @@ namespace TaskSimulatorLib.Entitys
     /// </summary>
     public enum DynamicComponentType
     {
-       Monitor,Task
+       Monitor,Task,SocketController,None
     }
 }
