@@ -20,7 +20,7 @@ namespace TaskSimulator.Util
         /// 编译程序集
         /// </summary>
         /// <returns></returns>
-        public static Assembly Compile(string[] refDLL,string[] csharpCodes)
+        public static Assembly Compile(string[] refDLL,string[] codeFiles)
         {
             //创建C#编译器实例
             CSharpCodeProvider comp = new CSharpCodeProvider();
@@ -40,7 +40,7 @@ namespace TaskSimulator.Util
             cp.GenerateInMemory = true;
 
             // 编译结果   
-            CompilerResults cr = comp.CompileAssemblyFromSource(cp, csharpCodes);
+            CompilerResults cr = comp.CompileAssemblyFromFile(cp, codeFiles);
 
             if (cr.Errors.HasErrors)
             {

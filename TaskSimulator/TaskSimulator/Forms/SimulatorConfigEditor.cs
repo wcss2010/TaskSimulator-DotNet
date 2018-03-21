@@ -634,7 +634,15 @@ namespace TaskSimulator.Forms
 
         private void btnRobotoSelectDefaultPos_Click(object sender, EventArgs e)
         {
-
+            GPSPointSelectMapMonitor defaultPosSelect = new GPSPointSelectMapMonitor();
+            if (defaultPosSelect.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                if (defaultPosSelect.PointFromMouseClick != null)
+                {
+                    rbRobotDefaultLat.Text = defaultPosSelect.PointFromMouseClick.Lat + "";
+                    rbRobotDefaultLng.Text = defaultPosSelect.PointFromMouseClick.Lng + "";
+                }
+            }
         }
 
         private void btnRobotSelectAllComponents_Click(object sender, EventArgs e)
