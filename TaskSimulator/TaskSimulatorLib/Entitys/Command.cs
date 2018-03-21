@@ -45,6 +45,31 @@ namespace TaskSimulatorLib.Entitys
         }
 
         /// <summary>
+        /// 链式调用-设置命令文本
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public Command SetCommandText(string str)
+        {
+            this.CommandText = str;
+
+            return this;
+        }
+
+        /// <summary>
+        /// 链式调用-追加参数
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public Command AddParam(string key, object value)
+        {
+            objects.Add(key, value);
+
+            return this;
+        }
+
+        /// <summary>
         /// 临时数据
         /// </summary>
         public object Tag { get; set; }

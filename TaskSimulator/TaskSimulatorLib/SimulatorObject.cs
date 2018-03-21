@@ -118,10 +118,10 @@ namespace TaskSimulatorLib
         }
 
         /// <summary>
-        /// 添加一个任务到任务队列中准备执行
+        /// 任务入队
         /// </summary>
         /// <param name="pqo"></param>
-        public void AddTaskToRunningQueue(ProcessorQueueObject pqo)
+        public void TaskEnqueue(ProcessorQueueObject pqo)
         {
             bool enabledAdd = true;
             foreach (ProcessorQueueObject queue in taskProcessor.Queues)
@@ -140,10 +140,10 @@ namespace TaskSimulatorLib
         }
 
         /// <summary>
-        /// 启动一个任务
+        /// 启动任务
         /// </summary>
         /// <param name="userCode"></param>
-        public void StartTask(string userCode, string taskCode, Command taskCommand)
+        public void TaskStartup(string userCode, string taskCode, Command taskCommand)
         {
             if (UserDict.ContainsKey(userCode))
             {
@@ -166,7 +166,7 @@ namespace TaskSimulatorLib
                 selectedUser.SupportedTask[taskCode].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
 
                 //添加到任务队列
-                AddTaskToRunningQueue(new ProcessorQueueObject(selectedUser, selectedUser.SupportedTask[taskCode], taskCommand));
+                TaskEnqueue(new ProcessorQueueObject(selectedUser, selectedUser.SupportedTask[taskCode], taskCommand));
             }
         }
 

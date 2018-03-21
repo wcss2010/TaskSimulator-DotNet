@@ -63,6 +63,67 @@ namespace TaskSimulatorLib.Entitys
         }
 
         /// <summary>
+        /// 链式调用-设置命令文本
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public CommandResult SetCommandText(string str)
+        {
+            this.CommandText = str;
+
+            return this;
+        }
+
+        /// <summary>
+        /// 链式调用-设置出错原因
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public CommandResult SetErrorReason(string str)
+        {
+            this.ErrorReason = str;
+
+            return this;
+        }
+
+        /// <summary>
+        /// 链式调用-设置内容
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public CommandResult SetContent(object obj)
+        {
+            this.Content = obj;
+
+            return this;
+        }
+
+        /// <summary>
+        /// 链式调用-设置执行结果
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public CommandResult SetCommandResult(bool isoks)
+        {
+            this.IsOK = isoks;
+
+            return this;
+        }
+
+        /// <summary>
+        /// 链式调用-追加参数
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public CommandResult AddParam(string key, object value)
+        {
+            objects.Add(key, value);
+
+            return this;
+        }
+
+        /// <summary>
         /// 临时数据
         /// </summary>
         public object Tag { get; set; }
