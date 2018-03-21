@@ -92,6 +92,12 @@
     <Compile Include="Forms\BoatMapMonitor.Designer.cs">
       <DependentUpon>BoatMapMonitor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FlyPathMapMonitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FlyPathMapMonitor.Designer.cs">
+      <DependentUpon>FlyPathMapMonitor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\GPSPointSelectMapMonitor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,6 +142,9 @@
     <Compile Include="Util\CSharpCompiler.cs" />
     <EmbeddedResource Include="Forms\BoatMapMonitor.resx">
       <DependentUpon>BoatMapMonitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FlyPathMapMonitor.resx">
+      <DependentUpon>FlyPathMapMonitor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GPSPointSelectMapMonitor.resx">
       <DependentUpon>GPSPointSelectMapMonitor.cs</DependentUpon>

@@ -657,7 +657,11 @@ namespace TaskSimulator.Forms
 
         private void btnRobotEditFlyPathInMap_Click(object sender, EventArgs e)
         {
-
+            FlyPathMapMonitor fmm = new FlyPathMapMonitor();
+            if (fmm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbRobotFlyPaths.Text = fmm.FlyPathText;
+            }
         }
     }
 }
