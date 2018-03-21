@@ -17,6 +17,8 @@ namespace TaskSimulatorLib.Templete
     public class RobotSocketTemplete : IRobotSocket
     {
         string robotName = "";
+		
+	    public RobotUser User { get;set; }
 
         /// <summary>
         /// 获得支持的控制台指令(用于在界面中双击使用)
