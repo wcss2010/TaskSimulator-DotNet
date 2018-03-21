@@ -149,6 +149,14 @@ namespace TaskSimulator.BoatRobot
                             }
                         }
                     }
+                    else
+                    {
+                        SimulatorObject.logger.Error("对不起，类文件(" + classFile + ")没有找到!");
+                        if (SimulatorObject.ConsoleLoggerWindow != null)
+                        {
+                            SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起，类文件(" + classFile + ")没有找到!");
+                        }
+                    }
                 }
                 #endregion
 
@@ -196,6 +204,14 @@ namespace TaskSimulator.BoatRobot
                                     {
                                         SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread(ex.ToString());
                                     }
+                                }
+                            }
+                            else
+                            {
+                                SimulatorObject.logger.Error("对不起，类文件(" + classFile + ")没有找到!");
+                                if (SimulatorObject.ConsoleLoggerWindow != null)
+                                {
+                                    SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起，类文件(" + classFile + ")没有找到!");
                                 }
                             }
                         }
@@ -246,6 +262,14 @@ namespace TaskSimulator.BoatRobot
                                     {
                                         SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread(ex.ToString());
                                     }
+                                }
+                            }
+                            else
+                            {
+                                SimulatorObject.logger.Error("对不起，类文件(" + classFile + ")没有找到!");
+                                if (SimulatorObject.ConsoleLoggerWindow != null)
+                                {
+                                    SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起，类文件(" + classFile + ")没有找到!");
                                 }
                             }
                         }
