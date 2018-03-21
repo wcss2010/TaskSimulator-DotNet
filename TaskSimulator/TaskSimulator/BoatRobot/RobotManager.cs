@@ -268,7 +268,11 @@ namespace TaskSimulator.BoatRobot
                             //检查Socket是否可用
                             if (robotSocketTemp != null)
                             {
+                                //克隆一个Socket对象
                                 curUser.RobotSocket = (IRobotSocket)robotSocketTemp.Clone();
+
+                                //设置所属用户
+                                curUser.RobotSocket.User = curUser;
 
                                 //初始化Socket
                                 curUser.RobotSocket.Init(rb);

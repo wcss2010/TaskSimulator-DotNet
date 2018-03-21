@@ -14,6 +14,11 @@ namespace TaskSimulatorLib.Sockets
     public interface IRobotSocket :ICloneable
     {
         /// <summary>
+        /// 所属设备用户
+        /// </summary>
+        RobotUser User { get; set; }
+
+        /// <summary>
         /// 初始化Socket
         /// </summary>
         /// <param name="robot">机器人信息</param>
