@@ -78,11 +78,11 @@ namespace TaskSimulator.Forms
             #endregion
 
             #region 显示无人船列表
-            if (TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.Robots != null)
+            if (TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.RobotMap != null)
             {
                 tvRobots.Nodes.Clear();
 
-                foreach (Robot robot in TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.Robots.Values)
+                foreach (Robot robot in TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.RobotMap.Values)
                 {
                     TreeNode item = new TreeNode();
                     item.Text = robot.RobotName;
@@ -146,7 +146,7 @@ namespace TaskSimulator.Forms
             foreach (TreeNode tn in tvRobots.Nodes)
             {
                 Robot robot = (Robot)tn.Tag;
-                rsc.Robots.Add(robot.RobotId, robot);
+                rsc.RobotMap.Add(robot.RobotId, robot);
             }
             
             TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig = rsc;

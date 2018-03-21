@@ -15,7 +15,7 @@ namespace TaskSimulatorLib.Entitys
     {
         public RobotSimulatorConfig()
         {
-            Robots = new SerializableDictionary<string, Robot>();
+            RobotMap = new SerializableDictionary<string, Robot>();
             
             SocketController = new DynamicComponent();
             SocketController.ComponentType = DynamicComponentType.SocketController;
@@ -34,7 +34,7 @@ namespace TaskSimulatorLib.Entitys
         /// <summary>
         /// 机器人字典(Key=RobotId,Value=RobotConfig)
         /// </summary>
-        public SerializableDictionary<string, Robot> Robots { get; set; }
+        public SerializableDictionary<string, Robot> RobotMap { get; set; }
 
         /// <summary>
         /// Socket控制器

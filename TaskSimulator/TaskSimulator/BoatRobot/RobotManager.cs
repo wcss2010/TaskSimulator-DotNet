@@ -254,9 +254,9 @@ namespace TaskSimulator.BoatRobot
                 #endregion
 
                 #region 生成无人船列表
-                if (SimulatorConfig.Robots != null)
+                if (SimulatorConfig.RobotMap != null)
                 {
-                    foreach (Robot rb in SimulatorConfig.Robots.Values)
+                    foreach (Robot rb in SimulatorConfig.RobotMap.Values)
                     {
                         try
                         {
