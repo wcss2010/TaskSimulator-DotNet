@@ -35,6 +35,7 @@
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.tbtnConfig = new System.Windows.Forms.ToolStripButton();
             this.tbtnStart = new System.Windows.Forms.ToolStripButton();
+            this.tbtnMapMonitor = new System.Windows.Forms.ToolStripButton();
             this.tcMain = new System.Windows.Forms.TabControl();
             this.tpLog = new System.Windows.Forms.TabPage();
             this.tbLogs = new System.Windows.Forms.RichTextBox();
@@ -56,7 +57,6 @@
             this.rbRoatWorkModeAlways = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.trBoatStateUpdater = new System.Windows.Forms.Timer(this.components);
-            this.tbtnMapMonitor = new System.Windows.Forms.ToolStripButton();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.tcMain.SuspendLayout();
@@ -122,6 +122,16 @@
             this.tbtnStart.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tbtnStart.Click += new System.EventHandler(this.tbtnStart_Click);
             // 
+            // tbtnMapMonitor
+            // 
+            this.tbtnMapMonitor.Image = ((System.Drawing.Image)(resources.GetObject("tbtnMapMonitor.Image")));
+            this.tbtnMapMonitor.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnMapMonitor.Name = "tbtnMapMonitor";
+            this.tbtnMapMonitor.Size = new System.Drawing.Size(163, 56);
+            this.tbtnMapMonitor.Text = "打开无人船地图监视器";
+            this.tbtnMapMonitor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tbtnMapMonitor.Click += new System.EventHandler(this.tbtnMapMonitor_Click);
+            // 
             // tcMain
             // 
             this.tcMain.Controls.Add(this.tpLog);
@@ -160,7 +170,7 @@
             this.tpStatusList.Location = new System.Drawing.Point(4, 25);
             this.tpStatusList.Name = "tpStatusList";
             this.tpStatusList.Padding = new System.Windows.Forms.Padding(3);
-            this.tpStatusList.Size = new System.Drawing.Size(1138, 407);
+            this.tpStatusList.Size = new System.Drawing.Size(1138, 391);
             this.tpStatusList.TabIndex = 1;
             this.tpStatusList.Text = "无人船状态列表";
             this.tpStatusList.UseVisualStyleBackColor = true;
@@ -178,7 +188,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gbBoatDetail);
-            this.splitContainer1.Size = new System.Drawing.Size(1132, 401);
+            this.splitContainer1.Size = new System.Drawing.Size(1132, 385);
             this.splitContainer1.SplitterDistance = 377;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -189,7 +199,7 @@
             this.tvRobotList.HideSelection = false;
             this.tvRobotList.Location = new System.Drawing.Point(0, 0);
             this.tvRobotList.Name = "tvRobotList";
-            this.tvRobotList.Size = new System.Drawing.Size(377, 401);
+            this.tvRobotList.Size = new System.Drawing.Size(377, 385);
             this.tvRobotList.TabIndex = 0;
             this.tvRobotList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvRobotList_AfterSelect);
             // 
@@ -201,7 +211,7 @@
             this.gbBoatDetail.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbBoatDetail.Location = new System.Drawing.Point(0, 0);
             this.gbBoatDetail.Name = "gbBoatDetail";
-            this.gbBoatDetail.Size = new System.Drawing.Size(751, 401);
+            this.gbBoatDetail.Size = new System.Drawing.Size(751, 385);
             this.gbBoatDetail.TabIndex = 0;
             this.gbBoatDetail.TabStop = false;
             this.gbBoatDetail.Text = "无人船详细";
@@ -211,9 +221,9 @@
             this.panel4.Controls.Add(this.lbxSocketCommands);
             this.panel4.Controls.Add(this.label3);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(3, 262);
+            this.panel4.Location = new System.Drawing.Point(3, 348);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(745, 136);
+            this.panel4.Size = new System.Drawing.Size(745, 34);
             this.panel4.TabIndex = 4;
             // 
             // lbxSocketCommands
@@ -223,7 +233,7 @@
             this.lbxSocketCommands.ItemHeight = 15;
             this.lbxSocketCommands.Location = new System.Drawing.Point(97, 0);
             this.lbxSocketCommands.Name = "lbxSocketCommands";
-            this.lbxSocketCommands.Size = new System.Drawing.Size(648, 136);
+            this.lbxSocketCommands.Size = new System.Drawing.Size(648, 34);
             this.lbxSocketCommands.TabIndex = 1;
             this.lbxSocketCommands.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbxSocketCommands_MouseDoubleClick);
             // 
@@ -232,7 +242,7 @@
             this.label3.Dock = System.Windows.Forms.DockStyle.Left;
             this.label3.Location = new System.Drawing.Point(0, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(97, 136);
+            this.label3.Size = new System.Drawing.Size(97, 34);
             this.label3.TabIndex = 0;
             this.label3.Text = "所支持的控制台指令（双击即可运行）：";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -244,7 +254,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(3, 54);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(745, 208);
+            this.panel3.Size = new System.Drawing.Size(745, 294);
             this.panel3.TabIndex = 3;
             // 
             // dgvTaskStateList
@@ -260,7 +270,7 @@
             this.dgvTaskStateList.ReadOnly = true;
             this.dgvTaskStateList.RowHeadersVisible = false;
             this.dgvTaskStateList.RowTemplate.Height = 27;
-            this.dgvTaskStateList.Size = new System.Drawing.Size(647, 208);
+            this.dgvTaskStateList.Size = new System.Drawing.Size(647, 294);
             this.dgvTaskStateList.TabIndex = 1;
             // 
             // cTaskName
@@ -282,7 +292,7 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Left;
             this.label2.Location = new System.Drawing.Point(0, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(98, 208);
+            this.label2.Size = new System.Drawing.Size(98, 294);
             this.label2.TabIndex = 0;
             this.label2.Text = "任务状态：";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -344,16 +354,6 @@
             this.trBoatStateUpdater.Enabled = true;
             this.trBoatStateUpdater.Interval = 1000;
             this.trBoatStateUpdater.Tick += new System.EventHandler(this.trBoatStateUpdater_Tick);
-            // 
-            // tbtnMapMonitor
-            // 
-            this.tbtnMapMonitor.Image = ((System.Drawing.Image)(resources.GetObject("tbtnMapMonitor.Image")));
-            this.tbtnMapMonitor.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbtnMapMonitor.Name = "tbtnMapMonitor";
-            this.tbtnMapMonitor.Size = new System.Drawing.Size(163, 56);
-            this.tbtnMapMonitor.Text = "打开无人船地图监视器";
-            this.tbtnMapMonitor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tbtnMapMonitor.Click += new System.EventHandler(this.tbtnMapMonitor_Click);
             // 
             // TestMainForm
             // 

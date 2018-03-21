@@ -17,7 +17,7 @@ namespace TaskSimulator
         /// <summary>
         /// 最大日志显示行
         /// </summary>
-        public const int Max_Log_Line_Count = 30;
+        public const int Max_Log_Line_Count = 35;
 
         public TestMainForm()
         {
@@ -250,6 +250,11 @@ namespace TaskSimulator
             {
                 TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
                 ru.WorkMode = TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ALWAYS;
+
+                if (ru.RobotSocket != null)
+                {
+                    ru.RobotSocket.RobotStart(null);
+                }
             }
         }
 

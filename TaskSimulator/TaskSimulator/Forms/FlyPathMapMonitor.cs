@@ -115,7 +115,14 @@ namespace TaskSimulator.Forms
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                
+                StringBuilder sb = new StringBuilder();
+                foreach (FlyPathLine fpl in flyPathLines)
+                {
+                    sb.Append(fpl.StartPoints.Lat).Append(":").Append(fpl.StartPoints.Lng).Append("\n");
+                    sb.Append(fpl.EndPoints.Lat).Append(":").Append(fpl.EndPoints.Lng).Append("\n");
+                }
+
+                FlyPathText = sb.ToString();
 
                 this.DialogResult = System.Windows.Forms.DialogResult.OK;
             }
