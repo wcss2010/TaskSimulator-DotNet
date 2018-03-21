@@ -33,7 +33,7 @@ namespace TaskSimulator.Forms
             RobotManager.OnUiActionEvent += RobotManager_OnUiActionEvent;
 
             //初始化地图
-            InitMap(new GMap.NET.PointLatLng(24.2120, 135.4603), 6, 6, 8, false);
+            InitMap(new GMap.NET.PointLatLng(24.2120, 135.4603), 6, 3, 21, false);
         }
 
         void RobotManager_OnUiActionEvent(object sender, UIActionEventArgs args)
