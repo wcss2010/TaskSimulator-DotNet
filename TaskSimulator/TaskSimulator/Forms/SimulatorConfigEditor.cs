@@ -662,6 +662,7 @@ namespace TaskSimulator.Forms
                 FlyPathMapMonitor fmm = new FlyPathMapMonitor();
                 fmm.BoatDefaultPoint = new LatAndLng(double.Parse(rbRobotDefaultLat.Text), double.Parse(rbRobotDefaultLng.Text));
                 fmm.FlyPathText = tbRobotFlyPaths.Text;
+                fmm.StepWithSecond = double.Parse(tbRobotStepWithSecond.Text);
 
                 if (fmm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {

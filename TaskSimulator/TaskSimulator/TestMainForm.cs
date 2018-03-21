@@ -149,8 +149,21 @@ namespace TaskSimulator
                 TaskSimulatorLib.SimulatorObject.logger.Info("正在进行重启操作，请稍等...");
                 ShowLogTextWithThread("正在进行重启操作，请稍等...");
 
+                foreach (TaskSimulatorLib.Entitys.RobotUser ru in TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Values)
+                {
+                    if (ru.RobotSocket != null)
+                    {
+                        //停止机器人
+                        ru.RobotSocket.RobotStop();
+
+                        //停止Socket
+                        ru.RobotSocket.Stop();
+                    }
+                }
+
                 //检查当前是不是已经一份配置的运行了
                 TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Clear();
+
                 foreach (TaskSimulatorLib.Processors.ProcessorQueueObject pqo in TaskSimulatorLib.SimulatorObject.Simulator.TaskProcessor.Queues)
                 {
                     if (pqo.Task != null && pqo.Task.TaskWorkerThread != null)

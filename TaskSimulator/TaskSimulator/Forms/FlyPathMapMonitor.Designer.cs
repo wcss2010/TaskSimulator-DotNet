@@ -36,7 +36,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(976, 454);
             this.Name = "FlyPathMapMonitor";
-            this.Text = "自定义航行路径";
+            this.Text = "自定义航行路径(单击右键确定行进路线，双击左键保存退出)";
             this.ResumeLayout(false);
 
         }
