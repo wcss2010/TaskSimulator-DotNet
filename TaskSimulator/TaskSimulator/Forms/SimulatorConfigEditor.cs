@@ -82,7 +82,7 @@ namespace TaskSimulator.Forms
             {
                 tvRobots.Nodes.Clear();
 
-                foreach (Robot robot in TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.Robots)
+                foreach (Robot robot in TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig.Robots.Values)
                 {
                     TreeNode item = new TreeNode();
                     item.Text = robot.RobotName;
@@ -143,14 +143,12 @@ namespace TaskSimulator.Forms
             }
 
             //无人船
-            List<Robot> robotList = new List<Robot>();
             foreach (TreeNode tn in tvRobots.Nodes)
             {
                 Robot robot = (Robot)tn.Tag;
-                robotList.Add(robot);
+                rsc.Robots.Add(robot.RobotId, robot);
             }
-            rsc.Robots = robotList.ToArray();
-
+            
             TaskSimulatorLib.SimulatorObject.Simulator.SimulatorConfig = rsc;
             TaskSimulatorLib.SimulatorObject.Simulator.SaveConfig();
 
