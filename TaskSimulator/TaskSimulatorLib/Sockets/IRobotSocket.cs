@@ -42,10 +42,23 @@ namespace TaskSimulatorLib.Sockets
         void Publish(object dest, byte[] msg);
 
         /// <summary>
+        /// 消息发布
+        /// </summary>
+        /// <param name="dest"></param>
+        /// <param name="msg"></param>
+        void Publish(object dest, object[] msg);
+
+        /// <summary>
         /// 消息接收
         /// </summary>
         /// <param name="msg"></param>
         void Receive(object source,byte[] msg);
+
+        /// <summary>
+        /// 消息接收
+        /// </summary>
+        /// <param name="msg"></param>
+        void Receive(object source, object[] msg);
 
         /// <summary>
         /// 是否已连接
