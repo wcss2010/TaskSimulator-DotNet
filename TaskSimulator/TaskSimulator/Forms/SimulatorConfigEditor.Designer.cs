@@ -1077,6 +1077,7 @@
             this.Name = "SimulatorConfigEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "模拟器配置编辑器";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.panel1.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
             this.tpBase.ResumeLayout(false);

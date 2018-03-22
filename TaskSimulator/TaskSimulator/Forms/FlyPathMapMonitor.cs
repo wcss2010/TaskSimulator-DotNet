@@ -106,9 +106,12 @@ namespace TaskSimulator.Forms
 
         void MapControl_MouseClick(object sender, MouseEventArgs e)
         {
-            LineStartPoint = TempFlyLine.EndPoints;
-            flyPathLines.Add(TempFlyLine);
-            TempFlyLine = null;
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                LineStartPoint = TempFlyLine.EndPoints;
+                flyPathLines.Add(TempFlyLine);
+                TempFlyLine = null;
+            }
         }
 
         void MapControl_MouseDoubleClick(object sender, MouseEventArgs e)

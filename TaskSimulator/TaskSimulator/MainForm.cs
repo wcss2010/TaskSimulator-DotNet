@@ -12,14 +12,14 @@ using TaskSimulatorLib;
 
 namespace TaskSimulator
 {
-    public partial class TestMainForm : Form, IConsoleWindowLogger
+    public partial class MainForm : Form, IConsoleWindowLogger
     {
         /// <summary>
         /// 最大日志显示行
         /// </summary>
         public const int Max_Log_Line_Count = 35;
 
-        public TestMainForm()
+        public MainForm()
         {
             InitializeComponent();
 

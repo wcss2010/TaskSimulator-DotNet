@@ -22,7 +22,7 @@ namespace TaskSimulator
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TestMainForm());
+            Application.Run(new MainForm());
         }
     }
 }
