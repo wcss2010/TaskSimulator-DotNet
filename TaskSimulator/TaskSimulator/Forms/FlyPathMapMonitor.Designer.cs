@@ -39,7 +39,7 @@
             this.gbNeedDraw.Controls.Add(this.btnDarwNewPath);
             this.gbNeedDraw.Location = new System.Drawing.Point(0, 0);
             this.gbNeedDraw.Name = "gbNeedDraw";
-            this.gbNeedDraw.Size = new System.Drawing.Size(156, 82);
+            this.gbNeedDraw.Size = new System.Drawing.Size(156, 53);
             this.gbNeedDraw.TabIndex = 3;
             this.gbNeedDraw.TabStop = false;
             // 
@@ -48,7 +48,7 @@
             this.btnDarwNewPath.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnDarwNewPath.Location = new System.Drawing.Point(3, 21);
             this.btnDarwNewPath.Name = "btnDarwNewPath";
-            this.btnDarwNewPath.Size = new System.Drawing.Size(150, 58);
+            this.btnDarwNewPath.Size = new System.Drawing.Size(150, 29);
             this.btnDarwNewPath.TabIndex = 0;
             this.btnDarwNewPath.Text = "重新创建航行路径";
             this.btnDarwNewPath.UseVisualStyleBackColor = true;

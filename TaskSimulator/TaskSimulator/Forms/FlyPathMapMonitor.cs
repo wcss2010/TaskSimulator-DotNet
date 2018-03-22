@@ -54,7 +54,7 @@ namespace TaskSimulator.Forms
         /// 是否允许绘制航行路径
         /// </summary>
         private bool IsEnabledDrawFlyPath { get; set; }
-        
+
         /// <summary>
         /// 每秒钟前进步数
         /// </summary>
@@ -75,7 +75,7 @@ namespace TaskSimulator.Forms
             MapControl.OnPolygonLeave += MapControl_OnPolygonLeave;
             MapControl.OnPolygonEnter += MapControl_OnPolygonEnter;
         }
-       
+
         void MapControl_OnPolygonLeave(GMapPolygon item)
         {
 
@@ -136,7 +136,7 @@ namespace TaskSimulator.Forms
                 StringBuilder sb = new StringBuilder();
                 foreach (FlyPathLine fpl in flyPathLines)
                 {
-                    sb.Append(fpl.StartPoints.Lat).Append(":").Append(fpl.StartPoints.Lng).Append("\n");
+                    //sb.Append(fpl.StartPoints.Lat).Append(":").Append(fpl.StartPoints.Lng).Append("\n");
                     sb.Append(fpl.EndPoints.Lat).Append(":").Append(fpl.EndPoints.Lng).Append("\n");
                 }
 
@@ -151,7 +151,7 @@ namespace TaskSimulator.Forms
             base.OnActivated(e);
 
             DefaultLineStartPoint = new PointLatLng(BoatDefaultPoint.Lat, BoatDefaultPoint.Lng);
-            LineStartPoint = new PointLatLng(BoatDefaultPoint.Lat,BoatDefaultPoint.Lng);
+            LineStartPoint = new PointLatLng(BoatDefaultPoint.Lat, BoatDefaultPoint.Lng);
 
             //显示船
             BoatMarker = new GMarkerGoogle(LineStartPoint, new Bitmap(Bitmap.FromFile(System.IO.Path.Combine(Application.StartupPath, "ship.png"))));
@@ -168,7 +168,7 @@ namespace TaskSimulator.Forms
             {
                 //已经规划航行路线
                 IsEnabledDrawFlyPath = false;
-                
+
                 //加载已有的方案
                 string[] flyPaths = FlyPathText.Split(new string[] { "\n" }, StringSplitOptions.None);
                 if (flyPaths != null)
@@ -188,21 +188,13 @@ namespace TaskSimulator.Forms
                     }
 
                     //绘制航行路线
-                    PointLatLng firstPoint = PointLatLng.Empty;
+                    PointLatLng firstPoint = DefaultLineStartPoint;
                     foreach (PointLatLng point in tempPoints)
                     {
-                        if (firstPoint == PointLatLng.Empty)
-                        {
-                            firstPoint = point;
-                            continue;
-                        }
-                        else
-                        {
-                            FlyPathLine fpl = new FlyPathLine(firstPoint, point, Color.Red, 2);
-                            DefaultOverlay.Routes.Add(fpl.RouteObject);
+                        FlyPathLine fpl = new FlyPathLine(firstPoint, point, Color.Red, 2);
+                        DefaultOverlay.Routes.Add(fpl.RouteObject);
 
-                            firstPoint = point;
-                        }
+                        firstPoint = point;
                     }
                 }
             }
@@ -226,13 +218,13 @@ namespace TaskSimulator.Forms
     {
         public FlyPathLine() { }
 
-        public FlyPathLine(PointLatLng pointLatLng_S, PointLatLng pointLatLng_E, Color penColor,int width)
+        public FlyPathLine(PointLatLng pointLatLng_S, PointLatLng pointLatLng_E, Color penColor, int width)
         {
             StartPoints = pointLatLng_S;
             EndPoints = pointLatLng_E;
             PenColor = penColor;
 
-            RouteObject = new GMapRoute(new PointLatLng[]{ StartPoints,EndPoints }, "");
+            RouteObject = new GMapRoute(new PointLatLng[] { StartPoints, EndPoints }, "");
             RouteObject.Stroke = new Pen(PenColor, width);
         }
 
