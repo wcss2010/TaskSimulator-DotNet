@@ -635,6 +635,8 @@ namespace TaskSimulator.Forms
         private void btnRobotoSelectDefaultPos_Click(object sender, EventArgs e)
         {
             GPSPointSelectMapMonitor defaultPosSelect = new GPSPointSelectMapMonitor();
+            defaultPosSelect.BoatDefaultPoint = new LatAndLng(double.Parse(rbRobotDefaultLat.Text), double.Parse(rbRobotDefaultLng.Text));
+
             if (defaultPosSelect.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 if (defaultPosSelect.PointFromMouseClick != null)
