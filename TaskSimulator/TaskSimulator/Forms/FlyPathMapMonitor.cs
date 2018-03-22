@@ -30,6 +30,10 @@ namespace TaskSimulator.Forms
         /// 船的初始位置
         /// </summary>
         public TaskSimulatorLib.Entitys.LatAndLng BoatDefaultPoint { get; set; }
+        /// <summary>
+        /// 线开始坐标（初始）
+        /// </summary>
+        private PointLatLng DefaultLineStartPoint { get; set; }
 
         /// <summary>
         /// 飞行线路
@@ -45,6 +49,11 @@ namespace TaskSimulator.Forms
         /// 线开始坐标
         /// </summary>
         private PointLatLng LineStartPoint;
+
+        /// <summary>
+        /// 是否允许绘制航行路径
+        /// </summary>
+        private bool IsEnabledDrawFlyPath { get; set; }
         
         /// <summary>
         /// 每秒钟前进步数
@@ -87,13 +96,16 @@ namespace TaskSimulator.Forms
 
         void MapControl_MouseMove(object sender, MouseEventArgs e)
         {
-            if (TempFlyLine != null)
+            if (IsEnabledDrawFlyPath)
             {
-                DefaultOverlay.Routes.Remove(TempFlyLine.RouteObject);
-            }
+                if (TempFlyLine != null)
+                {
+                    DefaultOverlay.Routes.Remove(TempFlyLine.RouteObject);
+                }
 
-            TempFlyLine = new FlyPathLine(LineStartPoint, MapControl.FromLocalToLatLng(e.X, e.Y), Color.Red, 2);
-            DefaultOverlay.Routes.Add(TempFlyLine.RouteObject);
+                TempFlyLine = new FlyPathLine(LineStartPoint, MapControl.FromLocalToLatLng(e.X, e.Y), Color.Red, 2);
+                DefaultOverlay.Routes.Add(TempFlyLine.RouteObject);
+            }
         }
 
         void MapControl_MouseUp(object sender, MouseEventArgs e)
@@ -108,9 +120,12 @@ namespace TaskSimulator.Forms
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
-                LineStartPoint = TempFlyLine.EndPoints;
-                flyPathLines.Add(TempFlyLine);
-                TempFlyLine = null;
+                if (TempFlyLine != null)
+                {
+                    LineStartPoint = TempFlyLine.EndPoints;
+                    flyPathLines.Add(TempFlyLine);
+                    TempFlyLine = null;
+                }
             }
         }
 
@@ -135,6 +150,7 @@ namespace TaskSimulator.Forms
         {
             base.OnActivated(e);
 
+            DefaultLineStartPoint = new PointLatLng(BoatDefaultPoint.Lat, BoatDefaultPoint.Lng);
             LineStartPoint = new PointLatLng(BoatDefaultPoint.Lat,BoatDefaultPoint.Lng);
 
             //显示船
@@ -142,6 +158,64 @@ namespace TaskSimulator.Forms
             BoatMarker.ToolTipMode = MarkerTooltipMode.Always;
             BoatMarker.ToolTipText = "船";
             DefaultOverlay.Markers.Add(BoatMarker);
+
+            if (string.IsNullOrEmpty(FlyPathText))
+            {
+                //还没有规划航行路线
+                IsEnabledDrawFlyPath = true;
+            }
+            else
+            {
+                //已经规划航行路线
+                IsEnabledDrawFlyPath = false;
+                
+                //加载已有的方案
+                string[] flyPaths = FlyPathText.Split(new string[] { "\n" }, StringSplitOptions.None);
+                if (flyPaths != null)
+                {
+                    //将Text文本转化成Point列表
+                    List<PointLatLng> tempPoints = new List<PointLatLng>();
+                    foreach (string fp in flyPaths)
+                    {
+                        string[] points = fp.Split(new string[] { ":" }, StringSplitOptions.None);
+                        if (points != null && points.Length >= 2)
+                        {
+                            double lat = double.Parse(points[0]);
+                            double lng = double.Parse(points[1]);
+
+                            tempPoints.Add(new PointLatLng(lat, lng));
+                        }
+                    }
+
+                    //绘制航行路线
+                    PointLatLng firstPoint = PointLatLng.Empty;
+                    foreach (PointLatLng point in tempPoints)
+                    {
+                        if (firstPoint == PointLatLng.Empty)
+                        {
+                            firstPoint = point;
+                            continue;
+                        }
+                        else
+                        {
+                            FlyPathLine fpl = new FlyPathLine(firstPoint, point, Color.Red, 2);
+                            DefaultOverlay.Routes.Add(fpl.RouteObject);
+
+                            firstPoint = point;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void btnDarwNewPath_Click(object sender, EventArgs e)
+        {
+            IsEnabledDrawFlyPath = true;
+            flyPathLines.Clear();
+            TempFlyLine = null;
+            DefaultOverlay.Routes.Clear();
+
+            LineStartPoint = DefaultLineStartPoint;
         }
     }
 
