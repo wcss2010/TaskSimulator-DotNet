@@ -139,13 +139,25 @@ namespace TaskSimulator.BoatRobot
                             Assembly result = CSharpCompiler.Compile(SimulatorConfig.RefDLL, new string[] { classFile });
                             Type objType = result.GetType(SimulatorConfig.SocketController.ComponentClassFullName);
 
-                            Type[] faceTypes = objType.GetInterfaces();
-                            foreach (Type interfaceType in faceTypes)
+                            if (objType != null)
                             {
-                                if (interfaceType.FullName.Equals(typeof(IRobotSocket).FullName))
+                                Type[] faceTypes = objType.GetInterfaces();
+                                foreach (Type interfaceType in faceTypes)
                                 {
-                                    robotSocketTemp = (IRobotSocket)objType.GetConstructor(Type.EmptyTypes).Invoke(null);
-                                    break;
+                                    if (interfaceType.FullName.Equals(typeof(IRobotSocket).FullName))
+                                    {
+                                        robotSocketTemp = (IRobotSocket)objType.GetConstructor(Type.EmptyTypes).Invoke(null);
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                SimulatorObject.logger.Error("对不起,类文件(" + classFile + ")中的主类名设置错误！");
+
+                                if (SimulatorObject.ConsoleLoggerWindow != null)
+                                {
+                                    SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起,类文件(" + classFile + ")中的主类名设置错误！");
                                 }
                             }
                         }
@@ -165,65 +177,6 @@ namespace TaskSimulator.BoatRobot
                         if (SimulatorObject.ConsoleLoggerWindow != null)
                         {
                             SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起，类文件(" + classFile + ")没有找到!");
-                        }
-                    }
-                }
-                #endregion
-
-                #region Task控制器编译选项
-                if (SimulatorConfig.TaskComponentMap != null)
-                {
-                    foreach (DynamicComponent kvp in SimulatorConfig.TaskComponentMap.Values)
-                    {
-                        if (string.IsNullOrEmpty(kvp.ComponentId) || string.IsNullOrEmpty(kvp.ComponentName) || string.IsNullOrEmpty(kvp.ComponentClassFullName) || string.IsNullOrEmpty(kvp.ComponentClassFile))
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            string classFile = kvp.ComponentClassFile;
-                            if (kvp.ComponentClassFile.StartsWith("./"))
-                            {
-                                //需要修饰一下目录
-                                classFile = Path.Combine(Application.StartupPath, Path.Combine(ROBOT_DYNAMIC_COMPONENT_DIR, kvp.ComponentClassFile.Replace("./", string.Empty)));
-                            }
-
-                            if (File.Exists(classFile))
-                            {
-                                try
-                                {
-                                   Assembly result = CSharpCompiler.Compile(SimulatorConfig.RefDLL, new string[] { classFile });
-                                   Type objType = result.GetType(kvp.ComponentClassFullName);
-
-                                   Type[] faceTypes = objType.GetInterfaces();
-                                   foreach (Type interfaceType in faceTypes)
-                                   {
-                                       if (interfaceType.FullName.Equals(typeof(ITaskWorkerThread).FullName))
-                                       {
-                                           taskDict.Add(kvp.ComponentId, (ITaskWorkerThread)objType.GetConstructor(Type.EmptyTypes).Invoke(null));
-                                           break;
-                                       }
-                                   }
-                                   
-                                }
-                                catch (Exception ex)
-                                {
-                                    SimulatorObject.logger.Error(ex.ToString());
-
-                                    if (SimulatorObject.ConsoleLoggerWindow != null)
-                                    {
-                                        SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread(ex.ToString());
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                SimulatorObject.logger.Error("对不起，类文件(" + classFile + ")没有找到!");
-                                if (SimulatorObject.ConsoleLoggerWindow != null)
-                                {
-                                    SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起，类文件(" + classFile + ")没有找到!");
-                                }
-                            }
                         }
                     }
                 }
@@ -254,13 +207,25 @@ namespace TaskSimulator.BoatRobot
                                     Assembly result = CSharpCompiler.Compile(SimulatorConfig.RefDLL, new string[] { classFile });
                                     Type objType = result.GetType(kvp.ComponentClassFullName);
 
-                                    Type[] faceTypes = objType.GetInterfaces();
-                                    foreach (Type interfaceType in faceTypes)
+                                    if (objType != null)
                                     {
-                                        if (interfaceType.FullName.Equals(typeof(IMonitor).FullName))
+                                        Type[] faceTypes = objType.GetInterfaces();
+                                        foreach (Type interfaceType in faceTypes)
                                         {
-                                            monitorDict.Add(kvp.ComponentId, (IMonitor)objType.GetConstructor(Type.EmptyTypes).Invoke(null));
-                                            break;
+                                            if (interfaceType.FullName.Equals(typeof(IMonitor).FullName))
+                                            {
+                                                monitorDict.Add(kvp.ComponentId, (IMonitor)objType.GetConstructor(Type.EmptyTypes).Invoke(null));
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        SimulatorObject.logger.Error("对不起,类文件(" + classFile + ")中的主类名设置错误！");
+
+                                        if (SimulatorObject.ConsoleLoggerWindow != null)
+                                        {
+                                            SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起,类文件(" + classFile + ")中的主类名设置错误！");
                                         }
                                     }
                                 }
@@ -287,6 +252,76 @@ namespace TaskSimulator.BoatRobot
                 }
                 #endregion
 
+                #region Task控制器编译选项
+                if (SimulatorConfig.TaskComponentMap != null)
+                {
+                    foreach (DynamicComponent kvp in SimulatorConfig.TaskComponentMap.Values)
+                    {
+                        if (string.IsNullOrEmpty(kvp.ComponentId) || string.IsNullOrEmpty(kvp.ComponentName) || string.IsNullOrEmpty(kvp.ComponentClassFullName) || string.IsNullOrEmpty(kvp.ComponentClassFile))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            string classFile = kvp.ComponentClassFile;
+                            if (kvp.ComponentClassFile.StartsWith("./"))
+                            {
+                                //需要修饰一下目录
+                                classFile = Path.Combine(Application.StartupPath, Path.Combine(ROBOT_DYNAMIC_COMPONENT_DIR, kvp.ComponentClassFile.Replace("./", string.Empty)));
+                            }
+
+                            if (File.Exists(classFile))
+                            {
+                                try
+                                {
+                                   Assembly result = CSharpCompiler.Compile(SimulatorConfig.RefDLL, new string[] { classFile });
+                                   Type objType = result.GetType(kvp.ComponentClassFullName);
+
+                                   if (objType != null)
+                                   {
+                                       Type[] faceTypes = objType.GetInterfaces();
+                                       foreach (Type interfaceType in faceTypes)
+                                       {
+                                           if (interfaceType.FullName.Equals(typeof(ITaskWorkerThread).FullName))
+                                           {
+                                               taskDict.Add(kvp.ComponentId, (ITaskWorkerThread)objType.GetConstructor(Type.EmptyTypes).Invoke(null));
+                                               break;
+                                           }
+                                       }
+                                   }
+                                   else
+                                   {
+                                       SimulatorObject.logger.Error("对不起,类文件(" + classFile + ")中的主类名设置错误！");
+
+                                       if (SimulatorObject.ConsoleLoggerWindow != null)
+                                       {
+                                           SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起,类文件(" + classFile + ")中的主类名设置错误！");
+                                       }
+                                   }
+                                }
+                                catch (Exception ex)
+                                {
+                                    SimulatorObject.logger.Error(ex.ToString());
+
+                                    if (SimulatorObject.ConsoleLoggerWindow != null)
+                                    {
+                                        SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread(ex.ToString());
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                SimulatorObject.logger.Error("对不起，类文件(" + classFile + ")没有找到!");
+                                if (SimulatorObject.ConsoleLoggerWindow != null)
+                                {
+                                    SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起，类文件(" + classFile + ")没有找到!");
+                                }
+                            }
+                        }
+                    }
+                }
+                #endregion
+                
                 #region 生成无人船列表
                 if (SimulatorConfig.RobotMap != null)
                 {
