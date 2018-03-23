@@ -31,9 +31,31 @@ namespace TaskSimulator.Util
            
             cp.ReferencedAssemblies.Add(Path.Combine(Application.StartupPath, "TaskSimulatorLib.dll")); //添加程序集 TaskSimulatorLib.dll 的引用
 
+            //尝试加载第三方DLL
             if (refDLL != null)
             {
-                cp.ReferencedAssemblies.AddRange(refDLL);
+                foreach (string sss in refDLL)
+                {
+                    string destDllFiles = string.Empty;
+
+                    if (string.IsNullOrEmpty(sss))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        if (sss.StartsWith("./"))
+                        {
+                            destDllFiles = sss.Replace("./", System.IO.Path.Combine(System.IO.Path.Combine(Application.StartupPath, TaskSimulator.BoatRobot.RobotManager.ROBOT_DYNAMIC_COMPONENT_DIR), TaskSimulator.BoatRobot.RobotManager.ROBOT_DYNAMIC_DLLFILES_DIR));
+                        }
+                        else
+                        {
+                            destDllFiles = sss;
+                        }
+                    }
+
+                    cp.ReferencedAssemblies.Add(destDllFiles);
+                }
             }
 
             cp.GenerateExecutable = false;

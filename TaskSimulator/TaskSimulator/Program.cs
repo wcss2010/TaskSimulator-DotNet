@@ -16,7 +16,7 @@ namespace TaskSimulator
             //创建动态代码目录
             try
             {
-                System.IO.Directory.CreateDirectory(System.IO.Path.Combine(Application.StartupPath, TaskSimulator.BoatRobot.RobotManager.ROBOT_DYNAMIC_COMPONENT_DIR));
+                System.IO.Directory.CreateDirectory(System.IO.Path.Combine(System.IO.Path.Combine(Application.StartupPath, TaskSimulator.BoatRobot.RobotManager.ROBOT_DYNAMIC_COMPONENT_DIR),TaskSimulator.BoatRobot.RobotManager.ROBOT_DYNAMIC_DLLFILES_DIR));
             }
             catch (Exception ex) { }
 
