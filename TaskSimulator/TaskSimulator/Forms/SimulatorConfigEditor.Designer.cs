@@ -828,7 +828,7 @@
             this.plRobotDetailMap.Controls.Add(this.gbConnections);
             this.plRobotDetailMap.Location = new System.Drawing.Point(3, 183);
             this.plRobotDetailMap.Name = "plRobotDetailMap";
-            this.plRobotDetailMap.Size = new System.Drawing.Size(642, 1380);
+            this.plRobotDetailMap.Size = new System.Drawing.Size(750, 1380);
             this.plRobotDetailMap.TabIndex = 4;
             // 
             // gbFlyPaths
@@ -838,7 +838,7 @@
             this.gbFlyPaths.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbFlyPaths.Location = new System.Drawing.Point(0, 971);
             this.gbFlyPaths.Name = "gbFlyPaths";
-            this.gbFlyPaths.Size = new System.Drawing.Size(642, 390);
+            this.gbFlyPaths.Size = new System.Drawing.Size(750, 390);
             this.gbFlyPaths.TabIndex = 3;
             this.gbFlyPaths.TabStop = false;
             this.gbFlyPaths.Text = "自定义飞行路径(Lat=纬度,Lng=经度,写法:Lat:Lng,一行只能写一个经纬度!):";
@@ -848,7 +848,7 @@
             this.tbRobotFlyPaths.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbRobotFlyPaths.Location = new System.Drawing.Point(3, 56);
             this.tbRobotFlyPaths.Name = "tbRobotFlyPaths";
-            this.tbRobotFlyPaths.Size = new System.Drawing.Size(636, 331);
+            this.tbRobotFlyPaths.Size = new System.Drawing.Size(744, 331);
             this.tbRobotFlyPaths.TabIndex = 1;
             this.tbRobotFlyPaths.Text = "";
             // 
@@ -858,13 +858,13 @@
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(3, 21);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(636, 35);
+            this.panel10.Size = new System.Drawing.Size(744, 35);
             this.panel10.TabIndex = 2;
             // 
             // btnRobotEditFlyPathInMap
             // 
             this.btnRobotEditFlyPathInMap.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnRobotEditFlyPathInMap.Location = new System.Drawing.Point(504, 0);
+            this.btnRobotEditFlyPathInMap.Location = new System.Drawing.Point(612, 0);
             this.btnRobotEditFlyPathInMap.Name = "btnRobotEditFlyPathInMap";
             this.btnRobotEditFlyPathInMap.Size = new System.Drawing.Size(132, 35);
             this.btnRobotEditFlyPathInMap.TabIndex = 0;
@@ -879,7 +879,7 @@
             this.gbComponents.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbComponents.Location = new System.Drawing.Point(0, 651);
             this.gbComponents.Name = "gbComponents";
-            this.gbComponents.Size = new System.Drawing.Size(642, 320);
+            this.gbComponents.Size = new System.Drawing.Size(750, 320);
             this.gbComponents.TabIndex = 2;
             this.gbComponents.TabStop = false;
             this.gbComponents.Text = "监视器与任务控制器配置:";
@@ -897,7 +897,7 @@
             this.dgvRobotComponents.Location = new System.Drawing.Point(3, 56);
             this.dgvRobotComponents.Name = "dgvRobotComponents";
             this.dgvRobotComponents.RowTemplate.Height = 27;
-            this.dgvRobotComponents.Size = new System.Drawing.Size(636, 261);
+            this.dgvRobotComponents.Size = new System.Drawing.Size(744, 261);
             this.dgvRobotComponents.TabIndex = 0;
             // 
             // compName
@@ -926,13 +926,13 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(3, 21);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(636, 35);
+            this.panel4.Size = new System.Drawing.Size(744, 35);
             this.panel4.TabIndex = 1;
             // 
             // btnRobotSelectAllComponents
             // 
             this.btnRobotSelectAllComponents.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnRobotSelectAllComponents.Location = new System.Drawing.Point(528, 0);
+            this.btnRobotSelectAllComponents.Location = new System.Drawing.Point(636, 0);
             this.btnRobotSelectAllComponents.Name = "btnRobotSelectAllComponents";
             this.btnRobotSelectAllComponents.Size = new System.Drawing.Size(108, 35);
             this.btnRobotSelectAllComponents.TabIndex = 0;
@@ -955,7 +955,7 @@
             this.gbCameras.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbCameras.Location = new System.Drawing.Point(0, 331);
             this.gbCameras.Name = "gbCameras";
-            this.gbCameras.Size = new System.Drawing.Size(642, 320);
+            this.gbCameras.Size = new System.Drawing.Size(750, 320);
             this.gbCameras.TabIndex = 1;
             this.gbCameras.TabStop = false;
             this.gbCameras.Text = "虚拟摄像头配置:";
@@ -1049,7 +1049,7 @@
             this.gbConnections.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbConnections.Location = new System.Drawing.Point(0, 0);
             this.gbConnections.Name = "gbConnections";
-            this.gbConnections.Size = new System.Drawing.Size(642, 331);
+            this.gbConnections.Size = new System.Drawing.Size(750, 331);
             this.gbConnections.TabIndex = 0;
             this.gbConnections.TabStop = false;
             this.gbConnections.Text = "连接配置(写法:参数名称=参数值,例如:RemoteIP=127.0.0.1,一行只能写一个键值对!):";
@@ -1059,7 +1059,7 @@
             this.tbRobotConnectionInfos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbRobotConnectionInfos.Location = new System.Drawing.Point(3, 21);
             this.tbRobotConnectionInfos.Name = "tbRobotConnectionInfos";
-            this.tbRobotConnectionInfos.Size = new System.Drawing.Size(636, 307);
+            this.tbRobotConnectionInfos.Size = new System.Drawing.Size(744, 307);
             this.tbRobotConnectionInfos.TabIndex = 0;
             this.tbRobotConnectionInfos.Text = "";
             // 
