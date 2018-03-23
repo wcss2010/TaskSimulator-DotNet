@@ -71,6 +71,11 @@ namespace TaskSimulator.BoatRobot
         public const string ROBOT_DYNAMIC_DLLFILES_DIR = "dllFiles";
 
         /// <summary>
+        /// 资源文件
+        /// </summary>
+        public const string ROBOT_DYNAMIC_RESFILES_DIR = "resFiles";
+
+        /// <summary>
         /// 摄像头ID前缀
         /// </summary>
         public const string CAMERA_ID_HEAD = "VirtualCamera-";

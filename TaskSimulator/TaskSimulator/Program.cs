@@ -20,6 +20,12 @@ namespace TaskSimulator
             }
             catch (Exception ex) { }
 
+            try
+            {
+                System.IO.Directory.CreateDirectory(System.IO.Path.Combine(Application.StartupPath, TaskSimulator.BoatRobot.RobotManager.ROBOT_DYNAMIC_RESFILES_DIR));
+            }
+            catch (Exception ex) { }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
