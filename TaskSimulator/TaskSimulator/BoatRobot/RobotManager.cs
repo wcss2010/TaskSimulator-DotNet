@@ -63,7 +63,7 @@ namespace TaskSimulator.BoatRobot
         /// <summary>
         /// 动态组件目录
         /// </summary>
-        public const string ROBOT_DYNAMIC_COMPONENT_DIR = "components";
+        public const string ROBOT_DYNAMIC_COMPONENT_DIR = "componentFiles";
 
         /// <summary>
         /// 动态组件第三方库的存放位置

@@ -46,7 +46,7 @@ namespace TaskSimulator.Util
                     {
                         if (sss.StartsWith("./"))
                         {
-                            destDllFiles = sss.Replace("./", System.IO.Path.Combine(System.IO.Path.Combine(Application.StartupPath, TaskSimulator.BoatRobot.RobotManager.ROBOT_DYNAMIC_COMPONENT_DIR), TaskSimulator.BoatRobot.RobotManager.ROBOT_DYNAMIC_DLLFILES_DIR));
+                            destDllFiles = System.IO.Path.Combine(System.IO.Path.Combine(System.IO.Path.Combine(Application.StartupPath, TaskSimulator.BoatRobot.RobotManager.ROBOT_DYNAMIC_COMPONENT_DIR), TaskSimulator.BoatRobot.RobotManager.ROBOT_DYNAMIC_DLLFILES_DIR), sss.Replace("./", string.Empty));
                         }
                         else
                         {
