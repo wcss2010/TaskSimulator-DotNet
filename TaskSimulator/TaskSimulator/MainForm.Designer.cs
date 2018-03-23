@@ -39,6 +39,10 @@
             this.tcMain = new System.Windows.Forms.TabControl();
             this.tpLog = new System.Windows.Forms.TabPage();
             this.tbLogs = new System.Windows.Forms.RichTextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.nudMaxLogRowCount = new System.Windows.Forms.NumericUpDown();
+            this.btnClearLogs = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.tpStatusList = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tvRobotList = new System.Windows.Forms.TreeView();
@@ -61,6 +65,8 @@
             this.toolStrip.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpLog.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxLogRowCount)).BeginInit();
             this.tpStatusList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -146,6 +152,7 @@
             // tpLog
             // 
             this.tpLog.Controls.Add(this.tbLogs);
+            this.tpLog.Controls.Add(this.groupBox1);
             this.tpLog.Location = new System.Drawing.Point(4, 25);
             this.tpLog.Name = "tpLog";
             this.tpLog.Padding = new System.Windows.Forms.Padding(3);
@@ -157,12 +164,65 @@
             // tbLogs
             // 
             this.tbLogs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLogs.Location = new System.Drawing.Point(3, 3);
+            this.tbLogs.Location = new System.Drawing.Point(3, 55);
             this.tbLogs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbLogs.Name = "tbLogs";
-            this.tbLogs.Size = new System.Drawing.Size(1132, 385);
+            this.tbLogs.Size = new System.Drawing.Size(1132, 333);
             this.tbLogs.TabIndex = 2;
             this.tbLogs.Text = "";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.nudMaxLogRowCount);
+            this.groupBox1.Controls.Add(this.btnClearLogs);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(1132, 52);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            // 
+            // nudMaxLogRowCount
+            // 
+            this.nudMaxLogRowCount.Location = new System.Drawing.Point(199, 19);
+            this.nudMaxLogRowCount.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.nudMaxLogRowCount.Minimum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            this.nudMaxLogRowCount.Name = "nudMaxLogRowCount";
+            this.nudMaxLogRowCount.Size = new System.Drawing.Size(120, 25);
+            this.nudMaxLogRowCount.TabIndex = 1;
+            this.nudMaxLogRowCount.Value = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            // 
+            // btnClearLogs
+            // 
+            this.btnClearLogs.Location = new System.Drawing.Point(325, 19);
+            this.btnClearLogs.Name = "btnClearLogs";
+            this.btnClearLogs.Size = new System.Drawing.Size(131, 25);
+            this.btnClearLogs.TabIndex = 2;
+            this.btnClearLogs.Text = "清空日志";
+            this.btnClearLogs.UseVisualStyleBackColor = true;
+            this.btnClearLogs.Click += new System.EventHandler(this.btnClearLogs_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 21);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(187, 15);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "控制台日志最大显示行数：";
             // 
             // tpStatusList
             // 
@@ -355,7 +415,7 @@
             this.trBoatStateUpdater.Interval = 1000;
             this.trBoatStateUpdater.Tick += new System.EventHandler(this.trBoatStateUpdater_Tick);
             // 
-            // TestMainForm
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -364,7 +424,7 @@
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.statusStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "TestMainForm";
+            this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "无人船模拟器 V1.1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TestMainForm_FormClosing);
@@ -375,6 +435,9 @@
             this.toolStrip.PerformLayout();
             this.tcMain.ResumeLayout(false);
             this.tpLog.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxLogRowCount)).EndInit();
             this.tpStatusList.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -422,5 +485,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cTaskState;
         private System.Windows.Forms.Timer trBoatStateUpdater;
         private System.Windows.Forms.ToolStripButton tbtnMapMonitor;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnClearLogs;
+        private System.Windows.Forms.NumericUpDown nudMaxLogRowCount;
+        private System.Windows.Forms.Label label4;
     }
 }

@@ -14,11 +14,6 @@ namespace TaskSimulator
 {
     public partial class MainForm : Form, IConsoleWindowLogger
     {
-        /// <summary>
-        /// 最大日志显示行
-        /// </summary>
-        public const int Max_Log_Line_Count = 35;
-
         public MainForm()
         {
             InitializeComponent();
@@ -55,7 +50,7 @@ namespace TaskSimulator
         /// <param name="txt"></param>
         public void ShowLogTextWithUI(string txt)
         {
-            if (tbLogs.Lines != null && tbLogs.Lines.Length >= Max_Log_Line_Count)
+            if (tbLogs.Lines != null && tbLogs.Lines.Length >= nudMaxLogRowCount.Value)
             {
                 tbLogs.Clear();
             }
@@ -351,6 +346,11 @@ namespace TaskSimulator
         {
             BoatMapMonitor mapMonitor = new BoatMapMonitor();
             mapMonitor.Show();
+        }
+
+        private void btnClearLogs_Click(object sender, EventArgs e)
+        {
+            tbLogs.Text = "";
         }
     }
 }
