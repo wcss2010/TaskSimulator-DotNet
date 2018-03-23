@@ -51,7 +51,7 @@ namespace TaskSimulator.BoatRobot.Components
                         }
                         else
                         {
-                            string destFile = VirtualCameraBackgroundImages[randomPictureIndex].Contains(@":\") ? VirtualCameraBackgroundImages[randomPictureIndex] : Path.Combine(Application.StartupPath, VirtualCameraBackgroundImages[randomPictureIndex]);
+                            string destFile = VirtualCameraBackgroundImages[randomPictureIndex].Contains(@":\") ? VirtualCameraBackgroundImages[randomPictureIndex] : Path.Combine(System.IO.Path.Combine(Application.StartupPath, TaskSimulator.BoatRobot.RobotManager.ROBOT_DYNAMIC_RESFILES_DIR), VirtualCameraBackgroundImages[randomPictureIndex].Replace("./", string.Empty));
                             if (File.Exists(destFile))
                             {
                                 //图片存在
