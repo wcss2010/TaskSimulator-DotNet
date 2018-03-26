@@ -59,7 +59,7 @@ namespace TaskSimulator.BoatRobot
         /// UI动作移动小船到新坐标
         /// </summary>
         public const string UIAction_Move = "Move";
-        
+
         /// <summary>
         /// 动态组件目录
         /// </summary>
@@ -106,7 +106,7 @@ namespace TaskSimulator.BoatRobot
                 OnUiActionEvent(null, eventargs);
             }
         }
-        
+
         /// <summary>
         /// 初始化无人船管理器
         /// </summary>
@@ -117,47 +117,181 @@ namespace TaskSimulator.BoatRobot
                 Dictionary<string, ITaskWorkerThread> taskDict = new Dictionary<string, ITaskWorkerThread>();
                 Dictionary<string, IMonitor> monitorDict = new Dictionary<string, IMonitor>();
                 IRobotSocket robotSocketTemp = null;
+                Assembly compileResult = null;
+                List<string> codeFiles = new List<string>();
+                string currentClassFullName = string.Empty;
 
-                #region Socket控制器编译选项
+                #region 收集需要编译的.cs文件
+                string codeFile = string.Empty;
+
                 if (string.IsNullOrEmpty(SimulatorConfig.SocketController.ComponentClassFullName) || string.IsNullOrEmpty(SimulatorConfig.SocketController.ComponentClassFile))
                 {
-                    //continue;
+                    SimulatorObject.logger.Error("对不起，Socket控制器不存在！");
+                    SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起，Socket控制器不存在！");
+                    return;
                 }
                 else
                 {
-                    string classFile = SimulatorConfig.SocketController.ComponentClassFile;
-                    if (SimulatorConfig.SocketController.ComponentClassFile.StartsWith("./"))
+                    //Socket控制器代码
+                    codeFile = SimulatorConfig.SocketController.ComponentClassFile;
+                    if (codeFile.StartsWith("./"))
                     {
                         //需要修饰一下目录
-                        classFile = Path.Combine(Application.StartupPath, Path.Combine(ROBOT_DYNAMIC_COMPONENT_DIR, SimulatorConfig.SocketController.ComponentClassFile.Replace("./", string.Empty)));
+                        codeFile = Path.Combine(Application.StartupPath, Path.Combine(ROBOT_DYNAMIC_COMPONENT_DIR, codeFile.Replace("./", string.Empty)));
+                    }
+                    if (File.Exists(codeFile))
+                    {
+                        codeFiles.Add(codeFile);
+                    }
+                    else
+                    {
+                        SimulatorObject.logger.Error("对不起，类文件(" + codeFile + ")没有找到!");
+                        if (SimulatorObject.ConsoleLoggerWindow != null)
+                        {
+                            SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起，类文件(" + codeFile + ")没有找到!");
+                        }
                     }
 
-                    if (File.Exists(classFile))
+                    //Monitor代码
+                    if (SimulatorConfig.MonitorComponentMap != null)
+                    {
+                        foreach (DynamicComponent kvp in SimulatorConfig.MonitorComponentMap.Values)
+                        {
+                            if (string.IsNullOrEmpty(kvp.ComponentId) || string.IsNullOrEmpty(kvp.ComponentName) || string.IsNullOrEmpty(kvp.ComponentClassFullName) || string.IsNullOrEmpty(kvp.ComponentClassFile))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                codeFile = kvp.ComponentClassFile;
+                                if (codeFile.StartsWith("./"))
+                                {
+                                    //需要修饰一下目录
+                                    codeFile = Path.Combine(Application.StartupPath, Path.Combine(ROBOT_DYNAMIC_COMPONENT_DIR, codeFile.Replace("./", string.Empty)));
+                                }
+                                if (File.Exists(codeFile))
+                                {
+                                    codeFiles.Add(codeFile);
+                                }
+                                else
+                                {
+                                    SimulatorObject.logger.Error("对不起，类文件(" + codeFile + ")没有找到!");
+                                    if (SimulatorObject.ConsoleLoggerWindow != null)
+                                    {
+                                        SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起，类文件(" + codeFile + ")没有找到!");
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    //Task代码
+                    if (SimulatorConfig.TaskComponentMap != null)
+                    {
+                        foreach (DynamicComponent kvp in SimulatorConfig.TaskComponentMap.Values)
+                        {
+                            if (string.IsNullOrEmpty(kvp.ComponentId) || string.IsNullOrEmpty(kvp.ComponentName) || string.IsNullOrEmpty(kvp.ComponentClassFullName) || string.IsNullOrEmpty(kvp.ComponentClassFile))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                codeFile = kvp.ComponentClassFile;
+                                if (codeFile.StartsWith("./"))
+                                {
+                                    //需要修饰一下目录
+                                    codeFile = Path.Combine(Application.StartupPath, Path.Combine(ROBOT_DYNAMIC_COMPONENT_DIR, codeFile.Replace("./", string.Empty)));
+                                }
+                                if (File.Exists(codeFile))
+                                {
+                                    codeFiles.Add(codeFile);
+                                }
+                                else
+                                {
+                                    SimulatorObject.logger.Error("对不起，类文件(" + codeFile + ")没有找到!");
+                                    if (SimulatorObject.ConsoleLoggerWindow != null)
+                                    {
+                                        SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起，类文件(" + codeFile + ")没有找到!");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                #endregion
+
+                //编译.cs文件
+                compileResult = CSharpCompiler.Compile(SimulatorConfig.RefDLL, codeFiles.ToArray());
+
+                #region Socket控制器编译选项
+                try
+                {
+                    currentClassFullName = SimulatorConfig.SocketController.ComponentClassFullName;
+
+                    Type objType = compileResult.GetType(currentClassFullName);
+                    if (objType != null)
+                    {
+                        Type[] faceTypes = objType.GetInterfaces();
+                        foreach (Type interfaceType in faceTypes)
+                        {
+                            if (interfaceType.FullName.Equals(typeof(IRobotSocket).FullName))
+                            {
+                                robotSocketTemp = (IRobotSocket)objType.GetConstructor(Type.EmptyTypes).Invoke(null);
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        SimulatorObject.logger.Error("对不起,类(" + currentClassFullName + ")没有找到！");
+
+                        if (SimulatorObject.ConsoleLoggerWindow != null)
+                        {
+                            SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起,类(" + currentClassFullName + ")没有找到！");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    SimulatorObject.logger.Error(ex.ToString());
+
+                    if (SimulatorObject.ConsoleLoggerWindow != null)
+                    {
+                        SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread(ex.ToString());
+                    }
+                }
+                #endregion
+
+                #region Monitor控制器编译选项
+                if (SimulatorConfig.MonitorComponentMap != null)
+                {
+                    foreach (DynamicComponent kvp in SimulatorConfig.MonitorComponentMap.Values)
                     {
                         try
                         {
-                            Assembly result = CSharpCompiler.Compile(SimulatorConfig.RefDLL, new string[] { classFile });
-                            Type objType = result.GetType(SimulatorConfig.SocketController.ComponentClassFullName);
+                            currentClassFullName = kvp.ComponentClassFullName;
+
+                            Type objType = compileResult.GetType(currentClassFullName);
 
                             if (objType != null)
                             {
                                 Type[] faceTypes = objType.GetInterfaces();
                                 foreach (Type interfaceType in faceTypes)
                                 {
-                                    if (interfaceType.FullName.Equals(typeof(IRobotSocket).FullName))
+                                    if (interfaceType.FullName.Equals(typeof(IMonitor).FullName))
                                     {
-                                        robotSocketTemp = (IRobotSocket)objType.GetConstructor(Type.EmptyTypes).Invoke(null);
+                                        monitorDict.Add(kvp.ComponentId, (IMonitor)objType.GetConstructor(Type.EmptyTypes).Invoke(null));
                                         break;
                                     }
                                 }
                             }
                             else
                             {
-                                SimulatorObject.logger.Error("对不起,类文件(" + classFile + ")中的主类名设置错误！");
+                                SimulatorObject.logger.Error("对不起,类(" + currentClassFullName + ")没有找到！");
 
                                 if (SimulatorObject.ConsoleLoggerWindow != null)
                                 {
-                                    SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起,类文件(" + classFile + ")中的主类名设置错误！");
+                                    SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起,类(" + currentClassFullName + ")没有找到！");
                                 }
                             }
                         }
@@ -170,84 +304,7 @@ namespace TaskSimulator.BoatRobot
                                 SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread(ex.ToString());
                             }
                         }
-                    }
-                    else
-                    {
-                        SimulatorObject.logger.Error("对不起，类文件(" + classFile + ")没有找到!");
-                        if (SimulatorObject.ConsoleLoggerWindow != null)
-                        {
-                            SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起，类文件(" + classFile + ")没有找到!");
-                        }
-                    }
-                }
-                #endregion
 
-                #region Monitor控制器编译选项
-                if (SimulatorConfig.MonitorComponentMap != null)
-                {
-                    foreach (DynamicComponent kvp in SimulatorConfig.MonitorComponentMap.Values)
-                    {
-                        if (string.IsNullOrEmpty(kvp.ComponentId) || string.IsNullOrEmpty(kvp.ComponentName) || string.IsNullOrEmpty(kvp.ComponentClassFullName) || string.IsNullOrEmpty(kvp.ComponentClassFile))
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            string classFile = kvp.ComponentClassFile;
-                            if (kvp.ComponentClassFile.StartsWith("./"))
-                            {
-                                //需要修饰一下目录
-                                classFile = Path.Combine(Application.StartupPath, Path.Combine(ROBOT_DYNAMIC_COMPONENT_DIR, kvp.ComponentClassFile.Replace("./", string.Empty)));
-                            }
-
-                            if (File.Exists(classFile))
-                            {
-                                try
-                                {
-                                    Assembly result = CSharpCompiler.Compile(SimulatorConfig.RefDLL, new string[] { classFile });
-                                    Type objType = result.GetType(kvp.ComponentClassFullName);
-
-                                    if (objType != null)
-                                    {
-                                        Type[] faceTypes = objType.GetInterfaces();
-                                        foreach (Type interfaceType in faceTypes)
-                                        {
-                                            if (interfaceType.FullName.Equals(typeof(IMonitor).FullName))
-                                            {
-                                                monitorDict.Add(kvp.ComponentId, (IMonitor)objType.GetConstructor(Type.EmptyTypes).Invoke(null));
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        SimulatorObject.logger.Error("对不起,类文件(" + classFile + ")中的主类名设置错误！");
-
-                                        if (SimulatorObject.ConsoleLoggerWindow != null)
-                                        {
-                                            SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起,类文件(" + classFile + ")中的主类名设置错误！");
-                                        }
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    SimulatorObject.logger.Error(ex.ToString());
-
-                                    if (SimulatorObject.ConsoleLoggerWindow != null)
-                                    {
-                                        SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread(ex.ToString());
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                SimulatorObject.logger.Error("对不起，类文件(" + classFile + ")没有找到!");
-                                if (SimulatorObject.ConsoleLoggerWindow != null)
-                                {
-                                    SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起，类文件(" + classFile + ")没有找到!");
-                                }
-                            }
-                        }
                     }
                 }
                 #endregion
@@ -257,71 +314,48 @@ namespace TaskSimulator.BoatRobot
                 {
                     foreach (DynamicComponent kvp in SimulatorConfig.TaskComponentMap.Values)
                     {
-                        if (string.IsNullOrEmpty(kvp.ComponentId) || string.IsNullOrEmpty(kvp.ComponentName) || string.IsNullOrEmpty(kvp.ComponentClassFullName) || string.IsNullOrEmpty(kvp.ComponentClassFile))
+                        try
                         {
-                            continue;
-                        }
-                        else
-                        {
-                            string classFile = kvp.ComponentClassFile;
-                            if (kvp.ComponentClassFile.StartsWith("./"))
+                            currentClassFullName = kvp.ComponentClassFullName;
+
+                            Type objType = compileResult.GetType(currentClassFullName);
+
+                            if (objType != null)
                             {
-                                //需要修饰一下目录
-                                classFile = Path.Combine(Application.StartupPath, Path.Combine(ROBOT_DYNAMIC_COMPONENT_DIR, kvp.ComponentClassFile.Replace("./", string.Empty)));
-                            }
-
-                            if (File.Exists(classFile))
-                            {
-                                try
+                                Type[] faceTypes = objType.GetInterfaces();
+                                foreach (Type interfaceType in faceTypes)
                                 {
-                                   Assembly result = CSharpCompiler.Compile(SimulatorConfig.RefDLL, new string[] { classFile });
-                                   Type objType = result.GetType(kvp.ComponentClassFullName);
-
-                                   if (objType != null)
-                                   {
-                                       Type[] faceTypes = objType.GetInterfaces();
-                                       foreach (Type interfaceType in faceTypes)
-                                       {
-                                           if (interfaceType.FullName.Equals(typeof(ITaskWorkerThread).FullName))
-                                           {
-                                               taskDict.Add(kvp.ComponentId, (ITaskWorkerThread)objType.GetConstructor(Type.EmptyTypes).Invoke(null));
-                                               break;
-                                           }
-                                       }
-                                   }
-                                   else
-                                   {
-                                       SimulatorObject.logger.Error("对不起,类文件(" + classFile + ")中的主类名设置错误！");
-
-                                       if (SimulatorObject.ConsoleLoggerWindow != null)
-                                       {
-                                           SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起,类文件(" + classFile + ")中的主类名设置错误！");
-                                       }
-                                   }
-                                }
-                                catch (Exception ex)
-                                {
-                                    SimulatorObject.logger.Error(ex.ToString());
-
-                                    if (SimulatorObject.ConsoleLoggerWindow != null)
+                                    if (interfaceType.FullName.Equals(typeof(ITaskWorkerThread).FullName))
                                     {
-                                        SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread(ex.ToString());
+                                        taskDict.Add(kvp.ComponentId, (ITaskWorkerThread)objType.GetConstructor(Type.EmptyTypes).Invoke(null));
+                                        break;
                                     }
                                 }
                             }
                             else
                             {
-                                SimulatorObject.logger.Error("对不起，类文件(" + classFile + ")没有找到!");
+                                SimulatorObject.logger.Error("对不起,类(" + currentClassFullName + ")没有找到！");
+
                                 if (SimulatorObject.ConsoleLoggerWindow != null)
                                 {
-                                    SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起，类文件(" + classFile + ")没有找到!");
+                                    SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread("对不起,类(" + currentClassFullName + ")没有找到！");
                                 }
                             }
                         }
+                        catch (Exception ex)
+                        {
+                            SimulatorObject.logger.Error(ex.ToString());
+
+                            if (SimulatorObject.ConsoleLoggerWindow != null)
+                            {
+                                SimulatorObject.ConsoleLoggerWindow.ShowLogTextWithThread(ex.ToString());
+                            }
+                        }
+
                     }
                 }
                 #endregion
-                
+
                 #region 生成无人船列表
                 if (SimulatorConfig.RobotMap != null)
                 {

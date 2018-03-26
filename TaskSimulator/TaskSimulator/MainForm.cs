@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,8 +19,20 @@ namespace TaskSimulator
         {
             InitializeComponent();
 
+            UpdateVersionInfo();
             TaskSimulatorLib.SimulatorObject.ConsoleLoggerWindow = this;
             TaskSimulatorLib.SimulatorObject.Simulator.TaskProcessor.OnTaskCompleteEvent += TaskProcessor_OnTaskCompleteEvent;
+        }
+
+        /// <summary>
+        /// 更新版本信息
+        /// </summary>
+        private void UpdateVersionInfo()
+        {
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
+
+            this.Text = this.Tag + " V" + version.ToString();
+            tssl_stateinfo.Text = "欢迎使用" + this.Tag + " V" + version.ToString();
         }
 
         /// <summary>

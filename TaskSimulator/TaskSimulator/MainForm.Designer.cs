@@ -426,7 +426,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "无人船模拟器 V1.1";
+            this.Tag = "无人船模拟器";
+            this.Text = " V1.1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TestMainForm_FormClosing);
             this.Load += new System.EventHandler(this.TestMainForm_Load);
             this.statusStrip.ResumeLayout(false);
