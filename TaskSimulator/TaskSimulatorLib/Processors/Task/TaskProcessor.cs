@@ -134,6 +134,7 @@ namespace TaskSimulatorLib.Processors.Task
                             {
                                 if (queueObject.Task.TaskWorkerThread != null)
                                 {
+                                    //检查这个任务是否要用
                                     if (queueObject.Task.Enabled)
                                     {
                                         CommandResult cr = queueObject.Task.TaskWorkerThread.Process(queueObject.Command);
@@ -181,11 +182,18 @@ namespace TaskSimulatorLib.Processors.Task
                         {
                             SimulatorObject.logger.Error(ex.ToString());
 
-                            //出错的任务直接完成
-                            if (queueObject != null && queueObject.Task != null && queueObject.User != null && queueObject.Command != null)
+                            //出错的任务，为了保险起见，仍然继续执行，并打印错误
+
+                            //检查这个任务是不是没有完成
+                            if (queueObject.Task.TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Ended)
                             {
                                 //投递任务完成事件
                                 OnTaskComplete(queueObject.User, queueObject.Task);
+                            }
+                            else
+                            {
+                                //还在运行的任务需要再入队列
+                                Queues.Enqueue(queueObject);
                             }
                         }
                     }));

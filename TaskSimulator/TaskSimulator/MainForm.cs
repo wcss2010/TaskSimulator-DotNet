@@ -48,8 +48,12 @@ namespace TaskSimulator
             //继续出自主航行任务
             if (args.User != null && (string.IsNullOrEmpty(args.User.WorkMode) || args.User.WorkMode == TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ALWAYS))
             {
-                if (args.User.RobotSocket.IsConnected())
+                if (args.User.RobotSocket!= null)
                 {
+                    //机器人停止
+                    args.User.RobotSocket.RobotStop();
+
+                    //机器人启动
                     args.User.RobotSocket.RobotStart(null);
 
                     ShowLogTextWithThread("无人船" + args.User.UserName + "的自主航行任务，正在执行中...");
@@ -125,7 +129,7 @@ namespace TaskSimulator
             TaskSimulatorLib.SimulatorObject.Simulator.Stop();
 
             //停止无人船的Socket
-            if (TaskSimulatorLib.SimulatorObject.Simulator.UserDict != null) 
+            if (TaskSimulatorLib.SimulatorObject.Simulator.UserDict != null)
             {
                 foreach (TaskSimulatorLib.Entitys.RobotUser ru in TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Values)
                 {
@@ -154,67 +158,86 @@ namespace TaskSimulator
         {
             if (MessageBox.Show("真的要重启所有无人船吗？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
             {
-                TaskSimulatorLib.SimulatorObject.logger.Info("正在进行重启操作，请稍等...");
-                ShowLogTextWithThread("正在进行重启操作，请稍等...");
-
-                foreach (TaskSimulatorLib.Entitys.RobotUser ru in TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Values)
+                try
                 {
-                    if (ru.RobotSocket != null)
-                    {
-                        //停止机器人
-                        ru.RobotSocket.RobotStop();
+                    TaskSimulatorLib.SimulatorObject.logger.Info("正在进行重启操作，请稍等...");
+                    ShowLogTextWithThread("正在进行重启操作，请稍等...");
 
-                        //停止Socket
-                        ru.RobotSocket.Stop();
+                    foreach (TaskSimulatorLib.Entitys.RobotUser ru in TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Values)
+                    {
+                        if (ru.RobotSocket != null)
+                        {
+                            //停止机器人
+                            ru.RobotSocket.RobotStop();
+
+                            //停止Socket
+                            ru.RobotSocket.Stop();
+                        }
                     }
-                }
 
-                //检查当前是不是已经一份配置的运行了
-                TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Clear();
+                    //检查当前是不是已经一份配置的运行了
+                    TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Clear();
 
-                foreach (TaskSimulatorLib.Processors.ProcessorQueueObject pqo in TaskSimulatorLib.SimulatorObject.Simulator.TaskProcessor.Queues)
-                {
-                    if (pqo.Task != null && pqo.Task.TaskWorkerThread != null)
+                    foreach (TaskSimulatorLib.Processors.ProcessorQueueObject pqo in TaskSimulatorLib.SimulatorObject.Simulator.TaskProcessor.Queues)
                     {
-                        pqo.Task.TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ended;
+                        if (pqo.Task != null && pqo.Task.TaskWorkerThread != null)
+                        {
+                            pqo.Task.TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ended;
+                        }
                     }
-                }
-                TaskSimulatorLib.SimulatorObject.Simulator.TaskProcessor.Queues = new System.Collections.Concurrent.ConcurrentQueue<TaskSimulatorLib.Processors.ProcessorQueueObject>();
+                    TaskSimulatorLib.SimulatorObject.Simulator.TaskProcessor.Queues = new System.Collections.Concurrent.ConcurrentQueue<TaskSimulatorLib.Processors.ProcessorQueueObject>();
 
-                TaskSimulatorLib.SimulatorObject.logger.Info("运行缓存清理完毕...");
-                ShowLogTextWithThread("运行缓存清理完毕...");
+                    TaskSimulatorLib.SimulatorObject.logger.Info("运行缓存清理完毕...");
+                    ShowLogTextWithThread("运行缓存清理完毕...");
 
-                TaskSimulatorLib.SimulatorObject.logger.Info("正在初始化无人船相关数据...");
-                ShowLogTextWithThread("正在初始化无人船相关数据...");
+                    TaskSimulatorLib.SimulatorObject.logger.Info("正在初始化无人船相关数据...");
+                    ShowLogTextWithThread("正在初始化无人船相关数据...");
 
-                //准备初始化无人船对象
-                TaskSimulator.BoatRobot.RobotManager.Init();
+                    //准备初始化无人船对象
+                    TaskSimulator.BoatRobot.RobotManager.Init();
 
-                TaskSimulatorLib.SimulatorObject.logger.Info("无人船相关数据初始化完毕...");
-                ShowLogTextWithThread("无人船相关数据初始化完毕...");
+                    TaskSimulatorLib.SimulatorObject.logger.Info("无人船相关数据初始化完毕...");
+                    ShowLogTextWithThread("无人船相关数据初始化完毕...");
 
-                //无人船启动
-                foreach (TaskSimulatorLib.Entitys.RobotUser ru in TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Values)
-                {
-                    if (ru.RobotSocket != null)
+                    //无人船启动
+                    foreach (TaskSimulatorLib.Entitys.RobotUser ru in TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Values)
                     {
-                        //启动Socket
-                        ru.RobotSocket.Start();
+                        //打印日志
+                        TaskSimulatorLib.SimulatorObject.logger.Debug("无人船" + ru.UserName + "正在启动...");
+                        ShowLogTextWithThread("无人船" + ru.UserName + "正在启动...");
 
-                        //启动无人船
-                        ru.RobotSocket.RobotStart(null);
+                        if (ru.RobotSocket != null)
+                        {
+                            //启动Socket
+                            try
+                            {
+                                ru.RobotSocket.Start();
+                            }
+                            catch (Exception ex)
+                            {
+                                SimulatorObject.logger.Error(ex.ToString());
+                                ShowLogTextWithThread(ex.ToString());
+                            }
+
+                            //启动无人船
+                            ru.RobotSocket.RobotStart(null);
+                        }
 
                         //打印日志
                         TaskSimulatorLib.SimulatorObject.logger.Debug("无人船" + ru.UserName + "已启动！");
                         ShowLogTextWithThread("无人船" + ru.UserName + "已启动！");
                     }
+
+                    //初始化无人船状态列表
+                    InitBoatStateList();
+
+                    TaskSimulatorLib.SimulatorObject.logger.Info("无人船模拟器重启完毕.");
+                    ShowLogTextWithThread("无人船模拟器重启完毕.");
                 }
-
-                //初始化无人船状态列表
-                InitBoatStateList();
-
-                TaskSimulatorLib.SimulatorObject.logger.Info("无人船模拟器重启完毕.");
-                ShowLogTextWithThread("无人船模拟器重启完毕.");
+                catch (Exception ex)
+                {
+                    MessageBox.Show("操作失败！错误:" + ex.ToString());
+                }
             }
         }
 
@@ -238,16 +261,23 @@ namespace TaskSimulator
         {
             if (tvRobotList.SelectedNode != null && lbxSocketCommands.SelectedItem != null)
             {
-                TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
-                TaskSimulatorLib.Sockets.ConsoleCommand robotCommand = (TaskSimulatorLib.Sockets.ConsoleCommand)lbxSocketCommands.SelectedItem;
-
-                if (ru.RobotSocket != null)
+                try
                 {
-                    //运行相关指令
-                    ru.RobotSocket.ProcessConsoleCommand(robotCommand.Code, new object[] { });
+                    TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
+                    TaskSimulatorLib.Sockets.ConsoleCommand robotCommand = (TaskSimulatorLib.Sockets.ConsoleCommand)lbxSocketCommands.SelectedItem;
 
-                    TaskSimulatorLib.SimulatorObject.logger.Debug("无人船" + ru.UserName + "执行了" + robotCommand + "指令！");
-                    ShowLogTextWithThread("无人船" + ru.UserName + "执行了" + robotCommand + "指令！");
+                    if (ru.RobotSocket != null)
+                    {
+                        //运行相关指令
+                        ru.RobotSocket.ProcessConsoleCommand(robotCommand.Code, new object[] { });
+
+                        TaskSimulatorLib.SimulatorObject.logger.Debug("无人船" + ru.UserName + "执行了" + robotCommand + "指令！");
+                        ShowLogTextWithThread("无人船" + ru.UserName + "执行了" + robotCommand + "指令！");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("操作失败！错误:" + ex.ToString());
                 }
             }
         }
@@ -257,7 +287,7 @@ namespace TaskSimulator
             if (tvRobotList.SelectedNode != null)
             {
                 TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
-                
+
                 if (rbRoatWorkModeAlways.Checked)
                 {
                     ru.WorkMode = TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ALWAYS;
