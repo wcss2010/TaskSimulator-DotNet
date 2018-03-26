@@ -165,6 +165,9 @@ namespace TaskSimulator
 
                     foreach (TaskSimulatorLib.Entitys.RobotUser ru in TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Values)
                     {
+                        //设置工作模式
+                        ru.WorkMode = TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ONCE;
+
                         if (ru.RobotSocket != null)
                         {
                             //停止机器人

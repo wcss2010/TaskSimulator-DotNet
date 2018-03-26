@@ -86,7 +86,7 @@
             this.tssl_stateinfo});
             this.statusStrip.Location = new System.Drawing.Point(0, 479);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(1146, 25);
+            this.statusStrip.Size = new System.Drawing.Size(1219, 25);
             this.statusStrip.TabIndex = 0;
             this.statusStrip.Text = "statusStrip1";
             // 
@@ -105,7 +105,7 @@
             this.tbtnMapMonitor});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(1146, 59);
+            this.toolStrip.Size = new System.Drawing.Size(1219, 59);
             this.toolStrip.TabIndex = 1;
             // 
             // tbtnConfig
@@ -146,7 +146,7 @@
             this.tcMain.Location = new System.Drawing.Point(0, 59);
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedIndex = 0;
-            this.tcMain.Size = new System.Drawing.Size(1146, 420);
+            this.tcMain.Size = new System.Drawing.Size(1219, 420);
             this.tcMain.TabIndex = 2;
             // 
             // tpLog
@@ -230,7 +230,7 @@
             this.tpStatusList.Location = new System.Drawing.Point(4, 25);
             this.tpStatusList.Name = "tpStatusList";
             this.tpStatusList.Padding = new System.Windows.Forms.Padding(3);
-            this.tpStatusList.Size = new System.Drawing.Size(1138, 391);
+            this.tpStatusList.Size = new System.Drawing.Size(1211, 391);
             this.tpStatusList.TabIndex = 1;
             this.tpStatusList.Text = "无人船状态列表";
             this.tpStatusList.UseVisualStyleBackColor = true;
@@ -248,8 +248,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gbBoatDetail);
-            this.splitContainer1.Size = new System.Drawing.Size(1132, 385);
-            this.splitContainer1.SplitterDistance = 377;
+            this.splitContainer1.Size = new System.Drawing.Size(1205, 385);
+            this.splitContainer1.SplitterDistance = 401;
             this.splitContainer1.TabIndex = 0;
             // 
             // tvRobotList
@@ -259,7 +259,7 @@
             this.tvRobotList.HideSelection = false;
             this.tvRobotList.Location = new System.Drawing.Point(0, 0);
             this.tvRobotList.Name = "tvRobotList";
-            this.tvRobotList.Size = new System.Drawing.Size(377, 385);
+            this.tvRobotList.Size = new System.Drawing.Size(401, 385);
             this.tvRobotList.TabIndex = 0;
             this.tvRobotList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvRobotList_AfterSelect);
             // 
@@ -271,7 +271,7 @@
             this.gbBoatDetail.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbBoatDetail.Location = new System.Drawing.Point(0, 0);
             this.gbBoatDetail.Name = "gbBoatDetail";
-            this.gbBoatDetail.Size = new System.Drawing.Size(751, 385);
+            this.gbBoatDetail.Size = new System.Drawing.Size(800, 385);
             this.gbBoatDetail.TabIndex = 0;
             this.gbBoatDetail.TabStop = false;
             this.gbBoatDetail.Text = "无人船详细";
@@ -283,7 +283,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 348);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(745, 34);
+            this.panel4.Size = new System.Drawing.Size(794, 34);
             this.panel4.TabIndex = 4;
             // 
             // lbxSocketCommands
@@ -293,7 +293,7 @@
             this.lbxSocketCommands.ItemHeight = 15;
             this.lbxSocketCommands.Location = new System.Drawing.Point(97, 0);
             this.lbxSocketCommands.Name = "lbxSocketCommands";
-            this.lbxSocketCommands.Size = new System.Drawing.Size(648, 34);
+            this.lbxSocketCommands.Size = new System.Drawing.Size(697, 34);
             this.lbxSocketCommands.TabIndex = 1;
             this.lbxSocketCommands.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbxSocketCommands_MouseDoubleClick);
             // 
@@ -314,7 +314,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(3, 54);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(745, 294);
+            this.panel3.Size = new System.Drawing.Size(794, 294);
             this.panel3.TabIndex = 3;
             // 
             // dgvTaskStateList
@@ -330,7 +330,7 @@
             this.dgvTaskStateList.ReadOnly = true;
             this.dgvTaskStateList.RowHeadersVisible = false;
             this.dgvTaskStateList.RowTemplate.Height = 27;
-            this.dgvTaskStateList.Size = new System.Drawing.Size(647, 294);
+            this.dgvTaskStateList.Size = new System.Drawing.Size(696, 294);
             this.dgvTaskStateList.TabIndex = 1;
             // 
             // cTaskName
@@ -364,7 +364,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(3, 21);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(745, 33);
+            this.panel2.Size = new System.Drawing.Size(794, 33);
             this.panel2.TabIndex = 2;
             // 
             // panel1
@@ -373,7 +373,7 @@
             this.panel1.Controls.Add(this.rbRoatWorkModeAlways);
             this.panel1.Location = new System.Drawing.Point(99, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(643, 27);
+            this.panel1.Size = new System.Drawing.Size(692, 27);
             this.panel1.TabIndex = 1;
             // 
             // rbRoatWorkModeOnce
@@ -381,9 +381,9 @@
             this.rbRoatWorkModeOnce.AutoSize = true;
             this.rbRoatWorkModeOnce.Location = new System.Drawing.Point(184, 4);
             this.rbRoatWorkModeOnce.Name = "rbRoatWorkModeOnce";
-            this.rbRoatWorkModeOnce.Size = new System.Drawing.Size(343, 19);
+            this.rbRoatWorkModeOnce.Size = new System.Drawing.Size(464, 19);
             this.rbRoatWorkModeOnce.TabIndex = 1;
-            this.rbRoatWorkModeOnce.Text = "无人船航行任务停止后不需要再次自动规划行程";
+            this.rbRoatWorkModeOnce.Text = "无人船不需要连续航行(即当前任务完成后不会再规则新航行路线)";
             this.rbRoatWorkModeOnce.UseVisualStyleBackColor = true;
             this.rbRoatWorkModeOnce.CheckedChanged += new System.EventHandler(this.rbRoatWorkModeOnce_CheckedChanged);
             // 
@@ -419,7 +419,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1146, 504);
+            this.ClientSize = new System.Drawing.Size(1219, 504);
             this.Controls.Add(this.tcMain);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.statusStrip);
