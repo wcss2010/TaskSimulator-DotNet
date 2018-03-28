@@ -544,6 +544,8 @@ namespace TaskSimulator.Forms
                 }
 
                 //组件状态
+                robot.MonitorStateMap.Clear();
+                robot.TaskStateMap.Clear();
                 foreach (DataGridViewRow dRow in dgvRobotComponents.Rows)
                 {
                     if (dRow.Tag != null && dRow.Tag is DynamicComponent)
