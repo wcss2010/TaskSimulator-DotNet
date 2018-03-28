@@ -294,12 +294,15 @@ namespace TaskSimulator
 
                 if (rbRoatWorkModeAlways.Checked)
                 {
-                    ru.WorkMode = TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ALWAYS;
-
-                    if (ru.SocketController != null)
+                    if (ru.WorkMode != TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ALWAYS)
                     {
-                        ru.SocketController.RobotStart(null);
+                        if (ru.SocketController != null)
+                        {
+                            ru.SocketController.RobotStart(null);
+                        }
                     }
+
+                    ru.WorkMode = TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ALWAYS;
                 }
             }
         }
