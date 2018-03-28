@@ -71,14 +71,14 @@
     <Compile Include="Entitys\Robot.cs" />
     <Compile Include="Entitys\RobotSimulatorConfig.cs" />
     <Compile Include="Extends\Base\BaseMonitor.cs" />
-    <Compile Include="Extends\Base\BaseTaskWorkerThread.cs" />
+    <Compile Include="Extends\Base\BaseTaskProcessorThread.cs" />
     <Compile Include="Entitys\Command.cs" />
     <Compile Include="Entitys\CommandResult.cs" />
     <Compile Include="Entitys\RobotTask.cs" />
     <Compile Include="Entitys\RobotUser.cs" />
     <Compile Include="Monitors\IMonitor.cs" />
     <Compile Include="Processors\ProcessorQueueObject.cs" />
-    <Compile Include="Processors\Task\ITaskWorkerThread.cs" />
+    <Compile Include="Processors\Task\ITaskProcessorThread.cs" />
     <Compile Include="Processors\Task\TaskProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimulatorObject.cs" />

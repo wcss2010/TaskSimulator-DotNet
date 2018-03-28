@@ -34,9 +34,9 @@ namespace TaskSimulatorLib.Entitys
         public bool Enabled { get; set; }
 
         /// <summary>
-        /// 任务处理器(用于生成Command)
+        /// 任务处理器线程(用于控制任务运行)
         /// </summary>
-        public ITaskWorkerThread TaskWorkerThread { get; set; }
+        public ITaskProcessorThread TaskProcessorThread { get; set; }
 
         private Dictionary<string, object> objects = new Dictionary<string, object>();
         /// <summary>

@@ -134,7 +134,7 @@ namespace TaskSimulatorLib
             }
             if (enabledAdd)
             {
-                pqo.Task.TaskWorkerThread.WorkerThreadState = WorkerThreadStateType.Started;
+                pqo.Task.TaskProcessorThread.WorkerThreadState = WorkerThreadStateType.Started;
                 taskProcessor.Queues.Enqueue(pqo);
             }
         }
@@ -157,13 +157,13 @@ namespace TaskSimulatorLib
                 }
 
                 //如果正在运行，则不添加新任务
-                if (selectedUser.SupportedTask[taskCode].TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Running)
+                if (selectedUser.SupportedTask[taskCode].TaskProcessorThread.WorkerThreadState == WorkerThreadStateType.Running)
                 {
                     return;
                 }
 
                 //重置工作线程状态为Ready
-                selectedUser.SupportedTask[taskCode].TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
+                selectedUser.SupportedTask[taskCode].TaskProcessorThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready;
 
                 //添加到任务队列
                 TaskEnqueue(new ProcessorQueueObject(selectedUser, selectedUser.SupportedTask[taskCode], taskCommand));

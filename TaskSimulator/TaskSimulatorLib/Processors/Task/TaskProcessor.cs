@@ -132,12 +132,12 @@ namespace TaskSimulatorLib.Processors.Task
                             //开始处理任务
                             if (queueObject != null && queueObject.Task != null && queueObject.User != null && queueObject.Command != null)
                             {
-                                if (queueObject.Task.TaskWorkerThread != null)
+                                if (queueObject.Task.TaskProcessorThread != null)
                                 {
                                     //检查这个任务是否要用
                                     if (queueObject.Task.Enabled)
                                     {
-                                        CommandResult cr = queueObject.Task.TaskWorkerThread.Process(queueObject.Command);
+                                        CommandResult cr = queueObject.Task.TaskProcessorThread.Process(queueObject.Command);
                                         if (cr != null)
                                         {
                                             //打印处理结果
@@ -156,7 +156,7 @@ namespace TaskSimulatorLib.Processors.Task
                                         }
 
                                         //检查这个任务是不是没有完成
-                                        if (queueObject.Task.TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Ended)
+                                        if (queueObject.Task.TaskProcessorThread.WorkerThreadState == WorkerThreadStateType.Ended)
                                         {
                                             //投递任务完成事件
                                             OnTaskComplete(queueObject.User, queueObject.Task);
@@ -185,7 +185,7 @@ namespace TaskSimulatorLib.Processors.Task
                             //出错的任务，为了保险起见，仍然继续执行，并打印错误
 
                             //检查这个任务是不是没有完成
-                            if (queueObject.Task.TaskWorkerThread.WorkerThreadState == WorkerThreadStateType.Ended)
+                            if (queueObject.Task.TaskProcessorThread.WorkerThreadState == WorkerThreadStateType.Ended)
                             {
                                 //投递任务完成事件
                                 OnTaskComplete(queueObject.User, queueObject.Task);

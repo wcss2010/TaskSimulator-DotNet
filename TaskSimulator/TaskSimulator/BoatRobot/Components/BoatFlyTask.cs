@@ -9,7 +9,7 @@ using TaskSimulatorLib.Processors.Task;
 
 namespace TaskSimulator.BoatRobot.Components
 {
-    public class BoatFlyTask : BaseTaskWorkerThread
+    public class BoatFlyTask : BaseTaskProcessorThread
     {
         /// <summary>
         /// 使用外部定义好的航行路径来播放

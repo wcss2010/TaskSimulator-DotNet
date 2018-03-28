@@ -114,7 +114,7 @@ namespace TaskSimulator.BoatRobot
         {
             if (SimulatorConfig != null)
             {
-                Dictionary<string, ITaskWorkerThread> taskDict = new Dictionary<string, ITaskWorkerThread>();
+                Dictionary<string, ITaskProcessorThread> taskDict = new Dictionary<string, ITaskProcessorThread>();
                 Dictionary<string, IMonitor> monitorDict = new Dictionary<string, IMonitor>();
                 IRobotSocket robotSocketTemp = null;
                 Assembly compileResult = null;
@@ -325,9 +325,9 @@ namespace TaskSimulator.BoatRobot
                                 Type[] faceTypes = objType.GetInterfaces();
                                 foreach (Type interfaceType in faceTypes)
                                 {
-                                    if (interfaceType.FullName.Equals(typeof(ITaskWorkerThread).FullName))
+                                    if (interfaceType.FullName.Equals(typeof(ITaskProcessorThread).FullName))
                                     {
-                                        taskDict.Add(kvp.ComponentId, (ITaskWorkerThread)objType.GetConstructor(Type.EmptyTypes).Invoke(null));
+                                        taskDict.Add(kvp.ComponentId, (ITaskProcessorThread)objType.GetConstructor(Type.EmptyTypes).Invoke(null));
                                         break;
                                     }
                                 }
@@ -414,11 +414,11 @@ namespace TaskSimulator.BoatRobot
                             boatFly.TaskCode = Task_BoatFly;
                             boatFly.TaskName = "自主航行任务";
                             boatFly.Enabled = true;
-                            boatFly.TaskWorkerThread = new BoatFlyTask();
-                            ((BoatFlyTask)boatFly.TaskWorkerThread).StepWithSecond = rb.StepWithSecond;
-                            ((BoatFlyTask)boatFly.TaskWorkerThread).Task = boatFly;
-                            ((BoatFlyTask)boatFly.TaskWorkerThread).User = curUser;
-                            ((BoatFlyTask)boatFly.TaskWorkerThread).WorkerThreadState = WorkerThreadStateType.Ready;
+                            boatFly.TaskProcessorThread = new BoatFlyTask();
+                            ((BoatFlyTask)boatFly.TaskProcessorThread).StepWithSecond = rb.StepWithSecond;
+                            ((BoatFlyTask)boatFly.TaskProcessorThread).Task = boatFly;
+                            ((BoatFlyTask)boatFly.TaskProcessorThread).User = curUser;
+                            ((BoatFlyTask)boatFly.TaskProcessorThread).WorkerThreadState = WorkerThreadStateType.Ready;
 
                             curUser.SupportedTask.TryAdd(boatFly.TaskCode, boatFly);
                             #endregion
@@ -445,10 +445,10 @@ namespace TaskSimulator.BoatRobot
                                     RobotTask rt = new RobotTask();
                                     rt.TaskCode = dc.ComponentId;
                                     rt.TaskName = dc.ComponentName;
-                                    rt.TaskWorkerThread = (ITaskWorkerThread)taskDict[dc.ComponentId].Clone();
-                                    rt.TaskWorkerThread.WorkerThreadState = WorkerThreadStateType.Ready;
-                                    rt.TaskWorkerThread.User = curUser;
-                                    rt.TaskWorkerThread.Task = rt;
+                                    rt.TaskProcessorThread = (ITaskProcessorThread)taskDict[dc.ComponentId].Clone();
+                                    rt.TaskProcessorThread.WorkerThreadState = WorkerThreadStateType.Ready;
+                                    rt.TaskProcessorThread.User = curUser;
+                                    rt.TaskProcessorThread.Task = rt;
                                     rt.Enabled = rb.TaskStateMap.ContainsKey(dc.ComponentId) ? rb.TaskStateMap[dc.ComponentId] : true;
 
                                     curUser.SupportedTask.TryAdd(dc.ComponentId, rt);

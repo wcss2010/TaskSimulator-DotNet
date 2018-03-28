@@ -183,9 +183,9 @@ namespace TaskSimulator
 
                     foreach (TaskSimulatorLib.Processors.ProcessorQueueObject pqo in TaskSimulatorLib.SimulatorObject.Simulator.TaskProcessor.Queues)
                     {
-                        if (pqo.Task != null && pqo.Task.TaskWorkerThread != null)
+                        if (pqo.Task != null && pqo.Task.TaskProcessorThread != null)
                         {
-                            pqo.Task.TaskWorkerThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ended;
+                            pqo.Task.TaskProcessorThread.WorkerThreadState = TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ended;
                         }
                     }
                     TaskSimulatorLib.SimulatorObject.Simulator.TaskProcessor.Queues = new System.Collections.Concurrent.ConcurrentQueue<TaskSimulatorLib.Processors.ProcessorQueueObject>();
@@ -363,7 +363,7 @@ namespace TaskSimulator
                     {
                         List<object> cells = new List<object>();
                         cells.Add(rt.TaskName + "(" + rt.TaskCode + ")");
-                        switch (rt.TaskWorkerThread.WorkerThreadState)
+                        switch (rt.TaskProcessorThread.WorkerThreadState)
                         {
                             case TaskSimulatorLib.Processors.Task.WorkerThreadStateType.Ready:
                                 cells.Add("准备");
