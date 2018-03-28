@@ -38,7 +38,7 @@
             this.tbtnMapMonitor = new System.Windows.Forms.ToolStripButton();
             this.tcMain = new System.Windows.Forms.TabControl();
             this.tpLog = new System.Windows.Forms.TabPage();
-            this.tbLogs = new System.Windows.Forms.RichTextBox();
+            this.tbLogs = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.nudMaxLogRowCount = new System.Windows.Forms.NumericUpDown();
             this.btnClearLogs = new System.Windows.Forms.Button();
@@ -51,6 +51,8 @@
             this.lbxSocketCommands = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.tbSocketInfo = new System.Windows.Forms.TextBox();
             this.dgvTaskStateList = new System.Windows.Forms.DataGridView();
             this.cTaskName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cTaskState = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -61,8 +63,6 @@
             this.rbRoatWorkModeAlways = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.trBoatStateUpdater = new System.Windows.Forms.Timer(this.components);
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.tbSocketInfo = new System.Windows.Forms.RichTextBox();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.tcMain.SuspendLayout();
@@ -77,13 +77,13 @@
             this.gbBoatDetail.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTaskStateList)).BeginInit();
-            this.panel2.SuspendLayout();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTaskStateList)).BeginInit();
+            this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -169,13 +169,18 @@
             // 
             // tbLogs
             // 
+            this.tbLogs.AcceptsReturn = true;
+            this.tbLogs.AcceptsTab = true;
             this.tbLogs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbLogs.Location = new System.Drawing.Point(3, 55);
             this.tbLogs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbLogs.MaxLength = 30000;
+            this.tbLogs.Multiline = true;
             this.tbLogs.Name = "tbLogs";
+            this.tbLogs.ReadOnly = true;
+            this.tbLogs.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbLogs.Size = new System.Drawing.Size(1205, 333);
             this.tbLogs.TabIndex = 2;
-            this.tbLogs.Text = "";
             // 
             // groupBox1
             // 
@@ -323,6 +328,38 @@
             this.panel3.Size = new System.Drawing.Size(794, 294);
             this.panel3.TabIndex = 3;
             // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(98, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.tbSocketInfo);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.dgvTaskStateList);
+            this.splitContainer2.Size = new System.Drawing.Size(696, 294);
+            this.splitContainer2.SplitterDistance = 147;
+            this.splitContainer2.TabIndex = 2;
+            // 
+            // tbSocketInfo
+            // 
+            this.tbSocketInfo.AcceptsReturn = true;
+            this.tbSocketInfo.AcceptsTab = true;
+            this.tbSocketInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSocketInfo.Location = new System.Drawing.Point(0, 0);
+            this.tbSocketInfo.MaxLength = 30000;
+            this.tbSocketInfo.Multiline = true;
+            this.tbSocketInfo.Name = "tbSocketInfo";
+            this.tbSocketInfo.ReadOnly = true;
+            this.tbSocketInfo.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tbSocketInfo.Size = new System.Drawing.Size(696, 147);
+            this.tbSocketInfo.TabIndex = 0;
+            // 
             // dgvTaskStateList
             // 
             this.dgvTaskStateList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -360,7 +397,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(98, 294);
             this.label2.TabIndex = 0;
-            this.label2.Text = "任务状态：";
+            this.label2.Text = "状态信息：";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // panel2
@@ -418,36 +455,8 @@
             // trBoatStateUpdater
             // 
             this.trBoatStateUpdater.Enabled = true;
-            this.trBoatStateUpdater.Interval = 500;
+            this.trBoatStateUpdater.Interval = 1000;
             this.trBoatStateUpdater.Tick += new System.EventHandler(this.trBoatStateUpdater_Tick);
-            // 
-            // splitContainer2
-            // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(98, 0);
-            this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.tbSocketInfo);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.dgvTaskStateList);
-            this.splitContainer2.Size = new System.Drawing.Size(696, 294);
-            this.splitContainer2.SplitterDistance = 147;
-            this.splitContainer2.TabIndex = 2;
-            // 
-            // tbSocketInfo
-            // 
-            this.tbSocketInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSocketInfo.Location = new System.Drawing.Point(0, 0);
-            this.tbSocketInfo.Name = "tbSocketInfo";
-            this.tbSocketInfo.ReadOnly = true;
-            this.tbSocketInfo.Size = new System.Drawing.Size(696, 147);
-            this.tbSocketInfo.TabIndex = 0;
-            this.tbSocketInfo.Text = "";
             // 
             // MainForm
             // 
@@ -470,6 +479,7 @@
             this.toolStrip.PerformLayout();
             this.tcMain.ResumeLayout(false);
             this.tpLog.ResumeLayout(false);
+            this.tpLog.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxLogRowCount)).EndInit();
@@ -481,15 +491,16 @@
             this.gbBoatDetail.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel1.PerformLayout();
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTaskStateList)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-            this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -504,7 +515,7 @@
         private System.Windows.Forms.TabPage tpLog;
         private System.Windows.Forms.TabPage tpStatusList;
         private System.Windows.Forms.ToolStripButton tbtnStart;
-        private System.Windows.Forms.RichTextBox tbLogs;
+        private System.Windows.Forms.TextBox tbLogs;
         private System.Windows.Forms.ToolStripButton tbtnConfig;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TreeView tvRobotList;
@@ -529,6 +540,6 @@
         private System.Windows.Forms.NumericUpDown nudMaxLogRowCount;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.RichTextBox tbSocketInfo;
+        private System.Windows.Forms.TextBox tbSocketInfo;
     }
 }
