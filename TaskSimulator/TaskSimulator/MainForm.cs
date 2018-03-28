@@ -70,9 +70,10 @@ namespace TaskSimulator
             if (tbLogs.Lines != null && tbLogs.Lines.Length >= nudMaxLogRowCount.Value)
             {
                 tbLogs.Clear();
+                tbLogs.Lines = new string[0];
             }
 
-            tbLogs.AppendText(DateTime.Now.ToString() + ":" + txt + "\n");
+            tbLogs.AppendText(DateTime.Now.ToString() + ":" + txt + System.Environment.NewLine);
 
             if (tbLogs.Text.Length > 0)
             {
@@ -408,6 +409,8 @@ namespace TaskSimulator
         private void btnClearLogs_Click(object sender, EventArgs e)
         {
             tbLogs.Text = "";
+            tbLogs.Clear();
+            tbLogs.Lines = new string[0];
         }
     }
 }
