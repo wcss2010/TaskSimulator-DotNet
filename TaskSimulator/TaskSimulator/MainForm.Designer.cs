@@ -455,7 +455,7 @@
             // trBoatStateUpdater
             // 
             this.trBoatStateUpdater.Enabled = true;
-            this.trBoatStateUpdater.Interval = 1000;
+            this.trBoatStateUpdater.Interval = 3000;
             this.trBoatStateUpdater.Tick += new System.EventHandler(this.trBoatStateUpdater_Tick);
             // 
             // MainForm

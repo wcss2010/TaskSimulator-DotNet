@@ -322,6 +322,9 @@ namespace TaskSimulator
             {
                 TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
 
+                //显示状态信息
+                trBoatStateUpdater_Tick(this, new EventArgs());
+
                 //工作状态
                 if (ru.WorkMode == TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ALWAYS || string.IsNullOrEmpty(ru.WorkMode))
                 {
