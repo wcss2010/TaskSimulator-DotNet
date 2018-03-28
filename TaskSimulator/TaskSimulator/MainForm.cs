@@ -358,6 +358,13 @@ namespace TaskSimulator
                 {
                     TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
 
+                    //显示一段状态说明文本
+                    if (ru.SocketController != null)
+                    {
+                        tbSocketInfo.Text = ru.SocketController.GetStatusInfo();
+                    }
+
+                    #region 显示任务状态列表
                     dgvTaskStateList.Rows.Clear();
                     foreach (TaskSimulatorLib.Entitys.RobotTask rt in ru.SupportedTask.Values)
                     {
@@ -380,6 +387,7 @@ namespace TaskSimulator
                         }
                         int rowIndex = dgvTaskStateList.Rows.Add(cells.ToArray());
                     }
+                    #endregion
                 }
             }
             catch (Exception ex)

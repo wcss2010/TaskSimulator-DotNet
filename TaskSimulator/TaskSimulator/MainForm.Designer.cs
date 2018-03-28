@@ -61,6 +61,8 @@
             this.rbRoatWorkModeAlways = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.trBoatStateUpdater = new System.Windows.Forms.Timer(this.components);
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.tbSocketInfo = new System.Windows.Forms.RichTextBox();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.tcMain.SuspendLayout();
@@ -78,6 +80,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvTaskStateList)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -156,7 +162,7 @@
             this.tpLog.Location = new System.Drawing.Point(4, 25);
             this.tpLog.Name = "tpLog";
             this.tpLog.Padding = new System.Windows.Forms.Padding(3);
-            this.tpLog.Size = new System.Drawing.Size(1138, 391);
+            this.tpLog.Size = new System.Drawing.Size(1211, 391);
             this.tpLog.TabIndex = 0;
             this.tpLog.Text = "运行日志";
             this.tpLog.UseVisualStyleBackColor = true;
@@ -167,7 +173,7 @@
             this.tbLogs.Location = new System.Drawing.Point(3, 55);
             this.tbLogs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbLogs.Name = "tbLogs";
-            this.tbLogs.Size = new System.Drawing.Size(1132, 333);
+            this.tbLogs.Size = new System.Drawing.Size(1205, 333);
             this.tbLogs.TabIndex = 2;
             this.tbLogs.Text = "";
             // 
@@ -179,7 +185,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1132, 52);
+            this.groupBox1.Size = new System.Drawing.Size(1205, 52);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             // 
@@ -187,12 +193,12 @@
             // 
             this.nudMaxLogRowCount.Location = new System.Drawing.Point(199, 19);
             this.nudMaxLogRowCount.Maximum = new decimal(new int[] {
-            5000,
+            500,
             0,
             0,
             0});
             this.nudMaxLogRowCount.Minimum = new decimal(new int[] {
-            25,
+            15,
             0,
             0,
             0});
@@ -200,7 +206,7 @@
             this.nudMaxLogRowCount.Size = new System.Drawing.Size(120, 25);
             this.nudMaxLogRowCount.TabIndex = 1;
             this.nudMaxLogRowCount.Value = new decimal(new int[] {
-            25,
+            20,
             0,
             0,
             0});
@@ -309,7 +315,7 @@
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.dgvTaskStateList);
+            this.panel3.Controls.Add(this.splitContainer2);
             this.panel3.Controls.Add(this.label2);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(3, 54);
@@ -324,13 +330,13 @@
             this.cTaskName,
             this.cTaskState});
             this.dgvTaskStateList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvTaskStateList.Location = new System.Drawing.Point(98, 0);
+            this.dgvTaskStateList.Location = new System.Drawing.Point(0, 0);
             this.dgvTaskStateList.MultiSelect = false;
             this.dgvTaskStateList.Name = "dgvTaskStateList";
             this.dgvTaskStateList.ReadOnly = true;
             this.dgvTaskStateList.RowHeadersVisible = false;
             this.dgvTaskStateList.RowTemplate.Height = 27;
-            this.dgvTaskStateList.Size = new System.Drawing.Size(696, 294);
+            this.dgvTaskStateList.Size = new System.Drawing.Size(696, 143);
             this.dgvTaskStateList.TabIndex = 1;
             // 
             // cTaskName
@@ -412,8 +418,36 @@
             // trBoatStateUpdater
             // 
             this.trBoatStateUpdater.Enabled = true;
-            this.trBoatStateUpdater.Interval = 1000;
+            this.trBoatStateUpdater.Interval = 500;
             this.trBoatStateUpdater.Tick += new System.EventHandler(this.trBoatStateUpdater_Tick);
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(98, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.tbSocketInfo);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.dgvTaskStateList);
+            this.splitContainer2.Size = new System.Drawing.Size(696, 294);
+            this.splitContainer2.SplitterDistance = 147;
+            this.splitContainer2.TabIndex = 2;
+            // 
+            // tbSocketInfo
+            // 
+            this.tbSocketInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSocketInfo.Location = new System.Drawing.Point(0, 0);
+            this.tbSocketInfo.Name = "tbSocketInfo";
+            this.tbSocketInfo.ReadOnly = true;
+            this.tbSocketInfo.Size = new System.Drawing.Size(696, 147);
+            this.tbSocketInfo.TabIndex = 0;
+            this.tbSocketInfo.Text = "";
             // 
             // MainForm
             // 
@@ -452,6 +486,10 @@
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -490,5 +528,7 @@
         private System.Windows.Forms.Button btnClearLogs;
         private System.Windows.Forms.NumericUpDown nudMaxLogRowCount;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.RichTextBox tbSocketInfo;
     }
 }

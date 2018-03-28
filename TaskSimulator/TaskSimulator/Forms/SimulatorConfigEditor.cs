@@ -469,11 +469,11 @@ namespace TaskSimulator.Forms
                 MessageBox.Show("对不起，必须设置虚拟摄像头的名称！");
                 return;
             }
-            if (imageTeams != null && imageTeams.Length >= 1 &&imageTeams.Length < 2)
-            {
-                MessageBox.Show("对不起，必须设置两张以上的背景图！");
-                return;
-            }
+            //if (imageTeams != null && imageTeams.Length >= 1 &&imageTeams.Length < 2)
+            //{
+            //    MessageBox.Show("对不起，必须设置两张以上的背景图！");
+            //    return;
+            //}
             if (btnRobotFonts.Tag == null)
             {
                 MessageBox.Show("对不起，必须设置字体！");
