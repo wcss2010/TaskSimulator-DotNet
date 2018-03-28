@@ -427,20 +427,20 @@ namespace TaskSimulator.BoatRobot
                             //监视器
                             foreach (DynamicComponent dc in SimulatorConfig.MonitorComponentMap.Values)
                             {
-                                if (monitorDict.ContainsKey(dc.ComponentId) && rb.MonitorStateMap.ContainsKey(dc.ComponentId))
+                                if (monitorDict.ContainsKey(dc.ComponentId))
                                 {
                                     curUser.SupportedMonitor.TryAdd(dc.ComponentId, (IMonitor)monitorDict[dc.ComponentId].Clone());
 
                                     curUser.SupportedMonitor[dc.ComponentId].Name = dc.ComponentName;
                                     curUser.SupportedMonitor[dc.ComponentId].User = curUser;
-                                    curUser.SupportedMonitor[dc.ComponentId].Enabled = rb.MonitorStateMap[dc.ComponentId];
+                                    curUser.SupportedMonitor[dc.ComponentId].Enabled = rb.MonitorStateMap.ContainsKey(dc.ComponentId) ? rb.MonitorStateMap[dc.ComponentId] : true;
                                 }
                             }
 
                             //任务处理器
                             foreach (DynamicComponent dc in SimulatorConfig.TaskComponentMap.Values)
                             {
-                                if (taskDict.ContainsKey(dc.ComponentId) && rb.TaskStateMap.ContainsKey(dc.ComponentId))
+                                if (taskDict.ContainsKey(dc.ComponentId))
                                 {
                                     RobotTask rt = new RobotTask();
                                     rt.TaskCode = dc.ComponentId;
@@ -449,7 +449,7 @@ namespace TaskSimulator.BoatRobot
                                     rt.TaskWorkerThread.WorkerThreadState = WorkerThreadStateType.Ready;
                                     rt.TaskWorkerThread.User = curUser;
                                     rt.TaskWorkerThread.Task = rt;
-                                    rt.Enabled = rb.TaskStateMap[dc.ComponentId];
+                                    rt.Enabled = rb.TaskStateMap.ContainsKey(dc.ComponentId) ? rb.TaskStateMap[dc.ComponentId] : true;
 
                                     curUser.SupportedTask.TryAdd(dc.ComponentId, rt);
                                 }
