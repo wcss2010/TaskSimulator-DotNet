@@ -81,7 +81,7 @@ namespace TaskSimulatorLib.Processors.Task
 
                 try
                 {
-                    Thread.Sleep(2);
+                    Thread.Sleep(5);
                 }
                 catch (Exception ex) { }
             }

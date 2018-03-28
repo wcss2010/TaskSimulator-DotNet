@@ -116,7 +116,7 @@ namespace TaskSimulator.BoatRobot
             {
                 Dictionary<string, ITaskProcessorThread> taskDict = new Dictionary<string, ITaskProcessorThread>();
                 Dictionary<string, IMonitor> monitorDict = new Dictionary<string, IMonitor>();
-                IRobotSocket robotSocketTemp = null;
+                ISocketController robotSocketTemp = null;
                 Assembly compileResult = null;
                 List<string> codeFiles = new List<string>();
                 string currentClassFullName = string.Empty;
@@ -234,9 +234,9 @@ namespace TaskSimulator.BoatRobot
                         Type[] faceTypes = objType.GetInterfaces();
                         foreach (Type interfaceType in faceTypes)
                         {
-                            if (interfaceType.FullName.Equals(typeof(IRobotSocket).FullName))
+                            if (interfaceType.FullName.Equals(typeof(ISocketController).FullName))
                             {
-                                robotSocketTemp = (IRobotSocket)objType.GetConstructor(Type.EmptyTypes).Invoke(null);
+                                robotSocketTemp = (ISocketController)objType.GetConstructor(Type.EmptyTypes).Invoke(null);
                                 break;
                             }
                         }
@@ -372,13 +372,13 @@ namespace TaskSimulator.BoatRobot
                             if (robotSocketTemp != null)
                             {
                                 //克隆一个Socket对象
-                                curUser.RobotSocket = (IRobotSocket)robotSocketTemp.Clone();
+                                curUser.SocketController = (ISocketController)robotSocketTemp.Clone();
 
                                 //设置所属用户
-                                curUser.RobotSocket.User = curUser;
+                                curUser.SocketController.User = curUser;
 
                                 //初始化Socket
-                                curUser.RobotSocket.Init(rb);
+                                curUser.SocketController.Init(rb);
                             }
 
                             #region 加载无人船默认的模块

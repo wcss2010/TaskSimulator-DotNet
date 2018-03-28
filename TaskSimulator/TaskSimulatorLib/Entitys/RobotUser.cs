@@ -46,7 +46,7 @@ namespace TaskSimulatorLib.Entitys
         /// <summary>
         /// 机器人控制通道
         /// </summary>
-        public IRobotSocket RobotSocket { get; set; }
+        public ISocketController SocketController { get; set; }
 
         private Dictionary<string, object> objects = new Dictionary<string, object>();
         /// <summary>

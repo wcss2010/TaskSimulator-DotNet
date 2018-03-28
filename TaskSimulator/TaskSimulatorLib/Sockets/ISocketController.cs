@@ -8,10 +8,10 @@ using TaskSimulatorLib.Util;
 namespace TaskSimulatorLib.Sockets
 {
     /**
-     * 机器人的Socket接口，用于适配MQTT,TCP,UCP等通信方式
+     * 机器人的Socket控制器接口，用于适配MQTT,TCP,UCP等通信方式
      * 
      */
-    public interface IRobotSocket :ICloneable
+    public interface ISocketController :ICloneable
     {
         /// <summary>
         /// 所属设备用户
@@ -88,6 +88,12 @@ namespace TaskSimulatorLib.Sockets
         /// <param name="code"></param>
         /// <param name="args"></param>
         object ProcessConsoleCommand(string code, object[] args);
+
+        /// <summary>
+        /// 返回给控制台一个状态说明
+        /// </summary>
+        /// <returns></returns>
+        string GetStatusInfo();
     }
 
     /// <summary>

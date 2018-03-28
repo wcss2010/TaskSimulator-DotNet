@@ -48,13 +48,13 @@ namespace TaskSimulator
             //继续出自主航行任务
             if (args.User != null && (string.IsNullOrEmpty(args.User.WorkMode) || args.User.WorkMode == TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ALWAYS))
             {
-                if (args.User.RobotSocket!= null)
+                if (args.User.SocketController!= null)
                 {
                     //机器人停止
-                    args.User.RobotSocket.RobotStop();
+                    args.User.SocketController.RobotStop();
 
                     //机器人启动
-                    args.User.RobotSocket.RobotStart(null);
+                    args.User.SocketController.RobotStart(null);
 
                     ShowLogTextWithThread("无人船" + args.User.UserName + "的自主航行任务，正在执行中...");
                 }
@@ -133,11 +133,11 @@ namespace TaskSimulator
             {
                 foreach (TaskSimulatorLib.Entitys.RobotUser ru in TaskSimulatorLib.SimulatorObject.Simulator.UserDict.Values)
                 {
-                    if (ru.RobotSocket != null)
+                    if (ru.SocketController != null)
                     {
                         try
                         {
-                            ru.RobotSocket.Stop();
+                            ru.SocketController.Stop();
                         }
                         catch (Exception ex) { }
                     }
@@ -168,13 +168,13 @@ namespace TaskSimulator
                         //设置工作模式
                         ru.WorkMode = TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ONCE;
 
-                        if (ru.RobotSocket != null)
+                        if (ru.SocketController != null)
                         {
                             //停止机器人
-                            ru.RobotSocket.RobotStop();
+                            ru.SocketController.RobotStop();
 
                             //停止Socket
-                            ru.RobotSocket.Stop();
+                            ru.SocketController.Stop();
                         }
                     }
 
@@ -209,12 +209,12 @@ namespace TaskSimulator
                         TaskSimulatorLib.SimulatorObject.logger.Debug("无人船" + ru.UserName + "正在启动...");
                         ShowLogTextWithThread("无人船" + ru.UserName + "正在启动...");
 
-                        if (ru.RobotSocket != null)
+                        if (ru.SocketController != null)
                         {
                             //启动Socket
                             try
                             {
-                                ru.RobotSocket.Start();
+                                ru.SocketController.Start();
                             }
                             catch (Exception ex)
                             {
@@ -223,7 +223,7 @@ namespace TaskSimulator
                             }
 
                             //启动无人船
-                            ru.RobotSocket.RobotStart(null);
+                            ru.SocketController.RobotStart(null);
                         }
 
                         //打印日志
@@ -269,10 +269,10 @@ namespace TaskSimulator
                     TaskSimulatorLib.Entitys.RobotUser ru = (TaskSimulatorLib.Entitys.RobotUser)tvRobotList.SelectedNode.Tag;
                     TaskSimulatorLib.Sockets.ConsoleCommand robotCommand = (TaskSimulatorLib.Sockets.ConsoleCommand)lbxSocketCommands.SelectedItem;
 
-                    if (ru.RobotSocket != null)
+                    if (ru.SocketController != null)
                     {
                         //运行相关指令
-                        ru.RobotSocket.ProcessConsoleCommand(robotCommand.Code, new object[] { });
+                        ru.SocketController.ProcessConsoleCommand(robotCommand.Code, new object[] { });
 
                         TaskSimulatorLib.SimulatorObject.logger.Debug("无人船" + ru.UserName + "执行了" + robotCommand + "指令！");
                         ShowLogTextWithThread("无人船" + ru.UserName + "执行了" + robotCommand + "指令！");
@@ -295,9 +295,9 @@ namespace TaskSimulator
                 {
                     ru.WorkMode = TaskSimulatorLib.Entitys.RobotUser.WORKMODE_ALWAYS;
 
-                    if (ru.RobotSocket != null)
+                    if (ru.SocketController != null)
                     {
-                        ru.RobotSocket.RobotStart(null);
+                        ru.SocketController.RobotStart(null);
                     }
                 }
             }
@@ -332,13 +332,13 @@ namespace TaskSimulator
                     rbRoatWorkModeOnce.Checked = true;
                 }
 
-                gbBoatDetail.Text = "无人船详细(ID:" + ru.UserCode + ",名称:" + ru.UserName + ",Socket状态:" + (ru.RobotSocket != null ? (ru.RobotSocket.IsConnected() ? "在线" : "离线") : ("离线")) + ")";
+                gbBoatDetail.Text = "无人船详细(ID:" + ru.UserCode + ",名称:" + ru.UserName + ",Socket状态:" + (ru.SocketController != null ? (ru.SocketController.IsConnected() ? "在线" : "离线") : ("离线")) + ")";
 
                 //Socket指令
                 lbxSocketCommands.Items.Clear();
-                if (ru.RobotSocket != null)
+                if (ru.SocketController != null)
                 {
-                    TaskSimulatorLib.Sockets.ConsoleCommand[] robotCmdTeams = ru.RobotSocket.GetSupportedConsoleCommands();
+                    TaskSimulatorLib.Sockets.ConsoleCommand[] robotCmdTeams = ru.SocketController.GetSupportedConsoleCommands();
                     if (robotCmdTeams != null)
                     {
                         foreach (TaskSimulatorLib.Sockets.ConsoleCommand cmd in robotCmdTeams)
