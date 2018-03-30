@@ -81,7 +81,7 @@ namespace TaskSimulatorLib.Processors.Task
 
                 try
                 {
-                    Thread.Sleep(5);
+                    Thread.Sleep(50);
                 }
                 catch (Exception ex) { }
             }
@@ -109,94 +109,94 @@ namespace TaskSimulatorLib.Processors.Task
         /// </summary>
         private void DoWork()
         {
-            if (Queues != null && Queues.Count > 0)
+            if (Queues != null)
             {
                 ProcessorQueueObject queueObject = null;
 
-                try
+                for (int kk = 0; kk < Queues.Count * 2; kk++)
                 {
-                    //取一个对象
-                    queueObject = new ProcessorQueueObject();
-                    Queues.TryDequeue(out queueObject);
-                }
-                catch (Exception ex)
-                {
-                    SimulatorObject.logger.Error(ex.ToString());
-                }
-
-                //调用Command工作线程去处理
-                ThreadPool.QueueUserWorkItem(new WaitCallback(delegate(object o)
+                    try
                     {
-                        try
-                        {
-                            //开始处理任务
-                            if (queueObject != null && queueObject.Task != null && queueObject.User != null && queueObject.Command != null)
-                            {
-                                if (queueObject.Task.TaskProcessorThread != null)
-                                {
-                                    //检查这个任务是否要用
-                                    if (queueObject.Task.Enabled)
-                                    {
-                                        CommandResult cr = queueObject.Task.TaskProcessorThread.Process(queueObject.Command);
-                                        if (cr != null)
-                                        {
-                                            //打印处理结果
-                                            if (cr.IsOK)
-                                            {
-                                                //SimulatorObject.logger.Debug("设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理成功！");
-                                            }
-                                            else
-                                            {
-                                                SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理失败！原因：" + cr.ErrorReason);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")没有返回处理结果!");
-                                        }
+                        //取一个对象
+                        queueObject = new ProcessorQueueObject();
+                        Queues.TryDequeue(out queueObject);
+                    }
+                    catch (Exception ex)
+                    {
+                        SimulatorObject.logger.Error(ex.ToString());
+                    }
 
-                                        //检查这个任务是不是没有完成
-                                        if (queueObject.Task.TaskProcessorThread.WorkerThreadState == WorkerThreadStateType.Ended)
+                    try
+                    {
+                        //开始处理任务
+                        if (queueObject != null && queueObject.Task != null && queueObject.User != null && queueObject.Command != null)
+                        {
+                            if (queueObject.Task.TaskProcessorThread != null)
+                            {
+                                //检查这个任务是否要用
+                                if (queueObject.Task.Enabled)
+                                {
+                                    CommandResult cr = queueObject.Task.TaskProcessorThread.Process(queueObject.Command);
+                                    if (cr != null)
+                                    {
+                                        //打印处理结果
+                                        if (cr.IsOK)
                                         {
-                                            //投递任务完成事件
-                                            OnTaskComplete(queueObject.User, queueObject.Task);
+                                            //SimulatorObject.logger.Debug("设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理成功！");
                                         }
                                         else
                                         {
-                                            //还在运行的任务需要再入队列
-                                            Queues.Enqueue(queueObject);
+                                            SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")处理失败！原因：" + cr.ErrorReason);
                                         }
                                     }
                                     else
                                     {
-                                        SimulatorObject.logger.Error("对不起，设备(" + queueObject.User.UserCode + ")不支持任务(" + queueObject.Task.TaskCode + ")");
+                                        SimulatorObject.logger.Warn("对不起，设备(" + queueObject.User.UserCode + ")中的任务处理线程(" + queueObject.Task.TaskCode + ")没有返回处理结果!");
+                                    }
+
+                                    //检查这个任务是不是没有完成
+                                    if (queueObject.Task.TaskProcessorThread.WorkerThreadState == WorkerThreadStateType.Ended)
+                                    {
+                                        //投递任务完成事件
+                                        OnTaskComplete(queueObject.User, queueObject.Task);
+                                    }
+                                    else
+                                    {
+                                        //还在运行的任务需要再入队列
+                                        Queues.Enqueue(queueObject);
                                     }
                                 }
                                 else
                                 {
-                                    SimulatorObject.logger.Error("对不起，设备(" + queueObject.User.UserCode + ")中没有任务处理线程(" + queueObject.Task.TaskCode + ")");
+                                    SimulatorObject.logger.Error("对不起，设备(" + queueObject.User.UserCode + ")不支持任务(" + queueObject.Task.TaskCode + ")");
                                 }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            SimulatorObject.logger.Error(ex.ToString());
-
-                            //出错的任务，为了保险起见，仍然继续执行，并打印错误
-
-                            //检查这个任务是不是没有完成
-                            if (queueObject.Task.TaskProcessorThread.WorkerThreadState == WorkerThreadStateType.Ended)
-                            {
-                                //投递任务完成事件
-                                OnTaskComplete(queueObject.User, queueObject.Task);
                             }
                             else
                             {
-                                //还在运行的任务需要再入队列
-                                Queues.Enqueue(queueObject);
+                                SimulatorObject.logger.Error("对不起，设备(" + queueObject.User.UserCode + ")中没有任务处理线程(" + queueObject.Task.TaskCode + ")");
                             }
                         }
-                    }));
+                    }
+                    catch (Exception ex)
+                    {
+                        //写日志
+                        SimulatorObject.logger.Error(ex.ToString(), ex);
+
+                        //出错的任务，为了保险起见，仍然继续执行，并打印错误
+
+                        //检查这个任务是不是没有完成
+                        if (queueObject.Task.TaskProcessorThread.WorkerThreadState == WorkerThreadStateType.Ended)
+                        {
+                            //投递任务完成事件
+                            OnTaskComplete(queueObject.User, queueObject.Task);
+                        }
+                        else
+                        {
+                            //还在运行的任务需要再入队列
+                            Queues.Enqueue(queueObject);
+                        }
+                    }
+                }
             }
         }
     }
